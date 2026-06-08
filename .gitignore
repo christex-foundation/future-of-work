@@ -72,3 +72,9 @@ local
 **/public/fallback-*.js
 # Sentry Config File
 .env.sentry-build-plugin
+
+# local db backups
+.db-backups/
+
+# stray npm lockfile (this project uses pnpm)
+package-lock.json
