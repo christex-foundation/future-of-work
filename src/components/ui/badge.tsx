@@ -3,18 +3,16 @@ import * as React from 'react';
 
 import { cn } from '@/utils/cn';
 
+// FOW retro badge — pixel (Silkscreen) label, square, hard 2px frame.
 const badgeVariants = cva(
-  'focus:ring-ring inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-hidden',
+  'focus:ring-ring border-input inline-flex items-center gap-1 rounded-none border-2 px-2 py-0.5 font-label text-[10px] leading-none tracking-wide uppercase transition-colors focus:ring-2 focus:outline-hidden',
   {
     variants: {
       variant: {
-        default:
-          'bg-primary text-primary-foreground hover:bg-primary/80 border-transparent',
-        secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent',
-        destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/80 border-transparent',
-        outline: 'text-foreground',
+        default: 'bg-primary text-primary-foreground',
+        secondary: 'bg-secondary text-foreground',
+        destructive: 'bg-destructive text-white',
+        outline: 'bg-transparent text-foreground',
       },
     },
     defaultVariants: {

@@ -41,6 +41,12 @@ const Meta = (props: IMetaProps) => {
         content="width=device-width, initial-scale=1, maximum-scale=1"
         key="viewport"
       />
+      <link
+        rel="icon"
+        type="image/svg+xml"
+        href={`${router.basePath}/fow-favicon.svg`}
+        key="icon-svg"
+      />
       {isEarnRoute ? (
         <>
           <link

@@ -1,0 +1,371 @@
+/* ============================================================
+   FUTURE OF WORK — bespoke component classes ("Serious Retro")
+   Ported from the design-system handoff (fow-retro.css). Tokens
+   live in globals.css (:root --fow-*, --sh-*, --font-*).
+   These cover components the shadcn primitives don't: money /
+   prize tiers, bounty cards, banners, empty states, avatar tiles.
+   ============================================================ */
+
+/* ---- type accents ---- */
+.fow-eyebrow {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fow-terracotta);
+}
+.fow-display {
+  font-family: var(--font-pixel);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  line-height: 1.5;
+  color: var(--fow-espresso);
+}
+.fow-serif {
+  font-family: var(--font-serif);
+}
+
+/* ---- money & prizes ---- */
+.fow-money {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  color: var(--fow-espresso);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.28em;
+  line-height: 1;
+}
+.fow-money .fow-cur {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.5em;
+  letter-spacing: 0.04em;
+  color: var(--fow-muted);
+  transform: translateY(-0.2em);
+}
+.fow-money--xl {
+  font-size: 2.4rem;
+}
+.fow-money--lg {
+  font-size: 1.65rem;
+}
+.fow-money--md {
+  font-size: 1.2rem;
+}
+.fow-money--accent {
+  color: var(--fow-terracotta);
+}
+.fow-coin {
+  width: 1em;
+  height: 1em;
+  image-rendering: pixelated;
+  vertical-align: -0.12em;
+  flex: none;
+}
+.fow-poollabel {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fow-muted);
+}
+.fow-prize {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.45em 0.65em;
+  border: 2px solid var(--fow-border);
+  background: var(--fow-surface);
+}
+.fow-prize-pos {
+  display: grid;
+  place-content: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border: 2px solid var(--fow-border);
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.625rem;
+}
+.fow-prize-pos--1 {
+  background: var(--fow-gold);
+  color: var(--fow-espresso);
+}
+.fow-prize-pos--2 {
+  background: var(--fow-clay);
+  color: #3a3128;
+}
+.fow-prize-pos--3 {
+  background: #e0c3a8;
+  color: #7a5a3a;
+}
+.fow-prize-pos--bonus {
+  background: var(--fow-pine);
+  color: var(--fow-clay);
+}
+
+/* ---- badges & chips (bespoke / design page) ---- */
+.fow-badge {
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.625rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.55em 0.65em;
+  border: 2px solid var(--fow-border);
+  background: var(--fow-surface-2);
+  color: var(--fow-espresso);
+  line-height: 1;
+}
+.fow-badge i {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  display: block;
+}
+.fow-badge svg {
+  width: 11px;
+  height: 11px;
+}
+.fow-badge--draft {
+  background: var(--fow-surface-2);
+  color: var(--fow-muted);
+}
+.fow-badge--funded {
+  background: #f8e8c8;
+  color: var(--fow-gold);
+}
+.fow-badge--active {
+  background: var(--fow-good);
+  color: #fff;
+}
+.fow-badge--judging {
+  background: var(--fow-marigold);
+  color: var(--fow-espresso);
+}
+.fow-badge--completed {
+  background: var(--fow-pine);
+  color: var(--fow-clay);
+}
+.fow-badge--cancelled {
+  background: #f6dad0;
+  color: var(--fow-bad);
+}
+.fow-badge--high {
+  background: var(--fow-good);
+  color: #fff;
+}
+.fow-badge--spam {
+  background: var(--fow-bad);
+  color: #fff;
+}
+.fow-badge--win {
+  background: var(--fow-gold);
+  color: var(--fow-espresso);
+}
+.fow-badge--bounty {
+  background: var(--fow-surface);
+  color: var(--fow-terracotta);
+}
+.fow-badge--project {
+  background: var(--fow-surface);
+  color: var(--fow-pine);
+}
+.fow-chip {
+  font-family: var(--font-label);
+  font-weight: 400;
+  font-size: 0.625rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 0.5em 0.65em;
+  border: 2px solid var(--fow-border);
+  background: transparent;
+  color: #3a3128;
+}
+
+/* ---- avatars & logo tiles ---- */
+.fow-avatar {
+  display: inline-grid;
+  place-content: center;
+  overflow: hidden;
+  border: 2px solid var(--fow-border);
+  background: var(--fow-pine);
+  color: var(--fow-bone);
+  font-family: var(--font-label);
+  font-weight: 700;
+  flex: none;
+}
+.fow-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fow-avatar--sm {
+  width: 40px;
+  height: 40px;
+  font-size: 11px;
+}
+.fow-avatar--md {
+  width: 48px;
+  height: 48px;
+  font-size: 13px;
+}
+.fow-avatar--lg {
+  width: 64px;
+  height: 64px;
+  font-size: 16px;
+}
+.fow-avatar--terracotta {
+  background: var(--fow-terracotta);
+  color: var(--primary-foreground);
+}
+.fow-avatar--marigold {
+  background: var(--fow-marigold);
+  color: var(--fow-espresso);
+}
+
+/* ---- banners & empty states ---- */
+.fow-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 2px solid var(--fow-border);
+  font-size: 0.9375rem;
+  box-shadow: var(--sh-sm);
+}
+.fow-banner svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  margin-top: 1px;
+}
+.fow-banner--info {
+  background: #d3e5e0;
+  color: var(--fow-pine);
+}
+.fow-banner--warn {
+  background: #f8e8c8;
+  color: #7a4e10;
+}
+.fow-banner--success {
+  background: #d6e8dd;
+  color: #1e5c42;
+}
+.fow-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 3rem 1.5rem;
+}
+.fow-empty-art {
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-content: center;
+  border: 2px solid var(--fow-border);
+  background: var(--fow-surface-2);
+  color: var(--fow-terracotta);
+  box-shadow: var(--sh-sm);
+}
+.fow-empty-art svg {
+  width: 38px;
+  height: 38px;
+}
+.fow-empty-title {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+.fow-empty-text {
+  color: var(--fow-muted);
+  max-width: 38ch;
+  line-height: 1.6;
+}
+
+/* ---- bounty card (the browse-feed workhorse) ---- */
+.fow-bounty {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--fow-surface);
+  border: 2px solid var(--fow-border);
+  box-shadow: var(--sh-md);
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+.fow-bounty:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 10px 0 var(--fow-shadow);
+}
+.fow-bounty-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.fow-bounty-head {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+.fow-bounty-org {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.625rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--fow-muted);
+}
+.fow-bounty-title {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 1.2rem;
+  line-height: 1.15;
+  color: var(--fow-espresso);
+  letter-spacing: -0.01em;
+}
+.fow-bounty-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--fow-border);
+}
+.fow-hr-dot {
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--fow-border) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+/* ---- icon helper for the FOW sprite ---- */
+.fow-icon {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: inline-block;
+  vertical-align: middle;
+}
+.fow-icon--fill {
+  fill: currentColor;
+  stroke: none;
+}

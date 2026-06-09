@@ -1,129 +1,121 @@
-import type { GetServerSideProps } from 'next';
-import Head from 'next/head';
+import Link from 'next/link';
 
-import { JsonLd } from '@/components/shared/JsonLd';
 import { ASSET_URL } from '@/constants/ASSET_URL';
 import { Meta } from '@/layouts/Meta';
-import { prisma } from '@/prisma';
-import { generateSuperteamChaptersSchema } from '@/utils/json-ld';
 
-import Collab from '@/features/stfun/components/sections/Collab';
-import Geographies from '@/features/stfun/components/sections/Geographies';
-import Hero from '@/features/stfun/components/sections/Hero';
-import LoveRespect from '@/features/stfun/components/sections/LoveRespect';
-import Production from '@/features/stfun/components/sections/Production';
+import { DawnHorizon } from '@/features/home/components/DawnHorizon';
+import { Footer } from '@/features/navbar/components/Footer';
 
-interface HomePageProps {
-  readonly chapters: Array<{
-    name: string;
-    region: string;
-    displayValue: string;
-    slug: string;
-    code: string;
-    country: string[];
-    icons?: string;
-    link?: string;
-  }>;
-  readonly chaptersForSchema: Array<{
-    name: string;
-    displayValue: string;
-    slug: string;
-    code: string;
-    country: string[];
-    icons?: string;
-    link?: string;
-  }>;
-}
+const STEPS = [
+  {
+    n: '01',
+    title: 'Post a task',
+    body: 'Businesses break work into clear, scoped tasks — no gatekeepers, no long hiring cycles.',
+  },
+  {
+    n: '02',
+    title: 'Talent submits',
+    body: 'Skilled people anywhere take on the work and submit real results, building a verified track record.',
+  },
+  {
+    n: '03',
+    title: 'Pick a winner, pay out',
+    body: 'Review submissions, choose the best, and pay — every payout recorded and trusted.',
+  },
+];
 
-function parseCountries(rawCountries: unknown): string[] {
-  if (!Array.isArray(rawCountries)) return [];
-  return rawCountries.filter(
-    (country): country is string => typeof country === 'string',
-  );
-}
+const VALUES = [
+  {
+    title: 'Built to be trusted',
+    body: 'Escrowed prizes and a transparent record turn informal gig work into a credible profession.',
+  },
+  {
+    title: 'Opportunity, not gatekeepers',
+    body: 'Work is matched to skill — not to who you know. Talent is everywhere; the gap is access.',
+  },
+  {
+    title: 'Made for the real world',
+    body: 'Fast, mobile-first and light on data, so it works on the connections people actually have.',
+  },
+];
 
-export default function Home({ chapters, chaptersForSchema }: HomePageProps) {
+export default function Home() {
   return (
-    <>
+    <main className="bg-background text-foreground min-h-screen">
       <Meta
-        title="Superteam | The Talent Layer of Solana"
-        description="Superteam is a community of the best talent learning, earning and building in crypto."
-        canonical="https://superteam.fun/"
+        title="Future of Work — A new day for work"
+        description="A digital marketplace for paid work. Talent is everywhere; opportunity shouldn't be the gap. Post a task, get matched, get paid."
+        canonical="https://cf-future-of-work.vercel.app/"
         og={`${ASSET_URL}/st/og/og-home.png`}
       />
-      <JsonLd data={generateSuperteamChaptersSchema(chaptersForSchema)} />
-      <Head>
-        <link
-          rel="preload"
-          as="image"
-          href={`${ASSET_URL}/st/hero/hero_home0.5x.webp`}
-          // @ts-expect-error fetchpriority is a valid attribute but not typed
-          imagesrcset={`${ASSET_URL}/st/hero/hero_home0.5x.webp 640w, ${ASSET_URL}/st/hero/hero_home.webp 1440w, ${ASSET_URL}/st/hero/hero_home1.5x.webp 2560w`}
-          imagesizes="(max-width: 640px) 100vw, (max-width: 1440px) 100vw, 2560px"
-        />
-      </Head>
 
-      <Hero
-        line1="Join The Talent Layer"
-        line2="of Solana"
-        line3="superteam is a community of the best talent learning,"
-        line4="earning and building in crypto"
-        buttonVisible={false}
-      />
+      <DawnHorizon />
 
-      <Geographies chapters={chapters} />
+      {/* How it works */}
+      <section id="how-it-works" className="mx-auto max-w-6xl px-6 py-20">
+        <p className="font-label text-primary text-[11px] tracking-[0.18em] uppercase">
+          How it works
+        </p>
+        <h2 className="font-serif mt-3 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
+          Post a task, get matched, get paid — without the gatekeepers.
+        </h2>
 
-      <Production />
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {STEPS.map((step) => (
+            <div
+              key={step.n}
+              className="border-input bg-card flex flex-col gap-3 border-2 p-6 shadow-[5px_5px_0_var(--fow-shadow)]"
+            >
+              <span className="font-pixel text-primary text-base">
+                {step.n}
+              </span>
+              <h3 className="font-serif text-xl font-semibold">{step.title}</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {step.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      <LoveRespect />
+      {/* Values band */}
+      <section className="bg-fow-pine text-fow-clay">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:grid-cols-3">
+          {VALUES.map((value) => (
+            <div key={value.title}>
+              <h3 className="font-serif text-2xl font-semibold text-[#f4eee3]">
+                {value.title}
+              </h3>
+              <p className="mt-3 leading-relaxed text-[#e7d3c1]/85">
+                {value.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      <Collab />
-    </>
+      {/* Closing CTA */}
+      <section className="mx-auto max-w-6xl px-6 py-24 text-center">
+        <h2 className="font-serif mx-auto max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
+          Find work that builds your future.
+        </h2>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/earn"
+            className="bg-primary text-primary-foreground inline-flex items-center gap-2 border-2 border-[#1d1815] px-7 py-3 text-sm font-bold tracking-wide uppercase shadow-[4px_4px_0_var(--fow-shadow)] transition-transform hover:translate-x-[1px] hover:translate-y-[1px] hover:no-underline"
+          >
+            Find work →
+          </Link>
+          <Link
+            href="/earn/sponsor"
+            className="bg-card text-foreground inline-flex items-center gap-2 border-2 border-[#1d1815] px-7 py-3 text-sm font-bold tracking-wide uppercase shadow-[4px_4px_0_var(--fow-shadow)] transition-transform hover:translate-x-[1px] hover:translate-y-[1px] hover:no-underline"
+          >
+            Post a task
+          </Link>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<
-  HomePageProps
-> = async () => {
-  const chapters = await prisma.chapter.findMany({
-    where: { active: true },
-    select: {
-      name: true,
-      region: true,
-      displayValue: true,
-      slug: true,
-      code: true,
-      countries: true,
-      icons: true,
-      link: true,
-    },
-  });
-
-  const chaptersForSchema = chapters.map((chapter) => ({
-    name: chapter.name,
-    displayValue: chapter.displayValue || chapter.name,
-    slug: chapter.slug,
-    code: chapter.code || '',
-    country: parseCountries(chapter.countries),
-    icons: chapter.icons || undefined,
-    link: chapter.link || undefined,
-  }));
-
-  const chaptersForGeographies = chapters.map((chapter) => ({
-    name: chapter.name,
-    region: chapter.region,
-    displayValue: chapter.displayValue || chapter.region,
-    slug: chapter.slug,
-    code: chapter.code || '',
-    country: parseCountries(chapter.countries),
-    icons: chapter.icons || undefined,
-    link: chapter.link || undefined,
-  }));
-
-  return {
-    props: {
-      chapters: chaptersForGeographies,
-      chaptersForSchema,
-    },
-  };
-};

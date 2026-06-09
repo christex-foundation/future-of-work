@@ -7,7 +7,7 @@ import MdOutlineMail from '@/components/icons/MdOutlineMail';
 import { RegionCombobox } from '@/components/shared/RegionCombobox';
 import { SkillsCombobox } from '@/components/shared/SkillsCombobox';
 import { SupportFormDialog } from '@/components/shared/SupportFormDialog';
-import { LocalImage } from '@/components/ui/local-image';
+import { FowWordmark } from '@/components/shared/FowLogo';
 import { skillSubSkillMap } from '@/interface/skills';
 import { cn } from '@/utils/cn';
 
@@ -185,16 +185,13 @@ export const Footer = () => {
         <div className="flex flex-col items-start justify-between md:flex-row">
           <div className="mb-8 flex max-w-[540px] flex-col md:mb-0">
             <div className="mb-4 flex items-center">
-              <LocalImage
-                className="mr-4 h-6"
-                alt="Superteam Earn"
-                src="/assets/logo.svg"
-              />
+              <FowWordmark className="text-foreground mr-4 text-[1.35rem]" />
             </div>
             <p className="mb-6 text-sm text-slate-500">
-              Discover high paying crypto bounties, projects and grants from the
-              best Solana companies in one place and apply to them using a
-              single profile.
+              Discover paid bounties, projects and grants from great
+              organisations in one place, and apply to them using a single
+              profile. Talent is everywhere — opportunity shouldn&apos;t be the
+              gap.
             </p>
             <div className="flex items-center gap-4">
               <GitHub
