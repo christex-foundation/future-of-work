@@ -1,3 +1,4 @@
+import { Fraunces } from 'next/font/google';
 import localFont from 'next/font/local';
 
 /**
@@ -54,10 +55,23 @@ const dmSans = localFont({
 });
 
 /**
+ * Fraunces - Serif display font for the Future of Work brand.
+ * Used for hero/section headings and the wordmark (matches the design system).
+ */
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+});
+
+/**
  * Combined font class names for applying to ST pages
  */
 export const stFontVariables = [
   satoshi.variable,
   archivo.variable,
   dmSans.variable,
+  fraunces.variable,
 ].join(' ');

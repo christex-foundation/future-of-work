@@ -4,57 +4,58 @@ import { useEffect, useRef } from 'react';
 
 import { gsap } from '@/lib/gsap';
 
+// Future of Work mark: lowercase "f" + the rising sun as the "o".
+// The sun rises into place on mount, echoing the brand motif.
 export default function AnimatedLogo() {
-  const slicesRef = useRef({ val1: 0, val2: 20, val3: 0 });
-  const clipPathRef = useRef<SVGClipPathElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sunRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.to(slicesRef.current, {
-        val1: 20,
-        val2: 0,
-        val3: 32,
-        duration: 1.8,
-        delay: 0.3,
-        ease: 'power2.out',
-        onUpdate: () => {
-          if (clipPathRef.current) {
-            const { val1, val2, val3 } = slicesRef.current;
-            // Update SVG clip path polygons for animation
-            // These values are computed numbers, not user input
-            clipPathRef.current.innerHTML = `
-              <polygon points="0 0, ${val1} 0, ${val1} 16, 0 16" />
-              <polygon points="${val2} 16, 20 16, 20 32, ${val2} 32" />
-              <polygon points="20 0, 42 0, 42 ${val3}, 20 ${val3}" />
-            `;
-          }
-        },
-      });
+      gsap.fromTo(
+        containerRef.current,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out', delay: 0.2 },
+      );
+      gsap.fromTo(
+        sunRef.current,
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.6, ease: 'power2.out', delay: 0.5 },
+      );
     });
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <svg
-      width="42"
-      height="32"
-      viewBox="0 0 42 32"
-      fill="white"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+      ref={containerRef}
+      className="flex items-end justify-center text-white select-none"
     >
-      <defs>
-        <clipPath id="clip0" ref={clipPathRef}>
-          <polygon points="0 0, 0 0, 0 16, 0 16" />
-          <polygon points="20 16, 20 16, 20 32, 20 32" />
-          <polygon points="20 0, 42 0, 42 0, 20 0" />
-        </clipPath>
-      </defs>
-      <path
-        style={{ clipPath: 'url(#clip0)' }}
-        d="M32.6944 4.90892H41.4468V8.28973C41.4468 12.8741 37.742 16.5795 33.1571 16.5795H32.6938L32.6944 4.90892ZM20.2372 0H32.6944V31.9071H31.2127C22.1822 31.9071 20.3765 25.6088 20.3765 20.0055L20.2372 0ZM0 7.22433C0 12.9205 4.07522 15.0043 8.61369 15.6993H0V32H8.28973C16.6252 32 17.5978 28.2952 17.5978 24.7757C17.5978 20.4688 14.6338 17.459 10.0495 16.3007H17.5978V0H9.30807C0.972554 0 0 3.70477 0 7.22433Z"
-        fill="white"
-      />
-    </svg>
+      <span className="font-secondary text-[40px] leading-[0.8] font-semibold tracking-[-0.04em] md:text-[52px]">
+        f
+      </span>
+      <svg
+        ref={sunRef}
+        className="mb-[6px] ml-[1px] h-[21px] w-[21px] md:mb-[8px] md:h-[26px] md:w-[26px]"
+        viewBox="0 0 74 74"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="fowSunMark" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stopColor="#A6371C" />
+            <stop offset=".5" stopColor="#CE4A2B" />
+            <stop offset="1" stopColor="#E6A12B" />
+          </linearGradient>
+        </defs>
+        <circle cx="37" cy="40" r="22" fill="url(#fowSunMark)" />
+        <rect x="8" y="40" width="58" height="4" fill="#F4EEE3" />
+        <g stroke="#E6A12B" strokeWidth="3.4" strokeLinecap="round">
+          <line x1="37" y1="6" x2="37" y2="13" />
+          <line x1="14" y1="15" x2="19" y2="20" />
+          <line x1="60" y1="15" x2="55" y2="20" />
+        </g>
+      </svg>
+    </div>
   );
 }

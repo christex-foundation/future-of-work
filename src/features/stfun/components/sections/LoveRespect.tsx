@@ -301,7 +301,7 @@ export default function LoveRespect({ collab = false }: LoveRespectProps) {
       )}
     >
       <div className="love-header">
-        <p className="love section-heading text-[24px] leading-[26px] md:text-[32px] lg:leading-[35px]">
+        <p className="love section-heading font-serif text-[24px] leading-[26px] md:text-[32px] lg:leading-[35px]">
           Love and Respect
         </p>
       </div>

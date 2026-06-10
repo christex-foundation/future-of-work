@@ -26,7 +26,7 @@ export default function PrimaryButton({
         target={target}
         rel={rel}
         className={cn(
-          'primary-cta font-secondary inline-block h-fit rounded-2xl px-6 py-3 text-[14px] leading-[15px] font-bold text-[#222327] transition-shadow duration-250 ease-out hover:shadow-[0px_-4px_27px_rgba(200,108,59,0.68),0px_4px_12px_rgba(57,22,149,1)]',
+          'primary-cta font-secondary inline-block h-fit rounded-2xl px-6 py-3 text-[14px] leading-[15px] font-bold text-[#1d1815] transition-shadow duration-250 ease-out hover:shadow-[0px_-4px_27px_rgba(230,161,43,0.6),0px_4px_12px_rgba(166,55,28,0.9)]',
           className,
         )}
       >
@@ -39,7 +39,7 @@ export default function PrimaryButton({
     <Link
       href={href}
       className={cn(
-        'primary-cta font-secondary inline-block h-fit rounded-2xl px-6 py-3 text-[14px] leading-[15px] font-bold text-[#222327] transition-shadow duration-250 ease-out hover:shadow-[0px_-4px_27px_rgba(200,108,59,0.68),0px_4px_12px_rgba(57,22,149,1)]',
+        'primary-cta font-secondary inline-block h-fit rounded-2xl px-6 py-3 text-[14px] leading-[15px] font-bold text-[#1d1815] transition-shadow duration-250 ease-out hover:shadow-[0px_-4px_27px_rgba(230,161,43,0.6),0px_4px_12px_rgba(166,55,28,0.9)]',
         className,
       )}
     >

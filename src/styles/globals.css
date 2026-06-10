@@ -23,6 +23,7 @@
   --font-primary: var(--font-satoshi);
   --font-secondary: var(--font-archivo);
   --font-display: var(--font-dm-sans);
+  --font-serif: var(--font-fraunces);
 
   --text-xxs: 0.625rem;
   --text-xxs--line-height: 0.875rem;

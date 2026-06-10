@@ -21,7 +21,7 @@ export default function Geographies({ chapters }: GeographiesProps) {
     >
       <h2
         id="superteam-locations-heading"
-        className="partners-text section-heading font-secondary mb-10 text-center text-[24px] leading-[22px] font-bold text-white md:mb-10 md:text-[32px] lg:leading-[26px]"
+        className="partners-text section-heading font-serif mb-10 text-center text-[24px] leading-[22px] font-bold text-white md:mb-10 md:text-[32px] lg:leading-[26px]"
       >
         Find Your Nearest Superteam
       </h2>
@@ -124,7 +124,7 @@ export default function Geographies({ chapters }: GeographiesProps) {
                 <li key={st.slug}>
                   <a
                     href={st.link || ''}
-                    className="text-blue-400 hover:underline"
+                    className="text-[#E6A12B] hover:underline"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

@@ -2,16 +2,17 @@
 
 import { type ReactNode, useEffect } from 'react';
 
-import { ASSET_URL } from '@/constants/ASSET_URL';
 import { gsap } from '@/lib/gsap';
 
 import HeroContainer from '../common/HeroContainer';
 
 interface HeroProps {
-  line1?: string;
-  line2?: string;
-  line3?: string;
-  line4?: string;
+  eyebrow?: string;
+  heading?: ReactNode;
+  line1?: ReactNode;
+  line2?: ReactNode;
+  line3?: ReactNode;
+  line4?: ReactNode;
   buttonVisible?: boolean;
   children?: ReactNode;
 }
@@ -77,6 +78,8 @@ const stars2AfterShadow = generateStars(200, 2560, 2560, 20000);
 const stars3AfterShadow = generateStars(50, 2560, 2560, 30000);
 
 export default function Hero({
+  eyebrow,
+  heading,
   line1 = '',
   line2 = '',
   line3 = '',
@@ -101,6 +104,8 @@ export default function Hero({
   return (
     <section className="st-hero relative col-span-5 flex h-[calc(100vh-40px-32px)] flex-col items-center">
       <HeroContainer
+        eyebrow={eyebrow}
+        heading={heading}
         line1={line1}
         line2={line2}
         line3={line3}
@@ -139,9 +144,9 @@ export default function Hero({
         </div>
         <div className="relative z-2 h-full w-full">
           <img
-            src={`${ASSET_URL}/st/hero/hero_home.webp`}
-            srcSet={`${ASSET_URL}/st/hero/hero_home0.5x.webp 640w, ${ASSET_URL}/st/hero/hero_home.webp 1440w, ${ASSET_URL}/st/hero/hero_home1.5x.webp 2560w`}
-            sizes="(max-width: 640px) 100vw, (max-width: 1440px) 100vw, 2560px"
+            src="/hero-dawn.jpg"
+            srcSet="/hero-dawn-sm.jpg 860w, /hero-dawn.jpg 1719w"
+            sizes="100vw"
             loading="eager"
             // @ts-expect-error fetchpriority is a valid attribute but not typed
             fetchpriority="high"

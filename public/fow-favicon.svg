@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="s" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#A6371C"/>
+      <stop offset=".5" stop-color="#CE4A2B"/>
+      <stop offset="1" stop-color="#E6A12B"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#1D1815"/>
+  <!-- f -->
+  <text x="13" y="46" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" fill="#F4EEE3">f</text>
+  <!-- rising sun as the "o" -->
+  <circle cx="41" cy="34" r="11" fill="url(#s)"/>
+  <rect x="26" y="34" width="30" height="2.4" rx="1.2" fill="#F4EEE3"/>
+  <g stroke="#E6A12B" stroke-width="2.2" stroke-linecap="round">
+    <line x1="41" y1="16" x2="41" y2="20"/>
+    <line x1="29.5" y1="21" x2="32" y2="23.5"/>
+    <line x1="52.5" y1="21" x2="50" y2="23.5"/>
+  </g>
+</svg>

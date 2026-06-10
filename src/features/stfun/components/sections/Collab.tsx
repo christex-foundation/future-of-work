@@ -4,7 +4,7 @@ import PrimaryButton from '../common/PrimaryButton';
 
 export default function Collab() {
   return (
-    <div className="collab-container relative right-1/2 left-1/2 z-1 col-span-5 -mt-[70px] -mb-[50px] flex h-fit w-screen -translate-x-1/2 flex-col justify-center bg-black align-middle md:-mt-[250px] md:-mb-[20px] md:h-fit md:rounded-[64px] lg:-mb-[30px]">
+    <div className="collab-container relative right-1/2 left-1/2 z-1 col-span-5 -mt-[70px] -mb-[50px] flex h-fit w-screen -translate-x-1/2 flex-col justify-center bg-[#0e1512] align-middle md:-mt-[250px] md:-mb-[20px] md:h-fit md:rounded-[64px] lg:-mb-[30px]">
       <div className="collab-overlay absolute hidden h-full w-full md:block" />
       <img
         src={`${ASSET_URL}/st/images/collab-sm2.png`}
@@ -16,7 +16,7 @@ export default function Collab() {
       />
 
       <div className="history-stuff absolute flex h-[669px] w-full flex-col items-center md:h-full md:justify-center">
-        <p className="collab-history mt-[145px] w-[189px] text-[24px] md:mt-[80px] md:w-[245px] md:text-[32px]">
+        <p className="collab-history font-serif mt-[145px] w-[189px] text-[24px] md:mt-[80px] md:w-[245px] md:text-[32px]">
           be a part of history
         </p>
         <div className="button mt-[50px]">

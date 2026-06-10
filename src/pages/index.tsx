@@ -7,8 +7,9 @@ import { Meta } from '@/layouts/Meta';
 import { prisma } from '@/prisma';
 import { generateSuperteamChaptersSchema } from '@/utils/json-ld';
 
+import PrimaryButton from '@/features/stfun/components/common/PrimaryButton';
 import Collab from '@/features/stfun/components/sections/Collab';
-import Geographies from '@/features/stfun/components/sections/Geographies';
+import FindWork from '@/features/stfun/components/sections/FindWork';
 import Hero from '@/features/stfun/components/sections/Hero';
 import LoveRespect from '@/features/stfun/components/sections/LoveRespect';
 import Production from '@/features/stfun/components/sections/Production';
@@ -42,7 +43,7 @@ function parseCountries(rawCountries: unknown): string[] {
   );
 }
 
-export default function Home({ chapters, chaptersForSchema }: HomePageProps) {
+export default function Home({ chaptersForSchema }: HomePageProps) {
   return (
     <>
       <Meta
@@ -56,22 +57,35 @@ export default function Home({ chapters, chaptersForSchema }: HomePageProps) {
         <link
           rel="preload"
           as="image"
-          href={`${ASSET_URL}/st/hero/hero_home0.5x.webp`}
+          href="/hero-dawn.jpg"
           // @ts-expect-error fetchpriority is a valid attribute but not typed
-          imagesrcset={`${ASSET_URL}/st/hero/hero_home0.5x.webp 640w, ${ASSET_URL}/st/hero/hero_home.webp 1440w, ${ASSET_URL}/st/hero/hero_home1.5x.webp 2560w`}
-          imagesizes="(max-width: 640px) 100vw, (max-width: 1440px) 100vw, 2560px"
+          imagesrcset="/hero-dawn-sm.jpg 860w, /hero-dawn.jpg 1719w"
+          imagesizes="100vw"
         />
       </Head>
 
       <Hero
-        line1="Join The Talent Layer"
-        line2="of Solana"
-        line3="superteam is a community of the best talent learning,"
-        line4="earning and building in crypto"
+        eyebrow="A New Day for Work"
+        heading={
+          <>
+            Talent is everywhere.{' '}
+            <em className="text-[#CE4A2B] italic">Opportunity</em>{' '}
+            shouldn&apos;t be the gap.
+          </>
+        }
         buttonVisible={false}
-      />
+      >
+        <PrimaryButton
+          href="/earn"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 bg-white text-center"
+        >
+          Start Earning
+        </PrimaryButton>
+      </Hero>
 
-      <Geographies chapters={chapters} />
+      <FindWork />
 
       <Production />
 
