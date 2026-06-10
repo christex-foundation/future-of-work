@@ -296,14 +296,17 @@ export default function LoveRespect({ collab = false }: LoveRespectProps) {
   return (
     <div
       className={cn(
-        'respect-container relative right-1/2 left-1/2 col-span-5 mt-[224px] h-fit w-screen -translate-x-1/2 overflow-x-visible md:h-fit',
-        collab ? 'lg:mt-[224px]' : '',
+        'respect-container relative right-1/2 left-1/2 col-span-5 h-fit w-screen -translate-x-1/2 overflow-x-visible bg-[#6b5e50] py-16 md:h-fit md:py-20',
+        collab ? 'mt-[224px]' : '-mt-5',
       )}
     >
-      <div className="love-header">
-        <p className="love section-heading font-serif text-[24px] leading-[26px] md:text-[32px] lg:leading-[35px]">
-          Love and Respect
+      <div className="love-header text-center">
+        <p className="font-secondary text-[11px] font-bold tracking-[0.26em] text-[#E6A12B] uppercase">
+          From the community
         </p>
+        <h2 className="font-serif mt-3 text-[40px] leading-[1.05] font-semibold text-[#f4eee3] md:text-[52px]">
+          Love and Respect
+        </h2>
       </div>
 
       <div className="scrollbar-hidden item-container mt-12 flex-nowrap overflow-x-scroll">

@@ -40,10 +40,6 @@ export default function Production() {
         <h2 className="font-serif mt-3 text-[40px] leading-[1.05] font-semibold text-[#1d1815] md:text-[52px]">
           Earning Opportunities
         </h2>
-        <p className="font-primary mx-auto mt-4 max-w-[48ch] text-[15px] leading-[1.5] text-[#6b5e50] md:text-[17px]">
-          Three ways to turn your skills into income — pick the one that fits how
-          you like to work.
-        </p>
       </div>
 
       <div className="relative z-10 mx-auto mt-14 grid max-w-[1120px] gap-5 px-2 sm:grid-cols-2 lg:grid-cols-3">

@@ -70,7 +70,7 @@ const STARS = [
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between gap-2 border-b border-[#f4eee3]/20 py-[5px]">
-      <dt className="text-[#f4eee3]/55">{label}</dt>
+      <dt className="text-[#f4eee3]/85">{label}</dt>
       <dd className="tracking-[0.12em] text-[#f4eee3]">{value}</dd>
     </div>
   );
@@ -110,16 +110,16 @@ export default function OpportunityCard({
         ))}
       </div>
 
-      <div className="relative flex flex-col gap-4 px-5 pt-5 pb-7">
+      <div className="relative flex flex-1 flex-col gap-6 px-5 pt-7 pb-10">
         {/* lanyard slot */}
-        <div className="mx-auto h-1.5 w-12 rounded-full border border-[#e6a12b]/40 bg-[#0e1512]" />
+        <div className="mx-auto h-5 w-20 rounded-full border border-[#e6a12b]/40 bg-[#0e1512]" />
 
         {/* agency header */}
         <div className="text-center">
           <p className="font-mono text-[10px] font-bold tracking-[0.22em] text-[#f4eee3] uppercase">
             {title}
           </p>
-          <p className="font-mono text-[7.5px] tracking-[0.26em] text-[#f4eee3]/55 uppercase">
+          <p className="font-mono text-[8px] tracking-[0.26em] text-[#f4eee3]/85 uppercase">
             Talent Credential &middot; Sierra Leone
           </p>
         </div>
@@ -136,7 +136,7 @@ export default function OpportunityCard({
               <div className="absolute inset-x-1 top-1/2 h-px -translate-y-1/2 bg-[#1d1815]/45" />
               <div className="absolute inset-y-1 left-1/2 w-px -translate-x-1/2 bg-[#1d1815]/45" />
             </div>
-            <span className="font-mono text-[7.5px] tracking-[0.18em] text-[#f4eee3]/50 uppercase">
+            <span className="font-mono text-[8px] tracking-[0.18em] text-[#f4eee3]/85 uppercase">
               Issue 2026
             </span>
           </div>
@@ -154,7 +154,7 @@ export default function OpportunityCard({
         </dl>
 
         {/* what it is */}
-        <p className="mt-0.5 text-center font-primary text-[12px] leading-[1.55] text-[#f4eee3]/80">
+        <p className="mt-0.5 text-center font-primary text-[12.5px] leading-[1.55] text-[#f4eee3]">
           {description}
         </p>
 
@@ -166,7 +166,7 @@ export default function OpportunityCard({
               'repeating-linear-gradient(90deg,#f4eee3 0 1px,transparent 1px 3px,#f4eee3 3px 4px,transparent 4px 7px,#f4eee3 7px 9px,transparent 9px 10px,#f4eee3 10px 13px,transparent 13px 15px)',
           }}
         />
-        <p className="text-center font-mono text-[7px] tracking-[0.16em] text-[#f4eee3]/45 uppercase">
+        <p className="text-center font-mono text-[8px] tracking-[0.16em] text-[#f4eee3]/75 uppercase">
           Talent property of Future of Work &middot; Apply at /earn
         </p>
       </div>

@@ -600,13 +600,10 @@
   /* ==================== TestimonialCard Component ==================== */
   .test-container {
     width: 289px;
-    background: linear-gradient(
-      180deg,
-      #1d1815 6.99%,
-      rgba(22, 22, 22, 0) 158.45%
-    );
-    border: 1px solid rgba(177, 177, 177, 0.2);
-    border-radius: 5px;
+    background: #f4eee3;
+    border: 2px solid #1d1815;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0 #1d1815;
   }
 
   .testimonial-user {

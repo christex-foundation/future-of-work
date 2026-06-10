@@ -81,15 +81,17 @@ export default function FindWork() {
       aria-labelledby="find-work-heading"
       className="relative right-1/2 left-1/2 col-span-5 -mt-5 w-screen -translate-x-1/2 bg-[#6b5e50] px-6 py-20 md:py-28"
     >
-      <h2
-        id="find-work-heading"
-        className="section-heading font-serif mb-3 text-center text-[24px] leading-[1.1] font-bold text-white md:text-[32px]"
-      >
-        Find Work That Pays You
-      </h2>
-      <p className="font-primary mx-auto mb-12 max-w-[44ch] text-center text-[15px] text-[#f4eee3]/85 md:text-[17px]">
-        Real bounties from real teams &mdash; apply, ship, and get paid.
-      </p>
+      <div className="mb-12 text-center">
+        <p className="font-secondary text-[11px] font-bold tracking-[0.26em] text-[#E6A12B] uppercase">
+          Open opportunities
+        </p>
+        <h2
+          id="find-work-heading"
+          className="font-serif mt-3 text-[40px] leading-[1.05] font-semibold text-[#f4eee3] md:text-[52px]"
+        >
+          Find Work That Pays You
+        </h2>
+      </div>
 
       <div className="mx-auto grid max-w-[1120px] gap-5 px-2 sm:grid-cols-2 lg:grid-cols-3">
         {BOUNTIES.map((b) => (
