@@ -5,7 +5,7 @@ import Link from 'next/link';
 import posthog from 'posthog-js';
 
 import { Button } from '@/components/ui/button';
-import { FowWordmark } from '@/components/shared/FowLogo';
+import { LocalImage } from '@/components/ui/local-image';
 import { useDisclosure } from '@/hooks/use-disclosure';
 import { useCreditBalance } from '@/store/credit';
 import { useUser } from '@/store/user';
@@ -72,7 +72,12 @@ export const MobileNavbar = ({
                 posthog.capture('homepage logo click_universal');
               }}
             >
-              <FowWordmark className="text-foreground cursor-pointer text-[1.2rem]" />
+              <LocalImage
+                className="h-[1.3rem] cursor-pointer object-contain"
+                alt="Superteam Earn"
+                src="/assets/logo.svg"
+                loading="eager"
+              />
             </Link>
           </div>
 

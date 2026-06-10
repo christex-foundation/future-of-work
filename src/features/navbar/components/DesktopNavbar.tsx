@@ -9,6 +9,7 @@ import IoSearchOutline from '@/components/icons/IoSearchOutline';
 import IoWalletOutline from '@/components/icons/IoWalletOutline';
 import { Button } from '@/components/ui/button';
 import { ExternalImage } from '@/components/ui/cloudinary-image';
+import { LocalImage } from '@/components/ui/local-image';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCreditBalance } from '@/store/credit';
@@ -21,8 +22,6 @@ import { HACKATHONS } from '@/features/hackathon/constants/hackathons';
 import { ProBadge } from '@/features/pro/components/ProBadge';
 
 import { LISTING_NAV_ITEMS } from '../constants';
-import { FowWordmark } from '@/components/shared/FowLogo';
-
 import { LogoContextMenu } from './LogoContextMenu';
 import { NavLink } from './NavLink';
 import { UserMenu } from './UserMenu';
@@ -135,7 +134,11 @@ export const DesktopNavbar = ({
                 posthog.capture('homepage logo click_universal');
               }}
             >
-              <FowWordmark className="text-foreground cursor-pointer text-[1.3rem]" />
+              <LocalImage
+                className="h-[1.4rem] cursor-pointer object-contain"
+                alt="Superteam Earn"
+                src="/assets/logo.svg"
+              />
 
               {isDashboardRoute && (
                 <>

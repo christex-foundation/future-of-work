@@ -68,7 +68,7 @@ function DialogContent({
         data-slot="dialog-content"
         className={cn(
           'max-h-screen overflow-y-auto',
-          'bg-background border-input fixed z-60 grid w-full max-w-lg gap-4 rounded-none border-2 p-6 shadow-[8px_8px_0_var(--fow-shadow)]',
+          'bg-background fixed z-60 grid w-full max-w-lg gap-4 border p-6 shadow-lg sm:rounded-lg',
           'data-[state=open]:animate-in data-[state=closed]:animate-out duration-200',
           'focus-visible:outline-0',
           !unsetDefaultPosition &&
@@ -86,7 +86,7 @@ function DialogContent({
         {!hideCloseIcon && (
           <DialogPrimitive.Close
             className={cn(
-              'ring-offset-background data-[state=open]:bg-accent data-[state=open]:text-muted-foreground focus:ring-ring absolute top-4 right-4 rounded-none opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none',
+              'ring-offset-background data-[state=open]:bg-accent data-[state=open]:text-muted-foreground focus:ring-ring absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none',
               classNames?.closeIcon,
             )}
           >

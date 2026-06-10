@@ -1,6 +1,5 @@
 import '../styles/globals.css';
 import '../styles/st-globals.css';
-import '../styles/fow.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { AppProps } from 'next/app';
@@ -10,7 +9,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import Providers from '@/components/providers';
-import { FowSprite } from '@/components/shared/FowSprite';
 import { ST_ROUTES } from '@/constants/ST_ROUTES';
 import { TokenListProvider } from '@/constants/tokenList';
 import { fontVariables } from '@/theme/fonts';
@@ -130,7 +128,6 @@ function App({ Component, pageProps }: AppProps) {
     <TokenListProvider>
       <div className={fontVariables}>
         <Providers>
-          <FowSprite />
           <TopLoader />
           <Component {...pageProps} key={router.asPath} />
           <Toaster position="bottom-right" richColors />

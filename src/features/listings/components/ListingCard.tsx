@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import IoIosStar from '@/components/icons/IoIosStar';
 import MdModeComment from '@/components/icons/MdModeComment';
@@ -61,7 +60,6 @@ export const ListingCard = ({ bounty }: { bounty: Listing }) => {
     isPro,
   } = bounty;
 
-  const router = useRouter();
   const { serverTime } = useServerTimeSync();
   const isBeforeDeadline = dayjs(serverTime()).isBefore(dayjs(deadline));
 
@@ -91,8 +89,8 @@ export const ListingCard = ({ bounty }: { bounty: Listing }) => {
     <Link
       href={`/earn/listing/${slug}`}
       className={cn(
-        'hover:bg-secondary block w-full rounded-none px-2 py-4 no-underline sm:px-4',
-        isFeatured && isBeforeDeadline ? 'bg-primary-100' : '',
+        'block w-full rounded-md px-2 py-4 no-underline hover:bg-gray-100 sm:px-4',
+        isFeatured && isBeforeDeadline ? 'bg-purple-50' : '',
       )}
     >
       <div className="flex w-full items-center justify-between">
@@ -107,28 +105,16 @@ export const ListingCard = ({ bounty }: { bounty: Listing }) => {
             <p className="line-clamp-1 text-sm font-semibold text-slate-700 sm:text-base">
               {title}
             </p>
-            <span
-              role="link"
-              tabIndex={0}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                void router.push(`/earn/s/${sponsor?.slug}`);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  void router.push(`/earn/s/${sponsor?.slug}`);
-                }
-              }}
-              className="flex w-min cursor-pointer items-center gap-1 hover:underline"
+            <Link
+              href={`/earn/s/${sponsor?.slug}`}
+              onClick={(e) => e.stopPropagation()}
+              className="flex w-min items-center gap-1 hover:underline"
             >
               <p className="w-full text-xs whitespace-nowrap text-slate-500 md:text-sm">
                 {sponsor?.name}
               </p>
               <div>{!!sponsor?.isVerified && <VerifiedBadge />}</div>
-            </span>
+            </Link>
             <div className="mt-px flex items-center gap-1 sm:gap-2">
               <div className="flex items-center justify-start sm:hidden">
                 {!!showToken && (
@@ -204,7 +190,7 @@ export const ListingCard = ({ bounty }: { bounty: Listing }) => {
                 <div
                   className={cn(
                     'flex items-center gap-1',
-                    'text-primary text-xs',
+                    'text-xs text-violet-600',
                     'mx-1 sm:mx-0',
                   )}
                 >
@@ -217,7 +203,7 @@ export const ListingCard = ({ bounty }: { bounty: Listing }) => {
 
               {dayjs(serverTime()).isBefore(dayjs(deadline)) &&
                 !isWinnersAnnounced && (
-                  <div className="bg-fow-good mx-1 h-2 w-2 rounded-full sm:mx-0" />
+                  <div className="mx-1 h-2 w-2 rounded-full bg-[#16A35F] sm:mx-0" />
                 )}
             </div>
           </div>

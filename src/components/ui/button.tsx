@@ -4,32 +4,26 @@ import * as React from 'react';
 
 import { cn } from '@/utils/cn';
 
-// Future of Work "Serious Retro" button — chunky espresso frame, hard offset
-// shadow that collapses on press, uppercase Hanken. Variant/size API unchanged.
 const buttonVariants = cva(
-  'focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center gap-2 rounded-none border-2 border-input text-sm font-extrabold tracking-wide uppercase whitespace-nowrap transition-all select-none focus-visible:ring-2 focus-visible:outline-hidden active:translate-x-[3px] active:translate-y-[3px] active:!shadow-none disabled:pointer-events-none disabled:opacity-45 disabled:shadow-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-base font-medium whitespace-nowrap transition-colors select-none focus-visible:ring-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
         default:
-          'bg-primary text-primary-foreground shadow-[3px_3px_0_var(--fow-shadow)] hover:bg-[#b83f22]',
+          'bg-brand-purple text-primary-foreground hover:bg-primary/90 shadow-sm',
         destructive:
-          'bg-destructive text-white shadow-[3px_3px_0_var(--fow-shadow)] hover:bg-[#a6371c]',
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-xs',
         outline:
-          'bg-card text-foreground shadow-[3px_3px_0_var(--fow-shadow)] hover:bg-secondary',
+          'border-input bg-background hover:bg-accent hover:text-accent-foreground border text-slate-400 shadow-xs',
         secondary:
-          'bg-card text-foreground shadow-[3px_3px_0_var(--fow-shadow)] hover:bg-secondary',
-        accent:
-          'bg-fow-marigold text-fow-espresso shadow-[3px_3px_0_var(--fow-shadow)] hover:bg-[#d9921f]',
-        pine: 'bg-fow-pine text-fow-clay shadow-[3px_3px_0_var(--fow-shadow)] hover:bg-[#0d2c26]',
-        ghost:
-          'border-transparent shadow-none hover:bg-secondary active:translate-x-0 active:translate-y-0',
-        link: 'border-transparent tracking-normal text-primary normal-case shadow-none hover:underline active:translate-x-0 active:translate-y-0',
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-xs',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        link: 'text-primary hover:underline',
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-8 px-3 text-xs',
-        lg: 'h-11 px-8 text-base shadow-[5px_5px_0_var(--fow-shadow)]',
+        default: 'h-10 px-4 py-2 text-sm',
+        sm: 'h-8 rounded-md px-3 text-xs',
+        lg: 'h-10 rounded-md px-8',
         icon: 'h-9 w-9',
       },
     },
