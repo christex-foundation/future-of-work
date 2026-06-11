@@ -1,22 +1,23 @@
 import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { AnimateChangeInHeight } from '@/components/shared/AnimateChangeInHeight';
 import { EmptySection } from '@/components/shared/EmptySection';
 import { Separator } from '@/components/ui/separator';
 import { useBreakpoint } from '@/hooks/use-breakpoint';
-import { useScrollShadow } from '@/hooks/use-scroll-shadow';
-import { cn } from '@/utils/cn';
+import { useServerTimeSync } from '@/hooks/use-server-time';
+import { dayjs } from '@/utils/dayjs';
+import { formatNumberWithSuffix } from '@/utils/formatNumberWithSuffix';
 
 import { chaptersQuery } from '@/features/chapters/queries/chapters';
 import { HACKATHONS } from '@/features/hackathon/constants/hackathons';
 import { sponsorStageQuery } from '@/features/home/queries/sponsor-stage';
 import { SponsorStage } from '@/features/home/types/sponsor-stage';
 import { getRegionSlug } from '@/features/listings/utils/region';
-import { CATEGORY_NAV_ITEMS } from '@/features/navbar/constants';
+import BountyCard from '@/features/stfun/components/cards/BountyCard';
 
-const SKELETON_COUNT = 5;
+const SKELETON_COUNT = 6;
 const skeletonArray = Array.from({ length: SKELETON_COUNT }, (_, i) => i);
 
 import {
@@ -29,13 +30,74 @@ import {
 } from '../hooks/useListings';
 import { useListingsFilterCount } from '../hooks/useListingsFilterCount';
 import { useListingState } from '../hooks/useListingState';
-import type { ListingTabsProps } from '../types';
+import type { Listing, ListingTabsProps } from '../types';
 import { AddListingCard } from './AddListingCard';
-import { CategoryPill } from './CategoryPill';
-import { ListingCard, ListingCardSkeleton } from './ListingCard';
+import { ListingCardSkeleton } from './ListingCard';
 import { ListingFilters } from './ListingFilters';
 import { ListingTabs } from './ListingTabs';
 import { ViewAllButton } from './ViewAllButton';
+
+const TYPE_LABELS: Record<string, string> = {
+  bounty: 'Bounty',
+  project: 'Project',
+  grant: 'Quest',
+  hackathon: 'Hackathon',
+};
+
+const getInitials = (name?: string) =>
+  (name ?? '?')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase() || '?';
+
+const getPrize = (listing: Listing): { prize: string; currency: string } => {
+  const token = listing.token ?? '';
+  switch (listing.compensationType) {
+    case 'range':
+      if (listing.minRewardAsk && listing.maxRewardAsk) {
+        return {
+          prize: `${formatNumberWithSuffix(listing.minRewardAsk)}-${formatNumberWithSuffix(listing.maxRewardAsk)}`,
+          currency: token,
+        };
+      }
+      return { prize: formatNumberWithSuffix(listing.rewardAmount ?? 0), currency: token };
+    case 'variable':
+      if (listing.isWinnersAnnounced && listing.rewardAmount) {
+        return { prize: formatNumberWithSuffix(listing.rewardAmount), currency: token };
+      }
+      return { prize: 'Variable', currency: '' };
+    default:
+      return { prize: formatNumberWithSuffix(listing.rewardAmount ?? 0), currency: token };
+  }
+};
+
+// Maps a real listing into the props of the landing-page BountyCard design.
+const toBountyCardProps = (listing: Listing, now: number) => {
+  const daysLeft = Math.max(0, dayjs(listing.deadline).diff(dayjs(now), 'day'));
+  const tags = Array.from(
+    new Set((listing.skills ?? []).map((s) => s.skills)),
+  ).slice(0, 3);
+  const { prize, currency } = getPrize(listing);
+  return {
+    logo: getInitials(listing.sponsor?.name),
+    org: listing.sponsor?.name ?? 'Sponsor',
+    location:
+      listing.region && listing.region.toLowerCase() !== 'global'
+        ? listing.region
+        : 'Global',
+    title: listing.title ?? '',
+    type: TYPE_LABELS[listing.type ?? 'bounty'] ?? 'Bounty',
+    tags,
+    daysLeft,
+    submitted: listing._count?.Submission ?? 0,
+    currency,
+    prize,
+    href: `/earn/listing/${listing.slug}`,
+  };
+};
 
 export type EmptySectionFilters = {
   activeTab: ListingTab;
@@ -64,8 +126,8 @@ export const ListingsSection = ({
   defaultTab,
   customEmptySection,
 }: ListingsSectionProps) => {
-  const isMd = useBreakpoint('md');
   const isLg = useBreakpoint('lg');
+  const { serverTime } = useServerTimeSync();
   const isSponsorContext = type === 'sponsor';
   const isBookmarksContext = type === 'bookmarks';
   const isProContext = type === 'pro';
@@ -89,12 +151,6 @@ export const ListingsSection = ({
       sponsorStageData.stage === SponsorStage.NEXT_LISTING
     );
   }, [sponsorStageData, isLg, type]);
-
-  const {
-    ref: scrollContainerRef,
-    showLeftShadow,
-    showRightShadow,
-  } = useScrollShadow<HTMLDivElement>();
 
   const { data: categoryCounts, isLoading: countsLoading } =
     useListingsFilterCount({
@@ -141,7 +197,6 @@ export const ListingsSection = ({
     activeSortBy,
     activeOrder,
     handleTabChange,
-    handleCategoryChange,
     handleStatusChange,
     handleSortChange,
   } = useListingState({
@@ -183,17 +238,6 @@ export const ListingsSection = ({
     authenticated,
   });
 
-  const shouldShowForYou = useMemo(() => {
-    if (!categoryCounts) return false;
-    return (
-      (potentialSession || (ready && authenticated)) &&
-      supportsForYou &&
-      (categoryCounts['For You'] || 0) > 2
-    );
-  }, [categoryCounts, potentialSession, authenticated, ready, supportsForYou]);
-
-  const visibleCategoryNavItems = CATEGORY_NAV_ITEMS;
-
   const viewAllLink = () => {
     if (HACKATHONS.some((hackathon) => hackathon.slug === activeTab)) {
       return `/earn/hackathon/${activeTab}`;
@@ -220,17 +264,17 @@ export const ListingsSection = ({
     return `${basePath}?${params.toString()}`;
   };
 
-  const handleForYouClick = useCallback(() => {
-    handleCategoryChange('For You' as ListingCategory, 'foryou_navpill');
-  }, [handleCategoryChange]);
-
-  const handleAllCategoryClick = useCallback(() => {
-    handleCategoryChange('All' as ListingCategory, 'all_navpill');
-  }, [handleCategoryChange]);
+  const gridClass = 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3';
 
   const renderContent = () => {
     if (isLoading) {
-      return skeletonArray.map((index) => <ListingCardSkeleton key={index} />);
+      return (
+        <div className={gridClass}>
+          {skeletonArray.map((index) => (
+            <ListingCardSkeleton key={index} />
+          ))}
+        </div>
+      );
     }
 
     if (error) {
@@ -251,15 +295,17 @@ export const ListingsSection = ({
       return (
         <>
           {shouldShowAddListingCard && (
-            <AddListingCard
-              listingType={
-                activeTab === 'bounties'
-                  ? 'bounty'
-                  : activeTab === 'projects'
-                    ? 'project'
-                    : 'bounty'
-              }
-            />
+            <div className={gridClass}>
+              <AddListingCard
+                listingType={
+                  activeTab === 'bounties'
+                    ? 'bounty'
+                    : activeTab === 'projects'
+                      ? 'project'
+                      : 'bounty'
+                }
+              />
+            </div>
           )}
           {emptySectionContent ?? (
             <EmptySection
@@ -272,28 +318,33 @@ export const ListingsSection = ({
     }
 
     return (
-      <div className="space-y-1">
-        {shouldShowAddListingCard && (
-          <AddListingCard
-            listingType={
-              activeTab === 'bounties'
-                ? 'bounty'
-                : activeTab === 'projects'
-                  ? 'project'
-                  : 'bounty'
-            }
-          />
-        )}
-        {listings.map((listing) => (
-          <ListingCard key={listing.id} bounty={listing} />
-        ))}
+      <>
+        <div className={gridClass}>
+          {shouldShowAddListingCard && (
+            <AddListingCard
+              listingType={
+                activeTab === 'bounties'
+                  ? 'bounty'
+                  : activeTab === 'projects'
+                    ? 'project'
+                    : 'bounty'
+              }
+            />
+          )}
+          {listings.map((listing) => (
+            <BountyCard
+              key={listing.id}
+              {...toBountyCardProps(listing, serverTime())}
+            />
+          ))}
+        </div>
         {(type === 'home' || type === 'region' || type === 'skill') && (
           <ViewAllButton
             posthogEvent="viewall bottom_listings"
             href={viewAllLink()}
           />
         )}
-      </div>
+      </>
     );
   };
 
@@ -310,108 +361,58 @@ export const ListingsSection = ({
     return 'Browse Opportunities';
   };
 
+  // Talent-facing browse pages rely on the global nav for tabs/categories, so
+  // the in-page heading, tabs and filter bar are only shown where they are
+  // functionally required (sponsor, bookmarks and pro contexts).
+  const showHeader = isSponsorContext || isBookmarksContext || isProContext;
+
   return (
     <div className="mt-5 mb-10">
-      <div className="flex w-full items-center justify-between md:mb-1.5">
-        {isBookmarksContext ? (
-          <p className="mb-2 text-xl font-semibold text-slate-700">Bookmarks</p>
-        ) : (
-          <div className="flex items-center">
-            <p className="text-lg font-semibold text-slate-800">{getTitle()}</p>
+      {showHeader && (
+        <>
+          <div className="flex w-full items-center justify-between md:mb-1.5">
+            {isBookmarksContext ? (
+              <p className="mb-2 text-xl font-semibold text-slate-700">
+                Bookmarks
+              </p>
+            ) : (
+              <div className="flex items-center">
+                <p className="text-lg font-semibold text-slate-800">
+                  {getTitle()}
+                </p>
 
-            <div className="hidden items-center md:flex">
-              <Separator orientation="vertical" className="mx-3 h-6" />
-              <ListingTabs
-                isPro={isProContext}
-                type={type}
-                activeTab={activeTab}
-                handleTabChange={handleTabChange}
-              />
-            </div>
+                <div className="hidden items-center md:flex">
+                  <Separator orientation="vertical" className="mx-3 h-6" />
+                  <ListingTabs
+                    isPro={isProContext}
+                    type={type}
+                    activeTab={activeTab}
+                    handleTabChange={handleTabChange}
+                  />
+                </div>
+              </div>
+            )}
+
+            <ListingFilters
+              activeStatus={activeStatus}
+              activeSortBy={activeSortBy}
+              activeOrder={activeOrder}
+              onStatusChange={handleStatusChange}
+              onSortChange={handleSortChange}
+              showAllFilter
+              showStatusSort
+            />
           </div>
-        )}
-
-        <ListingFilters
-          activeStatus={activeStatus}
-          activeSortBy={activeSortBy}
-          activeOrder={activeOrder}
-          onStatusChange={handleStatusChange}
-          onSortChange={handleSortChange}
-          showAllFilter={isSponsorContext || isBookmarksContext || isProContext}
-          showStatusSort={
-            isSponsorContext || isBookmarksContext || isProContext
-          }
-        />
-      </div>
-      <div className="mt-2 mb-1 md:hidden">
-        <ListingTabs
-          type={type}
-          activeTab={activeTab}
-          handleTabChange={handleTabChange}
-        />
-      </div>
-
-      <div className="mb-2 h-px w-full bg-slate-200" />
-      {type !== 'category' && type !== 'category-all' && (
-        <div className="relative -mx-2 mb-1">
-          <div
-            className={cn(
-              'pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-8',
-              'bg-linear-to-r from-white/80 via-white/30 to-transparent',
-              'transition-opacity duration-300 ease-in-out',
-              showLeftShadow ? 'opacity-100' : 'opacity-0',
-            )}
-          />
-
-          <div
-            ref={scrollContainerRef}
-            className="hide-scrollbar flex gap-1.5 overflow-x-auto px-2 py-1"
-          >
-            {shouldShowForYou && (
-              <CategoryPill
-                key="foryou"
-                phEvent="foryou_navpill"
-                isActive={activeCategory === 'For You'}
-                onClick={handleForYouClick}
-              >
-                For You
-              </CategoryPill>
-            )}
-            <CategoryPill
-              key="all"
-              phEvent="all_navpill"
-              isActive={effectiveCategory === 'All'}
-              onClick={handleAllCategoryClick}
-              isPro={isProContext}
-            >
-              All
-            </CategoryPill>
-            {visibleCategoryNavItems?.map((navItem) => (
-              <CategoryPill
-                key={navItem.label}
-                phEvent={navItem.pillPH}
-                isActive={effectiveCategory === navItem.label}
-                onClick={() =>
-                  handleCategoryChange(
-                    navItem.label as ListingCategory,
-                    navItem.pillPH,
-                  )
-                }
-                isPro={isProContext}
-              >
-                {isMd ? navItem.label : navItem.mobileLabel || navItem.label}
-              </CategoryPill>
-            ))}
+          <div className="mt-2 mb-1 md:hidden">
+            <ListingTabs
+              type={type}
+              activeTab={activeTab}
+              handleTabChange={handleTabChange}
+            />
           </div>
-          <div
-            className={cn(
-              'pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-8',
-              'bg-linear-to-l from-white/80 via-white/30 to-transparent',
-              'transition-opacity duration-300 ease-in-out',
-              showRightShadow ? 'opacity-100' : 'opacity-0',
-            )}
-          />
-        </div>
+
+          <div className="mb-2 h-px w-full bg-slate-200" />
+        </>
       )}
 
       <AnimateChangeInHeight disableOnHeightZero>

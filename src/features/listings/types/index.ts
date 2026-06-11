@@ -55,6 +55,7 @@ export interface Listing {
   hackathonId?: string;
   _count?: {
     Comments?: number;
+    Submission?: number;
   };
   isFndnPaying?: boolean;
   usdValue?: number;

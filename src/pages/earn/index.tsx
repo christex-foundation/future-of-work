@@ -1,35 +1,28 @@
-import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
 import { type GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 import { JsonLd } from '@/components/shared/JsonLd';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { Default } from '@/layouts/Default';
 import { Meta } from '@/layouts/Meta';
 import { prisma } from '@/prisma';
 import { useUser } from '@/store/user';
-import { cn } from '@/utils/cn';
 import {
   generateOrganizationSchema,
   generateWebSiteSchema,
 } from '@/utils/json-ld';
 
-import { ProListingsAnnouncement } from '@/features/announcements/components/ProListingsAnnouncement';
-import { BannerCarousel } from '@/features/home/components/Banner';
-import { SponsorStageBanner } from '@/features/home/components/SponsorStage/SponsorStageBanner';
-import { UserStatsBanner } from '@/features/home/components/UserStatsBanner';
 import { userCountQuery } from '@/features/home/queries/user-count';
 import { ListingsSection } from '@/features/listings/components/ListingsSection';
 
-const GrantsSection = dynamic(() =>
-  import('@/features/grants/components/GrantsSection').then(
-    (mod) => mod.GrantsSection,
-  ),
-);
-
-const HomeSideBar = dynamic(() =>
-  import('@/features/home/components/SideBar').then((mod) => mod.HomeSideBar),
+const WelcomeModal = dynamic(
+  () =>
+    import('@/features/home/components/WelcomeModal').then(
+      (mod) => mod.WelcomeModal,
+    ),
+  { ssr: false },
 );
 
 const HomepagePop = dynamic(
@@ -49,86 +42,45 @@ interface HomePageProps {
 export default function HomePage({
   potentialSession,
   totalUsers,
-  totalSponsors,
 }: HomePageProps) {
-  const { authenticated } = usePrivy();
+  const router = useRouter();
+  const { user, isLoading: isUserLoading } = useUser();
   useQuery({ ...userCountQuery, initialData: { totalUsers } });
-  const { user } = useUser();
-  const isLg = useBreakpoint('lg');
 
   const organizationSchema = generateOrganizationSchema();
   const websiteSchema = generateWebSiteSchema();
 
+  // Sponsors have no use for the talent homepage — send them to their dashboard.
+  const isSponsor = !isUserLoading && !!user?.currentSponsorId;
+  useEffect(() => {
+    if (isSponsor) {
+      router.replace('/earn/dashboard/listings');
+    }
+  }, [isSponsor, router]);
+
+  if (isSponsor) return null;
+
   return (
     <Default
-      className="bg-white"
-      topBanner={
-        <div className="w-full border-b border-slate-200 bg-slate-50">
-          <div className="mx-auto flex max-w-7xl items-center justify-center px-4 py-2 text-center text-xs font-medium text-slate-700 sm:text-sm">
-            <a
-              href="/earn/agents"
-              className="text-brand-purple hover:text-brand-purple-dark font-mono text-[8px] tracking-[0.2em] uppercase no-underline sm:text-xs"
-            >
-              If you&apos;re an AI agent, browse agent-eligible listings to earn
-              your first crypto.
-            </a>
-          </div>
-        </div>
-      }
+      className="bg-[#6b5e50]"
       meta={
         <>
           <Meta
-            title="Superteam Earn | Crypto Bounties, Web3 Jobs & Solana Opportunities | Work to Earn in Crypto"
-            description="Find crypto bounties, web3 jobs, and Solana opportunities. Earn crypto by completing bounties in design, development, and content. The leading platform for remote crypto work."
-            canonical="https://superteam.fun/earn/"
+            title="Future of Work | Sierra Leone's Digital Marketplace for Work"
+            description="Find paid work, bounties, quests, and projects on Future of Work — Sierra Leone's digital marketplace connecting talent with real opportunities. Built by Christex Foundation."
+            canonical="https://future-of-work-lovat.vercel.app/earn/"
           />
           <JsonLd data={[organizationSchema, websiteSchema]} />
         </>
       }
     >
-      <div className={cn('mx-auto w-full px-2 lg:px-6')}>
+      <div className="mx-auto w-full px-2 py-6 lg:px-6 lg:py-10">
         <div className="mx-auto w-full max-w-7xl p-0">
-          <div className="flex items-start justify-between">
-            <div className="w-full lg:border-r lg:border-slate-100">
-              <div className="w-full lg:pr-6">
-                <div className="pt-3">
-                  {potentialSession || authenticated ? (
-                    <>
-                      {!!user?.currentSponsorId && isLg ? (
-                        <div className="mt-3">
-                          <SponsorStageBanner />
-                        </div>
-                      ) : (
-                        <UserStatsBanner />
-                      )}
-                    </>
-                  ) : (
-                    <BannerCarousel
-                      totalUsers={totalUsers}
-                      totalSponsors={totalSponsors}
-                    />
-                  )}
-                </div>
-                <div className="w-full">
-                  <ListingsSection
-                    type="home"
-                    potentialSession={potentialSession}
-                  />
-                  {/* <HackathonSection type="home" /> */}
-                  <GrantsSection type="home" />
-                </div>
-              </div>
-            </div>
-            {isLg && (
-              <div className="flex">
-                <HomeSideBar type="landing" />
-              </div>
-            )}
-          </div>
+          <ListingsSection type="home" potentialSession={potentialSession} />
         </div>
       </div>
+      <WelcomeModal />
       <HomepagePop />
-      <ProListingsAnnouncement />
     </Default>
   );
 }

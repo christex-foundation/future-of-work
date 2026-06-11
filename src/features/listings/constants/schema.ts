@@ -52,6 +52,8 @@ export const listingSelect = {
   type: true,
   title: true,
   token: true,
+  skills: true,
+  region: true,
   winnersAnnouncedAt: true,
   slug: true,
   isWinnersAnnounced: true,
