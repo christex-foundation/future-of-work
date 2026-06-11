@@ -78,26 +78,29 @@ export const Login = ({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent
-        className="z-200 w-[23rem] p-0 pt-2"
+        className="z-200 w-[23rem] gap-0 rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-0 pt-2 shadow-[6px_6px_0_#1d1815]"
         classNames={{
           overlay: hideOverlay ? 'hidden' : '',
         }}
         hideCloseIcon
       >
-        <div className="py-5">
+        <div className="px-6 pt-7 pb-5">
           {loginStep === 1 && (
             <ArrowLeft
-              className="absolute top-8 ml-5 h-5 w-5 cursor-pointer text-slate-500"
+              className="absolute top-8 left-5 h-5 w-5 cursor-pointer text-[#6b5e50] transition-colors hover:text-[#1d1815]"
               onClick={() => setLoginStep(0)}
             />
           )}
-          <p className="text-center text-lg font-semibold text-slate-900">
+          <p className="font-secondary text-center text-[11px] font-bold tracking-[0.22em] text-[#e6a12b] uppercase">
+            Join Future of Work
+          </p>
+          <p className="font-serif mt-2 text-center text-2xl leading-tight font-semibold text-[#1d1815]">
             You&apos;re one step away
           </p>
-          <p className="text-center text-sm text-slate-600">
+          <p className="font-primary mt-1 text-center text-sm text-[#6b5e50]">
             {isSponsor
-              ? 'from joining Superteam Earn'
-              : 'From earning in global standards'}
+              ? 'from joining Future of Work'
+              : 'from earning in global standards'}
           </p>
         </div>
         <SignIn

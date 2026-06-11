@@ -78,9 +78,9 @@ export const SignIn = ({
             }`}
           >
             {loginStep === 0 && (
-              <div className="flex flex-col items-center justify-center gap-2 text-center text-slate-500">
+              <div className="flex flex-col items-center justify-center gap-2 text-center">
                 <Button
-                  className="ph-no-capture h-12 w-full font-medium"
+                  className="ph-no-capture h-12 w-full rounded-none border-2 border-[#1d1815] bg-[#1d1815] font-medium text-[#FBF7EE] shadow-[3px_3px_0_#1d1815] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#1d1815] hover:shadow-[1px_1px_0_#1d1815]"
                   size="lg"
                   onClick={handleGmailSignIn}
                   disabled={isLoading}
@@ -93,16 +93,18 @@ export const SignIn = ({
                   )}
                 </Button>
 
-                <div className="my-3 flex w-full items-center gap-4">
-                  <div className="h-px flex-1 bg-slate-300" />
-                  <span className="text-sm text-slate-400">OR</span>
-                  <div className="h-px flex-1 bg-slate-300" />
+                <div className="my-3 flex w-full items-center gap-3">
+                  <div className="h-px flex-1 border-t border-dashed border-[#1d1815]/30" />
+                  <span className="font-secondary text-[11px] font-bold tracking-[0.18em] text-[#6b5e50] uppercase">
+                    Or
+                  </span>
+                  <div className="h-px flex-1 border-t border-dashed border-[#1d1815]/30" />
                 </div>
 
                 <Button
                   variant="outline"
                   size="lg"
-                  className="h-12 w-full bg-white font-medium text-slate-500 hover:bg-slate-100 active:bg-slate-200"
+                  className="h-12 w-full rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] font-medium text-[#1d1815] shadow-[3px_3px_0_#1d1815] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#f4eee3] hover:shadow-[1px_1px_0_#1d1815] active:bg-[#e7d3c1]"
                   onClick={() => setLoginStep(1)}
                 >
                   <MdOutlineEmail className="mr-2" />
@@ -125,11 +127,11 @@ export const SignIn = ({
           </div>
         </div>
 
-        <p className="mt-4 mb-2 text-center text-xs text-slate-500">
+        <p className="font-primary mt-4 mb-2 text-center text-xs text-[#6b5e50]">
           By using this website, you agree to our{' '}
           <Link
             href={TERMS_OF_USE}
-            className="font-semibold hover:underline"
+            className="font-semibold text-[#ce4a2b] hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -138,7 +140,7 @@ export const SignIn = ({
           and our{' '}
           <Link
             href={`https://superteam.fun/earn/privacy-policy.pdf`}
-            className="font-semibold hover:underline"
+            className="font-semibold text-[#ce4a2b] hover:underline"
             target="_blank"
           >
             Privacy Policy
@@ -147,27 +149,27 @@ export const SignIn = ({
         </p>
       </div>
 
-      <div className="rounded-b-md bg-slate-100 py-[7px]">
-        <p className="text-center text-xs text-slate-400">
+      <div className="border-t-2 border-[#1d1815] bg-[#f4eee3] py-2">
+        <p className="font-primary text-center text-xs text-[#6b5e50]">
           Need help? Reach out to us at{' '}
           {isMD ? (
             <CopyButton
-              text="support@superteam.fun"
+              text="eng@christex.foundation"
               contentProps={{
                 className: 'px-1.5 py-0.5 text-[0.6875rem]',
               }}
             >
-              <p className="underline hover:text-slate-500">
-                support@superteam.fun
+              <p className="font-medium text-[#1d1815] underline hover:text-[#ce4a2b]">
+                eng@christex.foundation
               </p>
             </CopyButton>
           ) : (
             <a
-              href="mailto:support@superteam.fun"
-              className="underline hover:text-slate-500"
+              href="mailto:eng@christex.foundation"
+              className="font-medium text-[#1d1815] underline hover:text-[#ce4a2b]"
               target="_blank"
             >
-              support@superteam.fun
+              eng@christex.foundation
             </a>
           )}
         </p>

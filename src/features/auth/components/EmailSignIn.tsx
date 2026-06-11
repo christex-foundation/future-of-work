@@ -110,7 +110,7 @@ export const EmailSignIn = ({ redirectTo, onSuccess }: LoginProps) => {
   if (showOTPInput) {
     return (
       <div className="mb-20 flex flex-col items-center gap-4">
-        <h1 className="text-center text-lg font-medium text-slate-500">
+        <h1 className="font-secondary text-center text-[11px] font-bold tracking-[0.18em] text-[#6b5e50] uppercase">
           Enter OTP
         </h1>
         <InputOTP
@@ -119,20 +119,39 @@ export const EmailSignIn = ({ redirectTo, onSuccess }: LoginProps) => {
           autoFocus
           inputMode="numeric"
         >
-          <InputOTPGroup>
-            <InputOTPSlot index={0} className="border-gray-400" />
-            <InputOTPSlot index={1} className="border-gray-400" />
-            <InputOTPSlot index={2} className="border-gray-400" />
-            <InputOTPSlot index={3} className="border-gray-400" />
-            <InputOTPSlot index={4} className="border-gray-400" />
-            <InputOTPSlot index={5} className="border-gray-400" />
+          <InputOTPGroup className="gap-2">
+            <InputOTPSlot
+              index={0}
+              className="font-serif h-11 w-11 rounded-none border-2 border-[#1d1815] text-lg text-[#1d1815] first:rounded-none last:rounded-none"
+            />
+            <InputOTPSlot
+              index={1}
+              className="font-serif h-11 w-11 rounded-none border-2 border-[#1d1815] text-lg text-[#1d1815] first:rounded-none last:rounded-none"
+            />
+            <InputOTPSlot
+              index={2}
+              className="font-serif h-11 w-11 rounded-none border-2 border-[#1d1815] text-lg text-[#1d1815] first:rounded-none last:rounded-none"
+            />
+            <InputOTPSlot
+              index={3}
+              className="font-serif h-11 w-11 rounded-none border-2 border-[#1d1815] text-lg text-[#1d1815] first:rounded-none last:rounded-none"
+            />
+            <InputOTPSlot
+              index={4}
+              className="font-serif h-11 w-11 rounded-none border-2 border-[#1d1815] text-lg text-[#1d1815] first:rounded-none last:rounded-none"
+            />
+            <InputOTPSlot
+              index={5}
+              className="font-serif h-11 w-11 rounded-none border-2 border-[#1d1815] text-lg text-[#1d1815] first:rounded-none last:rounded-none"
+            />
           </InputOTPGroup>
         </InputOTP>
-        <p className="text-center text-xs text-slate-400">
-          We just sent an OTP on your email <b>{email}</b>
+        <p className="font-primary text-center text-xs text-[#6b5e50]">
+          We just sent an OTP on your email{' '}
+          <b className="text-[#1d1815]">{email}</b>
         </p>
         {emailError && (
-          <p className="mt-2 text-center text-xs leading-[0.9rem] text-red-500">
+          <p className="font-primary mt-2 text-center text-xs leading-[0.9rem] text-[#ce4a2b]">
             {emailError}
           </p>
         )}
@@ -142,29 +161,31 @@ export const EmailSignIn = ({ redirectTo, onSuccess }: LoginProps) => {
 
   return (
     <>
-      <div
-        className={cn(
-          'relative',
-          isError && 'has-[input:invalid]:ring-red-500',
-        )}
-      >
+      <div className={cn('relative')}>
         <Input
-          className="h-12 border-slate-300 text-lg"
+          className={cn(
+            'font-primary h-12 rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] text-lg text-[#1d1815] placeholder:text-[#6b5e50]/60 focus-visible:ring-0 focus-visible:ring-offset-0',
+            isError && 'border-[#ce4a2b]',
+          )}
           onChange={handleEmailChange}
           onKeyDown={handleKeyDown}
-          placeholder="Enter Your Email Address"
+          placeholder="Enter your email address"
           value={email}
         />
       </div>
       <Button
-        className="ph-no-capture mt-3 h-12 w-full font-medium"
+        className="ph-no-capture mt-3 h-12 w-full rounded-none border-2 border-[#1d1815] bg-[#e6a12b] font-medium text-[#1d1815] shadow-[3px_3px_0_#1d1815] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]"
         disabled={isLoading}
         onClick={handleEmailSignIn}
       >
-        {isLoading ? <span>Loading...</span> : <span>Continue with Email</span>}
+        {isLoading ? (
+          <span>Loading...</span>
+        ) : (
+          <span>Continue with Email →</span>
+        )}
       </Button>
       {emailError && (
-        <p className="mt-2 text-center text-xs leading-[0.9rem] text-red-500">
+        <p className="font-primary mt-2 text-center text-xs leading-[0.9rem] text-[#ce4a2b]">
           {emailError}
         </p>
       )}
