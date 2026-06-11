@@ -17,16 +17,23 @@ import {
 import { generateTelegramBotUrl } from '@/constants/Telegram';
 import { useDisclosure } from '@/hooks/use-disclosure';
 import { useLogout, useUser } from '@/store/user';
+import { cn } from '@/utils/cn';
 
 import { EarnAvatar } from '@/features/talent/components/EarnAvatar';
 import { EmailSettingsModal } from '@/features/talent/components/EmailSettingsModal';
 
-export function UserMenu() {
+export function UserMenu({
+  variant = 'navbar',
+}: {
+  variant?: 'navbar' | 'rail';
+}) {
   const router = useRouter();
 
   const { user, isLoading } = useUser();
   const logout = useLogout();
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const isRail = variant === 'rail';
 
   // Check if user has clicked on telegram alerts before
   const hasSeenTelegramAlerts = () => {
@@ -93,28 +100,52 @@ export function UserMenu() {
       <DropdownMenu>
         <DropdownMenuTrigger
           id="user menu"
-          className="ph-no-capture rounded-lg border border-white px-2 py-1 transition-all duration-100 hover:bg-slate-100 focus:outline-hidden active:border-slate-300 active:bg-slate-200 data-[state=open]:bg-slate-100"
+          className={cn(
+            'ph-no-capture focus:outline-hidden',
+            isRail
+              ? 'relative grid size-[42px] place-items-center overflow-hidden rounded-[13px] border-2 border-[rgba(231,211,193,0.2)] transition-transform duration-200 hover:scale-105'
+              : 'rounded-lg border border-white px-2 py-1 transition-all duration-100 hover:bg-slate-100 active:border-slate-300 active:bg-slate-200 data-[state=open]:bg-slate-100',
+          )}
+          aria-label={isRail ? 'Your profile' : undefined}
           onClick={() => {
             posthog.capture('clicked_user menu');
           }}
         >
-          <div className="flex items-center gap-1.5">
-            <EarnAvatar className="size-7" id={user?.id} avatar={user?.photo} />
-            <div className="flex items-center">
-              <p className="text-sm font-medium tracking-tight text-slate-600">
-                {user?.firstName ?? user?.email ?? ''}
-              </p>
+          {isRail ? (
+            <>
+              <EarnAvatar
+                className="size-full rounded-[11px]"
+                id={user?.id}
+                avatar={user?.photo}
+              />
+              {!hasSeenTelegramAlerts() && (
+                <span className="absolute top-1 right-1 block size-2 rounded-full bg-sky-400 ring-2 ring-[#1D1815]" />
+              )}
+            </>
+          ) : (
+            <div className="flex items-center gap-1.5">
+              <EarnAvatar
+                className="size-7"
+                id={user?.id}
+                avatar={user?.photo}
+              />
+              <div className="flex items-center">
+                <p className="text-sm font-medium tracking-tight text-slate-600">
+                  {user?.firstName ?? user?.email ?? ''}
+                </p>
+              </div>
+              {!hasSeenTelegramAlerts() && (
+                <div className="block h-1.5 w-1.5 rounded-full bg-sky-400" />
+              )}
+              <ChevronDown className="block size-4 text-slate-400" />
             </div>
-            {!hasSeenTelegramAlerts() && (
-              <div className="block h-1.5 w-1.5 rounded-full bg-sky-400" />
-            )}
-            <ChevronDown className="block size-4 text-slate-400" />
-          </div>
+          )}
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
           className="ph-no-capture px-0 font-medium"
-          align="start"
+          align={isRail ? 'end' : 'start'}
+          side={isRail ? 'right' : 'bottom'}
         >
           {user?.isTalentFilled && (
             <>

@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 
 import { SupportFormDialog } from '@/components/shared/SupportFormDialog';
 import { Button } from '@/components/ui/button';
-import { ExternalImage } from '@/components/ui/cloudinary-image';
 import {
   Collapsible,
   CollapsibleContent,
@@ -20,10 +19,8 @@ import { useDisclosure } from '@/hooks/use-disclosure';
 import { useLogout, useUser } from '@/store/user';
 import { cn } from '@/utils/cn';
 
-import { HACKATHONS } from '@/features/hackathon/constants/hackathons';
 import { userStatsQuery } from '@/features/home/queries/user-stats';
 import { isEligiblePeopleType } from '@/features/membership/utils/peopleEligibility';
-import { ProBadge } from '@/features/pro/components/ProBadge';
 import { ProIntro } from '@/features/pro/components/ProIntro';
 import { EarnAvatar } from '@/features/talent/components/EarnAvatar';
 import { EmailSettingsModal } from '@/features/talent/components/EmailSettingsModal';
@@ -164,23 +161,6 @@ export const MobileDrawer = ({
               Complete your Profile
             </Button>
           )}
-          {HACKATHONS?.map((hackathon) => (
-            <NavItem
-              key={hackathon.slug}
-              label={
-                <div className="relateive flex -translate-x-1 items-center gap-2">
-                  <ExternalImage
-                    src={hackathon.logo}
-                    alt={hackathon.label}
-                    className="h-5 p-1"
-                  />
-                </div>
-              }
-              onClick={() => {
-                router.push(`/earn/hackathon/${hackathon.slug}`);
-              }}
-            />
-          ))}
           <div className="ph-no-capture flex flex-col">
             {isLoggedIn && user?.isTalentFilled && (
               <>
@@ -238,20 +218,6 @@ export const MobileDrawer = ({
                       />
                     );
                   })}
-                  <NavItem
-                    className="ph-no-capture"
-                    onClick={() => {
-                      posthog.capture('pro_navbar');
-                      router.push('/earn/pro');
-                    }}
-                    label={
-                      <ProBadge
-                        containerClassName="gap-1 mt-px"
-                        iconClassName="size-4 text-zinc-600"
-                        textClassName="text-xs font-medium text-slate-600"
-                      />
-                    }
-                  />
                 </div>
               </CollapsibleContent>
             </Collapsible>

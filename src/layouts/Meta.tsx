@@ -18,7 +18,6 @@ type IMetaProps = {
 const Meta = (props: IMetaProps) => {
   const router = useRouter();
   const isSTRoute = ST_ROUTES.includes(router.pathname);
-  const isEarnRoute = router.pathname.startsWith('/earn');
   const isDashboardRoute = router.pathname.startsWith('/earn/dashboard');
   const shouldNoIndex = props.noIndex || isDashboardRoute;
   const config = isSTRoute ? STConfig : AppConfig;
@@ -41,43 +40,12 @@ const Meta = (props: IMetaProps) => {
         content="width=device-width, initial-scale=1, maximum-scale=1"
         key="viewport"
       />
-      {isEarnRoute ? (
-        <>
-          <link
-            rel="apple-touch-icon"
-            href={`${router.basePath}/apple-touch-icon.png`}
-            key="apple"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href={`${router.basePath}/favicon-32x32.png`}
-            key="icon32"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href={`${router.basePath}/favicon-16x16.png`}
-            key="icon16"
-          />
-          <link
-            rel="icon"
-            href={`${router.basePath}/favicon.ico`}
-            key="favicon"
-          />
-        </>
-      ) : (
-        <>
-          <link
-            rel="icon"
-            type="image/svg+xml"
-            href={`${router.basePath}/fow-favicon.svg`}
-            key="icon-png"
-          />
-        </>
-      )}
+      <link
+        rel="icon"
+        type="image/svg+xml"
+        href={`${router.basePath}/fow-favicon.svg`}
+        key="icon-svg"
+      />
       <meta name="description" content={props.description} key="description" />
       {shouldNoIndex && (
         <>
@@ -88,7 +56,7 @@ const Meta = (props: IMetaProps) => {
       {canonicalForIndexable && (
         <link rel="canonical" href={canonicalForIndexable} key="canonical" />
       )}
-      <meta name="theme-color" content="#5522e0" key="theme-color" />
+      <meta name="theme-color" content="#CE4A2B" key="theme-color" />
       <meta property="og:title" content={props.title} key="og:title" />
       <meta
         property="og:description"

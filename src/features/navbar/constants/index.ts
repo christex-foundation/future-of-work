@@ -18,7 +18,7 @@ export const LISTING_NAV_ITEMS: Array<NavItem> = [
     href: '/earn/all?tab=projects',
   },
   {
-    label: 'Grants',
+    label: 'Quests',
     posthog: 'grants_navbar',
     href: '/earn/grants',
   },

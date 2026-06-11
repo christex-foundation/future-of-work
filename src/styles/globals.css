@@ -475,21 +475,6 @@ pre hr {
   }
 }
 
-.sponsor-dashboard-sidebar {
-  transition: width 0.3s ease-in-out;
-  overflow: hidden;
-}
-
-.sponsor-dashboard-sidebar:not(.expanded) .nav-item-text {
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.sponsor-dashboard-sidebar.expanded .nav-item-text {
-  opacity: 1;
-  transition: opacity 0.2s ease-in-out 0.1s;
-}
-
 h1.tiptap-heading {
   @apply mt-8 mb-6 text-4xl font-bold;
 }

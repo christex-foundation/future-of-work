@@ -74,8 +74,8 @@ export default function HomePage({
         </>
       }
     >
-      <div className="mx-auto w-full px-2 py-6 lg:px-6 lg:py-10">
-        <div className="mx-auto w-full max-w-7xl p-0">
+      <div className="mx-auto w-full px-4 py-6 lg:px-12 lg:py-10">
+        <div className="mx-auto w-full max-w-[88rem] p-0">
           <ListingsSection type="home" potentialSession={potentialSession} />
         </div>
       </div>

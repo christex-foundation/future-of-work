@@ -73,9 +73,9 @@ export const MobileNavbar = ({
               }}
             >
               <LocalImage
-                className="h-[1.3rem] cursor-pointer object-contain"
-                alt="Superteam Earn"
-                src="/assets/logo.svg"
+                className="h-[1.5rem] cursor-pointer object-contain"
+                alt="Future of Work"
+                src="/fow-favicon.svg"
                 loading="eager"
               />
             </Link>

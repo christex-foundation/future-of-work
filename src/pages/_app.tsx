@@ -113,7 +113,7 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <TokenListProvider>
-      <div className={fontVariables}>
+      <div className={`${fontVariables} ${stFontVariables}`}>
         <Providers>
           <TopLoader />
           <Component {...pageProps} key={router.asPath} />

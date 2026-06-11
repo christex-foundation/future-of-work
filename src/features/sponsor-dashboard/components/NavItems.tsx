@@ -9,7 +9,6 @@ interface NavItemProps {
   icon: IconType;
   link?: string;
   children: ReactNode;
-  isExpanded: boolean;
   className?: string;
   onClick?: () => void;
 }
@@ -18,7 +17,6 @@ export const NavItem = ({
   icon: Icon,
   link,
   children,
-  isExpanded,
   className,
   onClick,
 }: NavItemProps) => {
@@ -35,39 +33,27 @@ export const NavItem = ({
       href={resolvedLink || '#'}
       target={isExternalLink ? '_blank' : undefined}
       rel={isExternalLink ? 'noopener noreferrer' : undefined}
-      className="no-underline focus:outline-hidden"
+      onClick={onClick}
+      aria-label={typeof children === 'string' ? children : undefined}
+      className={cn(
+        'group relative grid size-[46px] place-items-center rounded-[14px] transition-all duration-200',
+        isActiveLink
+          ? 'bg-[#E6A12B] text-[#1D1815]'
+          : 'text-[#E7D3C1]/55 hover:bg-[#E7D3C1]/[0.07] hover:text-[#E7D3C1]',
+        className,
+      )}
     >
-      <div
-        className={cn(
-          'flex cursor-pointer items-center px-6 py-3 transition-colors',
-          isExpanded ? 'mr-0' : 'mr-4',
-          isActiveLink
-            ? 'bg-indigo-50 text-indigo-800'
-            : 'bg-transparent text-slate-500',
-          'hover:bg-blue-50 hover:text-indigo-700',
-          className,
-        )}
-        onClick={onClick}
-      >
-        {Icon && (
-          <Icon
-            className={cn(
-              'size-4 transition-all duration-300 ease-in-out hover:text-indigo-700',
-              isExpanded ? 'mr-4' : 'mr-0',
-            )}
-          />
-        )}
-        <span
-          className={cn(
-            'text-sm font-medium transition-opacity duration-200 ease-in-out',
-            isExpanded
-              ? 'static opacity-100'
-              : 'absolute -ml-[9999px] opacity-0',
-          )}
-        >
-          {children}
-        </span>
-      </div>
+      {/* active indicator bar */}
+      {isActiveLink && (
+        <span className="absolute top-1/2 -left-[19px] h-6 w-1 -translate-y-1/2 rounded-r-[4px] bg-[#E6A12B]" />
+      )}
+
+      {Icon && <Icon className="size-5" />}
+
+      {/* slide-out label */}
+      <span className="font-secondary pointer-events-none absolute left-full z-40 ml-3 origin-left scale-90 rounded-lg border border-[rgba(231,211,193,0.12)] bg-[#1D1815] px-2.5 py-1.5 text-[11px] font-semibold tracking-[0.04em] whitespace-nowrap text-[#FBF7EE] uppercase opacity-0 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100">
+        {children}
+      </span>
     </Link>
   );
 };

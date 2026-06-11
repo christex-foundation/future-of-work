@@ -1,266 +1,102 @@
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
-import MdOutlineMail from '@/components/icons/MdOutlineMail';
-import { RegionCombobox } from '@/components/shared/RegionCombobox';
-import { SkillsCombobox } from '@/components/shared/SkillsCombobox';
-import { SupportFormDialog } from '@/components/shared/SupportFormDialog';
-import { LocalImage } from '@/components/ui/local-image';
-import { skillSubSkillMap } from '@/interface/skills';
-import { cn } from '@/utils/cn';
+import NamedLogo from '@/features/stfun/components/common/NamedLogo';
 
-import { chaptersQuery } from '@/features/chapters/queries/chapters';
-import {
-  findCountryBySlug,
-  getRegionSlug,
-} from '@/features/listings/utils/region';
-import { GitHub, Twitter } from '@/features/social/components/SocialIcons';
+const PLATFORM_LINKS = [
+  { label: 'Find Work', href: '/earn', external: false },
+  { label: 'Bounties', href: '/earn/bounties', external: false },
+  { label: 'Projects', href: '/earn/projects', external: false },
+  { label: 'Quests', href: '/earn/grants', external: false },
+];
 
-const FooterColumn = ({
-  title,
-  links,
-}: {
-  title: string;
-  links: { href?: string; text: string; supportForm?: boolean }[];
-}) => (
-  <div className="flex flex-col items-start">
-    <p className="mb-2 text-xs font-medium text-slate-400 uppercase">{title}</p>
-    <div className="flex flex-col space-y-2">
-      {links
-        .filter((s) => !!s.href)
-        .map((link) => (
-          <Link
-            key={link.text}
-            href={link.href || ''}
-            className="text-sm text-slate-500 hover:text-slate-600"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {link.text}
-          </Link>
-        ))}
-      {links
-        .filter((s) => !!s.supportForm)
-        .map((link) => (
-          <SupportFormDialog key={link.text}>
-            <button className="w-fit text-sm text-slate-500 hover:text-slate-600">
-              {link.text}
-            </button>
-          </SupportFormDialog>
-        ))}
+const CONNECT_LINKS = [
+  {
+    label: 'Get in Touch',
+    href: 'mailto:eng@christex.foundation',
+    external: true,
+  },
+  { label: 'Christex Foundation', href: 'https://christex.foundation', external: true },
+];
+
+type FooterLink = { label: string; href: string; external: boolean };
+
+function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
+  return (
+    <div className="flex flex-col items-start gap-4">
+      <p className="font-secondary text-[11px] font-bold tracking-[0.22em] text-[#e6a12b] uppercase">
+        {title}
+      </p>
+      {links.map((l) => (
+        <Link
+          key={l.label}
+          href={l.href}
+          {...(l.external
+            ? { target: '_blank', rel: 'noopener noreferrer' }
+            : {})}
+          className="font-secondary text-[15px] font-medium text-[#f4eee3]/80 transition-colors hover:text-[#f4eee3]"
+        >
+          {l.label}
+        </Link>
+      ))}
     </div>
-  </div>
-);
+  );
+}
 
 export const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  const router = useRouter();
-  const { data: chapters = [] } = useQuery(chaptersQuery);
-
-  const [selectedRegion, setSelectedRegion] = useState<string>('Global');
-  const [selectedSkill, setSelectedSkill] = useState<string>('All');
-
-  useEffect((): void => {
-    const path = router.asPath.toLowerCase();
-
-    // Check if it's a Superteam region page
-    const matchedSuperteam = chapters.find((team) =>
-      path.includes(`/regions/${team.slug?.toLowerCase()}`),
-    );
-
-    if (matchedSuperteam) {
-      setSelectedRegion(matchedSuperteam.region);
-    } else if (path.includes('/regions/')) {
-      // Extract the slug from the path and try to match it to a country/region
-      const slugMatch = path.match(/\/regions\/([^/?]+)/);
-      if (slugMatch) {
-        const slug = slugMatch[1];
-        const country = findCountryBySlug(slug || '', chapters);
-        if (country) {
-          setSelectedRegion(country.name);
-        } else {
-          setSelectedRegion('Global');
-        }
-      }
-    } else {
-      setSelectedRegion('Global');
-    }
-
-    // Check if it's a skill page
-    if (path.includes('/skill/')) {
-      const skillMatch = path.match(/\/skill\/([^/?]+)/);
-      if (skillMatch && skillMatch[1]) {
-        const slug = skillMatch[1].replace(/-/g, ' ');
-
-        // Check if it matches a parent skill first
-        const parentSkill = Object.keys(skillSubSkillMap).find(
-          (skill) => skill.toLowerCase() === slug.toLowerCase(),
-        );
-
-        if (parentSkill) {
-          setSelectedSkill(parentSkill);
-        } else {
-          // Check if it matches any subskill
-          let foundSkill = false;
-          for (const subskills of Object.values(skillSubSkillMap)) {
-            const subskill = subskills.find(
-              (s) => s.value.toLowerCase() === slug.toLowerCase(),
-            );
-            if (subskill) {
-              setSelectedSkill(subskill.value);
-              foundSkill = true;
-              break;
-            }
-          }
-
-          if (!foundSkill) {
-            setSelectedSkill('All');
-          }
-        }
-      }
-    } else {
-      setSelectedSkill('All');
-    }
-  }, [router.asPath, chapters]);
-
-  const handleRegionChange = (value: string): void => {
-    if (value === 'Global') {
-      setSelectedRegion('Global');
-      router.push('/earn');
-      return;
-    }
-
-    setSelectedRegion(value);
-
-    router.push(`/earn/regions/${getRegionSlug(value, chapters)}`);
-  };
-
-  const handleSkillChange = (value: string): void => {
-    if (value === 'All') {
-      setSelectedSkill('All');
-      router.push('/earn');
-      return;
-    }
-
-    setSelectedSkill(value);
-
-    // Generate slug from skill name (e.g., 'Frontend' -> 'frontend')
-    const slug = value.toLowerCase().replace(/\s+/g, '-');
-    router.push(`/earn/skill/${slug}`);
-  };
-
-  const opportunities = [
-    { text: 'Bounties', href: '/earn/bounties' },
-    { text: 'Projects', href: '/earn/projects' },
-    { text: 'Jobs', href: '/earn/jobs' },
-    { text: 'Grants', href: '/earn/grants' },
-  ];
-
-  const categories = [
-    { text: 'Content', href: '/earn/category/content' },
-    { text: 'Design', href: '/earn/category/design' },
-    { text: 'Development', href: '/earn/category/development' },
-    { text: 'Others', href: '/earn/category/other' },
-  ];
-
-  const about = [
-    {
-      text: 'FAQ',
-      href: 'https://superteamdao.notion.site/Superteam-Earn-FAQ-aedaa039b25741b1861167d68aa880b1?pvs=4',
-    },
-    { text: 'Terms', href: '/earn/terms-of-use.pdf' },
-    { text: 'Privacy Policy', href: '/earn/privacy-policy.pdf' },
-    {
-      text: 'Changelog',
-      href: 'https://superteamdao.notion.site/Superteam-Earn-Changelog-faf0c85972a742699ecc07a52b569827',
-    },
-    { text: 'Contact Us', supportForm: true },
-  ];
-
   return (
-    <footer className="border-t border-slate-200 bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="flex flex-col items-start justify-between md:flex-row">
-          <div className="mb-8 flex max-w-[540px] flex-col md:mb-0">
-            <div className="mb-4 flex items-center">
-              <LocalImage
-                className="mr-4 h-6"
-                alt="Superteam Earn"
-                src="/assets/logo.svg"
-              />
-            </div>
-            <p className="mb-6 text-sm text-slate-500">
-              Discover high paying crypto bounties, projects and grants from the
-              best Solana companies in one place and apply to them using a
-              single profile.
-            </p>
-            <div className="flex items-center gap-4">
-              <GitHub
-                link="https://github.com/SuperteamDAO/earn"
-                className="text-slate-500"
-              />
-              <Twitter
-                link="https://twitter.com/superteamearn"
-                className="text-slate-500"
-              />
-              <MdOutlineMail
-                className="'transition-opacity size-5 cursor-pointer text-slate-500 opacity-100 grayscale duration-200 hover:opacity-80"
-                onClick={() => {
-                  window.open('mailto:support@superteam.fun', '_blank');
-                }}
-              />
-            </div>
+    <footer className="relative z-10 mt-12 overflow-hidden rounded-t-[48px] bg-[#1d1815]">
+      {/* large faded FOW mark watermark */}
+      <div
+        className="pointer-events-none absolute -bottom-16 left-2 z-0 select-none md:left-12"
+        aria-hidden="true"
+      >
+        <span className="flex items-end font-secondary text-[200px] leading-[0.8] font-semibold tracking-[-0.04em] text-[#f4eee3] opacity-[0.07] md:text-[300px]">
+          f
+          <svg
+            className="mb-[30px] ml-1 h-[104px] w-[104px] md:mb-[44px] md:h-[156px] md:w-[156px]"
+            viewBox="0 0 74 74"
+          >
+            <defs>
+              <linearGradient id="footerSunMark" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stopColor="#A6371C" />
+                <stop offset=".5" stopColor="#CE4A2B" />
+                <stop offset="1" stopColor="#E6A12B" />
+              </linearGradient>
+            </defs>
+            <circle cx="37" cy="40" r="22" fill="url(#footerSunMark)" />
+            <rect x="8" y="40" width="58" height="4" fill="#F4EEE3" />
+            <g stroke="#E6A12B" strokeWidth="3.4" strokeLinecap="round">
+              <line x1="37" y1="6" x2="37" y2="13" />
+              <line x1="14" y1="15" x2="19" y2="20" />
+              <line x1="60" y1="15" x2="55" y2="20" />
+            </g>
+          </svg>
+        </span>
+      </div>
 
-            <div>
-              <img
-                alt="Powered by Solana"
-                src="/assets/solana-powered.svg"
-                className="mt-6 w-36"
-              />
-            </div>
-          </div>
-          <div className="flex w-full flex-wrap justify-start gap-6 md:w-auto md:justify-end md:gap-16">
-            <FooterColumn title="Opportunities" links={opportunities} />
-            <FooterColumn title="Categories" links={categories} />
-            <FooterColumn title="About" links={about} />
-          </div>
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-12 px-8 pt-16 pb-12 md:flex-row md:justify-between md:px-12 lg:pt-20">
+        {/* brand */}
+        <div className="flex max-w-[340px] flex-col gap-5">
+          <NamedLogo />
+          <p className="font-primary text-[15px] leading-[1.55] text-[#e7d3c1]/75">
+            Sierra Leone&apos;s digital marketplace for work — confident, human,
+            and built to be trusted.
+          </p>
+        </div>
+
+        {/* links */}
+        <div className="flex gap-14 sm:gap-20">
+          <FooterColumn title="Platform" links={PLATFORM_LINKS} />
+          <FooterColumn title="Connect" links={CONNECT_LINKS} />
         </div>
       </div>
-      <div className="bg-gray-100 py-4 pb-20 md:pb-4">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
-            <p className="mb-4 text-sm text-slate-500 md:mb-0">
-              © {currentYear} Superteam. All rights reserved.
-            </p>
-            <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-6">
-              <div className="flex items-center">
-                <p className="mr-2 text-sm font-medium text-slate-500">SKILL</p>
-                <SkillsCombobox
-                  placeholder="Skill"
-                  value={selectedSkill}
-                  onChange={handleSkillChange}
-                  all
-                  className={cn(selectedSkill !== 'All' && 'w-fit')}
-                />
-              </div>
-              <div className="flex items-center">
-                <p className="mr-2 text-sm font-medium text-slate-500">
-                  REGION
-                </p>
-                <RegionCombobox
-                  placeholder="Region"
-                  value={selectedRegion}
-                  onChange={handleRegionChange}
-                  global
-                  superteams
-                  regions
-                  className={cn(selectedRegion !== 'Global' && 'w-fit')}
-                />
-              </div>
-            </div>
-          </div>
+
+      {/* bottom bar */}
+      <div className="relative z-10 border-t border-[#f4eee3]/10">
+        <div className="mx-auto flex max-w-7xl px-8 pt-6 pb-24 md:px-12 md:pb-6">
+          <p className="font-primary text-[13px] text-[#e7d3c1]/55">
+            © 2026 Future of Work · Built by Christex Foundation
+          </p>
         </div>
       </div>
     </footer>
