@@ -43,9 +43,16 @@ import { prisma } from '@/prisma';
 import { useUser } from '@/store/user';
 import { cn } from '@/utils/cn';
 
+import {
+  GitHub,
+  Linkedin,
+  Twitter,
+  Website,
+} from '@/features/social/components/SocialIcons';
 import { SocialInputAll } from '@/features/social/components/SocialInput';
 import { extractSocialUsername } from '@/features/social/utils/extractUsername';
 import { AddProject } from '@/features/talent/components/AddProject';
+import { EarnAvatar } from '@/features/talent/components/EarnAvatar';
 import { UpdateLocationConfirmModal } from '@/features/talent/components/UpdateLocationConfirmModal';
 import {
   CommunityList,
@@ -62,6 +69,161 @@ const interestDropdown: Option[] = IndustryList.map((i) => ({
   value: i,
   label: i,
 }));
+
+function SectionHeading({
+  num,
+  children,
+  className,
+}: {
+  num?: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('mb-5 flex items-center gap-2.5', className)}>
+      {num && (
+        <span className="font-secondary text-[11px] font-bold text-[#ce4a2b]">
+          {num}
+        </span>
+      )}
+      <span className="inline-block size-[7px] shrink-0 bg-[#ce4a2b]" />
+      <h2 className="font-secondary text-[13px] font-bold tracking-[0.18em] text-[#1d1815] uppercase">
+        {children}
+      </h2>
+      <span className="h-px flex-1 bg-[#1d1815]/15" />
+    </div>
+  );
+}
+
+const workPreferenceLabel = (wp?: string): string | null => {
+  if (!wp || wp === 'Not looking for Work') return null;
+  if (/fulltime/i.test(wp)) return 'Fulltime Roles';
+  if (/freelance/i.test(wp)) return 'Freelance Opportunities';
+  if (/internship/i.test(wp)) return 'Internship Opportunities';
+  return wp;
+};
+
+function LivePreview({
+  values,
+  userId,
+  photo,
+}: {
+  values: Partial<ProfileFormData>;
+  userId?: string;
+  photo?: string;
+}) {
+  const fullName = `${values.firstName ?? ''} ${values.lastName ?? ''}`.trim();
+  const wpText = workPreferenceLabel(values.workPrefernce as string | undefined);
+  const skills: any[] = Array.isArray(values.skills) ? values.skills : [];
+  const socials = [
+    { Icon: Twitter, link: values.twitter },
+    { Icon: GitHub, link: values.github },
+    { Icon: Linkedin, link: values.linkedin },
+    { Icon: Website, link: values.website },
+  ];
+
+  return (
+    <div>
+      <p className="font-secondary mb-3 flex items-center gap-2 text-[10px] font-bold tracking-[0.18em] text-[#e7d3c1] uppercase">
+        <span className="inline-block size-[7px] bg-[#e6a12b]" />
+        Live preview — what they see
+      </p>
+      <div className="overflow-hidden rounded-xl border-2 border-[#1d1815] bg-[#f4eee3] shadow-[6px_6px_0_#1d1815]">
+        <div className="flex items-center justify-between bg-[#1d1815] px-4 py-2">
+          <span className="font-secondary text-[9px] font-bold tracking-[0.18em] text-[#c9b9a5] uppercase">
+            Talent Dossier
+          </span>
+          <span className="font-secondary text-[9px] font-bold tracking-[0.18em] text-[#c9b9a5] uppercase">
+            @{values.username || 'username'}
+          </span>
+        </div>
+        <div className="p-4">
+          <div className="flex items-start gap-3">
+            <div className="inline-flex shrink-0 overflow-hidden rounded-lg border-2 border-[#1d1815] bg-[#1d1815] shadow-[3px_3px_0_#1d1815]">
+              <EarnAvatar
+                className="size-14 rounded-none"
+                id={userId}
+                avatar={photo}
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-secondary truncate text-[18px] leading-tight font-bold text-[#1d1815]">
+                {fullName || 'Your Name'}
+              </h3>
+              <p className="font-secondary truncate text-[12px] font-semibold text-[#6b5e50]">
+                @{values.username || 'username'}
+              </p>
+            </div>
+          </div>
+
+          {wpText && (
+            <p className="font-serif mt-3 text-[15px] leading-snug font-semibold text-[#ce4a2b] italic">
+              Looking for {wpText}
+            </p>
+          )}
+
+          {values.bio && (
+            <p className="mt-2 line-clamp-2 text-[12px] leading-relaxed text-[#3a322b]">
+              {values.bio}
+            </p>
+          )}
+
+          {(values.currentEmployer || values.location) && (
+            <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-[#6b5e50]">
+              {values.currentEmployer && (
+                <span>
+                  <span className="text-[#9a8b78]">@ </span>
+                  <span className="font-medium text-[#3a322b]">
+                    {values.currentEmployer}
+                  </span>
+                </span>
+              )}
+              {values.currentEmployer && values.location && (
+                <span className="inline-block size-1 rounded-full bg-[#9a8b78]" />
+              )}
+              {values.location && (
+                <span className="font-medium text-[#3a322b]">
+                  {values.location}
+                </span>
+              )}
+            </p>
+          )}
+
+          {skills.length > 0 && (
+            <div className="mt-3.5 flex flex-wrap gap-1.5 border-t border-dashed border-[#1d1815]/15 pt-3.5">
+              {skills
+                .flatMap((s: any) => s?.subskills ?? [])
+                .slice(0, 8)
+                .map((sub: string, i: number) => (
+                  <span
+                    key={i}
+                    className="rounded border border-[#1d1815]/15 bg-[#efe8da] px-2 py-0.5 text-[11px] font-medium text-[#3a322b]"
+                  >
+                    {sub}
+                  </span>
+                ))}
+            </div>
+          )}
+
+          {socials.some(({ link }) => link) && (
+            <div className="mt-3.5 flex items-center gap-4 border-t border-dashed border-[#1d1815]/15 pt-3.5">
+              {socials.map(({ Icon, link }, i) => (
+                <Icon
+                  key={i}
+                  link={link ? '#' : undefined}
+                  className="h-[18px] w-[18px]"
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      <p className="mt-3 text-center text-[11px] text-[#e7d3c1]">
+        Updates live as you edit.
+      </p>
+    </div>
+  );
+}
 
 interface EditProfilePageProps {
   slug: string;
@@ -88,6 +250,20 @@ export default function EditProfilePage({
   const { control, handleSubmit, watch, setError, clearErrors, trigger } = form;
 
   const skills = watch('skills');
+
+  const values = watch();
+  const completion = [
+    !!(values.firstName && values.lastName && values.username),
+    !!(
+      values.twitter ||
+      values.github ||
+      values.linkedin ||
+      values.website ||
+      values.telegram
+    ),
+    !!(values.location || values.workPrefernce || values.experience),
+    !!(Array.isArray(values.skills) && values.skills.length),
+  ];
 
   const userRef = useRef(user);
   userRef.current = user;
@@ -342,6 +518,7 @@ export default function EditProfilePage({
 
   return (
     <Default
+      className="bg-[#6b5e50]"
       meta={
         <Meta
           title="Superteam Earn"
@@ -359,14 +536,39 @@ export default function EditProfilePage({
           if (data) void submitProfile(data);
         }}
       />
-      <div className="bg-white">
-        <div className="mx-auto max-w-[600px] p-3 md:p-5">
-          <Form {...form}>
-            <h1 className="mt-3 mb-5 text-4xl font-bold">Edit Profile</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <p className="mt-12 mb-5 text-lg font-semibold text-slate-600">
-                PERSONAL INFO
-              </p>
+      <div className="w-full grow bg-[#6b5e50] px-4 py-8 md:px-6 md:py-12">
+        <div className="mx-auto max-w-[1080px]">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+            <div className="dossier-form overflow-hidden rounded-xl border-2 border-[#1d1815] bg-[#f4eee3] shadow-[8px_8px_0_#1d1815]">
+              <div className="flex items-center justify-between gap-3 bg-[#1d1815] px-4 py-2.5 md:px-7">
+                <span className="font-secondary flex items-center gap-2 text-[10px] font-bold tracking-[0.18em] text-[#f4eee3] uppercase md:text-[11px]">
+                  <span className="inline-block size-[7px] bg-[#e6a12b]" />
+                  Editing Dossier
+                </span>
+                <span className="flex items-center gap-1.5">
+                  {completion.map((done, i) => (
+                    <span
+                      key={i}
+                      className={cn(
+                        'inline-block size-2 rounded-full border border-[#f4eee3]/40',
+                        done ? 'bg-[#e6a12b]' : 'bg-transparent',
+                      )}
+                    />
+                  ))}
+                </span>
+              </div>
+              <div className="p-5 md:p-8">
+                <Form {...form}>
+                  <h1 className="font-serif text-[32px] leading-none font-semibold text-[#1d1815] md:text-[38px]">
+                    Edit Profile
+                  </h1>
+                  <p className="mt-2.5 text-[14px] text-[#6b5e50]">
+                    Fill the left, watch your dossier build on the right.
+                  </p>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <SectionHeading num="01" className="mt-9">
+                      Identity
+                    </SectionHeading>
               <FormField
                 name="photo"
                 control={control}
@@ -405,25 +607,25 @@ export default function EditProfilePage({
                 <Input maxLength={40} placeholder="Username" />
               </FormFieldWrapper>
 
-              <FormFieldWrapper
-                label="First Name"
-                name="firstName"
-                control={control}
-                isRequired
-                className="mb-5"
-              >
-                <Input placeholder="First Name" />
-              </FormFieldWrapper>
+              <div className="mb-5 grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2">
+                <FormFieldWrapper
+                  label="First Name"
+                  name="firstName"
+                  control={control}
+                  isRequired
+                >
+                  <Input placeholder="First Name" />
+                </FormFieldWrapper>
 
-              <FormFieldWrapper
-                className="mb-5"
-                label="Last Name"
-                name="lastName"
-                control={control}
-                isRequired
-              >
-                <Input placeholder="Last Name" />
-              </FormFieldWrapper>
+                <FormFieldWrapper
+                  label="Last Name"
+                  name="lastName"
+                  control={control}
+                  isRequired
+                >
+                  <Input placeholder="Last Name" />
+                </FormFieldWrapper>
+              </div>
 
               <FormField
                 control={control}
@@ -445,8 +647,8 @@ export default function EditProfilePage({
                         className={cn(
                           'mt-1 text-right text-xs',
                           (watch('bio')?.length || 0) > 160
-                            ? 'text-red-500'
-                            : 'text-slate-400',
+                            ? 'text-[#ce4a2b]'
+                            : 'text-[#9a8b78]',
                         )}
                       >
                         {180 - (watch('bio')?.length || 0)} characters left
@@ -457,18 +659,18 @@ export default function EditProfilePage({
                 )}
               />
 
-              <p className="mt-12 mb-5 text-lg font-semibold text-slate-600">
-                SOCIALS
-              </p>
+              <SectionHeading num="02" className="mt-10">
+                Socials
+              </SectionHeading>
 
               <SocialInputAll
                 control={control}
                 required={hasDevSkills(skills) ? ['github'] : ['twitter']}
               />
 
-              <p className="mt-12 mb-5 text-lg font-semibold text-slate-600">
-                WORK
-              </p>
+              <SectionHeading num="03" className="mt-10">
+                Work
+              </SectionHeading>
 
               <FormField
                 name="interests"
@@ -520,116 +722,120 @@ export default function EditProfilePage({
                 )}
               />
 
-              <FormField
-                name="experience"
-                control={control}
-                render={({ field }) => (
-                  <FormItem className="mb-5 w-full">
-                    <FormLabel>Work Experience</FormLabel>
-                    <FormControl>
-                      <Select
-                        key={skillsRefreshKey}
-                        onValueChange={field.onChange}
-                        defaultValue={field.value || undefined}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Pick Your Experience" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {workExp.map((option) => (
-                            <SelectItem key={option} value={option}>
-                              {option}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="mb-5 grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2">
+                <FormField
+                  name="experience"
+                  control={control}
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Work Experience</FormLabel>
+                      <FormControl>
+                        <Select
+                          key={skillsRefreshKey}
+                          onValueChange={field.onChange}
+                          defaultValue={field.value || undefined}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Pick Your Experience" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {workExp.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                name="location"
-                control={control}
-                render={({ field }) => (
-                  <FormItem className="mb-4 w-full gap-2">
-                    <FormLabel className="">Location</FormLabel>
-                    <FormControl>
-                      <RegionCombobox
-                        className="w-full"
-                        value={field.value}
-                        onChange={(e) => {
-                          field.onChange(e);
-                        }}
-                        classNames={{
-                          popoverContent:
-                            'w-[var(--radix-popper-anchor-width)]',
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage className="mt-1" />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  name="cryptoExperience"
+                  control={control}
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>How familiar are you with Web3?</FormLabel>
+                      <FormControl>
+                        <Select
+                          key={skillsRefreshKey}
+                          onValueChange={field.onChange}
+                          defaultValue={field.value || undefined}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Pick your Experience" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {web3Exp.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-              <FormField
-                name="cryptoExperience"
-                control={control}
-                render={({ field }) => (
-                  <FormItem className="mb-5 w-full">
-                    <FormLabel>How familiar are you with Web3?</FormLabel>
-                    <FormControl>
-                      <Select
-                        key={skillsRefreshKey}
-                        onValueChange={field.onChange}
-                        defaultValue={field.value || undefined}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Pick your Experience" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {web3Exp.map((option) => (
-                            <SelectItem key={option} value={option}>
-                              {option}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="mb-5 grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2">
+                <FormField
+                  name="location"
+                  control={control}
+                  render={({ field }) => (
+                    <FormItem className="w-full gap-2">
+                      <FormLabel>Location</FormLabel>
+                      <FormControl>
+                        <RegionCombobox
+                          className="w-full"
+                          value={field.value}
+                          onChange={(e) => {
+                            field.onChange(e);
+                          }}
+                          classNames={{
+                            popoverContent:
+                              'w-[var(--radix-popper-anchor-width)]',
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage className="mt-1" />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                name="workPrefernce"
-                control={control}
-                render={({ field }) => (
-                  <FormItem className="mb-5 w-full">
-                    <FormLabel>Work Preference</FormLabel>
-                    <FormControl>
-                      <Select
-                        key={skillsRefreshKey}
-                        onValueChange={field.onChange}
-                        defaultValue={field.value || undefined}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Type of Work" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {workType.map((option) => (
-                            <SelectItem key={option} value={option}>
-                              {option}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  name="workPrefernce"
+                  control={control}
+                  render={({ field }) => (
+                    <FormItem className="w-full gap-2">
+                      <FormLabel>Work Preference</FormLabel>
+                      <FormControl>
+                        <Select
+                          key={skillsRefreshKey}
+                          onValueChange={field.onChange}
+                          defaultValue={field.value || undefined}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Type of Work" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {workType.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <FormFieldWrapper
                 className="mb-5"
@@ -640,24 +846,26 @@ export default function EditProfilePage({
                 <Input placeholder="Employer" />
               </FormFieldWrapper>
 
-              <FormLabel>Proof of Work</FormLabel>
+              <SectionHeading num="04" className="mt-10">
+                Proof &amp; Skills
+              </SectionHeading>
               <div>
                 {pow.map((data, idx) => {
                   return (
                     <div
-                      className="mt-2 mb-1.5 flex items-center gap-3 rounded-md border border-slate-300 px-[1rem] py-[0.5rem] break-all text-slate-500"
+                      className="mt-2 mb-1.5 flex items-center gap-3 rounded-lg border border-[#1d1815]/20 bg-[#efe8da] px-4 py-2.5 break-all"
                       key={data.id}
                     >
-                      <p className="w-full text-sm text-gray-800">
+                      <p className="w-full text-sm font-medium text-[#3a322b]">
                         {data.title}
                       </p>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 text-[#6b5e50]">
                         <Edit
                           onClick={() => {
                             setSelectedProject(idx);
                             onOpen();
                           }}
-                          className="h-3.5 w-3.5 cursor-pointer"
+                          className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1d1815]"
                         />
                         <Trash
                           onClick={() => {
@@ -665,7 +873,7 @@ export default function EditProfilePage({
                               prevPow.filter((_ele, id) => idx !== id),
                             );
                           }}
-                          className="h-3.5 w-3.5 cursor-pointer"
+                          className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#ce4a2b]"
                         />
                       </div>
                     </div>
@@ -673,7 +881,7 @@ export default function EditProfilePage({
                 })}
               </div>
               <Button
-                className="mb-8 w-full"
+                className="mb-8 w-full border-2 border-[#1d1815] bg-[#f4eee3] font-semibold text-[#1d1815] hover:bg-[#1d1815] hover:text-[#f4eee3]"
                 onClick={() => {
                   onOpen();
                 }}
@@ -731,10 +939,10 @@ export default function EditProfilePage({
                               field.onChange(checked);
                             }
                           }}
-                          className="text-brand-purple data-[state=checked]:border-brand-purple data-[state=checked]:bg-brand-purple mr-1"
+                          className="mr-1 data-[state=checked]:border-[#1d1815] data-[state=checked]:bg-[#1d1815]"
                         ></Checkbox>
                       </FormControl>
-                      <FormLabel className="font-medium text-slate-500">
+                      <FormLabel className="font-medium text-[#6b5e50]">
                         Keep my info private
                       </FormLabel>
                     </div>
@@ -742,29 +950,37 @@ export default function EditProfilePage({
                   </FormItem>
                 )}
               />
-              <br />
-
-              <Button
-                className={cn(
-                  'ph-no-capture mb-12',
-                  isLoading && 'pointer-events-none opacity-50',
-                )}
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <span className="flex items-center gap-2">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    <span>Updating...</span>
-                  </span>
-                ) : (
-                  <span>Update Profile</span>
-                )}
-              </Button>
-            </form>
-          </Form>
+                  <Button
+                    className={cn(
+                      'ph-no-capture mt-2 mb-2 h-11 w-full border-2 border-[#1d1815] bg-[#1d1815] px-6 text-[14px] font-semibold text-[#f4eee3] shadow-[3px_3px_0_#1d1815] transition hover:bg-[#1d1815] hover:text-[#f4eee3] hover:shadow-[1px_1px_0_#1d1815]',
+                      isLoading && 'pointer-events-none opacity-50',
+                    )}
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center gap-2">
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <span>Updating...</span>
+                      </span>
+                    ) : (
+                      <span>Update Profile</span>
+                    )}
+                  </Button>
+                </form>
+              </Form>
+            </div>
+          </div>
+          <aside className="lg:sticky lg:top-6">
+            <LivePreview
+              values={values}
+              userId={user?.id}
+              photo={uploadedPhotoUrl || (values.photo as string | undefined)}
+            />
+          </aside>
         </div>
       </div>
+    </div>
       <AddProject
         key={`${pow.length}project`}
         {...{

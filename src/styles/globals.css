@@ -25,6 +25,10 @@
   --font-display: var(--font-dm-sans);
   --font-serif: var(--font-fraunces);
 
+  /* "Pop" theme (listing detail page) */
+  --font-pop: var(--font-bricolage);
+  --font-pop-body: var(--font-manrope);
+
   --text-xxs: 0.625rem;
   --text-xxs--line-height: 0.875rem;
 
@@ -630,4 +634,45 @@ h3.tiptap-heading + h2.tiptap-heading {
   [data-rmiz-modal-img] {
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ── Dossier edit form: scoped retro theming for all field widgets ── */
+.dossier-form [data-slot='form-label'] {
+  font-family: var(--font-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b5e50;
+}
+.dossier-form [data-slot='form-description'] {
+  color: #9a8b78;
+  font-size: 12px;
+}
+.dossier-form input,
+.dossier-form textarea,
+.dossier-form [data-slot='select-trigger'],
+.dossier-form [role='combobox'] {
+  background-color: #fbf7ee;
+  border-color: rgba(29, 24, 21, 0.22);
+  border-radius: 8px;
+  color: #1d1815;
+}
+.dossier-form input::placeholder,
+.dossier-form textarea::placeholder {
+  color: #9a8b78;
+}
+.dossier-form input:hover,
+.dossier-form textarea:hover,
+.dossier-form [data-slot='select-trigger']:hover,
+.dossier-form [role='combobox']:hover {
+  border-color: rgba(29, 24, 21, 0.45);
+}
+.dossier-form input:focus-visible,
+.dossier-form textarea:focus-visible,
+.dossier-form [data-slot='select-trigger']:focus-visible,
+.dossier-form [role='combobox']:focus-visible {
+  border-color: #ce4a2b;
+  box-shadow: 0 0 0 1px #ce4a2b;
+  outline: none;
 }

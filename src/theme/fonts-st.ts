@@ -1,4 +1,4 @@
-import { Fraunces } from 'next/font/google';
+import { Bricolage_Grotesque, Fraunces, Manrope } from 'next/font/google';
 import localFont from 'next/font/local';
 
 /**
@@ -67,6 +67,26 @@ const fraunces = Fraunces({
 });
 
 /**
+ * Bricolage Grotesque - Chunky display font for the "Pop" listing detail theme.
+ */
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage',
+  display: 'swap',
+  weight: ['500', '700', '800'],
+});
+
+/**
+ * Manrope - Friendly body font paired with Bricolage on the "Pop" listing theme.
+ */
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+/**
  * Combined font class names for applying to ST pages
  */
 export const stFontVariables = [
@@ -74,4 +94,6 @@ export const stFontVariables = [
   archivo.variable,
   dmSans.variable,
   fraunces.variable,
+  bricolage.variable,
+  manrope.variable,
 ].join(' ');

@@ -19,15 +19,14 @@ export const ListingTabLink = ({
   onClick,
   className,
   subText,
-  isPro,
 }: ListingTabLinkProps) => {
   return (
     <Link
       className={cn(
-        'ph-no-capture hover:border-brand-purple/80 flex h-full items-center gap-2 border-b-2 px-3 text-sm font-medium no-underline transition-colors',
-        isPro ? 'text-zinc-900' : 'text-slate-500',
-        isActive ? 'border-brand-purple/80' : 'border-transparent',
-        isPro && isActive ? 'border-zinc-900' : 'border-transparent',
+        'ph-no-capture font-pop-body flex h-full items-center gap-2 border-b-[3px] px-3 text-sm font-bold no-underline transition-colors hover:border-[#ff6b3d]/70',
+        isActive
+          ? 'border-[#ff6b3d] text-[#221a14]'
+          : 'border-transparent text-[#8a7f72]',
         className,
       )}
       href={href}
@@ -35,7 +34,7 @@ export const ListingTabLink = ({
     >
       {text}
       {subText && (
-        <span className="bg-brand-purple/20 rounded-full px-1.5 py-px text-[10px] text-slate-500">
+        <span className="rounded-full border-[1.5px] border-[#221a14] bg-[#ffe3d6] px-1.5 py-px text-[10px] font-bold text-[#221a14]">
           {subText}
         </span>
       )}

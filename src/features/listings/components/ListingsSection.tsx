@@ -32,6 +32,7 @@ import { useListingsFilterCount } from '../hooks/useListingsFilterCount';
 import { useListingState } from '../hooks/useListingState';
 import type { Listing, ListingTabsProps } from '../types';
 import { AddListingCard } from './AddListingCard';
+import { DaybreakBrowseHeader } from './DaybreakBrowseHeader';
 import { ListingCardSkeleton } from './ListingCard';
 import { ListingFilters } from './ListingFilters';
 import { ListingTabs } from './ListingTabs';
@@ -110,6 +111,9 @@ interface ListingsSectionProps extends ListingTabsProps {
   customEmptySection?:
     | React.ReactNode
     | ((filters: EmptySectionFilters) => React.ReactNode);
+  // 'daybreak' renders the Filing Index masthead + sticky control rail used on
+  // the dedicated browse page (/earn/all), in place of the legacy header.
+  browseVariant?: 'daybreak';
 }
 const FOR_YOU_SUPPORTED_TYPES: ReadonlyArray<ListingContext> = [
   'home',
@@ -125,6 +129,7 @@ export const ListingsSection = ({
   category,
   defaultTab,
   customEmptySection,
+  browseVariant,
 }: ListingsSectionProps) => {
   const isLg = useBreakpoint('lg');
   const { serverTime } = useServerTimeSync();
@@ -141,6 +146,8 @@ export const ListingsSection = ({
     enabled: false,
   });
   const { data: chapters = [] } = useQuery(chaptersQuery);
+
+  const isDaybreak = browseVariant === 'daybreak';
 
   const shouldShowAddListingCard = useMemo(() => {
     if (type !== 'home') return false;
@@ -197,6 +204,7 @@ export const ListingsSection = ({
     activeSortBy,
     activeOrder,
     handleTabChange,
+    handleCategoryChange,
     handleStatusChange,
     handleSortChange,
   } = useListingState({
@@ -366,15 +374,31 @@ export const ListingsSection = ({
   // functionally required (sponsor, bookmarks and pro contexts).
   const showHeader = isSponsorContext || isBookmarksContext || isProContext;
 
+  if (isDaybreak) {
+    return (
+      <div className="mb-12">
+        <DaybreakBrowseHeader
+          activeCategory={activeCategory}
+          onCategoryChange={handleCategoryChange}
+        />
+        <div className="mt-6">
+          <AnimateChangeInHeight disableOnHeightZero>
+            {renderContent()}
+          </AnimateChangeInHeight>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-5 mb-10">
       {showHeader && (
         <>
           <div className="flex w-full items-center justify-between md:mb-1.5">
             {isBookmarksContext ? (
-              <p className="mb-2 text-xl font-semibold text-slate-700">
-                Bookmarks
-              </p>
+              <span className="font-secondary mb-2 text-[11px] font-bold tracking-[0.18em] text-[#6b5e50] uppercase">
+                Filter &amp; sort
+              </span>
             ) : (
               <div className="flex items-center">
                 <p className="text-lg font-semibold text-slate-800">

@@ -155,7 +155,7 @@ export function ListingPageLayout({
         </Head>
       }
     >
-      <div className="bg-white">
+      <div className="font-pop-body bg-[#fff7ec]">
         {initialListing === null && <ErrorSection />}
         {initialListing !== null && !initialListing?.id && (
           <ErrorSection message="Sorry! The bounty you are looking for is not available." />
@@ -172,12 +172,12 @@ export function ListingPageLayout({
               />
               <div
                 className={cn(
-                  'flex min-h-screen flex-col items-center justify-center gap-0 bg-white md:flex-row md:items-start md:justify-between md:gap-4',
+                  'flex min-h-screen flex-col items-stretch gap-5 pt-5 md:flex-row md:items-start md:justify-between md:gap-6 md:pt-6',
                   maxW,
                 )}
               >
                 {!isSubmissionPage && (
-                  <div className="top-14 h-full w-full grow border-slate-100 md:sticky md:w-[23rem] md:border-r md:pr-2 lg:pr-5">
+                  <div className="top-6 h-full w-full grow md:sticky md:w-[22rem]">
                     <RightSideBar
                       isTemplate={isTemplate}
                       listing={initialListing}
@@ -187,16 +187,18 @@ export function ListingPageLayout({
                     />
                   </div>
                 )}
-                <div className="flex h-full w-full grow flex-col gap-8 pb-10">
-                  <div className="w-full">{children}</div>
+                <div className="flex h-full w-full grow flex-col gap-5 pb-10">
+                  <div className="w-full rounded-3xl border-2 border-[#221a14] bg-white p-5 shadow-[0_8px_0_#221a14] md:p-7">
+                    {children}
+                  </div>
                   <div className="flex w-full flex-col items-start md:hidden">
-                    <p className="mb-1.5 h-full text-center text-xs font-semibold text-slate-600">
-                      SKILLS NEEDED
+                    <p className="font-pop mb-2 text-xs font-bold tracking-wide text-[#221a14] uppercase">
+                      Skills Needed
                     </p>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       {iterableSkills?.map((skill) => (
                         <div
-                          className="m-0 rounded-sm bg-slate-100 px-4 py-1 text-sm font-medium text-slate-600"
+                          className="m-0 rounded-full border-[1.5px] border-[#221a14] bg-[#f0eadd] px-3 py-1 text-xs font-bold text-[#221a14]"
                           key={skill}
                         >
                           <p className="text-xs">{skill}</p>
@@ -263,7 +265,7 @@ export function ListingPageLayout({
                 </div>
               </div>
             </div>
-            <div className="sticky bottom-14 z-40 mb-12 w-full border-t border-slate-100 bg-white py-1 md:hidden">
+            <div className="sticky bottom-14 z-40 mb-12 w-full border-t-2 border-[#221a14] bg-[#fff7ec] py-2 md:hidden">
               <SubmissionActionButton
                 listing={initialListing}
                 isTemplate={isTemplate}

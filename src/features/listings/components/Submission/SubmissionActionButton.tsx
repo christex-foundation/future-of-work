@@ -290,28 +290,28 @@ export const SubmissionActionButton = ({
       buttonText = isProject
         ? 'Applied Successfully'
         : 'Submitted Successfully';
-      buttonBG = 'bg-green-600';
+      buttonBG = 'bg-[#ff6b3d]';
       isBtnDisabled = true;
       btnLoadingText = null;
       break;
 
     case 'kyc':
       buttonText = 'Submit KYC';
-      buttonBG = 'bg-brand-purple';
+      buttonBG = 'bg-[#ff6b3d]';
       isBtnDisabled = false;
       btnLoadingText = null;
       break;
 
     case 'kyc_done':
       buttonText = 'Processing Payment';
-      buttonBG = 'bg-green-600';
+      buttonBG = 'bg-[#ff6b3d]';
       isBtnDisabled = true;
       btnLoadingText = null;
       break;
 
     case 'paid':
       buttonText = 'Payment Successful';
-      buttonBG = 'bg-green-600';
+      buttonBG = 'bg-[#ff6b3d]';
       isBtnDisabled = true;
       btnLoadingText = null;
       break;
@@ -341,7 +341,7 @@ export const SubmissionActionButton = ({
           listing.compensationType === 'range'
         )
           buttonText = 'Send Quote';
-        buttonBG = isUserPro && isPro ? 'bg-zinc-800' : 'bg-brand-purple';
+        buttonBG = isUserPro && isPro ? 'bg-zinc-800' : 'bg-[#ff6b3d]';
         if (isNotPublished && !isListingSponsor) {
           buttonText = 'Paused';
         }
@@ -374,7 +374,7 @@ export const SubmissionActionButton = ({
 
   if (isLocationCooldown && buttonState === 'submit') {
     buttonText = 'Ineligible';
-    buttonBG = 'bg-brand-purple-400';
+    buttonBG = 'bg-[#ff8a5c]';
     isBtnDisabled = true;
     isSubmitDisabled = true;
   }
@@ -538,13 +538,14 @@ export const SubmissionActionButton = ({
                       ? 'disabled:opacity-100'
                       : 'disabled:opacity-70',
                     'text-base md:text-lg',
-                    'font-semibold sm:font-semibold',
+                    'font-pop font-bold tracking-wide sm:font-bold',
+                    'rounded-2xl border-2 border-[#221a14] shadow-[0_5px_0_#221a14] transition hover:translate-y-0.5 hover:shadow-[0_3px_0_#221a14]',
                     buttonBG,
                     isNotEligible && 'text-zinc-700',
                     isEditMode &&
                       (isPro
                         ? 'border-zinc-700 text-zinc-700 hover:text-white'
-                        : 'border-brand-purple text-brand-purple hover:text-brand-purple-dark'),
+                        : 'border-[#221a14] bg-white text-[#221a14] hover:bg-[#221a14] hover:text-white'),
                     isUserPro && isPro && 'hover:bg-black',
                     !isUserPro && isPro && 'hover:opacity-90',
                   )}

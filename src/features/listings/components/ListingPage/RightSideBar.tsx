@@ -88,7 +88,6 @@ export function RightSideBar({
     Hackathon,
     maxBonusSpots,
     isWinnersAnnounced,
-    isPro,
   } = listing;
 
   const { serverTime, isSync } = useServerTimeSync();
@@ -145,7 +144,7 @@ export function RightSideBar({
   return (
     <div className="h-full w-full md:w-auto">
       <div className="flex w-full flex-col gap-2 pt-4">
-        <div className="flex w-full flex-col justify-center rounded-xl bg-white">
+        <div className="font-pop-body flex w-full flex-col justify-center rounded-3xl border-2 border-[#221a14] bg-white p-5 shadow-[0_8px_0_#221a14] md:p-6">
           {!router.asPath.split('/')[4]?.includes('submission') &&
             listing.isWinnersAnnounced && (
               <div className="block w-full pb-6 md:hidden">
@@ -179,14 +178,14 @@ export function RightSideBar({
                           token={!showUsdSymbolOnly ? token : 'USD'}
                           isWinnersAnnounced={isWinnersAnnounced}
                           className={cn(
-                            'text-lg font-semibold text-slate-700 md:text-xl',
+                            'font-pop text-3xl font-extrabold text-[#221a14] md:text-4xl',
                           )}
                           style={{
                             width: widthOfPrize,
                           }}
                           showUsdSymbol={showUsdSymbolOnly}
                         />
-                        <p className="text-lg font-normal text-slate-500">
+                        <p className="text-sm font-semibold text-[#8a7f72]">
                           {isProject ? 'Payment' : 'Total Prizes'}
                         </p>
                       </div>
@@ -211,24 +210,16 @@ export function RightSideBar({
               </table>
             </div>
           </div>
-          <div className="w-full border-b border-slate-100" />
-          <div
-            className={cn(
-              'flex w-full justify-between',
-              rewards ? 'py-0' : 'py-3',
-            )}
-          >
+          <div className="my-4 w-full border-b-2 border-dashed border-[#221a14]/15" />
+          <div className="flex w-full gap-3">
             {hasHackathonStarted ? (
               <>
-                <div className="flex flex-col items-start justify-center">
+                <div className="flex flex-1 flex-col items-start justify-center rounded-2xl border-2 border-[#221a14] bg-[#fff7ec] px-3.5 py-3">
                   <div className="flex items-center justify-center gap-2">
                     <TbBriefcase2
-                      className={cn(
-                        isPro ? 'text-zinc-900' : 'text-brand-purple',
-                        'size-[1.4rem]',
-                      )}
+                      className={cn('text-[#ff6b3d]', 'size-[1.3rem]')}
                     />
-                    <p className="text-lg font-medium text-black md:text-xl">
+                    <p className="font-pop text-xl font-extrabold text-[#221a14]">
                       {isSubmissionNumberLoading
                         ? '...'
                         : !isProject
@@ -236,25 +227,22 @@ export function RightSideBar({
                           : submissionRange}
                     </p>
                   </div>
-                  <p className="text-xs text-slate-500 sm:text-sm">
+                  <p className="mt-1 text-[10px] font-bold tracking-wide text-[#8a7f72] uppercase sm:text-xs">
                     {isProject
                       ? 'Applications'
                       : submissionNumber === 1
-                        ? 'SUBMISSION'
-                        : 'SUBMISSIONS'}
+                        ? 'Submission'
+                        : 'Submissions'}
                   </p>
                 </div>
 
-                <div className="flex flex-col items-start justify-center py-3">
+                <div className="flex flex-1 flex-col items-start justify-center rounded-2xl border-2 border-[#221a14] bg-[#fff7ec] px-3.5 py-3">
                   <div className="flex items-start justify-center gap-1">
                     <MdTimer
-                      className={cn(
-                        isPro ? 'text-zinc-900' : 'text-brand-purple',
-                        'mt-0.5 size-[1.4rem]',
-                      )}
+                      className={cn('text-[#ff6b3d]', 'mt-0.5 size-[1.3rem]')}
                     />
                     <div className="flex flex-col items-start">
-                      <p className="text-lg font-medium text-black md:text-xl">
+                      <p className="font-pop text-xl font-extrabold text-[#221a14]">
                         {isSync && deadline ? (
                           <Countdown
                             date={deadline}
@@ -263,25 +251,24 @@ export function RightSideBar({
                             zeroPadDays={1}
                           />
                         ) : (
-                          <span className="text-slate-400">Syncing...</span>
+                          <span className="text-[#8a7f72]">Syncing...</span>
                         )}
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 sm:text-sm">REMAINING</p>
+                  <p className="mt-1 text-[10px] font-bold tracking-wide text-[#8a7f72] uppercase sm:text-xs">
+                    Remaining
+                  </p>
                 </div>
               </>
             ) : (
-              <div className="flex flex-col items-start justify-center py-3">
+              <div className="flex w-full flex-col items-start justify-center rounded-2xl border-2 border-[#221a14] bg-[#fff7ec] px-3.5 py-3">
                 <div className="flex items-start justify-center gap-1">
                   <MdTimer
-                    className={cn(
-                      isPro ? 'text-zinc-900' : 'text-brand-purple',
-                      'mt-0.5 size-[1.4rem]',
-                    )}
+                    className={cn('text-[#ff6b3d]', 'mt-0.5 size-[1.3rem]')}
                   />
                   <div className="flex flex-col items-start">
-                    <p className="text-lg font-medium text-black md:text-xl">
+                    <p className="font-pop text-xl font-extrabold text-[#221a14]">
                       {isSync && Hackathon?.startDate ? (
                         <Countdown
                           date={Hackathon.startDate}
@@ -290,17 +277,19 @@ export function RightSideBar({
                           zeroPadDays={1}
                         />
                       ) : (
-                        <span className="text-slate-400">Syncing...</span>
+                        <span className="text-[#8a7f72]">Syncing...</span>
                       )}
                     </p>
-                    <p className="text-slate-400">Until Submissions Open</p>
+                    <p className="mt-1 text-[10px] font-bold tracking-wide text-[#8a7f72] uppercase">
+                      Until Submissions Open
+                    </p>
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="hidden w-full md:flex">
+          <div className="mt-4 hidden w-full md:flex">
             <SubmissionActionButton listing={listing} isTemplate={isTemplate} />
           </div>
           {inReview && listing.commitmentDate && (
@@ -333,9 +322,9 @@ export function RightSideBar({
               ) && <ApprovalStages listing={listing} />}
           </div>
           {isProject && deadline && dayjs(deadline).isAfter(new Date()) && (
-            <div className="mb-4 flex w-full gap-2 bg-[#62F6FF10] p-3">
+            <div className="mt-4 flex w-full gap-2 rounded-2xl border-2 border-[#221a14] bg-[#d9f3ff] p-3">
               <TriangleAlert color="#1A7F86" />
-              <p className="text-xs font-medium text-[#1A7F86]" color="#1A7F86">
+              <p className="text-xs font-semibold text-[#1A7F86]" color="#1A7F86">
                 Don&apos;t start working just yet! Apply first, and then begin
                 working only once you&apos;ve been hired for the project.
               </p>
@@ -367,10 +356,10 @@ export function RightSideBar({
                 }
               >
                 <div className="flex w-full items-center justify-between">
-                  <p className="text-sm font-semibold text-slate-600">
+                  <p className="font-pop text-sm font-bold tracking-wide text-[#221a14] uppercase">
                     {!Hackathon
-                      ? 'RELATED LIVE LISTINGS'
-                      : 'RELATED LIVE TRACKS'}
+                      ? 'Related Live Listings'
+                      : 'Related Live Tracks'}
                   </p>
                 </div>
               </RelatedListings>

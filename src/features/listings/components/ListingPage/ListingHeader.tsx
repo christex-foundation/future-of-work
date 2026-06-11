@@ -31,7 +31,7 @@ const SponsorLogo = ({ sponsor }: { sponsor: SponsorType | undefined }) => {
   return (
     <Link href={`/earn/s/${sponsor?.slug}`}>
       <img
-        className="mr-2 h-12 w-12 rounded-md object-cover md:h-16 md:w-16"
+        className="mr-3 h-12 w-12 rounded-2xl border-2 border-[#221a14] object-cover shadow-[0_4px_0_#221a14] md:h-14 md:w-14"
         alt={sponsor?.name}
         src={sponsor?.logo || `${ASSET_URL}/logo/sponsor-logo.png`}
       />
@@ -41,7 +41,7 @@ const SponsorLogo = ({ sponsor }: { sponsor: SponsorType | undefined }) => {
 
 const ListingTitle = ({ title }: { title: string | undefined }) => {
   return (
-    <h1 className="text-lg font-semibold tracking-tight text-slate-700 sm:text-xl">
+    <h1 className="font-pop text-2xl font-extrabold tracking-tight text-[#221a14] sm:text-3xl">
       {title}
     </h1>
   );
@@ -109,7 +109,7 @@ const HeaderSub = ({
           });
         }}
       >
-        <p className="max-w-[200px] overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap text-slate-500">
+        <p className="max-w-[200px] overflow-hidden text-sm font-semibold text-ellipsis whitespace-nowrap text-[#8a7f72]">
           by <span className="group-hover:underline">{sponsor?.name}</span>
         </p>
         {!!sponsor?.isVerified && <VerifiedBadge />}
@@ -139,8 +139,8 @@ const HeaderSub = ({
             contentProps={{ className: 'max-w-80' }}
           >
             <div className="flex items-center gap-1">
-              {getListingIcon(type!, 'fill-slate-400')}
-              <p className="text-sm font-medium text-gray-400">
+              {getListingIcon(type!, 'fill-[#8a7f72]')}
+              <p className="text-sm font-semibold text-[#8a7f72]">
                 {isPrivate ? 'Private' : isProject ? 'Project' : 'Bounty'}
               </p>
             </div>
@@ -261,8 +261,8 @@ export function ListingHeader({
   const isSubmissionPage = router.pathname.endsWith('/submission');
 
   return (
-    <div className="flex flex-col gap-1 bg-white">
-      <div className="mx-auto flex w-full max-w-7xl justify-between gap-5 py-4 md:py-10">
+    <div className="font-pop-body mt-5 flex flex-col gap-1 rounded-3xl border-2 border-[#221a14] bg-white px-5 py-5 shadow-[0_8px_0_#221a14] md:mt-6 md:px-8 md:py-6">
+      <div className="mx-auto flex w-full max-w-7xl justify-between gap-5 py-0">
         <div className="flex items-center">
           <SponsorLogo sponsor={sponsor} />
           <div
@@ -275,7 +275,7 @@ export function ListingHeader({
               <div className="hidden md:flex">
                 <p
                   aria-hidden="true"
-                  className="text-lg font-semibold tracking-tight text-slate-700 sm:text-xl"
+                  className="font-pop text-2xl font-extrabold tracking-tight text-[#221a14] sm:text-3xl"
                 >
                   {title}
                 </p>
@@ -330,7 +330,7 @@ export function ListingHeader({
         />
       </div>
       <div className="flex h-10 w-full max-w-7xl items-center">
-        <div className="mx-auto my-auto flex h-full w-full max-w-7xl items-center justify-start border-b border-slate-200">
+        <div className="mx-auto my-auto flex h-full w-full max-w-7xl items-center justify-start border-b-2 border-[#221a14]/15">
           {!isSubmissionPage && (
             <ListingTabLink
               className="pointer-events-none hidden px-0 md:flex md:w-[23rem]"
