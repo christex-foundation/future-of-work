@@ -314,11 +314,11 @@ export const SkillsSelect = React.forwardRef<MultiSelectRef, SkillsSelectProps>(
                 key={suggestion.value}
                 variant="outline"
                 size="sm"
-                className="h-fit w-fit px-2 py-1"
+                className="h-fit w-fit rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] px-2 py-1 text-[#1d1815] hover:bg-[#f4eee3]"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
                 <span>{suggestion.label}</span>
-                <Plus className="h-3! w-3! text-slate-500" />
+                <Plus className="h-3! w-3! text-[#6b5e50]" />
               </Button>
             ))}
           </div>

@@ -402,14 +402,14 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
       // For async search that showing emptyIndicator
       if (onSearch && !creatable && Object.keys(options).length === 0) {
         return (
-          <CommandItem value="-" disabled className="text-slate-500">
+          <CommandItem value="-" disabled className="text-[#6b5e50]">
             {emptyIndicator}
           </CommandItem>
         );
       }
 
       return (
-        <CommandEmpty className="text-slate-500">{emptyIndicator}</CommandEmpty>
+        <CommandEmpty className="text-[#6b5e50]">{emptyIndicator}</CommandEmpty>
       );
     }, [creatable, emptyIndicator, onSearch, options]);
 
@@ -454,7 +454,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
       >
         <div
           className={cn(
-            'border-input ring-primary min-h-10 rounded-md border text-sm focus-within:ring-1',
+            'min-h-10 rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] text-sm focus-within:ring-0',
             {
               'px-3 py-2': selected.length !== 0,
               'cursor-text': !disabled && selected.length !== 0,
@@ -495,7 +495,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                       }}
                       onClick={() => handleUnselect(option)}
                     >
-                      <X className="text-muted-foreground hover:text-foreground h-3 w-3" />
+                      <X className="text-[#6b5e50] hover:text-[#1d1815] h-3 w-3" />
                     </button>
                   </Badge>
                 );
@@ -529,7 +529,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                     : placeholder
                 }
                 className={cn(
-                  'flex-1 bg-transparent outline-hidden placeholder:text-slate-400',
+                  'flex-1 bg-transparent text-[#1d1815] outline-hidden placeholder:text-[#6b5e50]/60',
                   {
                     'w-full': hidePlaceholderWhenSelected,
                     'px-3 py-2': selected.length === 0,
@@ -546,7 +546,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                 onChange?.(selected.filter((s) => s.fixed));
               }}
               className={cn(
-                'absolute top-2/4 right-0 -translate-y-2/4 p-0 text-slate-400',
+                'absolute top-2/4 right-0 -translate-y-2/4 p-0 text-[#6b5e50]',
                 (hideClearAllButton ||
                   disabled ||
                   selected.length < 1 ||
@@ -561,7 +561,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
         <div className="relative">
           {open && (
             <CommandList
-              className="bg-popover text-popover-foreground animate-in scrollbar-visible absolute top-1 z-10 w-full rounded-md border shadow-md outline-hidden"
+              className="bg-[#FBF7EE] text-[#1d1815] animate-in scrollbar-visible absolute top-1 z-10 w-full rounded-none border-2 border-[#1d1815] shadow-[4px_4px_0_#1d1815] outline-hidden"
               onMouseLeave={() => {
                 setOnScrollbar(false);
               }}

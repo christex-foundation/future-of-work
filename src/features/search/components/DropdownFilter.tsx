@@ -75,18 +75,18 @@ function StatusFilterList({
           key={filter.value}
           onSelect={() => !disabled && onStatusToggle(filter.value)}
           className={cn(
-            'mb-1 flex items-center gap-2 text-sm text-slate-600 last:mb-0',
+            'mb-1 flex items-center gap-2 text-sm text-[#1d1815] last:mb-0',
             disabled && 'pointer-events-none opacity-50',
             activeStatus.includes(filter.value) &&
-              'bg-indigo-50 font-normal text-indigo-600',
+              'bg-[#e6a12b]/25 font-semibold text-[#1d1815]',
           )}
         >
           <Checkbox
             checked={activeStatus.includes(filter.value)}
             disabled={disabled}
-            className="data-[state=checked]:border-indigo-600 data-[state=checked]:bg-transparent"
+            className="rounded-none border-[#1d1815] data-[state=checked]:border-[#1d1815] data-[state=checked]:bg-[#e6a12b]"
             classNames={{
-              indicatorClassName: 'text-indigo-600',
+              indicatorClassName: 'text-[#1d1815]',
             }}
           />
           {filter.label}
@@ -112,10 +112,10 @@ function SkillFilterList({
           key={filter.value}
           onSelect={() => !disabled && onSkillToggle(filter.value)}
           className={cn(
-            'mb-1 flex items-center gap-2 text-slate-600 last:mb-0',
+            'mb-1 flex items-center gap-2 text-[#1d1815] last:mb-0',
             disabled && 'pointer-events-none opacity-50',
             activeSkills.includes(filter.value) &&
-              'bg-slate-100 font-medium text-indigo-600',
+              'bg-[#e6a12b]/25 font-semibold text-[#1d1815]',
           )}
         >
           {filter.label}
@@ -161,29 +161,29 @@ export function DropdownFilter({
         >
           <div
             className={cn(
-              'relative flex items-center gap-1.5 rounded-md p-2 hover:bg-slate-100 sm:p-1.5',
-              'text-sm font-normal md:rounded-full md:border md:border-slate-200 md:px-2 md:py-0.5',
+              'relative flex items-center gap-1.5 rounded-md p-2 hover:bg-[#f4eee3] sm:p-1.5',
+              'text-sm font-normal md:rounded-none md:border-2 md:border-[#1d1815] md:px-2 md:py-0.5',
               disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
             )}
           >
             {isMd ? (
               <>
-                <span className="text-sm font-normal text-slate-500">
+                <span className="text-sm font-normal text-[#6b5e50]">
                   Status
                 </span>
-                <ChevronDown className="h-4 w-4 text-slate-500" />
+                <ChevronDown className="h-4 w-4 text-[#6b5e50]" />
               </>
             ) : (
               <LucideListFilter
                 className={cn(
                   'h-4 w-4',
-                  hasActiveFilters ? 'text-brand-purple' : 'text-slate-500',
+                  hasActiveFilters ? 'text-[#ce4a2b]' : 'text-[#6b5e50]',
                 )}
               />
             )}
             {!isMd && hasActiveFilters && (
               <span
-                className="absolute top-5 right-2 block h-1 w-1 rounded-full bg-green-500"
+                className="absolute top-5 right-2 block h-1 w-1 rounded-full bg-[#ce4a2b]"
                 aria-hidden="true"
               />
             )}
@@ -191,7 +191,7 @@ export function DropdownFilter({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="z-[60] w-40">
-          <DropdownMenuLabel className="text-sm font-medium text-slate-600 md:hidden">
+          <DropdownMenuLabel className="md:hidden">
             Filter by Status
           </DropdownMenuLabel>
           <StatusFilterList
@@ -202,9 +202,7 @@ export function DropdownFilter({
           {!isMd && (
             <>
               <DropdownMenuSeparator />
-              <DropdownMenuLabel className="font-medium text-slate-600">
-                Filter by Skill
-              </DropdownMenuLabel>
+              <DropdownMenuLabel>Filter by Skill</DropdownMenuLabel>
               <SkillFilterList
                 activeSkills={activeSkills}
                 onSkillToggle={onSkillToggle}

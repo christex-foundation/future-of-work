@@ -43,12 +43,12 @@ export const HackathonFilters = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="cursor-pointer rounded-md p-2 hover:bg-slate-100">
-          <LucideListFilter className="size-4 stroke-3 text-slate-600" />
+        <div className="cursor-pointer rounded-md p-2 hover:bg-[#f4eee3]">
+          <LucideListFilter className="size-4 stroke-3 text-[#1d1815]" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel className="font-medium text-slate-600">
+        <DropdownMenuLabel>
           Filter By
         </DropdownMenuLabel>
         {hackathonFilterOptions.map((option) => (
@@ -58,9 +58,9 @@ export const HackathonFilters = ({
               onStatusChange(option.params.status as HackathonStatus)
             }
             className={cn(
-              'flex items-center gap-2 text-slate-600',
+              'flex items-center gap-2 text-[#1d1815]',
               activeStatus === option.params.status &&
-                'bg-slate-100 font-medium',
+                'bg-[#e6a12b]/25 font-semibold',
             )}
           >
             <div
@@ -77,7 +77,7 @@ export const HackathonFilters = ({
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuLabel className="font-medium text-slate-600">
+        <DropdownMenuLabel>
           Sort By
         </DropdownMenuLabel>
         {HACKATHON_SORT_OPTIONS.map((option) => (
@@ -87,10 +87,10 @@ export const HackathonFilters = ({
               onSortChange(option.params.sortBy, option.params.order)
             }
             className={cn(
-              'flex gap-2 text-slate-600',
+              'flex gap-2 text-[#1d1815]',
               activeSortBy === option.params.sortBy &&
                 activeOrder === option.params.order &&
-                'bg-slate-100 font-medium',
+                'bg-[#e6a12b]/25 font-semibold',
             )}
           >
             <div className="text-slate-500">{option.icon}</div>

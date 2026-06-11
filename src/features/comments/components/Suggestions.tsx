@@ -99,7 +99,7 @@ export const Suggestions = ({ defaultSuggestions, input, onSelect }: Props) => {
   if (suggestions.size === 0) return null;
 
   return (
-    <div className="flex w-[15rem] flex-col items-start gap-2 rounded-lg border border-slate-300 bg-white p-1">
+    <div className="flex w-[15rem] flex-col items-start gap-2 rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-1 shadow-[4px_4px_0_#1d1815]">
       {[...suggestions.values()]
         .slice(0, MAX_COMMENT_SUGGESTIONS)
         .map((suggestion, index) => (
@@ -107,9 +107,9 @@ export const Suggestions = ({ defaultSuggestions, input, onSelect }: Props) => {
             key={suggestion.id}
             variant="ghost"
             className={cn(
-              'flex w-full justify-start gap-2 p-1',
-              activeIndex === index ? 'bg-slate-100' : 'bg-transparent',
-              'hover:bg-slate-200 active:bg-slate-100',
+              'flex w-full justify-start gap-2 rounded-none p-1',
+              activeIndex === index ? 'bg-[#e6a12b]/25' : 'bg-transparent',
+              'hover:bg-[#f4eee3] active:bg-[#e7d3c1]',
             )}
             onClick={() => onSelect(suggestion.username ?? '')}
           >
@@ -119,10 +119,10 @@ export const Suggestions = ({ defaultSuggestions, input, onSelect }: Props) => {
               avatar={suggestion?.photo}
             />
             <div className="flex flex-col items-start">
-              <p className="text-sm font-medium text-slate-900">
+              <p className="text-sm font-medium text-[#1d1815]">
                 {suggestion.firstName} {suggestion.lastName}
               </p>
-              <p className="max-w-[10rem] overflow-hidden text-xs font-medium text-ellipsis text-slate-500">
+              <p className="max-w-[10rem] overflow-hidden text-xs font-medium text-ellipsis text-[#6b5e50]">
                 @{suggestion.username}
               </p>
             </div>

@@ -65,21 +65,21 @@ export const ListingFilters = ({
       }}
     >
       <DropdownMenuTrigger>
-        <div className="relative flex cursor-pointer items-center gap-1.5 rounded-md p-2 hover:bg-slate-100 sm:p-1.5">
-          <span className="hidden text-[0.8rem] font-semibold text-slate-500 sm:flex">
+        <div className="relative flex cursor-pointer items-center gap-1.5 rounded-md p-2 hover:bg-[#f4eee3] sm:p-1.5">
+          <span className="hidden text-[0.8rem] font-semibold text-[#6b5e50] sm:flex">
             Filter
           </span>
-          <LucideListFilter className="size-4 stroke-3 text-slate-600" />
+          <LucideListFilter className="size-4 stroke-3 text-[#1d1815]" />
           {!isDefaultFilterApplied && (
             <span
-              className="absolute right-2 bottom-2 block size-1 rounded-full bg-green-500 ring-1 ring-white"
+              className="absolute right-2 bottom-2 block size-1 rounded-full bg-[#ce4a2b] ring-1 ring-[#FBF7EE]"
               aria-hidden="true"
             />
           )}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="z-[60]">
-        <DropdownMenuLabel className="font-medium text-slate-600">
+        <DropdownMenuLabel>
           Filter By
         </DropdownMenuLabel>
         {filterOptions.map((option) => (
@@ -87,9 +87,9 @@ export const ListingFilters = ({
             key={option.label}
             onSelect={() => onStatusChange(option.params.status)}
             className={cn(
-              'flex items-center gap-2 text-slate-600',
+              'flex items-center gap-2 text-[#1d1815]',
               activeStatus === option.params.status &&
-                'bg-slate-100 font-medium',
+                'bg-[#e6a12b]/25 font-semibold',
             )}
           >
             <div
@@ -106,7 +106,7 @@ export const ListingFilters = ({
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuLabel className="font-medium text-slate-600">
+        <DropdownMenuLabel>
           Sort By
         </DropdownMenuLabel>
         {sortOptions.map((option) => (
@@ -116,10 +116,10 @@ export const ListingFilters = ({
               onSortChange(option.params.sortBy, option.params.order)
             }
             className={cn(
-              'flex gap-2 text-slate-600',
+              'flex gap-2 text-[#1d1815]',
               activeSortBy === option.params.sortBy &&
                 activeOrder === option.params.order &&
-                'bg-slate-100 font-medium',
+                'bg-[#e6a12b]/25 font-semibold',
             )}
           >
             <div className="text-slate-500">{option.icon}</div>

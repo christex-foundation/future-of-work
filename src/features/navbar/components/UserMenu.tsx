@@ -14,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { generateTelegramBotUrl } from '@/constants/Telegram';
 import { useDisclosure } from '@/hooks/use-disclosure';
 import { useLogout, useUser } from '@/store/user';
 import { cn } from '@/utils/cn';
@@ -34,12 +33,6 @@ export function UserMenu({
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const isRail = variant === 'rail';
-
-  // Check if user has clicked on telegram alerts before
-  const hasSeenTelegramAlerts = () => {
-    if (typeof window === 'undefined') return false;
-    return localStorage.getItem('telegram-alerts-shown') === 'true';
-  };
 
   useEffect(() => {
     const checkHashAndOpenModal = () => {
@@ -64,14 +57,6 @@ export function UserMenu({
       { shallow: true },
     );
     onClose();
-  };
-
-  const handleTelegramAlertsClick = () => {
-    // Mark telegram alerts as shown in localStorage
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('telegram-alerts-shown', 'true');
-    }
-    posthog.capture('telegram notifications_user menu');
   };
 
   if (isLoading) {
@@ -104,7 +89,7 @@ export function UserMenu({
             'ph-no-capture focus:outline-hidden',
             isRail
               ? 'relative grid size-[42px] place-items-center overflow-hidden rounded-[13px] border-2 border-[#1d1815] transition-transform duration-200 hover:scale-105'
-              : 'rounded-lg border border-white px-2 py-1 transition-all duration-100 hover:bg-slate-100 active:border-slate-300 active:bg-slate-200 data-[state=open]:bg-slate-100',
+              : 'rounded-none border-2 border-[#1d1815] px-2 py-1 transition-all duration-100 hover:bg-[#f4eee3] active:bg-[#e7d3c1] data-[state=open]:bg-[#f4eee3]',
           )}
           aria-label={isRail ? 'Your profile' : undefined}
           onClick={() => {
@@ -112,16 +97,11 @@ export function UserMenu({
           }}
         >
           {isRail ? (
-            <>
-              <EarnAvatar
-                className="size-full rounded-[11px]"
-                id={user?.id}
-                avatar={user?.photo}
-              />
-              {!hasSeenTelegramAlerts() && (
-                <span className="absolute top-1 right-1 block size-2 rounded-full bg-sky-400 ring-2 ring-[#F4EEE3]" />
-              )}
-            </>
+            <EarnAvatar
+              className="size-full rounded-[11px]"
+              id={user?.id}
+              avatar={user?.photo}
+            />
           ) : (
             <div className="flex items-center gap-1.5">
               <EarnAvatar
@@ -130,14 +110,11 @@ export function UserMenu({
                 avatar={user?.photo}
               />
               <div className="flex items-center">
-                <p className="text-sm font-medium tracking-tight text-slate-600">
+                <p className="text-sm font-medium tracking-tight text-[#1d1815]">
                   {user?.firstName ?? user?.email ?? ''}
                 </p>
               </div>
-              {!hasSeenTelegramAlerts() && (
-                <div className="block h-1.5 w-1.5 rounded-full bg-sky-400" />
-              )}
-              <ChevronDown className="block size-4 text-slate-400" />
+              <ChevronDown className="block size-4 text-[#6b5e50]" />
             </div>
           )}
         </DropdownMenuTrigger>
@@ -155,7 +132,7 @@ export function UserMenu({
                   onClick={() => {
                     posthog.capture('profile_user menu');
                   }}
-                  className="text-sm tracking-tight text-slate-500"
+                  className="text-sm tracking-tight text-[#1d1815]"
                 >
                   Profile
                 </Link>
@@ -166,7 +143,7 @@ export function UserMenu({
                   onClick={() => {
                     posthog.capture('edit profile_user menu');
                   }}
-                  className="text-sm tracking-tight text-slate-500"
+                  className="text-sm tracking-tight text-[#1d1815]"
                 >
                   Edit Profile
                 </Link>
@@ -181,7 +158,7 @@ export function UserMenu({
                 onClick={() => {
                   posthog.capture('sponsor dashboard_user menu');
                 }}
-                className="text-sm tracking-tight text-slate-500"
+                className="text-sm tracking-tight text-[#1d1815]"
               >
                 Dashboard
               </Link>
@@ -192,13 +169,11 @@ export function UserMenu({
 
           {user?.role === 'GOD' && (
             <div>
-              <DropdownMenuLabel className="-mb-2 text-xs font-medium text-slate-400">
-                God Mode
-              </DropdownMenuLabel>
+              <DropdownMenuLabel className="-mb-2">God Mode</DropdownMenuLabel>
               <DropdownMenuItem asChild>
                 <Link
                   href="/earn/new/sponsor"
-                  className="text-sm tracking-tight text-slate-500"
+                  className="text-sm tracking-tight text-[#1d1815]"
                 >
                   Create New Sponsor
                 </Link>
@@ -213,7 +188,7 @@ export function UserMenu({
                 onOpen();
                 posthog.capture('email preferences_user menu');
               }}
-              className="text-sm tracking-tight text-slate-500"
+              className="text-sm tracking-tight text-[#1d1815]"
             >
               Email Preferences
             </DropdownMenuItem>
@@ -226,32 +201,16 @@ export function UserMenu({
                 onClick={() => {
                   posthog.capture('bookmarks_user menu');
                 }}
-                className="text-sm tracking-tight text-slate-500"
+                className="text-sm tracking-tight text-[#1d1815]"
               >
                 Bookmarks
               </Link>
             </DropdownMenuItem>
           )}
 
-          <DropdownMenuItem asChild>
-            <Link
-              href={generateTelegramBotUrl(user?.email)}
-              target="_blank"
-              onClick={handleTelegramAlertsClick}
-              className="text-sm tracking-tight text-slate-500"
-            >
-              <div className="flex items-center gap-2">
-                <span>Telegram Alerts</span>
-                {!hasSeenTelegramAlerts() && (
-                  <div className="block h-1.5 w-1.5 rounded-full bg-sky-400" />
-                )}
-              </div>
-            </Link>
-          </DropdownMenuItem>
-
           <SupportFormDialog>
             <DropdownMenuItem
-              className="text-sm tracking-tight text-slate-500"
+              className="text-sm tracking-tight text-[#1d1815]"
               onSelect={(e) => {
                 e.preventDefault();
                 posthog.capture('get help_user menu');
@@ -266,7 +225,7 @@ export function UserMenu({
               posthog.capture('logout_user menu');
               logout();
             }}
-            className="text-sm tracking-tight text-red-500"
+            className="text-sm tracking-tight text-[#ce4a2b]"
           >
             Logout
           </DropdownMenuItem>

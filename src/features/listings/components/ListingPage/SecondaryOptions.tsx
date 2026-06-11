@@ -27,22 +27,22 @@ export function SecondaryOptions({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="h-8 w-auto rounded-md p-0 px-2 hover:bg-slate-100 focus-visible:outline-0 sm:h-10 sm:px-2">
-          <EllipsisVertical className="text-slate-400" />
+        <DropdownMenuTrigger className="h-8 w-auto rounded-md p-0 px-2 hover:bg-[#f4eee3] focus-visible:outline-0 sm:h-10 sm:px-2">
+          <EllipsisVertical className="text-[#6b5e50]" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="min-w-[6rem] p-0" align="end">
           <DropdownMenuItem
             onSelect={() => setShareOpen(true)}
-            className="group flex cursor-pointer justify-center font-medium text-slate-500"
+            className="group flex cursor-pointer justify-center font-medium text-[#1d1815]"
           >
-            <IoMdShareAlt className="group-hover:text-accent-foreground !size-5 text-slate-500" />
+            <IoMdShareAlt className="!size-5 text-[#6b5e50]" />
             Share
           </DropdownMenuItem>
           <DropdownMenuSeparator className="m-0" />
           <AuthWrapper>
             <DropdownMenuItem
               onSelect={() => setReportOpen(true)}
-              className="flex cursor-pointer justify-center font-medium text-slate-500 focus:text-red-500"
+              className="flex cursor-pointer justify-center font-medium text-[#1d1815] focus:text-[#ce4a2b]"
             >
               <RiFlagFill />
               Report

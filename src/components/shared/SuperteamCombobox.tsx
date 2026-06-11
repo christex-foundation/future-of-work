@@ -127,9 +127,9 @@ export function SuperteamCombobox({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            'w-32 justify-start px-3 text-xs text-slate-600',
+            'w-32 justify-start rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] px-3 text-xs text-[#1d1815]',
             className,
-            !value && 'text-slate-400',
+            !value && 'text-[#6b5e50]',
           )}
         >
           {!!value && value !== 'No association' && (
@@ -187,7 +187,7 @@ export function SuperteamCombobox({
                     setOpen(false);
                   }}
                 >
-                  <p className="text-slate-400">Select Superteam</p>
+                  <p className="text-[#6b5e50]">Select Superteam</p>
                 </CommandItem>
               </CommandGroup>
             )}
@@ -200,7 +200,7 @@ export function SuperteamCombobox({
                 }}
                 className={cn(
                   'cursor-pointer',
-                  value === 'Global' && 'bg-gray-200',
+                  value === 'Global' && 'bg-[#e6a12b]/25',
                 )}
               >
                 <span className="mx-2 min-h-4 min-w-4 pl-1">
@@ -225,7 +225,7 @@ export function SuperteamCombobox({
                   }}
                   className={cn(
                     'cursor-pointer',
-                    value === item.value && 'bg-gray-200',
+                    value === item.value && 'bg-[#e6a12b]/25',
                   )}
                 >
                   <span className="mx-2 min-h-4 min-w-4">
@@ -252,17 +252,17 @@ export function SuperteamCombobox({
                 }}
                 className={cn(
                   'cursor-pointer',
-                  value === 'No association' && 'bg-gray-200',
+                  value === 'No association' && 'bg-[#e6a12b]/25',
                 )}
               >
-                <p className="pl-3 text-sm text-slate-600">No association</p>
+                <p className="pl-3 text-sm text-[#1d1815]">No association</p>
               </CommandItem>
             )}
           </CommandList>
           {!isMD && (
             <CommandInput
               placeholder="Search..."
-              wrapperClassName="border-b-0 border-t"
+              wrapperClassName="border-b-0 border-t-2 border-[#1d1815]"
             />
           )}
         </Command>

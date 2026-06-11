@@ -227,7 +227,7 @@ export function RegionCombobox({
           disabled={disabled}
           aria-expanded={open}
           className={cn(
-            'w-32 justify-start px-3 text-xs text-slate-600',
+            'w-32 justify-start rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] px-3 text-xs text-[#1d1815]',
             disabled && 'cursor-not-allowed',
             className,
           )}
@@ -235,7 +235,7 @@ export function RegionCombobox({
           {!!value && (
             <span className="min-h-4 min-w-4">
               {value === 'Global' ? (
-                <Earth className="text-slate-500" />
+                <Earth className="text-[#6b5e50]" />
               ) : (
                 <UserFlag
                   location={findOptionByValue(value || '')?.code ?? ''}
@@ -280,7 +280,7 @@ export function RegionCombobox({
                     setOpen(false);
                   }}
                 >
-                  <p className="text-slate-400">Select a region</p>
+                  <p className="text-[#6b5e50]">Select a region</p>
                 </CommandItem>
               )}
             </CommandGroup>
@@ -308,7 +308,7 @@ export function RegionCombobox({
                         />
                         <span className="min-h-4 min-w-4">
                           {item.value === 'Global' ? (
-                            <Earth className="text-slate-500" />
+                            <Earth className="text-[#6b5e50]" />
                           ) : (
                             <UserFlag location={item.code} isCode />
                           )}
@@ -337,7 +337,7 @@ export function RegionCombobox({
                     />
                     {option.value === 'Global' ? (
                       <>
-                        <Earth className="text-slate-500" />
+                        <Earth className="text-[#6b5e50]" />
                         Global
                       </>
                     ) : (
