@@ -41,7 +41,7 @@ function FooterColumn({
 
 export default function Footer() {
   return (
-    <footer className="st-footer-container relative right-1/2 left-1/2 z-10 col-span-5 h-fit w-screen -translate-x-1/2 overflow-hidden rounded-t-[48px] md:w-[calc(100vw-144px)]">
+    <footer className="st-footer-container relative right-1/2 left-1/2 z-10 col-span-5 h-fit w-screen -translate-x-1/2 overflow-hidden rounded-t-[48px]">
       {/* large faded FOW mark watermark */}
       <div
         className="pointer-events-none absolute -bottom-16 left-2 z-0 select-none md:left-12"
@@ -90,12 +90,9 @@ export default function Footer() {
 
       {/* bottom bar */}
       <div className="relative z-10 border-t border-[#f4eee3]/10">
-        <div className="mx-auto flex max-w-[1120px] flex-col gap-2 px-10 py-6 md:flex-row md:items-center md:justify-between md:px-16">
+        <div className="mx-auto flex max-w-[1120px] flex-col gap-2 px-10 py-6 md:px-16">
           <p className="font-primary text-[13px] text-[#e7d3c1]/55">
             © 2026 Future of Work · Built by Christex Foundation
-          </p>
-          <p className="font-mono text-[11px] tracking-[0.16em] text-[#e7d3c1]/45 uppercase">
-            Powered by Solana
           </p>
         </div>
       </div>

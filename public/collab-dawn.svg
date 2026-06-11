@@ -329,11 +329,5 @@
   <ellipse cx="800" cy="456" rx="448" ry="121" fill="url(#glow)"/>
   <circle cx="800" cy="450" r="58" fill="url(#sun)"/>
 
-  <!-- lone figure stepping forward, silhouette -->
-  <g fill="#1D1815" transform="translate(791,552)">
-    <circle cx="9" cy="8" r="8"/>
-    <path d="M2 20 Q9 15 16 20 L14 52 17 96 11 96 9 60 7 96 1 96 4 52 Z"/>
-  </g>
-
   <rect width="1600" height="760" fill="url(#vig)"/>
 </svg>

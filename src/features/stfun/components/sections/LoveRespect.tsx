@@ -296,7 +296,7 @@ export default function LoveRespect({ collab = false }: LoveRespectProps) {
   return (
     <div
       className={cn(
-        'respect-container relative right-1/2 left-1/2 col-span-5 h-fit w-screen -translate-x-1/2 overflow-x-visible bg-[#6b5e50] py-16 md:h-fit md:py-20',
+        'respect-container relative right-1/2 left-1/2 col-span-5 h-fit w-screen -translate-x-1/2 overflow-x-visible bg-[#6b5e50] pt-16 pb-6 md:h-fit md:pt-20 md:pb-8',
         collab ? 'mt-[224px]' : '-mt-5',
       )}
     >
@@ -309,7 +309,7 @@ export default function LoveRespect({ collab = false }: LoveRespectProps) {
         </h2>
       </div>
 
-      <div className="scrollbar-hidden item-container mt-12 flex-nowrap overflow-x-scroll">
+      <div className="st-scrollbar-hidden item-container mt-12 flex-nowrap overflow-x-hidden">
         <div className="scroll-wrapper grid w-full">
           {/* Row 1 */}
           <div className="item-row item-row-1 flex flex-row">
