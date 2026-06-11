@@ -132,14 +132,14 @@ const Mobile = ({
         classNames={{
           overlay: isLoginOpen ? 'z-200' : '',
         }}
-        className="border-0! ring-0!"
+        className="border-t-2! border-[#1d1815]! bg-[#FBF7EE] ring-0!"
       >
         <DrawerHeader className="text-left">
           <UserFlag isCode location={st.code} size="44px" />
-          <DrawerTitle className="pt-2 text-base font-semibold">
+          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
             Exclusive opportunities for {st.nationality}
           </DrawerTitle>
-          <DrawerDescription className="text-sm text-slate-500">
+          <DrawerDescription className="font-primary text-sm text-[#6b5e50]">
             Sign up and receive exclusive opportunities available only to{' '}
             {st.nationality}.
           </DrawerDescription>
@@ -169,17 +169,17 @@ const Desktop = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className={cn(
-          'max-w-[23rem] overflow-hidden bg-white p-5',
+          'max-w-[23rem] overflow-hidden rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-5 shadow-[6px_6px_0_#1d1815]',
           isLoginOpen && 'invisible',
         )}
         hideCloseIcon
       >
         <DialogHeader className="">
           <UserFlag location={st.code} isCode size="44px" />
-          <DialogTitle className="pt-2 text-base font-semibold">
+          <DialogTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
             Exclusive opportunities for {st.nationality}
           </DialogTitle>
-          <DialogDescription className="text-sm text-slate-500">
+          <DialogDescription className="font-primary text-sm text-[#6b5e50]">
             Sign up and receive exclusive opportunities available only to{' '}
             {st.nationality}.
           </DialogDescription>
@@ -224,7 +224,7 @@ const People = ({
           ))}
         </AvatarGroupList>
       </AvatarGroup>
-      <p className="text-sm text-slate-500">
+      <p className="font-primary text-sm text-[#6b5e50]">
         Join {people[0]?.name.split(' ')[0]}, {people[1]?.name.split(' ')[0]} &{' '}
         {totalUsers?.toLocaleString('en-us')} others
       </p>

@@ -46,6 +46,31 @@ const Meta = (props: IMetaProps) => {
         href={`${router.basePath}/fow-favicon.svg`}
         key="icon-svg"
       />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href={`${router.basePath}/favicon-32x32.png`}
+        key="icon-32"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href={`${router.basePath}/favicon-16x16.png`}
+        key="icon-16"
+      />
+      <link
+        rel="shortcut icon"
+        href={`${router.basePath}/favicon.ico`}
+        key="icon-ico"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href={`${router.basePath}/apple-touch-icon.png`}
+        key="apple-touch-icon"
+      />
       <meta name="description" content={props.description} key="description" />
       {shouldNoIndex && (
         <>

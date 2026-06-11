@@ -578,9 +578,9 @@ export const SubmissionDrawer = ({
 
   return (
     <SideDrawer isOpen={isOpen} onClose={handleClose}>
-      <SideDrawerContent className="w-screen max-w-2xl px-2 sm:p-4">
+      <SideDrawerContent className="w-screen max-w-2xl border-l-2 border-[#1d1815] bg-[#FBF7EE] px-2 sm:p-4">
         <X
-          className="absolute top-10 right-4 z-10 h-4 w-4 text-slate-400 sm:top-8 sm:right-8"
+          className="absolute top-10 right-4 z-10 h-4 w-4 text-[#1d1815] sm:top-8 sm:right-8"
           onClick={handleClose}
         />
         <Form {...form}>
@@ -589,12 +589,14 @@ export const SubmissionDrawer = ({
             style={{ width: '100%', height: '100%' }}
           >
             <div className="flex h-full flex-col justify-between gap-6">
-              <ScrollArea className="h-full overflow-x-hidden overflow-y-auto rounded-lg border border-slate-200 px-2 shadow-[0px_1px_3px_rgba(0,0,0,0.08),_0px_1px_2px_rgba(0,0,0,0.06)]">
-                <div className="mb-4 border-b border-slate-100 bg-white py-3">
-                  <p className="text-lg font-medium text-slate-700">
+              <ScrollArea className="h-full overflow-x-hidden overflow-y-auto rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] px-2">
+                <div className="mb-4 border-b border-[#1d1815]/20 bg-[#FBF7EE] py-3">
+                  <p className="font-serif text-lg font-semibold text-[#1d1815]">
                     {headerText}
                   </p>
-                  <p className="text-sm text-slate-500">{subheadingText}</p>
+                  <p className="font-primary text-sm text-[#6b5e50]">
+                    {subheadingText}
+                  </p>
                 </div>
                 <div>
                   <div className="mb-5 flex flex-col gap-4">
@@ -616,8 +618,8 @@ export const SubmissionDrawer = ({
                               <div>
                                 <FormControl>
                                   <div className="mr-0.5 flex">
-                                    <div className="border-input bg-muted flex items-center gap-1 rounded-l-md border border-r-0 px-2 shadow-xs">
-                                      <p className="text-sm font-medium text-slate-500">
+                                    <div className="flex items-center gap-1 rounded-l-none border-2 border-r-0 border-[#1d1815] bg-[#f4eee3] px-2">
+                                      <p className="font-primary text-sm font-medium text-[#6b5e50]">
                                         https://
                                       </p>
                                     </div>
@@ -644,8 +646,7 @@ export const SubmissionDrawer = ({
                                           }
                                           size="sm"
                                           className={cn(
-                                            'absolute top-1/2 right-1 h-7 -translate-y-1/2 px-3 text-xs',
-                                            isPro && 'bg-zinc-900',
+                                            'absolute top-1/2 right-1 h-7 -translate-y-1/2 rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-3 text-xs text-[#1d1815] hover:bg-[#e6a12b]',
                                           )}
                                         >
                                           Verify
@@ -678,8 +679,8 @@ export const SubmissionDrawer = ({
                               <div>
                                 <FormControl>
                                   <div className="mr-0.5 flex">
-                                    <div className="border-input bg-muted flex items-center gap-1 rounded-l-md border border-r-0 px-2 shadow-xs">
-                                      <p className="text-sm font-medium text-slate-500">
+                                    <div className="flex items-center gap-1 rounded-l-none border-2 border-r-0 border-[#1d1815] bg-[#f4eee3] px-2">
+                                      <p className="font-primary text-sm font-medium text-[#6b5e50]">
                                         https://
                                       </p>
                                     </div>
@@ -706,8 +707,7 @@ export const SubmissionDrawer = ({
                                           }
                                           size="sm"
                                           className={cn(
-                                            'absolute top-1/2 right-1 h-7 -translate-y-1/2 px-3 text-xs',
-                                            isPro && 'bg-zinc-900',
+                                            'absolute top-1/2 right-1 h-7 -translate-y-1/2 rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-3 text-xs text-[#1d1815] hover:bg-[#e6a12b]',
                                           )}
                                         >
                                           Verify
@@ -744,8 +744,8 @@ export const SubmissionDrawer = ({
                                 <FormControl>
                                   {e.isLink || e.type === 'link' ? (
                                     <div className="flex">
-                                      <div className="border-input bg-muted flex items-center gap-1 rounded-l-md border border-r-0 px-2 shadow-xs">
-                                        <p className="text-sm font-medium text-slate-500">
+                                      <div className="flex items-center gap-1 rounded-l-none border-2 border-r-0 border-[#1d1815] bg-[#f4eee3] px-2">
+                                        <p className="font-primary text-sm font-medium text-[#6b5e50]">
                                           https://
                                         </p>
                                       </div>
@@ -820,9 +820,7 @@ export const SubmissionDrawer = ({
                     <Checkbox
                       id="terms"
                       className={cn(
-                        'data-[state=checked]:border-brand-purple data-[state=checked]:bg-brand-purple mt-1',
-                        isPro &&
-                          'border-zinc-400 data-[state=checked]:border-zinc-400 data-[state=checked]:bg-zinc-700',
+                        'mt-1 rounded-none border-2 border-[#1d1815] data-[state=checked]:border-[#1d1815] data-[state=checked]:bg-[#e6a12b] data-[state=checked]:text-[#1d1815]',
                       )}
                       checked={termsAccepted}
                       onCheckedChange={(checked) =>
@@ -831,7 +829,7 @@ export const SubmissionDrawer = ({
                     />
                     <label
                       htmlFor="terms"
-                      className="text-sm leading-none text-slate-600"
+                      className="font-primary text-sm leading-none text-[#6b5e50]"
                     >
                       I confirm that I have reviewed the scope of this track and
                       that my submission adheres to the specified requirements.
@@ -847,9 +845,7 @@ export const SubmissionDrawer = ({
                     <Checkbox
                       id="kyc-acknowledgement"
                       className={cn(
-                        'data-[state=checked]:border-brand-purple data-[state=checked]:bg-brand-purple',
-                        isPro &&
-                          'border-zinc-400 data-[state=checked]:border-zinc-400 data-[state=checked]:bg-zinc-700',
+                        'rounded-none border-2 border-[#1d1815] data-[state=checked]:border-[#1d1815] data-[state=checked]:bg-[#e6a12b] data-[state=checked]:text-[#1d1815]',
                       )}
                       checked={kycAcknowledged}
                       onCheckedChange={(checked) =>
@@ -858,7 +854,7 @@ export const SubmissionDrawer = ({
                     />
                     <label
                       htmlFor="kyc-acknowledgement"
-                      className="text-sm leading-4 text-slate-600"
+                      className="font-primary text-sm leading-4 text-[#6b5e50]"
                     >
                       {regionAckCopy}
                     </label>
@@ -868,24 +864,15 @@ export const SubmissionDrawer = ({
                 <div className="relative w-full">
                   <Button
                     className={cn(
-                      'ph-no-capture h-11 w-full gap-4',
+                      'ph-no-capture h-11 w-full gap-4 rounded-none border-2 border-[#1d1815] shadow-[3px_3px_0_#1d1815] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_#1d1815]',
                       isNotEligibleForPro
                         ? 'disabled:opacity-100'
                         : 'disabled:cursor-default disabled:opacity-70',
                       isNotEligibleForPro
-                        ? 'bg-zinc-300 text-zinc-700'
-                        : user?.isPro && isPro
-                          ? 'bg-zinc-900'
-                          : 'bg-brand-purple',
+                        ? 'bg-[#e7d3c1] text-[#1d1815]'
+                        : 'bg-[#e6a12b] text-[#1d1815] hover:bg-[#e6a12b]',
                       editMode &&
-                        (isPro
-                          ? 'border-zinc-900 text-white hover:text-white'
-                          : 'border-brand-purple hover:text-brand-purple-dark text-white'),
-                      user?.isPro && isPro && 'hover:bg-black',
-                      !user?.isPro &&
-                        isPro &&
-                        !isNotEligibleForPro &&
-                        'hover:opacity-90',
+                        'border-[#1d1815] bg-[#FBF7EE] text-[#1d1815] hover:bg-[#FBF7EE] hover:text-[#1d1815]',
                     )}
                     disabled={isDisabled}
                     type="submit"
@@ -932,12 +919,12 @@ export const SubmissionDrawer = ({
                     )}
                   </Button>
                 </div>
-                <p className="mt-2 text-center text-xs text-slate-400 sm:text-sm">
+                <p className="font-primary mt-2 text-center text-xs text-[#6b5e50] sm:text-sm">
                   By submitting/applying to this listing, you agree to our{' '}
                   <button
                     type="button"
                     onClick={() => setIsTOSModalOpen(true)}
-                    className="cursor-pointer underline underline-offset-2"
+                    className="cursor-pointer text-[#ce4a2b] underline underline-offset-2"
                     rel="noopener noreferrer"
                   >
                     Terms of Use

@@ -79,18 +79,17 @@ export function WalletDrawer({
       toast(
         <div className="relative flex flex-col gap-1">
           <X
-            className="absolute top-0 right-0 size-4 cursor-pointer text-slate-400 hover:text-slate-700"
+            className="absolute top-0 right-0 size-4 cursor-pointer text-[#6b5e50] hover:text-[#1d1815]"
             onClick={() => toast.dismiss()}
           />
           <div
             className={cn(
-              'text-brand-purple mt-1 pr-6 text-xl font-bold',
-              user?.isPro && 'text-zinc-700',
+              'font-serif mt-1 pr-6 text-xl font-semibold text-[#1d1815]',
             )}
           >
             Two-Factor Auth is Mandatory
           </div>
-          <div className="text-sm text-slate-600">
+          <div className="font-primary text-sm text-[#6b5e50]">
             Setting up two-factor authentication is mandatory to continue
             withdrawing. This will keep your funds secure.
           </div>
@@ -100,8 +99,7 @@ export function WalletDrawer({
               setView('withdraw');
             }}
             className={cn(
-              'bg-brand-purple hover:bg-brand-purple-dark mt-2 w-full rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition-colors',
-              user?.isPro && 'bg-zinc-700 hover:bg-zinc-800',
+              'mt-2 w-full rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-4 py-2.5 text-sm font-semibold text-[#1d1815] shadow-[3px_3px_0_#1d1815] transition-colors hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]',
             )}
           >
             Set up 2FA
@@ -110,7 +108,7 @@ export function WalletDrawer({
         {
           duration: 7000,
           style: {
-            border: '1px solid #7471ff',
+            border: '2px solid #1d1815',
             padding: '1rem',
           },
           className: 'shadow-lg',
@@ -124,26 +122,26 @@ export function WalletDrawer({
 
   return (
     <SideDrawer isOpen={isOpen} onClose={handleClose}>
-      <SideDrawerContent className="w-screen overflow-hidden sm:w-120">
+      <SideDrawerContent className="w-screen overflow-hidden border-l-2 border-[#1d1815] bg-[#FBF7EE] sm:w-120">
         <ScrollArea className="h-full overflow-y-auto">
           <X
-            className="absolute top-5 right-4 z-10 h-5 w-5 cursor-pointer text-slate-600 sm:hidden"
+            className="absolute top-5 right-4 z-10 h-5 w-5 cursor-pointer text-[#1d1815] sm:hidden"
             onClick={onClose}
           />
           <div className="flex h-full flex-col">
             <div
               className={cn(
-                'items-center border-b bg-slate-50 py-5 pb-4',
+                'items-center border-b border-[#1d1815]/20 bg-[#f4eee3] py-5 pb-4',
                 padding,
               )}
             >
               <div className="flex items-baseline gap-2">
-                <h2 className="text-lg font-semibold tracking-tight">
+                <h2 className="font-serif text-lg font-semibold tracking-tight text-[#1d1815]">
                   {user?.firstName + "'s Wallet"}
                 </h2>
                 <CopyButton
                   text={user?.walletAddress || ''}
-                  className="flex cursor-pointer items-center gap-1 text-slate-500 hover:text-slate-700"
+                  className="font-primary flex cursor-pointer items-center gap-1 text-[#6b5e50] hover:text-[#1d1815]"
                   contentProps={{ side: 'right' }}
                   content={'Click to copy'}
                 >
@@ -153,11 +151,11 @@ export function WalletDrawer({
                   <CopyIcon className="size-2.5" />
                 </CopyButton>
               </div>
-              <p className="text-sm font-medium text-slate-500">
+              <p className="font-primary text-sm font-medium text-[#6b5e50]">
                 You will receive payments in this wallet each time you win.{' '}
                 <a
                   href="https://superteamdao.notion.site/using-your-earn-wallet"
-                  className="underline"
+                  className="text-[#ce4a2b] underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -166,23 +164,26 @@ export function WalletDrawer({
                 about what you can do with your rewards.
               </p>
             </div>
-            <div className={cn('bg-slate-50 py-4', padding)}>
+            <div className={cn('bg-[#f4eee3] py-4', padding)}>
               <div className="flex items-baseline gap-1">
-                <p className="text-3xl font-semibold tracking-tight text-slate-900">
+                <p className="font-serif text-3xl font-semibold tracking-tight text-[#1d1815]">
                   ${formatNumberWithSuffix(totalBalance || 0, 2, true)}
                 </p>
-                <p className="text-xl font-semibold tracking-tight text-slate-500">
+                <p className="font-serif text-xl font-semibold tracking-tight text-[#6b5e50]">
                   USD
                 </p>
               </div>
-              <p className="text-base font-medium text-slate-400">BALANCE</p>
+              <p className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
+                BALANCE
+              </p>
               {view === 'main' && (
                 <div className="w-full items-end justify-between">
                   <Button
                     onClick={handleWithdraw}
                     className={cn(
-                      'bg-brand-purple mt-3 rounded-lg px-5 text-base',
-                      user?.isPro && 'bg-zinc-700 hover:bg-zinc-800',
+                      'mt-3 rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-5 text-base text-[#1d1815] shadow-[3px_3px_0_#1d1815] hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]',
+                      user?.isPro &&
+                        'border-2 border-[#1d1815] bg-[#e6a12b] hover:bg-[#e6a12b]',
                     )}
                     disabled={!tokens?.length}
                   >
@@ -191,7 +192,7 @@ export function WalletDrawer({
                   </Button>
                   <div
                     onClick={() => showMfaEnrollmentModal()}
-                    className="mt-1.5 cursor-pointer py-0.5 text-xs font-semibold text-slate-400 hover:text-slate-500 hover:underline"
+                    className="font-primary mt-1.5 cursor-pointer py-0.5 text-xs font-semibold text-[#6b5e50] hover:text-[#1d1815] hover:underline"
                   >
                     {privyUser?.mfaMethods.length === 0
                       ? '+ Add Two Factor Authentication'
@@ -204,7 +205,7 @@ export function WalletDrawer({
               <>
                 <div
                   className={cn(
-                    'border-b pt-6 pb-2 text-sm font-medium text-slate-500',
+                    'font-secondary border-b border-[#1d1815]/20 pt-6 pb-2 text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase',
                     padding,
                   )}
                 >
@@ -218,7 +219,7 @@ export function WalletDrawer({
 
                 <div
                   className={cn(
-                    'border-b pt-6 pb-2 text-sm font-medium text-slate-500',
+                    'font-secondary border-b border-[#1d1815]/20 pt-6 pb-2 text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase',
                     padding,
                   )}
                 >
@@ -228,16 +229,16 @@ export function WalletDrawer({
               </>
             )}
             {view !== 'main' && (
-              <div className="flex items-center border-b py-1.5">
+              <div className="flex items-center border-b border-[#1d1815]/20 py-1.5">
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={handleBack}
                   className="mr-1 ml-4"
                 >
-                  <ArrowLeft className="h-4 w-4 text-slate-400" />
+                  <ArrowLeft className="h-4 w-4 text-[#1d1815]" />
                 </Button>
-                <h2 className="text-sm font-medium text-slate-500">
+                <h2 className="font-serif text-sm font-semibold text-[#1d1815]">
                   {view === 'withdraw' && 'Withdraw Funds'}
                   {view === 'success' && 'Successfully Withdrawn'}
                 </h2>
@@ -254,21 +255,21 @@ export function WalletDrawer({
                 />
               </div>
             )}
-            <p className="sticky bottom-0 mt-auto bg-white px-2 py-2 text-center text-xs text-slate-400 sm:text-sm">
+            <p className="font-primary sticky bottom-0 mt-auto bg-[#FBF7EE] px-2 py-2 text-center text-xs text-[#6b5e50] sm:text-sm">
               Have questions? Reach out to us at{' '}
               {isMD ? (
-                <CopyButton text="support@superteam.fun">
-                  <p className="underline hover:text-slate-500">
-                    support@superteam.fun
+                <CopyButton text="eng@christex.foundation">
+                  <p className="text-[#ce4a2b] underline hover:text-[#ce4a2b]/80">
+                    eng@christex.foundation
                   </p>
                 </CopyButton>
               ) : (
                 <a
-                  href="mailto:support@superteam.fun"
-                  className="underline hover:text-slate-500"
+                  href="mailto:eng@christex.foundation"
+                  className="text-[#ce4a2b] underline hover:text-[#ce4a2b]/80"
                   target="_blank"
                 >
-                  support@superteam.fun
+                  eng@christex.foundation
                 </a>
               )}
             </p>

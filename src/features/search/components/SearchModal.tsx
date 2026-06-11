@@ -113,7 +113,7 @@ export function SearchModal({ isOpen, onClose }: Props) {
       <DialogContent
         hideCloseIcon
         className={cn(
-          'border-none p-0 backdrop-blur-md sm:max-w-xl',
+          'rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-0 shadow-[6px_6px_0_#1d1815] backdrop-blur-md sm:max-w-xl',
           'fixed top-20 left-1/2 -translate-x-1/2',
           'block! translate-y-0!',
         )}
@@ -126,12 +126,12 @@ export function SearchModal({ isOpen, onClose }: Props) {
 
             router.push(`/earn/search?q=${encodeURIComponent(inputValue)}`);
           }}
-          className="relative"
+          className="relative border-b-2 border-[#1d1815]"
         >
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6b5e50]" />
           <Input
             className={cn(
-              'border-none bg-slate-100 pr-10 pl-10',
+              'rounded-none border-none bg-[#FBF7EE] pr-10 pl-10 text-[#1d1815] placeholder:text-[#6b5e50]/60',
               'text-sm md:text-base',
               'focus-visible:ring-0 focus-visible:ring-offset-0',
             )}
@@ -145,10 +145,10 @@ export function SearchModal({ isOpen, onClose }: Props) {
           />
           <button
             type="submit"
-            className="absolute top-1/2 right-3 -translate-y-1/2 text-slate-400"
+            className="absolute top-1/2 right-3 -translate-y-1/2 text-[#ce4a2b]"
           >
             {isFetching ? (
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-400 border-t-transparent" />
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#6b5e50] border-t-transparent" />
             ) : (
               <ArrowRight className="h-4 w-4" />
             )}
@@ -180,8 +180,8 @@ export function SearchModal({ isOpen, onClose }: Props) {
               <Button
                 variant="ghost"
                 className={cn(
-                  'hover:bg-brand-purple w-full gap-2 text-sm font-normal hover:text-white',
-                  'rounded-none border-t border-slate-100',
+                  'w-full gap-2 text-sm font-normal text-[#1d1815] hover:bg-[#e6a12b] hover:text-[#1d1815]',
+                  'rounded-none border-t-2 border-[#1d1815]',
                 )}
               >
                 View All Results <ArrowRight className="h-4 w-4" />

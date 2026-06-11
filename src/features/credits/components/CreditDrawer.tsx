@@ -139,50 +139,50 @@ export function CreditDrawer({
 
   return (
     <SideDrawer isOpen={isOpen} onClose={handleClose}>
-      <SideDrawerContent className="flex h-full w-screen flex-col overflow-hidden sm:w-[30rem]">
+      <SideDrawerContent className="flex h-full w-screen flex-col overflow-hidden border-l-2 border-[#1d1815] bg-[#FBF7EE] sm:w-[30rem]">
         <X
-          className="absolute top-5 right-4 z-10 h-5 w-5 cursor-pointer text-slate-600 sm:hidden"
+          className="absolute top-5 right-4 z-10 h-5 w-5 cursor-pointer text-[#1d1815] sm:hidden"
           onClick={onClose}
         />
 
         <div className="flex h-full flex-col">
           <div
             className={cn(
-              'items-center border-b bg-slate-50 py-5 pb-4',
+              'items-center border-b border-[#1d1815]/20 bg-[#f4eee3] py-5 pb-4',
               padding,
             )}
           >
             <div className="flex items-baseline gap-2">
-              <h2 className="flex items-center gap-1 text-lg font-semibold tracking-tight">
+              <h2 className="font-serif flex items-center gap-1 text-lg font-semibold tracking-tight text-[#1d1815]">
                 Credit History
                 <Tooltip
                   contentProps={{ className: 'z-[200]' }}
                   content="See what led to changes in your submission credit balance. Your credits are affected by bounty and project submissions, as well as wins and spam reports across grants, and listings."
                 >
-                  <Info className="size-4 text-slate-500" />
+                  <Info className="size-4 text-[#6b5e50]" />
                 </Tooltip>
               </h2>
             </div>
           </div>
-          <div className={cn('bg-slate-50 py-4', padding)}>
+          <div className={cn('bg-[#f4eee3] py-4', padding)}>
             <div className="flex w-full items-baseline justify-between gap-1">
               <div>
-                <p className="text-sm font-medium tracking-tight text-slate-500">
+                <p className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
                   CURRENT BALANCE
                 </p>
                 <div className="mt-1.5 flex items-center gap-1">
                   <CreditIcon className="text-brand-purple size-5 sm:size-6" />
-                  <p className="text-base font-semibold text-slate-800 sm:text-lg">
+                  <p className="font-serif text-base font-semibold text-[#1d1815] sm:text-lg">
                     {creditBalance} Credits
                   </p>
                 </div>
               </div>
 
               <div>
-                <p className="text-sm font-medium tracking-tight text-slate-500">
+                <p className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
                   {creditBalance <= 0 ? 'RENEWS IN' : 'EXPIRES IN'}
                 </p>
-                <p className="mt-1.5 text-base font-medium text-slate-800 sm:text-lg">
+                <p className="font-serif mt-1.5 text-base font-medium text-[#1d1815] sm:text-lg">
                   <Countdown
                     date={
                       new Date(
@@ -204,12 +204,14 @@ export function CreditDrawer({
             </div>
           </div>
 
-          <ScrollArea className="flex-1 overflow-y-auto bg-white">
+          <ScrollArea className="flex-1 overflow-y-auto bg-[#FBF7EE]">
             {isLoading ? (
               <CreditHistorySkeleton />
             ) : creditHistory?.data?.length === 0 ? (
               <div className="flex justify-center py-8">
-                <p className="text-slate-500">No credit history available</p>
+                <p className="font-primary text-[#6b5e50]">
+                  No credit history available
+                </p>
               </div>
             ) : (
               <div className="mb-4 pb-2">
@@ -217,8 +219,10 @@ export function CreditDrawer({
                   <CreditHistoryCard
                     title={
                       <div className="flex gap-1">
-                        <h2 className="text-sm font-medium">Upcoming Month</h2>
-                        <p className="mt-0.5 flex items-center gap-0.5 text-xs text-slate-500">
+                        <h2 className="font-serif text-sm font-semibold text-[#1d1815]">
+                          Upcoming Month
+                        </h2>
+                        <p className="font-primary mt-0.5 flex items-center gap-0.5 text-xs text-[#6b5e50]">
                           (Expected:{' '}
                           <span className="flex items-center gap-1 font-medium">
                             {upcomingMonthEntries.reduce(
@@ -234,7 +238,7 @@ export function CreditDrawer({
                           contentProps={{ className: 'z-[200]' }}
                           content="This shows your win or spam activity for the current month, and how it will affect your Submission Credit balance in the next month."
                         >
-                          <Info className="mt-0.5 size-3.5 text-slate-500" />
+                          <Info className="mt-0.5 size-3.5 text-[#6b5e50]" />
                         </Tooltip>
                       </div>
                     }
@@ -244,7 +248,11 @@ export function CreditDrawer({
                 )}
                 {currentMonthEntries.length > 0 && (
                   <CreditHistoryCard
-                    title={<h2 className="text-sm font-medium">This Month</h2>}
+                    title={
+                      <h2 className="font-serif text-sm font-semibold text-[#1d1815]">
+                        This Month
+                      </h2>
+                    }
                     entries={currentMonthEntries}
                     disputeSubmissionId={disputeSubmissionId}
                   />
@@ -252,7 +260,9 @@ export function CreditDrawer({
                 {pastMonthEntries.length > 0 && (
                   <CreditHistoryCard
                     title={
-                      <h2 className="text-sm font-medium">Past 3 Months</h2>
+                      <h2 className="font-serif text-sm font-semibold text-[#1d1815]">
+                        Past 3 Months
+                      </h2>
                     }
                     entries={pastMonthEntries}
                     disputeSubmissionId={disputeSubmissionId}
@@ -262,9 +272,9 @@ export function CreditDrawer({
             )}
           </ScrollArea>
 
-          <div className="w-full border-t border-slate-50 bg-white py-1 shadow-[0_-2px_3px_rgba(0,0,0,0.05)]">
-            <p className="mx-auto flex items-center justify-center text-xs text-slate-400 transition-colors sm:text-sm">
-              <span className="mr-1 cursor-pointer underline">
+          <div className="w-full border-t border-[#1d1815]/20 bg-[#FBF7EE] py-1">
+            <p className="font-primary mx-auto flex items-center justify-center text-xs text-[#6b5e50] transition-colors sm:text-sm">
+              <span className="mr-1 cursor-pointer text-[#ce4a2b] underline">
                 <a
                   href="https://superteamdao.notion.site/submission-credits"
                   target="_blank"
@@ -288,7 +298,7 @@ function CreditHistorySkeleton() {
         <div className="flex items-center gap-1 px-4 pt-5 pb-3">
           <Skeleton className="h-4 w-20" />
         </div>
-        <div className="border-t border-slate-200" />
+        <div className="border-t border-[#1d1815]/20" />
         <div className="space-y-0">
           {Array.from({ length: 3 }).map((_, index) => (
             <div
@@ -318,7 +328,7 @@ function CreditHistorySkeleton() {
         <div className="flex items-center gap-1 px-4 pt-5 pb-3">
           <Skeleton className="h-4 w-24" />
         </div>
-        <div className="border-t border-slate-200" />
+        <div className="border-t border-[#1d1815]/20" />
         <div className="space-y-0">
           {Array.from({ length: 2 }).map((_, index) => (
             <div

@@ -3,7 +3,7 @@ import { configure, done, start } from 'nprogress';
 import { useEffect } from 'react';
 
 export const TopLoader = () => {
-  const color = '#6366F1';
+  const color = '#ce4a2b';
   const height = 3;
 
   const boxShadow = `box-shadow:0 0 10px ${color},0 0 5px ${color}`;

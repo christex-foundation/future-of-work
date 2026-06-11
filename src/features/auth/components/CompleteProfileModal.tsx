@@ -38,23 +38,25 @@ export function CompleteProfileModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="rounded-xl bg-white px-6 py-6 shadow-xl sm:max-w-md lg:max-w-md">
+      <DialogContent className="rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] px-6 py-6 shadow-[6px_6px_0_#1d1815] sm:max-w-md lg:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">{header}</DialogTitle>
+          <DialogTitle className="font-serif text-xl font-semibold text-[#1d1815]">
+            {header}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="px-0">
-          <p className="text-slate-500">{body}</p>
+          <p className="font-primary text-[#6b5e50]">{body}</p>
         </div>
 
         <DialogFooter className="px-0 pt-2">
           <Button
-            className="ph-no-capture h-10 w-full"
+            className="ph-no-capture h-10 w-full rounded-none border-2 border-[#1d1815] bg-[#e6a12b] text-[#1d1815] shadow-[3px_3px_0_#1d1815] hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]"
             asChild
             onClick={() => posthog.capture('complete profile_CTA pop up')}
           >
             <Link href={`/earn/new/talent?originUrl=${router.asPath}`}>
-              {CTA}
+              {CTA} →
             </Link>
           </Button>
         </DialogFooter>

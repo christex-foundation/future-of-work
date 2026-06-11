@@ -144,19 +144,19 @@ const Desktop = ({
         }}
         unsetDefaultPosition
         unsetDefaultTransition
-        className="data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-right-full right-4 bottom-4 max-w-[22.5rem] translate-x-0 translate-y-0 overflow-hidden duration-500"
+        className="data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-right-full right-4 bottom-4 max-w-[22.5rem] translate-x-0 translate-y-0 overflow-hidden rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-5 shadow-[6px_6px_0_#1d1815] duration-500"
       >
         <DialogHeader className="">
           <LocalImage
             src={variant?.sponsorLogo || ''}
             alt={`${variant?.sponsorName} logo`}
-            className="h-12 w-12 rounded-md"
+            className="h-12 w-12 rounded-none border-2 border-[#1d1815]"
             loading="eager"
           />
-          <DialogTitle className="pt-2 text-base font-semibold">
+          <DialogTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
             {variant?.title}
           </DialogTitle>
-          <DialogDescription className="text-sm text-slate-500">
+          <DialogDescription className="font-primary text-sm text-[#6b5e50]">
             {variant?.description}
           </DialogDescription>
         </DialogHeader>
@@ -184,19 +184,19 @@ const Mobile = ({
         classNames={{
           overlay: isLoginOpen ? 'z-200' : '',
         }}
-        className="border-0! ring-0!"
+        className="border-t-2! border-[#1d1815]! bg-[#FBF7EE] ring-0!"
       >
         <DrawerHeader className="text-left">
           <LocalImage
             src={variant?.sponsorLogo || ''}
             alt={`${variant?.sponsorName} logo`}
-            className="w-12 rounded-md object-contain"
+            className="w-12 rounded-none border-2 border-[#1d1815] object-contain"
             loading="eager"
           />
-          <DrawerTitle className="pt-2 text-base font-semibold">
+          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
             {variant?.title}
           </DrawerTitle>
-          <DrawerDescription className="text-sm text-slate-500">
+          <DrawerDescription className="font-primary text-sm text-[#6b5e50]">
             {variant?.description}
           </DrawerDescription>
         </DrawerHeader>

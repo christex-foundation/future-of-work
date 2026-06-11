@@ -22,7 +22,7 @@ const AlertOption = ({
   onCategoryChange,
 }: AlertOptionProps) => (
   <div className="flex items-center justify-between">
-    <p className="mt-1 font-medium text-slate-500">{title}</p>
+    <p className="mt-1 font-primary font-medium text-[#6b5e50]">{title}</p>
     <Switch
       autoFocus={false}
       className="mt-0.5"
@@ -79,17 +79,17 @@ export const EmailSettingsModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="p-2">
+      <DialogContent className="rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-2 shadow-[6px_6px_0_#1d1815]">
         <div className="px-3 py-6 sm:px-6">
-          <h2 className="text-2xl font-semibold text-slate-700">
+          <h2 className="font-serif text-2xl font-semibold text-[#1d1815]">
             Update Email Preferences
           </h2>
-          <p className="mt-1 font-medium text-slate-400">
+          <p className="mt-1 font-primary font-medium text-[#6b5e50]">
             Tell us which emails you would like to receive!
           </p>
           {showSponsorAlerts && (
             <div className="mt-6">
-              <p className="mt-6 mb-1 text-sm tracking-[0.8px] text-slate-400">
+              <p className="font-secondary mt-6 mb-1 text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
                 SPONSOR ALERTS
               </p>
               <AlertOption
@@ -114,7 +114,7 @@ export const EmailSettingsModal = ({
           )}
           {showTalentAlerts && (
             <div className="mt-6">
-              <p className="mt-6 mb-1 text-sm tracking-[0.8px] text-slate-400">
+              <p className="font-secondary mt-6 mb-1 text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
                 TALENT ALERTS
               </p>
               <AlertOption
@@ -145,7 +145,7 @@ export const EmailSettingsModal = ({
           )}
           {(showTalentAlerts || showSponsorAlerts) && (
             <div className="mt-6">
-              <p className="mt-6 mb-1 text-sm tracking-[0.8px] text-slate-400">
+              <p className="font-secondary mt-6 mb-1 text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
                 GENERAL ALERTS
               </p>
               <AlertOption
@@ -166,14 +166,14 @@ export const EmailSettingsModal = ({
 
         <div className="px-2 sm:px-4">
           <Button
-            className="ph-no-capture mb-3 w-full"
+            className="ph-no-capture mb-3 w-full rounded-none border-2 border-[#1d1815] bg-[#e6a12b] text-[#1d1815] shadow-[3px_3px_0_#1d1815] hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]"
             disabled={isUpdating}
             onClick={updateEmailSettings}
           >
             {isUpdating ? (
               <span>Updating Preferences..</span>
             ) : (
-              <span>Update Preferences</span>
+              <span>Update Preferences →</span>
             )}
           </Button>
         </div>

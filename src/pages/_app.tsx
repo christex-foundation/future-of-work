@@ -97,7 +97,28 @@ function App({ Component, pageProps }: AppProps) {
               rel="icon"
               type="image/svg+xml"
               href="/fow-favicon.svg"
-              key="icon-png"
+              key="icon-svg"
+            />
+            <link
+              rel="icon"
+              type="image/png"
+              sizes="32x32"
+              href="/favicon-32x32.png"
+              key="icon-32"
+            />
+            <link
+              rel="icon"
+              type="image/png"
+              sizes="16x16"
+              href="/favicon-16x16.png"
+              key="icon-16"
+            />
+            <link rel="shortcut icon" href="/favicon.ico" key="icon-ico" />
+            <link
+              rel="apple-touch-icon"
+              sizes="180x180"
+              href="/apple-touch-icon.png"
+              key="apple-touch-icon"
             />
           </Head>
           <Header className="mx-auto px-10 md:px-[72px]" />

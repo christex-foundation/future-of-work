@@ -106,7 +106,7 @@ const Mobile = ({
         classNames={{
           overlay: isLoginOpen ? 'z-200' : '',
         }}
-        className="border-0! ring-0!"
+        className="border-t-2! border-[#1d1815]! bg-[#FBF7EE] ring-0!"
       >
         <DrawerHeader className="text-left">
           <img
@@ -114,12 +114,12 @@ const Mobile = ({
             alt={`${variant?.title}`}
             width={48}
             height={48}
-            className="w-12 rounded-md object-contain"
+            className="w-12 rounded-none border-2 border-[#1d1815] object-contain"
           />
-          <DrawerTitle className="pt-2 text-base font-semibold">
+          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
             {variant?.title}
           </DrawerTitle>
-          <DrawerDescription className="text-sm text-slate-500">
+          <DrawerDescription className="font-primary text-sm text-[#6b5e50]">
             {variant?.description}
           </DrawerDescription>
         </DrawerHeader>
@@ -145,7 +145,7 @@ const Desktop = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className={cn(
-          'max-w-[23rem] overflow-hidden bg-white p-5',
+          'max-w-[23rem] overflow-hidden rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-5 shadow-[6px_6px_0_#1d1815]',
           isLoginOpen && 'invisible',
         )}
         hideCloseIcon
@@ -156,12 +156,12 @@ const Desktop = ({
             alt={`${variant?.title}`}
             width={48}
             height={48}
-            className="w-12 rounded-md object-contain"
+            className="w-12 rounded-none border-2 border-[#1d1815] object-contain"
           />
-          <DialogTitle className="pt-2 text-base font-semibold">
+          <DialogTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
             {variant?.title}
           </DialogTitle>
-          <DialogDescription className="text-sm text-slate-500">
+          <DialogDescription className="font-primary text-sm text-[#6b5e50]">
             {variant?.description}
           </DialogDescription>
         </DialogHeader>

@@ -22,7 +22,7 @@ export const XVerificationModal = ({
           <div className="h-full">
             <div className="mx-auto flex max-w-[20rem] flex-col items-center pt-20 pb-16">
               <div className="flex gap-1.5">
-                <p className="text-brand-purple font-medium">
+                <p className="font-serif font-semibold text-[#1d1815]">
                   Verifying your X profile
                 </p>
                 <div className="flex items-end gap-1 pb-[0.45rem]">
@@ -42,21 +42,21 @@ export const XVerificationModal = ({
                      }
                    `}</style>
                   <div
-                    className="bg-brand-purple size-1 rounded-full"
+                    className="size-1 rounded-full bg-[#e6a12b]"
                     style={{
                       animation: 'bigBounce 1s infinite',
                       animationDelay: '-0.3s',
                     }}
                   ></div>
                   <div
-                    className="bg-brand-purple size-1 rounded-full"
+                    className="size-1 rounded-full bg-[#e6a12b]"
                     style={{
                       animation: 'bigBounce 1s infinite',
                       animationDelay: '-0.15s',
                     }}
                   ></div>
                   <div
-                    className="bg-brand-purple size-1 rounded-full"
+                    className="size-1 rounded-full bg-[#e6a12b]"
                     style={{
                       animation: 'bigBounce 1s infinite',
                     }}
@@ -64,7 +64,7 @@ export const XVerificationModal = ({
                 </div>
               </div>
             </div>
-            <p className="bg-slate-50 py-2 text-center text-xs font-medium text-slate-500">
+            <p className="font-secondary border-t-2 border-dashed border-[#1d1815]/20 bg-[#f4eee3] py-2 text-center text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
               X verification is open in a different tab
             </p>
           </div>
@@ -74,23 +74,23 @@ export const XVerificationModal = ({
           <div className="flex h-full flex-col">
             <div className="pt-12">
               <div className="flex items-center justify-center">
-                <div className="flex items-center justify-center rounded-full bg-red-50 p-6">
-                  <div className="rounded-full bg-red-600 p-2.5">
+                <div className="flex items-center justify-center rounded-full bg-[#ce4a2b]/10 p-6">
+                  <div className="rounded-full bg-[#ce4a2b] p-2.5">
                     <X className="size-7 text-white" strokeWidth={3} />
                   </div>
                 </div>
               </div>
 
               <div className="mx-auto flex max-w-[24rem] flex-col items-center gap-1 pb-12">
-                <p className="mt-6 font-medium text-slate-900">
+                <p className="mt-6 font-serif text-lg font-semibold text-[#1d1815]">
                   Uh-Oh Verification Failed
                 </p>
                 {handle ? (
-                  <p className="text-center text-sm text-slate-500">
+                  <p className="font-primary text-center text-sm text-[#6b5e50]">
                     {`We couldn’t verify if you own the @${handle} profile on X. Make sure you’re logged into the correct X profile during authorisation.`}
                   </p>
                 ) : (
-                  <p className="text-center text-sm text-slate-500">
+                  <p className="font-primary text-center text-sm text-[#6b5e50]">
                     We couldn&apos;t verify your X account. Please try again.
                   </p>
                 )}
@@ -111,7 +111,7 @@ export const XVerificationModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange} modal>
       <DialogContent
-        className="m-0 max-w-md rounded-none p-0 sm:rounded-none"
+        className="m-0 max-w-md rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-0 shadow-[6px_6px_0_#1d1815] sm:rounded-none"
         hideCloseIcon
       >
         <div>{renderContent()}</div>

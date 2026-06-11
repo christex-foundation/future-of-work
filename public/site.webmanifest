@@ -1,6 +1,6 @@
 {
-  "name": "Superteam Earn",
-  "short_name": "Earn",
+  "name": "Future of Work",
+  "short_name": "Future of Work",
   "start_url": "/",
   "icons": [
     {
@@ -14,8 +14,8 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#CE4A2B",
+  "background_color": "#1D1815",
   "display": "standalone",
   "orientation": "portrait"
 }

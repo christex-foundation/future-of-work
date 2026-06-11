@@ -130,12 +130,12 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
       >
         {children}
       </DialogTrigger>
-      <DialogContent className="gap-2 px-0 sm:max-w-xl">
-        <DialogHeader className="border-b px-6 pb-4">
-          <DialogTitle className="text-lg font-semibold">
+      <DialogContent className="gap-2 rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] px-0 shadow-[6px_6px_0_#1d1815] sm:max-w-xl">
+        <DialogHeader className="border-b-2 border-dashed border-[#1d1815]/20 px-6 pb-4">
+          <DialogTitle className="font-serif text-lg font-semibold text-[#1d1815]">
             Get In Touch With Us
           </DialogTitle>
-          <DialogDescription className="text-sm">
+          <DialogDescription className="font-primary text-sm text-[#6b5e50]">
             Describe what you need from us, and we&apos;ll get in touch with you
             as soon as possible
           </DialogDescription>
@@ -156,7 +156,12 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
                       Email
                     </FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="Your email" {...field} />
+                      <Input
+                        type="email"
+                        placeholder="Your email"
+                        className="rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] text-[#1d1815] placeholder:text-[#6b5e50]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -173,7 +178,11 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
                     Subject
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Add a short subject line" {...field} />
+                    <Input
+                      placeholder="Add a short subject line"
+                      className="rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] text-[#1d1815] placeholder:text-[#6b5e50]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -191,7 +200,7 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
                   <FormControl>
                     <Textarea
                       placeholder="Write a short description on how we can help"
-                      className="min-h-[150px]"
+                      className="min-h-[150px] rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] text-[#1d1815] placeholder:text-[#6b5e50]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
                       {...field}
                     />
                   </FormControl>
@@ -202,10 +211,10 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
 
             <Button
               type="submit"
-              className="w-full bg-indigo-500 hover:bg-indigo-600"
+              className="w-full rounded-none border-2 border-[#1d1815] bg-[#e6a12b] text-[#1d1815] shadow-[3px_3px_0_#1d1815] hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Sending...' : 'Continue'}
+              {isSubmitting ? 'Sending...' : 'Continue →'}
             </Button>
           </form>
         </Form>
