@@ -14,6 +14,7 @@ import {
   generateWebSiteSchema,
 } from '@/utils/json-ld';
 
+import { EarnHomeHero } from '@/features/home/components/EarnHomeHero';
 import { userCountQuery } from '@/features/home/queries/user-count';
 import { ListingsSection } from '@/features/listings/components/ListingsSection';
 
@@ -76,6 +77,7 @@ export default function HomePage({
     >
       <div className="mx-auto w-full px-4 py-6 lg:px-12 lg:py-10">
         <div className="mx-auto w-full max-w-[88rem] p-0">
+          <EarnHomeHero />
           <ListingsSection type="home" potentialSession={potentialSession} />
         </div>
       </div>

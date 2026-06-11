@@ -36,16 +36,16 @@ export const NavItem = ({
       onClick={onClick}
       aria-label={typeof children === 'string' ? children : undefined}
       className={cn(
-        'group relative grid size-[46px] place-items-center rounded-[14px] transition-all duration-200',
+        'group relative grid size-[46px] place-items-center rounded-[14px] border-2 transition-all duration-200',
         isActiveLink
-          ? 'bg-[#E6A12B] text-[#1D1815]'
-          : 'text-[#E7D3C1]/55 hover:bg-[#E7D3C1]/[0.07] hover:text-[#E7D3C1]',
+          ? 'border-[#1d1815] bg-[#E6A12B] text-[#1D1815]'
+          : 'border-transparent text-[#6B5E50] hover:bg-[#1d1815]/5 hover:text-[#1D1815]',
         className,
       )}
     >
       {/* active indicator bar */}
       {isActiveLink && (
-        <span className="absolute top-1/2 -left-[19px] h-6 w-1 -translate-y-1/2 rounded-r-[4px] bg-[#E6A12B]" />
+        <span className="absolute top-1/2 -left-[19px] h-6 w-1 -translate-y-1/2 bg-[#E6A12B]" />
       )}
 
       {Icon && <Icon className="size-5" />}

@@ -103,7 +103,7 @@ export function UserMenu({
           className={cn(
             'ph-no-capture focus:outline-hidden',
             isRail
-              ? 'relative grid size-[42px] place-items-center overflow-hidden rounded-[13px] border-2 border-[rgba(231,211,193,0.2)] transition-transform duration-200 hover:scale-105'
+              ? 'relative grid size-[42px] place-items-center overflow-hidden rounded-[13px] border-2 border-[#1d1815] transition-transform duration-200 hover:scale-105'
               : 'rounded-lg border border-white px-2 py-1 transition-all duration-100 hover:bg-slate-100 active:border-slate-300 active:bg-slate-200 data-[state=open]:bg-slate-100',
           )}
           aria-label={isRail ? 'Your profile' : undefined}
@@ -119,7 +119,7 @@ export function UserMenu({
                 avatar={user?.photo}
               />
               {!hasSeenTelegramAlerts() && (
-                <span className="absolute top-1 right-1 block size-2 rounded-full bg-sky-400 ring-2 ring-[#1D1815]" />
+                <span className="absolute top-1 right-1 block size-2 rounded-full bg-sky-400 ring-2 ring-[#F4EEE3]" />
               )}
             </>
           ) : (

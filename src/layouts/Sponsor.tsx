@@ -20,6 +20,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { LocalImage } from '@/components/ui/local-image';
 import { Tooltip } from '@/components/ui/tooltip';
 import { JTTG } from '@/constants/Telegram';
 import { SolanaWalletProvider } from '@/context/SolanaWallet';
@@ -277,10 +278,23 @@ export function SponsorLayout({
           {/* slim icon rail */}
           <aside
             className={cn(
-              'z-10 flex w-[84px] max-w-[84px] min-w-[84px] flex-col items-center border-r border-[rgba(231,211,193,0.08)] bg-[#1D1815] py-5',
+              'z-10 flex w-[84px] max-w-[84px] min-w-[84px] flex-col items-center border-r-2 border-[#1d1815] bg-[#F4EEE3] py-5',
               isCollapsible ? 'fixed top-12 bottom-0 left-0' : 'static',
             )}
           >
+            {/* logo */}
+            <Link
+              href="/earn/dashboard/listings"
+              aria-label="Future of Work"
+              className="mb-5"
+            >
+              <LocalImage
+                className="size-10 object-contain"
+                alt="Future of Work"
+                src="/fow-favicon.svg"
+              />
+            </Link>
+
             {/* nav icons */}
             <nav className="flex flex-col items-center gap-1.5">
               {LinkItems.map((link) => (
@@ -312,7 +326,7 @@ export function SponsorLayout({
                         type="button"
                         aria-label="Create new listing"
                         className={cn(
-                          'ph-no-capture grid size-[46px] place-items-center rounded-[14px] bg-[#CE4A2B] text-white transition-all duration-200 hover:bg-[#A6371C]',
+                          'ph-no-capture grid size-[46px] place-items-center rounded-[14px] border-2 border-[#1d1815] bg-[#CE4A2B] text-[#f4eee3] transition-all duration-200 hover:bg-[#A6371C]',
                           'disabled:cursor-not-allowed disabled:opacity-50',
                         )}
                         disabled={isCreateLocked}
@@ -370,7 +384,7 @@ export function SponsorLayout({
                 <Link
                   href="/earn/dashboard/new/?type=hackathon"
                   aria-label="Create new track"
-                  className="group relative grid size-[46px] place-items-center rounded-[14px] bg-[#CE4A2B] text-white transition-all duration-200 hover:bg-[#A6371C]"
+                  className="group relative grid size-[46px] place-items-center rounded-[14px] border-2 border-[#1d1815] bg-[#CE4A2B] text-[#f4eee3] transition-all duration-200 hover:bg-[#A6371C]"
                 >
                   <Plus className="size-5" />
                   <span className="font-secondary pointer-events-none absolute left-full z-40 ml-3 origin-left scale-90 rounded-lg border border-[rgba(231,211,193,0.12)] bg-[#1D1815] px-2.5 py-1.5 text-[11px] font-semibold tracking-[0.04em] whitespace-nowrap text-[#FBF7EE] uppercase opacity-0 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100">
