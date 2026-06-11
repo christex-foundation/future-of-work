@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export interface Bounty {
   logo: string;
   org: string;
@@ -69,10 +71,8 @@ export default function BountyCard({
   href = '/earn',
 }: Bounty) {
   return (
-    <a
+    <Link
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
       className="group/card flex flex-col gap-4 rounded-xl border-2 border-[#1d1815] bg-[#f4eee3] p-5 text-[#1d1815] shadow-[5px_5px_0_#1d1815] transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_#1d1815]"
     >
       {/* top: org + status */}
@@ -141,6 +141,6 @@ export default function BountyCard({
           View &rarr;
         </span>
       </div>
-    </a>
+    </Link>
   );
 }
