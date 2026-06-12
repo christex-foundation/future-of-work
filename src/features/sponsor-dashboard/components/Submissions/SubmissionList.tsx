@@ -116,19 +116,19 @@ export const SubmissionList = ({
       return colorMap[submission.label];
     } else {
       return {
-        bg: 'bg-slate-100',
-        color: 'text-slate-600',
-        border: 'border-slate-200',
+        bg: 'bg-[#ECE2D2]',
+        color: 'text-[#6B5E50]',
+        border: 'border-[#1d1815]/12',
       };
     }
   };
 
   return (
-    <div className="h-full w-full rounded-l-lg border border-slate-200 bg-white">
+    <div className="h-full w-full rounded-l-lg border border-[#1d1815]/12 bg-[#FBF7EE]">
       <div className="flex w-full items-center justify-between gap-2 p-3">
         {!isMultiSelectDisabled && (
           <Checkbox
-            className="data-[state=checked]:border-brand-purple data-[state=checked]:bg-brand-purple"
+            className="data-[state=checked]:border-[#CE4A2B] data-[state=checked]:bg-[#CE4A2B]"
             checked={isAllToggled}
             disabled={isMultiSelectDisabled}
             onCheckedChange={() =>
@@ -138,9 +138,9 @@ export const SubmissionList = ({
         )}
 
         <div className="relative w-full">
-          <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6B5E50]" />
           <Input
-            className="placeholder:text-md focus-visible:ring-brand-purple h-10 border-slate-200 bg-white pl-9 placeholder:font-medium placeholder:text-slate-400"
+            className="placeholder:text-md h-10 border-[#1d1815]/12 bg-[#F4EEE3] pl-9 placeholder:font-medium placeholder:text-[#6B5E50] focus-visible:ring-[#CE4A2B]"
             onChange={(e) => {
               debouncedSetSearchTextRef.current?.(e.target.value);
             }}
@@ -164,7 +164,7 @@ export const SubmissionList = ({
       </div>
       <div
         ref={scrollContainerRef}
-        className="scrollbar-thin scrollbar-w-1 scrollbar-track-white scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-300 h-[42rem] w-full overflow-y-auto rounded-bl-lg border-t bg-white"
+        className="scrollbar-thin scrollbar-w-1 scrollbar-thumb-[#1d1815]/15 hover:scrollbar-thumb-[#1d1815]/25 h-[42rem] w-full overflow-y-auto rounded-bl-lg border-t border-[#1d1815]/12 bg-[#FBF7EE]"
       >
         {submissions.map((submission) => {
           const { bg, color, border } = getSubmissionColors(submission);
@@ -173,10 +173,10 @@ export const SubmissionList = ({
               key={submission?.id}
               data-submission-id={submission?.id}
               className={cn(
-                'flex cursor-pointer items-center justify-between gap-4 border-b border-slate-200 px-3 py-2',
-                'hover:bg-slate-100',
+                'flex cursor-pointer items-center justify-between gap-4 border-b border-[#1d1815]/10 px-3 py-2',
+                'hover:bg-[#ECE2D2]',
                 selectedSubmission?.id === submission?.id
-                  ? 'bg-slate-100'
+                  ? 'bg-[#ECE2D2]'
                   : 'bg-transparent',
               )}
               onClick={() => {
@@ -186,7 +186,7 @@ export const SubmissionList = ({
               <div className="flex items-center">
                 {!isMultiSelectDisabled && (
                   <Checkbox
-                    className="data-[state=checked]:border-brand-purple data-[state=checked]:bg-brand-purple mr-2 disabled:invisible"
+                    className="data-[state=checked]:border-[#CE4A2B] data-[state=checked]:bg-[#CE4A2B] mr-2 disabled:invisible"
                     checked={isToggled && isToggled(submission.id)}
                     disabled={
                       submission?.status !== 'Pending' ||
@@ -204,11 +204,11 @@ export const SubmissionList = ({
                 />
                 <div className="ml-2 w-40">
                   <div className="flex items-center gap-1">
-                    <p className="flex min-w-0 items-center gap-2 overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap text-slate-700">
+                    <p className="flex min-w-0 items-center gap-2 overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap text-[#1D1815]">
                       {`${submission?.user?.firstName} ${submission?.user?.lastName}`}
                     </p>
                   </div>
-                  <p className="text-xxs overflow-hidden text-ellipsis whitespace-nowrap text-slate-500">
+                  <p className="text-xxs overflow-hidden text-ellipsis whitespace-nowrap text-[#6B5E50]">
                     Submitted:{' '}
                     {dayjs(submission?.createdAt).format('MMM D YYYY')}
                   </p>

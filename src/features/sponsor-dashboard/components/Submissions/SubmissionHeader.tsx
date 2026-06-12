@@ -224,7 +224,7 @@ export const SubmissionHeader = ({
   return (
     <div className="mb-2 flex items-center justify-between gap-12">
       <div>
-        <Breadcrumb className="text-slate-400">
+        <Breadcrumb className="text-[#6B5E50]">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink
@@ -240,15 +240,15 @@ export const SubmissionHeader = ({
         <div className="mb-2 flex items-center gap-2">
           <div className="ml-1 flex items-center gap-2">
             {getListingIcon(bounty?.type!, 'size-5')}
-            <p className="text-xl font-bold text-slate-800">{bounty?.title}</p>
+            <p className="text-xl font-bold text-[#1D1815]">{bounty?.title}</p>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className="cursor-pointer rounded-md p-2 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-500">
+              <div className="cursor-pointer rounded-md p-2 text-[#6B5E50] transition-all hover:bg-[#ECE2D2] hover:text-[#1D1815]">
                 <MoreVertical className="h-4 w-4" />
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48 text-slate-500">
+            <DropdownMenuContent align="start" className="w-48 text-[#6B5E50]">
               {!isHackathonPage && (
                 <>
                   <DropdownMenuItem
@@ -399,7 +399,7 @@ export const SubmissionHeader = ({
                       href={JTTG}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-brand-purple underline"
+                      className="text-[#CE4A2B] underline"
                     >
                       Reach out
                     </a>{' '}
@@ -443,10 +443,10 @@ export const SubmissionHeader = ({
 
       {isProject && !bounty?.isWinnersAnnounced && bounty?.isPublished && (
         <div className="flex flex-row-reverse items-center gap-8">
-          <p className="text-slate-800">
+          <p className="text-[#1D1815]">
             {`Didn't find a suitable candidate? `}
             <span
-              className="cursor-pointer text-blue-500 underline"
+              className="cursor-pointer text-[#CE4A2B] underline"
               onClick={unpublishOnOpen}
             >
               Click here
@@ -480,7 +480,7 @@ export const SubmissionHeader = ({
         bountyStatus !== 'Completed' && (
           <Button
             className={cn(
-              'border-brand-purple text-brand-purple hover:bg-brand-purple shadow-md hover:text-white',
+              'border-[#CE4A2B] text-[#CE4A2B] shadow-md hover:bg-[#CE4A2B] hover:text-white',
             )}
             onClick={handleVerifyPayment}
             variant="outline"

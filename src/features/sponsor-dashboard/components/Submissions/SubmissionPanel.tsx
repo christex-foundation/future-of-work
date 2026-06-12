@@ -54,7 +54,7 @@ export const SubmissionPanel = ({
     <div className="sticky top-[3rem] w-full">
       {submissions.length ? (
         <>
-          <div className="rounded-t-xl border-b border-slate-200 bg-white py-1">
+          <div className="rounded-t-xl border-b border-[#1d1815]/12 bg-[#FBF7EE] py-1">
             <div className="flex w-full items-center justify-between px-4 pt-3">
               <div className="flex w-full items-center gap-2">
                 <EarnAvatar
@@ -65,7 +65,7 @@ export const SubmissionPanel = ({
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="w-full font-medium whitespace-nowrap text-slate-900">
+                    <p className="w-full font-medium whitespace-nowrap text-[#1D1815]">
                       {`${selectedSubmission?.user?.firstName}'s Submission`}
                     </p>
                     {!!selectedSubmission?.agentId && (
@@ -77,7 +77,7 @@ export const SubmissionPanel = ({
                     )}
                   </div>
                   <Link
-                    className="text-brand-purple flex w-full items-center text-xs font-medium whitespace-nowrap"
+                    className="flex w-full items-center text-xs font-medium whitespace-nowrap text-[#CE4A2B]"
                     href={`/earn/t/${selectedSubmission?.user?.username}`}
                   >
                     View Profile <ArrowRight className="inline-block h-3 w-3" />
@@ -123,7 +123,7 @@ export const SubmissionPanel = ({
                   !shouldHideTxLinks &&
                   paymentTxId && (
                     <Button
-                      className="mr-4 border-slate-300 text-slate-600"
+                      className="mr-4 border-[#1d1815]/20 text-[#6B5E50]"
                       onClick={() => {
                         window.open(
                           `https://solscan.io/tx/${paymentTxId}?cluster=${process.env.NEXT_PUBLIC_PAYMENT_CLUSTER}`,
@@ -143,7 +143,7 @@ export const SubmissionPanel = ({
               {selectedSubmission?.user?.email && (
                 <CopyButton
                   text={selectedSubmission.user.email}
-                  className="gap-1 text-sm text-slate-400 underline-offset-1 hover:text-slate-500 hover:underline"
+                  className="gap-1 text-sm text-[#6B5E50] underline-offset-1 hover:text-[#1D1815] hover:underline"
                   contentProps={{ side: 'right' }}
                 >
                   {truncateString(selectedSubmission.user.email, 36)}
@@ -152,7 +152,7 @@ export const SubmissionPanel = ({
 
               {selectedSubmission?.user?.walletAddress && (
                 <CopyButton
-                  className="gap-1 text-sm text-slate-400 underline-offset-1 hover:text-slate-500 hover:underline"
+                  className="gap-1 text-sm text-[#6B5E50] underline-offset-1 hover:text-[#1D1815] hover:underline"
                   contentProps={{ side: 'right' }}
                   text={selectedSubmission.user.walletAddress}
                 >
@@ -168,7 +168,7 @@ export const SubmissionPanel = ({
 
               <div className="flex gap-2">
                 <Telegram
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
                   link={
                     selectedSubmission?.telegram ||
                     selectedSubmission?.user?.telegram ||
@@ -177,22 +177,22 @@ export const SubmissionPanel = ({
                 />
 
                 <Twitter
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
                   link={selectedSubmission?.user?.twitter || ''}
                 />
 
                 <GitHub
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
                   link={selectedSubmission?.user?.github || ''}
                 />
 
                 <Website
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
                   link={selectedSubmission?.user?.website || ''}
                 />
               </div>
               {isProject && (
-                <p className="text-sm whitespace-nowrap text-slate-400">
+                <p className="text-sm whitespace-nowrap text-[#6B5E50]">
                   $
                   {formatNumberWithSuffix(
                     selectedSubmission?.totalEarnings || 0,
@@ -206,10 +206,10 @@ export const SubmissionPanel = ({
         </>
       ) : (
         <div className="p-3">
-          <p className="text-xl font-medium text-slate-500">
+          <p className="text-xl font-medium text-[#1D1815]">
             No submissions found
           </p>
-          <p className="text-sm text-slate-400">Try a different search query</p>
+          <p className="text-sm text-[#6B5E50]">Try a different search query</p>
         </div>
       )}
     </div>

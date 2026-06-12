@@ -454,10 +454,10 @@ export default function BountySubmissions({ slug }: Props) {
           <Tabs value={activeTab} onValueChange={handleTabChange}>
             {bounty?.isPublished && (
               <>
-                <TabsList className="mt-3 gap-4 font-medium text-slate-400">
+                <TabsList className="mt-3 gap-4 font-medium text-[#6B5E50]">
                   <TabsTrigger value="submissions">
                     Submissions
-                    <div className="text-xxs ml-2 rounded-full bg-slate-200 px-2 py-0.5 text-slate-500">
+                    <div className="text-xxs ml-2 rounded-full bg-[#ECE2D2] px-2 py-0.5 text-[#6B5E50]">
                       {submissions?.length}
                     </div>
                   </TabsTrigger>
@@ -475,12 +475,12 @@ export default function BountySubmissions({ slug }: Props) {
                     <TabsTrigger value="payments">Payments</TabsTrigger>
                   )}
                 </TabsList>
-                <div className="h-[1.5px] w-full bg-slate-200/70" />
+                <div className="h-[1.5px] w-full bg-[#1d1815]/12" />
               </>
             )}
 
             <TabsContent value="submissions" className="w-full px-0">
-              <div className="grid h-160 w-full grid-cols-[23rem_1fr] bg-white">
+              <div className="grid h-160 w-full grid-cols-[23rem_1fr] bg-[#FBF7EE]">
                 <SubmissionList
                   listing={bounty}
                   selectedFilters={selectedFilters}
@@ -495,7 +495,7 @@ export default function BountySubmissions({ slug }: Props) {
                   isMultiSelectDisabled={isMultiSelectDisabled}
                 />
 
-                <div className="h-full w-full rounded-r-xl border-t border-r border-b border-slate-200 bg-white">
+                <div className="h-full w-full rounded-r-xl border-t border-r border-b border-[#1d1815]/12 bg-[#FBF7EE]">
                   {!filteredSubmissions?.length &&
                   !searchText &&
                   !isSubmissionsLoading ? (
@@ -505,12 +505,12 @@ export default function BountySubmissions({ slug }: Props) {
                         alt={'talent empty'}
                         src={'/bg/talent-empty.svg'}
                       />
-                      <p className="mx-auto mt-5 text-center text-lg font-semibold text-slate-600">
+                      <p className="mx-auto mt-5 text-center text-lg font-semibold text-[#1D1815]">
                         {selectedFilters.size > 0
                           ? 'Zero Results'
                           : 'People are working!'}
                       </p>
-                      <p className="mx-auto mb-[200px] text-center font-medium text-slate-400">
+                      <p className="mx-auto mb-[200px] text-center font-medium text-[#6B5E50]">
                         {selectedFilters.size > 0
                           ? 'For the filters you have selected'
                           : 'Submissions will start appearing here'}
@@ -595,14 +595,14 @@ export default function BountySubmissions({ slug }: Props) {
                   </p>
                 )}
                 <div className="flex items-center gap-3">
-                  <p className="text-base font-medium whitespace-nowrap">
+                  <p className="text-base font-medium whitespace-nowrap text-[#1D1815]">
                     {selectedSubmissionIds.size} Selected
                   </p>
 
-                  <div className="h-4 w-px bg-slate-300" />
+                  <div className="h-4 w-px bg-[#1d1815]/20" />
 
                   <Button
-                    className="px-2 font-semibold text-slate-500"
+                    className="px-2 font-semibold text-[#6B5E50]"
                     onClick={() => {
                       setSelectedSubmissionIds(new Set());
                     }}

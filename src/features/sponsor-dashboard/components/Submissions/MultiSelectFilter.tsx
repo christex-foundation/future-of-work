@@ -75,9 +75,9 @@ export const MultiSelectFilter = ({
     if (value === 'Rejected') return colorMap.Rejected;
     return (
       colorMap[value as keyof typeof colorMap] || {
-        bg: 'bg-slate-100',
-        color: 'text-slate-600',
-        border: 'border-slate-200',
+        bg: 'bg-[#ECE2D2]',
+        color: 'text-[#6B5E50]',
+        border: 'border-[#1d1815]/12',
       }
     );
   };
@@ -85,21 +85,21 @@ export const MultiSelectFilter = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="relative cursor-pointer rounded-md p-1.5 hover:bg-slate-100">
-          <LucideListFilter className="size-4 stroke-3 text-slate-600" />
+        <div className="relative cursor-pointer rounded-md p-1.5 hover:bg-[#ECE2D2]">
+          <LucideListFilter className="size-4 stroke-3 text-[#6B5E50]" />
           {hasActiveFilters && (
             <span
-              className="absolute right-1.5 bottom-1.5 block size-1 rounded-full bg-green-500 ring-1 ring-white"
+              className="absolute right-1.5 bottom-1.5 block size-1 rounded-full bg-[#CE4A2B] ring-1 ring-[#FBF7EE]"
               aria-hidden="true"
             />
           )}
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="border-slate-300" align="end">
+      <DropdownMenuContent className="border-[#1d1815]/15" align="end">
         <div className="py-1">
           <DropdownMenuGroup>
-            <div className="px-3 py-1 text-xs text-slate-400">
+            <div className="px-3 py-1 text-xs text-[#6B5E50]">
               Select Options
             </div>
             <div className="space-y-1">
@@ -110,13 +110,13 @@ export const MultiSelectFilter = ({
                 return (
                   <label
                     key={filter.value}
-                    className="flex cursor-pointer items-center justify-between rounded-md px-3 py-1 hover:bg-slate-100"
+                    className="flex cursor-pointer items-center justify-between rounded-md px-3 py-1 hover:bg-[#ECE2D2]"
                   >
                     <div className="flex items-center space-x-2">
                       <Switch
                         checked={isSelected}
                         onCheckedChange={() => toggleFilter(filter.value)}
-                        className="data-[state=checked]:bg-brand-purple h-3 w-5.5"
+                        className="h-3 w-5.5 data-[state=checked]:bg-[#CE4A2B]"
                         thumbClassName="size-2 data-[state=checked]:translate-x-2.5"
                       />
                       <StatusPill

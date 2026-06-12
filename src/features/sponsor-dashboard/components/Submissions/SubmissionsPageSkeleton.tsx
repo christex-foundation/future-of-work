@@ -7,7 +7,7 @@ export const SubmissionsPageSkeleton = () => {
       <div className="mb-2 flex items-center justify-between gap-12 pt-2">
         <div>
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-slate-400">
+          <div className="flex items-center gap-2 text-[#6B5E50]">
             <Skeleton className="ml-8 h-4 w-20" />
           </div>
           {/* Title row */}
@@ -32,12 +32,12 @@ export const SubmissionsPageSkeleton = () => {
           <Skeleton className="h-4 w-6 rounded-xl" />
         </div>
       </div>
-      <div className="my-2 h-[1.5px] w-full bg-slate-200/70" />
+      <div className="my-2 h-[1.5px] w-full bg-[#1d1815]/12" />
 
       {/* Main content - two column layout */}
-      <div className="grid h-160 w-full grid-cols-[23rem_1fr] bg-white">
+      <div className="grid h-160 w-full grid-cols-[23rem_1fr] bg-[#FBF7EE]">
         {/* Left side - SubmissionList skeleton */}
-        <div className="h-full w-full rounded-l-lg border border-slate-200 bg-white">
+        <div className="h-full w-full rounded-l-lg border border-[#1d1815]/12 bg-[#FBF7EE]">
           {/* Search bar */}
           <div className="flex w-full items-center justify-between gap-2 p-3">
             <Skeleton className="h-10 flex-1" />
@@ -49,7 +49,7 @@ export const SubmissionsPageSkeleton = () => {
             {Array.from({ length: 8 }).map((_, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between gap-4 border-b border-slate-200 px-3 py-2"
+                className="flex items-center justify-between gap-4 border-b border-[#1d1815]/10 px-3 py-2"
               >
                 <div className="flex items-center">
                   <Skeleton className="h-8 w-8 shrink-0 rounded-full" />
@@ -65,9 +65,9 @@ export const SubmissionsPageSkeleton = () => {
         </div>
 
         {/* Right side - SubmissionPanel skeleton */}
-        <div className="h-full w-full rounded-r-xl border-t border-r border-b border-slate-200 bg-white">
+        <div className="h-full w-full rounded-r-xl border-t border-r border-b border-[#1d1815]/12 bg-[#FBF7EE]">
           {/* Panel header */}
-          <div className="border-b border-slate-200 py-1">
+          <div className="border-b border-[#1d1815]/12 py-1">
             <div className="flex w-full items-center justify-between px-4 pt-3">
               <div className="flex w-full items-center gap-2">
                 <Skeleton className="h-10 w-10 shrink-0 rounded-full" />

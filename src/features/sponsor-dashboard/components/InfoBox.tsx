@@ -23,12 +23,12 @@ export const InfoBox = ({
   isHtml?: boolean;
 }) => (
   <div className="mb-4">
-    <p className="mt-1 text-xs font-semibold text-slate-400 uppercase">
+    <p className="mt-1 text-xs font-semibold tracking-[0.04em] text-[#6B5E50] uppercase">
       {label}
     </p>
     {isHtml ? (
       <div
-        className={`h-full w-full text-sm font-medium break-words whitespace-normal text-slate-600 ${styles.richtext}`}
+        className={`h-full w-full text-sm font-medium break-words whitespace-normal text-[#1D1815] ${styles.richtext}`}
       >
         {parse(content || '-', options)}
       </div>

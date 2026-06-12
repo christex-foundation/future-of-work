@@ -122,7 +122,7 @@ export const SelectWinner = ({
                         isHackathonPage ||
                         isMultiSelectOn
                       }
-                      className="w-full justify-between rounded-lg border border-emerald-600 bg-emerald-50 py-4 text-emerald-600 transition-all duration-300 ease-out hover:bg-emerald-100 hover:text-emerald-700 disabled:opacity-50 data-[state=open]:rounded-b-none data-[state=open]:border-slate-200"
+                      className="w-full justify-between rounded-lg border border-emerald-600 bg-emerald-50 py-4 text-emerald-600 transition-all duration-300 ease-out hover:bg-emerald-100 hover:text-emerald-700 disabled:opacity-50 data-[state=open]:rounded-b-none data-[state=open]:border-[#1d1815]/12"
                     >
                       <div className="flex items-center">
                         <div className="mr-2">
@@ -138,7 +138,7 @@ export const SelectWinner = ({
                 </div>
                 <DropdownMenuContent
                   sideOffset={-1}
-                  className="w-full min-w-[180px] divide-y divide-slate-100 rounded-t-none p-0"
+                  className="w-full min-w-[180px] divide-y divide-[#1d1815]/10 rounded-t-none p-0"
                 >
                   {rewards.map((reward) => {
                     let isRewardUsed = usedPositions.includes(reward);
@@ -163,7 +163,7 @@ export const SelectWinner = ({
                           }
                         >
                           <div className="flex w-full justify-between px-0 py-0.5">
-                            <p className="text-slate-500">
+                            <p className="text-[#6B5E50]">
                               {nthLabelGenerator(reward)}
                             </p>
                             <div className="flex items-center gap-1">
@@ -174,7 +174,7 @@ export const SelectWinner = ({
                                     alt="token"
                                     className="h-4 w-4"
                                   />
-                                  <p className="font-semibold text-slate-700">
+                                  <p className="font-semibold text-[#1D1815]">
                                     {bounty?.compensationType === 'fixed'
                                       ? bounty?.rewards &&
                                         formatNumberWithSuffix(
@@ -186,7 +186,7 @@ export const SelectWinner = ({
                                         )
                                       : selectedSubmission?.ask}
                                   </p>
-                                  <span className="text-slate-400">
+                                  <span className="text-[#6B5E50]">
                                     {bounty.token}
                                   </span>
                                 </div>
@@ -208,7 +208,7 @@ export const SelectWinner = ({
                     isHackathonPage ||
                     isMultiSelectOn
                   }
-                  className="w-full justify-between rounded-lg border border-slate-200 bg-white py-4 transition-all duration-300 ease-out hover:bg-slate-50 disabled:opacity-50"
+                  className="w-full justify-between rounded-lg border border-[#1d1815]/12 bg-[#FBF7EE] py-4 transition-all duration-300 ease-out hover:bg-[#ECE2D2] disabled:opacity-50"
                 >
                   <div className="flex items-center">
                     <div className="mr-2">
@@ -220,7 +220,7 @@ export const SelectWinner = ({
                     </span>
                     {selectedSubmission?.winnerPosition && (
                       <>
-                        <div className="mx-3 h-4 w-px bg-slate-200" />
+                        <div className="mx-3 h-4 w-px bg-[#1d1815]/15" />
                         <div className="flex items-center gap-2">
                           {bounty?.token && (
                             <TokenIcon
@@ -229,7 +229,7 @@ export const SelectWinner = ({
                               className="h-5 w-5 rounded-full"
                             />
                           )}
-                          <span className="font-semibold text-slate-900">
+                          <span className="font-semibold text-[#1D1815]">
                             {bounty?.rewards && bounty?.token && (
                               <>
                                 {formatNumberWithSuffix(
@@ -239,7 +239,7 @@ export const SelectWinner = ({
                                   1,
                                   false,
                                 )}
-                                <span className="ml-1 font-normal text-slate-400">
+                                <span className="ml-1 font-normal text-[#6B5E50]">
                                   {bounty.token}
                                 </span>
                               </>
@@ -250,7 +250,7 @@ export const SelectWinner = ({
                     )}
                   </div>
                   <button
-                    className="flex h-6 w-6 items-center justify-center text-slate-500 transition-all duration-300 ease-out hover:text-slate-600"
+                    className="flex h-6 w-6 items-center justify-center text-[#6B5E50] transition-all duration-300 ease-out hover:text-[#1D1815]"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
