@@ -242,26 +242,29 @@ export function ListingPageLayout({
                     </div>
                   )}
 
-                  <Comments
-                    isTemplate={isTemplate}
-                    isAnnounced={initialListing?.isWinnersAnnounced ?? false}
-                    listingSlug={initialListing?.slug ?? ''}
-                    listingType={initialListing?.type ?? ''}
-                    poc={initialListing?.poc as User}
-                    sponsorId={initialListing?.sponsorId}
-                    isVerified={initialListing?.sponsor?.isVerified}
-                    refId={initialListing?.id ?? ''}
-                    refType="BOUNTY"
-                    count={commentCount}
-                    setCount={setCommentCount}
-                    isDisabled={
-                      !initialListing.isPublished &&
-                      initialListing.status === 'OPEN'
-                    }
-                    isListingAndUserPro={
-                      (initialListing?.isPro ?? false) && (user?.isPro ?? false)
-                    }
-                  />
+                  <div className="w-full rounded-3xl border-2 border-[#221a14] bg-white p-5 shadow-[0_8px_0_#221a14] md:p-7">
+                    <Comments
+                      isTemplate={isTemplate}
+                      isAnnounced={initialListing?.isWinnersAnnounced ?? false}
+                      listingSlug={initialListing?.slug ?? ''}
+                      listingType={initialListing?.type ?? ''}
+                      poc={initialListing?.poc as User}
+                      sponsorId={initialListing?.sponsorId}
+                      isVerified={initialListing?.sponsor?.isVerified}
+                      refId={initialListing?.id ?? ''}
+                      refType="BOUNTY"
+                      count={commentCount}
+                      setCount={setCommentCount}
+                      isDisabled={
+                        !initialListing.isPublished &&
+                        initialListing.status === 'OPEN'
+                      }
+                      isListingAndUserPro={
+                        (initialListing?.isPro ?? false) &&
+                        (user?.isPro ?? false)
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             </div>

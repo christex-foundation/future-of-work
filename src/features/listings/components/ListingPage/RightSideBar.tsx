@@ -159,33 +159,32 @@ export function RightSideBar({
                     <td className="w-full p-0" colSpan={3}>
                       <div
                         className={cn(
-                          'flex items-center gap-2',
+                          'flex flex-col gap-1',
                           showUsdSymbolOnly && 'ml-6',
                         )}
                       >
-                        {!showUsdSymbolOnly && (
-                          <TokenIcon
-                            className="h-8 w-8 rounded-full"
-                            alt="token icon"
-                            symbol={token}
-                          />
-                        )}
-                        <CompensationAmount
-                          compensationType={compensationType}
-                          rewardAmount={rewardAmount}
-                          maxRewardAsk={maxRewardAsk}
-                          minRewardAsk={minRewardAsk}
-                          token={!showUsdSymbolOnly ? token : 'USD'}
-                          isWinnersAnnounced={isWinnersAnnounced}
-                          className={cn(
-                            'font-pop text-3xl font-extrabold text-[#221a14] md:text-4xl',
+                        <div className="flex items-center gap-2">
+                          {!showUsdSymbolOnly && (
+                            <TokenIcon
+                              className="h-8 w-8 rounded-full border-2 border-[#221a14]"
+                              alt="token icon"
+                              symbol={token}
+                            />
                           )}
-                          style={{
-                            width: widthOfPrize,
-                          }}
-                          showUsdSymbol={showUsdSymbolOnly}
-                        />
-                        <p className="text-sm font-semibold text-[#8a7f72]">
+                          <CompensationAmount
+                            compensationType={compensationType}
+                            rewardAmount={rewardAmount}
+                            maxRewardAsk={maxRewardAsk}
+                            minRewardAsk={minRewardAsk}
+                            token={!showUsdSymbolOnly ? token : 'USD'}
+                            isWinnersAnnounced={isWinnersAnnounced}
+                            className={cn(
+                              'font-pop text-3xl font-extrabold text-[#221a14] md:text-4xl',
+                            )}
+                            showUsdSymbol={showUsdSymbolOnly}
+                          />
+                        </div>
+                        <p className="text-xs font-bold tracking-wide text-[#8a7f72] uppercase">
                           {isProject ? 'Payment' : 'Total Prizes'}
                         </p>
                       </div>

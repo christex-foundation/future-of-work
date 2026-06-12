@@ -77,14 +77,14 @@ export function PrizesList({
           className="relative flex gap-3"
           style={{ overflowY: 'visible' }}
         >
-          <div className="relative top-2 mx-2.5 h-3 w-3 rounded-full bg-slate-200">
+          <div className="relative top-2 mx-2.5 h-3 w-3 rounded-full border border-[#221a14] bg-[#ff6b3d]">
             <div className="h-full w-full" />
           </div>
 
-          <div className="flex shrink-0 gap-2 text-lg md:text-xl">
+          <div className="flex shrink-0 gap-2 text-base md:text-lg">
             <div
               className={cn(
-                'ml-auto flex gap-1 font-semibold whitespace-nowrap',
+                'font-pop ml-auto flex gap-1 font-bold whitespace-nowrap text-[#221a14]',
               )}
               style={{
                 width: widthPrize,
@@ -95,7 +95,7 @@ export function PrizesList({
                 {showUsdSymbol && '$'}
                 {formatNumberWithSuffix(step[1], 2, true)}
               </p>
-              <p className="font-semibold text-slate-400">{token}</p>
+              <p className="font-bold text-[#8a7f72]">{token}</p>
             </div>
             <LabelOrAction
               setSeeAll={setSeeAll}
@@ -118,7 +118,7 @@ export function PrizesList({
                 top: '1.2rem',
                 maxHeight: 'none',
                 borderLeftWidth: '1px',
-                borderColor: 'rgb(226 232 240)',
+                borderColor: 'rgba(34,26,20,0.18)',
                 borderStyle:
                   visibleRewards[index + 1]?.[0] ===
                     BONUS_REWARD_POSITION + '' &&
@@ -153,7 +153,7 @@ function LabelOrAction({
     if (!seeAll) {
       return (
         <button
-          className="flex items-center gap-1 bg-transparent text-xs font-medium text-slate-500 hover:opacity-80"
+          className="flex items-center gap-1 bg-transparent text-xs font-bold text-[#8a7f72] hover:opacity-80"
           onClick={() => setSeeAll(true)}
         >
           View More
@@ -162,7 +162,7 @@ function LabelOrAction({
       );
     } else
       return (
-        <p className="text-md flex items-center gap-2 text-sm font-medium text-slate-500">
+        <p className="text-md flex items-center gap-2 text-sm font-bold text-[#8a7f72]">
           x{maxBonusSpots} {`(Bonus)`}
           {needsCollapse && (
             <button
@@ -176,7 +176,7 @@ function LabelOrAction({
       );
   } else {
     return (
-      <p className="mt-auto mb-1 flex items-center gap-1 text-sm font-medium text-slate-500">
+      <p className="mt-auto mb-1 flex items-center gap-1 text-sm font-bold text-[#8a7f72]">
         {nthLabelGenerator(Number(step[0]), true)}
         {needsCollapse && (
           <button
