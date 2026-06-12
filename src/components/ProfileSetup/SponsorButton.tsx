@@ -21,14 +21,14 @@ export function SponsorButton({
         </Alert>
       )}
       <Button
-        className="h-12 w-full rounded bg-slate-900 text-white hover:bg-slate-700"
+        className="font-secondary h-12 w-full rounded-none border-2 border-[#1d1815] bg-[#1d1815] font-bold tracking-[0.06em] text-[#f4eee3] uppercase shadow-none transition-colors duration-150 hover:bg-[#123a33] hover:text-[#f4eee3]"
         onClick={() => checkSponsor()}
         disabled={isLoading}
       >
         {isLoading ? (
           <span>Redirecting...</span>
         ) : (
-          <span>Continue as a Sponsor</span>
+          <span>Continue as a Company</span>
         )}
       </Button>
     </>

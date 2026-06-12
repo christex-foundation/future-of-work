@@ -23,14 +23,14 @@ export function TalentButton({
       )}
       <Link href="#" className="block">
         <Button
-          className="bg-brand-purple hover:bg-brand-purple-dark h-12 w-full rounded text-white"
+          className="font-secondary h-12 w-full rounded-none border-2 border-[#1d1815] bg-[#1d1815] font-bold tracking-[0.06em] text-[#f4eee3] uppercase shadow-none transition-colors duration-150 hover:bg-[#ce4a2b] hover:text-[#f4eee3]"
           onClick={() => checkTalent()}
           disabled={isLoading}
         >
           {isLoading ? (
             <span>Redirecting...</span>
           ) : (
-            <span>Continue as Talent</span>
+            <span>Continue as a Freelancer</span>
           )}
         </Button>
       </Link>
