@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { ImageUploader } from '@/components/shared/ImageUploader';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -170,14 +169,23 @@ export default function UpdateSponsor() {
 
   return (
     <SponsorLayout>
-      <div className="mx-auto ml-4 flex flex-col gap-2 pr-4">
-        <div className="flex flex-col gap-2">
-          <p className="mb-4 text-2xl font-bold tracking-tight text-gray-900">
-            Edit Sponsor Profile
+      <div className="px-4 pt-2 pb-14">
+        <div className="mx-auto max-w-[760px]">
+          {/* header */}
+          <div className="font-secondary flex items-center gap-2.5 text-[11px] font-bold tracking-[0.26em] text-[#CE4A2B] uppercase">
+            <span className="inline-block h-0.5 w-6 bg-[#CE4A2B]" />
+            Sponsor Profile
+          </div>
+          <h1 className="font-serif mt-3.5 text-[clamp(28px,3.2vw,40px)] leading-[1.02] font-semibold tracking-[-0.02em] text-[#1D1815]">
+            Edit profile
+          </h1>
+          <p className="mt-2.5 max-w-[480px] text-[15px] leading-relaxed text-[#6B5E50]">
+            Update how your organization shows up across Future of Work.
           </p>
-        </div>
-        <div className="flex w-full flex-col">
-          <Form {...form}>
+
+          {/* form card */}
+          <div className="mt-8 rounded-2xl border-2 border-[#1d1815] bg-[#f4eee3] p-6 shadow-[5px_5px_0_#1d1815] sm:p-8 [&_input]:border-[#1d1815]/25 [&_input]:bg-[#FBF7EE] [&_input]:text-[#1d1815] [&_input]:placeholder:text-[#6b5e50] [&_input]:focus-visible:ring-[#ce4a2b] [&_label]:text-[#1d1815]">
+            <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               style={{ width: '100%' }}
@@ -316,30 +324,29 @@ export default function UpdateSponsor() {
                     placeholder="What does your company do?"
                   />
                 </FormFieldWrapper>
-                <div className="text-right text-xs text-slate-400">
+                <div className="text-right text-xs text-[#6b5e50]">
                   {180 - (form.watch('bio')?.length || 0)} characters left
                 </div>
               </div>
               <div className="mt-8">
-                <Button
-                  className="w-full"
-                  disabled={isSubmitDisabled}
-                  size="lg"
+                <button
                   type="submit"
-                  variant="default"
+                  disabled={isSubmitDisabled}
+                  className="font-secondary flex w-full items-center justify-center gap-2 rounded-md border-2 border-[#1d1815] bg-[#ce4a2b] px-5 py-3.5 text-[13px] font-bold tracking-[0.08em] text-[#f4eee3] uppercase shadow-[3px_3px_0_#1d1815] transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#1d1815] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[3px_3px_0_#1d1815]"
                 >
                   {isLoading ? (
-                    <span className="flex items-center gap-1">
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      <span>Updating...</span>
-                    </span>
+                    <>
+                      <Loader2 className="size-4 animate-spin" />
+                      Updating…
+                    </>
                   ) : (
-                    <span>Update Profile</span>
+                    <>Update profile &rarr;</>
                   )}
-                </Button>
+                </button>
               </div>
             </form>
           </Form>
+          </div>
         </div>
       </div>
     </SponsorLayout>

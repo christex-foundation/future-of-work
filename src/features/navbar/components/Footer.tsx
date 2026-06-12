@@ -6,7 +6,6 @@ const PLATFORM_LINKS = [
   { label: 'Find Work', href: '/earn', external: false },
   { label: 'Bounties', href: '/earn/bounties', external: false },
   { label: 'Projects', href: '/earn/projects', external: false },
-  { label: 'Quests', href: '/earn/grants', external: false },
 ];
 
 const CONNECT_LINKS = [

@@ -5,6 +5,8 @@ import { api } from '@/lib/api';
 interface TotalType {
   count?: number;
   totalInUSD?: number;
+  openInUSD?: number;
+  openCount?: number;
 }
 
 const fetchTotals = async (): Promise<TotalType> => {

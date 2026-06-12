@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { type GetServerSideProps } from 'next';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { ExternalImage } from '@/components/ui/cloudinary-image';
@@ -29,14 +29,12 @@ import { getListingStatus } from '@/features/listings/utils/status';
 import { CreateListingModal } from '@/features/sponsor-dashboard/components/CreateListingModal';
 import { DaybreakStats } from '@/features/sponsor-dashboard/components/daybreak/DaybreakStats';
 import { ListingBoard } from '@/features/sponsor-dashboard/components/daybreak/ListingBoard';
+import { ListingBoardList } from '@/features/sponsor-dashboard/components/daybreak/ListingBoardList';
 import { SponsorSwitcherPill } from '@/features/sponsor-dashboard/components/daybreak/SponsorSwitcherPill';
-import { ListingTable } from '@/features/sponsor-dashboard/components/ListingTable';
 import { ListingTableSkeleton } from '@/features/sponsor-dashboard/components/ListingTableSkeleton';
 import { activeHackathonsQuery } from '@/features/sponsor-dashboard/queries/active-hackathons';
 import { dashboardQuery } from '@/features/sponsor-dashboard/queries/dashboard';
 import { sponsorStatsQuery } from '@/features/sponsor-dashboard/queries/sponsor-stats';
-
-const MemoizedListingTable = React.memo(ListingTable);
 
 type DashboardTab = 'all' | 'bounty' | 'project' | 'grant' | 'hackathon';
 type DashboardStatus =
@@ -62,10 +60,6 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
 
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const [currentSort, setCurrentSort] = useState<{
-    column: string;
-    direction: 'asc' | 'desc' | null;
-  }>({ column: '', direction: null });
   const listingsPerPage = 15;
   const { data: hackathons } = useQuery({
     ...activeHackathonsQuery(),
@@ -165,29 +159,8 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
       result.push(listing);
     }
 
-    if (currentSort.direction && currentSort.column) {
-      const factor = currentSort.direction === 'asc' ? 1 : -1;
-      return result.toSorted((a, b) => {
-        switch (currentSort.column) {
-          case 'title':
-            return (a.title || '').localeCompare(b.title || '') * factor;
-          case 'submissions':
-            return (
-              ((a.submissionCount ?? 0) - (b.submissionCount ?? 0)) * factor
-            );
-          case 'deadline': {
-            const deadlineA = a.deadline ? new Date(a.deadline).getTime() : 0;
-            const deadlineB = b.deadline ? new Date(b.deadline).getTime() : 0;
-            return (deadlineA - deadlineB) * factor;
-          }
-          default:
-            return 0;
-        }
-      });
-    }
-
     return result;
-  }, [allListings, activeTab, activeStatus, searchText, currentSort]);
+  }, [allListings, activeTab, activeStatus, searchText]);
 
   const paginatedListings = useMemo(() => {
     return filteredListings?.slice(
@@ -446,15 +419,7 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
                   onCreate={onOpenCreateListing}
                 />
               ) : (
-                <div className="mt-6">
-                  <MemoizedListingTable
-                    listings={paginatedListings}
-                    currentSort={currentSort}
-                    onSort={(column, direction) =>
-                      setCurrentSort({ column, direction })
-                    }
-                  />
-                </div>
+                <ListingBoardList listings={paginatedListings} />
               )}
 
               <div className="mt-7 flex items-center justify-end">

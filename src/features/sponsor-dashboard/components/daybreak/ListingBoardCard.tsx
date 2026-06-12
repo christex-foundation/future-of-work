@@ -30,7 +30,7 @@ const POOL_LABEL: Record<ListingType, string> = {
   hackathon: 'Prize Pool',
 };
 
-function fowStatus(status: string): {
+export function fowStatus(status: string): {
   label: string;
   badge: string;
   dot: string;

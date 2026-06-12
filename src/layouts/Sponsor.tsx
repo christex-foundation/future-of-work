@@ -20,7 +20,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LocalImage } from '@/components/ui/local-image';
 import { Tooltip } from '@/components/ui/tooltip';
 import { JTTG } from '@/constants/Telegram';
 import { SolanaWalletProvider } from '@/context/SolanaWallet';
@@ -35,7 +34,6 @@ import { cn } from '@/utils/cn';
 import { isAutoGenerateOpenAtom } from '@/features/listing-builder/atoms';
 import { isCreateListingAllowedQuery } from '@/features/listing-builder/queries/is-create-allowed';
 import { FooterCompact } from '@/features/navbar/components/FooterCompact';
-import { UserMenu } from '@/features/navbar/components/UserMenu';
 import { NavItem } from '@/features/sponsor-dashboard/components/NavItems';
 import { activeHackathonsQuery } from '@/features/sponsor-dashboard/queries/active-hackathons';
 
@@ -282,19 +280,6 @@ export function SponsorLayout({
               isCollapsible ? 'fixed top-12 bottom-0 left-0' : 'static',
             )}
           >
-            {/* logo */}
-            <Link
-              href="/earn/dashboard/listings"
-              aria-label="Future of Work"
-              className="mb-5"
-            >
-              <LocalImage
-                className="size-10 object-contain"
-                alt="Future of Work"
-                src="/fow-favicon.svg"
-              />
-            </Link>
-
             {/* nav icons */}
             <nav className="flex flex-col items-center gap-1.5">
               {LinkItems.map((link) => (
@@ -393,11 +378,6 @@ export function SponsorLayout({
                 </Link>
               )}
             </div>
-
-            <div className="flex-1" />
-
-            {/* profile */}
-            <UserMenu variant="rail" />
 
             <CreateListingModal
               isOpen={isOpen}

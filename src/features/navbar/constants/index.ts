@@ -17,11 +17,6 @@ export const LISTING_NAV_ITEMS: Array<NavItem> = [
     posthog: 'projects_navbar',
     href: '/earn/all?tab=projects',
   },
-  {
-    label: 'Quests',
-    posthog: 'grants_navbar',
-    href: '/earn/grants',
-  },
 ];
 
 export const CATEGORY_NAV_ITEMS: Array<NavItem & { pillPH: string }> = [

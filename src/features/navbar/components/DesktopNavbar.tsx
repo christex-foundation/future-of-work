@@ -86,7 +86,7 @@ export const DesktopNavbar = ({
 
   const padding = useMemo(() => {
     if (isDashboardRoute) {
-      return 'pr-8 pl-6';
+      return 'pr-8 pl-0';
     }
     if (isNewTalentRoute) {
       return 'pr-8 pl-24 2xl:pl-0';
@@ -126,7 +126,12 @@ export const DesktopNavbar = ({
           <LogoContextMenu>
             <Link
               href="/earn"
-              className="flex items-center gap-3 hover:no-underline"
+              className={cn(
+                'flex items-center hover:no-underline',
+                isDashboardRoute
+                  ? 'h-14 w-[84px] justify-center border-r-2 border-[#1d1815]'
+                  : 'gap-3',
+              )}
               onClick={() => {
                 posthog.capture('homepage logo click_universal');
               }}
@@ -136,17 +141,14 @@ export const DesktopNavbar = ({
                 alt="Future of Work"
                 src="/fow-favicon.svg"
               />
-
-              {isDashboardRoute && (
-                <>
-                  <div className="h-6 w-[2px] bg-[#1d1815]" />
-                  <p className="font-secondary text-[11px] font-bold tracking-[0.18em] text-[#1d1815] uppercase">
-                    SPONSORS
-                  </p>
-                </>
-              )}
             </Link>
           </LogoContextMenu>
+
+          {isDashboardRoute && (
+            <p className="font-secondary text-[11px] font-bold tracking-[0.18em] text-[#1d1815] uppercase">
+              SPONSORS
+            </p>
+          )}
 
           <Separator
             orientation="vertical"
@@ -267,7 +269,7 @@ export const DesktopNavbar = ({
                   </div>
                 </div>
               )}
-              {!isDashboardRoute && <UserMenu />}
+              <UserMenu />
             </div>
           )}
 

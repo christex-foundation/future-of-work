@@ -1,8 +1,5 @@
-import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import posthog from 'posthog-js';
-
-import { Button } from '@/components/ui/button';
 
 export const ViewAllButton = ({
   posthogEvent,
@@ -12,17 +9,14 @@ export const ViewAllButton = ({
   href: string;
 }) => {
   return (
-    <Button
-      className="my-4 w-full border-slate-300 py-3 text-sm font-medium text-slate-400 sm:py-4.5 sm:text-sm"
-      onClick={() => posthog.capture(posthogEvent)}
-      size="sm"
-      variant="outline"
-      asChild
-    >
-      <Link className="ph-no-capture" href={href}>
-        View All
-        <ArrowRight className="ml-1 h-4 w-4" />
+    <div className="mt-8 mb-2 flex justify-center">
+      <Link
+        href={href}
+        onClick={() => posthog.capture(posthogEvent)}
+        className="ph-no-capture font-secondary flex w-fit items-center gap-2 rounded-md border-2 border-[#1d1815] bg-[#f4eee3] px-6 py-3 text-[12px] font-bold tracking-[0.1em] text-[#1d1815] uppercase shadow-[4px_4px_0_#1d1815] transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#f4eee3] hover:no-underline hover:shadow-[6px_6px_0_#1d1815]"
+      >
+        View all opportunities &rarr;
       </Link>
-    </Button>
+    </div>
   );
 };

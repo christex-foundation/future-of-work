@@ -6,8 +6,6 @@ import {
 } from '@/components/ui/accordion';
 import { SponsorLayout } from '@/layouts/Sponsor';
 
-import { HelpBanner } from '@/features/sponsor-dashboard/components/HelpBanner';
-
 interface FAQSection {
   readonly title: string;
   readonly subsections: readonly {
@@ -198,47 +196,65 @@ To verify the transaction, the wallet address must match the winner's, and the t
   },
 ] as const;
 
+// Recolor the blue inline links baked into the answer HTML to the FOW terra.
+const themeAnswer = (html: string) =>
+  html.replace(/color:\s*blue/gi, 'color:#ce4a2b;text-decoration:underline');
+
 export default function FAQ() {
   return (
     <SponsorLayout>
-      <div className="py=4 px-8">
-        <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
-          <p className="text-3xl font-semibold">Frequently Asked Questions</p>
-          <div className="w-[400px]">
-            <HelpBanner />
+      <div className="px-8 pt-2 pb-14">
+        <div className="mx-auto max-w-[820px]">
+          {/* header */}
+          <div className="font-secondary flex items-center gap-2.5 text-[11px] font-bold tracking-[0.26em] text-[#CE4A2B] uppercase">
+            <span className="inline-block h-0.5 w-6 bg-[#CE4A2B]" />
+            Help Center
           </div>
-        </div>
-        <div className="mt-8 space-y-8">
-          {faqSections.map((section, index) => (
-            <div key={section.title}>
-              <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-slate-500">
-                  {section.title}
-                </h2>
-                <Accordion type="single" collapsible>
+          <h1 className="font-serif mt-3.5 text-[clamp(30px,3.6vw,46px)] leading-[1.02] font-semibold tracking-[-0.02em] text-[#1D1815]">
+            Frequently asked questions
+          </h1>
+          <p className="mt-2.5 max-w-[540px] text-[15px] leading-relaxed text-[#6B5E50]">
+            Everything you need to post listings, pick winners, and pay people
+            out — answered.
+          </p>
+
+          {/* sections */}
+          <div className="mt-11 space-y-12">
+            {faqSections.map((section, index) => (
+              <section key={section.title}>
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="font-secondary grid size-7 shrink-0 place-items-center rounded-md border-2 border-[#1d1815] bg-[#E6A12B] text-[12px] font-bold text-[#1d1815]">
+                    {index + 1}
+                  </span>
+                  <h2 className="font-serif text-[22px] font-semibold text-[#1d1815]">
+                    {section.title}
+                  </h2>
+                </div>
+                <Accordion type="single" collapsible className="space-y-3">
                   {section.subsections.map((faq) => (
                     <AccordionItem
-                      className="my-5 rounded-lg border border-slate-200 bg-white"
+                      className="overflow-hidden rounded-xl border-2 border-[#1d1815] bg-[#f4eee3] shadow-[3px_3px_0_#1d1815]"
                       key={faq.question}
                       value={faq.question}
                     >
-                      <AccordionTrigger className="rounded px-5 py-5 text-base font-normal hover:bg-slate-200/5 hover:no-underline">
-                        <span className="flex-1 text-left text-lg font-medium">
+                      <AccordionTrigger className="gap-4 px-5 py-4 hover:no-underline [&>svg]:text-[#6b5e50] [&[data-state=open]]:bg-[#ECE2D2]">
+                        <span className="flex-1 text-left text-[16px] font-bold text-[#1d1815]">
                           {faq.question}
                         </span>
                       </AccordionTrigger>
-                      <AccordionContent className="px-5 pb-6 text-base text-slate-700">
-                        <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                      <AccordionContent className="fow-faq-answer border-t border-dashed border-[#1d1815]/25 px-5 pt-4 pb-5 text-[14px] leading-relaxed text-[#3a322c]">
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: themeAnswer(faq.answer),
+                          }}
+                        />
                       </AccordionContent>
                     </AccordionItem>
                   ))}
                 </Accordion>
-              </div>
-              {index < faqSections.length - 1 && (
-                <div className="mt-8 mb-12 border-t border-slate-300" />
-              )}
-            </div>
-          ))}
+              </section>
+            ))}
+          </div>
         </div>
       </div>
     </SponsorLayout>
