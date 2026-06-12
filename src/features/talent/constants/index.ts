@@ -11,6 +11,30 @@ export const IndustryList = [
   'Prediction Markets',
 ] as const;
 
+// Sierra Leone-specific industries used in the company/sponsor onboarding flow.
+export const SLIndustryList = [
+  'Agriculture & Agro-processing',
+  'Mining & Minerals',
+  'Fisheries & Marine',
+  'Telecommunications',
+  'Banking & Microfinance',
+  'Mobile Money & Fintech',
+  'Education & Training',
+  'Health & Pharmaceuticals',
+  'Tourism & Hospitality',
+  'Energy & Power',
+  'Construction & Real Estate',
+  'Trade & Retail',
+  'Transport & Logistics',
+  'Media & Creative Arts',
+  'Technology & Software',
+  'Manufacturing',
+  'NGO & Development',
+  'Government & Public Sector',
+  'Professional Services',
+  'Other',
+] as const;
+
 export const web3Exp = [
   'New to crypto',
   'Occasionally contributing',

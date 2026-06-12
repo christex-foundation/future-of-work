@@ -10,6 +10,23 @@ import {
 const noHtmlDelimiters = (value: string) => !/[<>]/.test(value);
 const noHtmlMessage = 'HTML characters are not allowed';
 
+// Optional handle for company socials (facebook / instagram / tiktok).
+// Stored as-is and turned into full URLs on submit.
+const socialHandle = z
+  .string()
+  .refine(noHtmlDelimiters, noHtmlMessage)
+  .optional()
+  .or(z.literal(''));
+
+export const companySocialsSchema = z
+  .object({
+    facebook: socialHandle,
+    instagram: socialHandle,
+    tiktok: socialHandle,
+  })
+  .partial()
+  .optional();
+
 export const sponsorBaseSchema = z.object({
   name: z
     .string()
@@ -34,11 +51,15 @@ export const sponsorBaseSchema = z.object({
     .string()
     .min(1, 'Company URL is required')
     .regex(URL_REGEX, 'Invalid URL'),
-  twitter: twitterUsernameSchema,
+  // X is optional — many Sierra Leonean companies use Facebook/Instagram/TikTok instead.
+  twitter: z.union([z.literal(''), twitterUsernameSchema]).optional(),
+  socials: companySocialsSchema,
+  // Entity name is no longer collected; defaults to the company name on submit.
   entityName: z
     .string()
-    .min(1, 'Entity name is required')
-    .refine(noHtmlDelimiters, noHtmlMessage),
+    .refine(noHtmlDelimiters, noHtmlMessage)
+    .optional()
+    .or(z.literal('')),
 });
 
 export const userSponsorDetailsSchema = z.object({
@@ -59,7 +80,9 @@ export const userSponsorDetailsSchema = z.object({
       'Only letters, numbers, underscores, and hyphens are allowed',
     ),
   photo: z.string().optional(),
-  telegram: telegramUsernameSchema,
+  // Telegram is hidden in the sponsor flow but kept optional for back-compat.
+  // `.nullish()` because the API extracts the username and yields null when empty.
+  telegram: z.union([z.literal(''), telegramUsernameSchema]).nullish(),
 });
 
 export const sponsorFormSchema = z.object({
@@ -71,6 +94,30 @@ export type SponsorBase = z.infer<typeof sponsorBaseSchema>;
 export type UserSponsorDetails = z.infer<typeof userSponsorDetailsSchema>;
 export type SponsorFormValues = z.infer<typeof sponsorFormSchema>;
 
+const SOCIAL_PREFIX: Record<keyof NonNullable<SponsorBase['socials']>, string> =
+  {
+    facebook: 'https://facebook.com/',
+    instagram: 'https://instagram.com/',
+    tiktok: 'https://tiktok.com/@',
+  };
+
+// Turn raw handles into full profile URLs, dropping any blanks.
+const buildSocials = (socials: SponsorBase['socials']) => {
+  if (!socials) return undefined;
+  const out: Record<string, string> = {};
+  (Object.keys(SOCIAL_PREFIX) as Array<keyof typeof SOCIAL_PREFIX>).forEach(
+    (key) => {
+      const handle = socials[key]?.trim();
+      if (handle) {
+        out[key] = handle.startsWith('http')
+          ? handle
+          : `${SOCIAL_PREFIX[key]}${handle.replace(/^@/, '')}`;
+      }
+    },
+  );
+  return Object.keys(out).length > 0 ? out : undefined;
+};
+
 export const transformFormToApiData = (data: SponsorFormValues) => {
   const sponsorData: SponsorBase = {
     name: data.sponsor.name,
@@ -79,8 +126,10 @@ export const transformFormToApiData = (data: SponsorFormValues) => {
     logo: data.sponsor.logo,
     industry: data.sponsor.industry,
     url: data.sponsor.url,
-    twitter: data.sponsor.twitter,
-    entityName: data.sponsor.entityName,
+    twitter: data.sponsor.twitter || '',
+    socials: buildSocials(data.sponsor.socials),
+    // No entity-name field anymore — fall back to the company name.
+    entityName: data.sponsor.entityName || data.sponsor.name,
   };
 
   const userData = data.user

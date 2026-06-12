@@ -44,7 +44,7 @@ async function user(req: NextApiRequestWithUser, res: NextApiResponse) {
       });
     }
 
-    const { name, slug, url, industry, twitter, bio, entityName } =
+    const { name, slug, url, industry, twitter, bio, entityName, socials } =
       validationResult.data;
     let logo: string | undefined = validationResult.data.logo;
 
@@ -83,6 +83,8 @@ async function user(req: NextApiRequestWithUser, res: NextApiResponse) {
           twitter,
           bio,
           entityName,
+          socials:
+            socials && Object.keys(socials).length > 0 ? socials : undefined,
         },
       });
 
