@@ -129,8 +129,9 @@ function ActivityDeck() {
             <Kicker>Just now</Kicker>
             <div className="mt-4">
               <p className="text-[15px] font-bold text-[#1d1815]">
-                {submission
-                  ? `${submission.user.firstName} ${submission.user.lastName}`.trim()
+                {submission?.user
+                  ? `${submission.user.firstName ?? ''} ${submission.user.lastName ?? ''}`.trim() ||
+                    'Someone'
                   : 'Someone'}
                 {submission?.user?.username && (
                   <span className="ml-1.5 text-[12px] font-medium text-[#6b5e50]">

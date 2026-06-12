@@ -24,7 +24,12 @@ import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { useTimeout } from '@/hooks/use-timeout';
 import { cn } from '@/utils/cn';
 
-import { popupOpenAtom, popupsShowedAtom, popupTimeoutAtom } from '../atoms';
+import {
+  CONVERSION_POPUPS_ENABLED,
+  popupOpenAtom,
+  popupsShowedAtom,
+  popupTimeoutAtom,
+} from '../atoms';
 import { GetStarted } from './GetStarted';
 
 interface GrantInfo {
@@ -64,6 +69,7 @@ export const GrantsPop = () => {
       !authenticated &&
       popupsShowed < 1 &&
       !open &&
+      CONVERSION_POPUPS_ENABLED &&
       process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ) {
       initated.current = true;

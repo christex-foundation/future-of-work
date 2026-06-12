@@ -39,7 +39,12 @@ import { roundToNearestThousand } from '@/utils/number';
 import { userCountQuery } from '@/features/home/queries/user-count';
 import { liveOpportunitiesQuery } from '@/features/listings/queries/live-opportunities';
 
-import { popupOpenAtom, popupsShowedAtom, popupTimeoutAtom } from '../atoms';
+import {
+  CONVERSION_POPUPS_ENABLED,
+  popupOpenAtom,
+  popupsShowedAtom,
+  popupTimeoutAtom,
+} from '../atoms';
 import { GetStarted } from './GetStarted';
 
 const avatars = [
@@ -101,6 +106,7 @@ export const HomepagePop = () => {
       !authenticated &&
       popupsShowed < 1 &&
       !open &&
+      CONVERSION_POPUPS_ENABLED &&
       process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ) {
       initated.current = true;

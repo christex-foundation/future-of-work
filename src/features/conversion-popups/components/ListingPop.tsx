@@ -29,7 +29,12 @@ import { type Listing } from '@/features/listings/types';
 import { isDeadlineOver } from '@/features/listings/utils/deadline';
 import { bountySnackbarAtom } from '@/features/navbar/components/BountySnackbar';
 
-import { popupOpenAtom, popupsShowedAtom, popupTimeoutAtom } from '../atoms';
+import {
+  CONVERSION_POPUPS_ENABLED,
+  popupOpenAtom,
+  popupsShowedAtom,
+  popupTimeoutAtom,
+} from '../atoms';
 import { GetStarted } from './GetStarted';
 
 interface VariantInfo {
@@ -95,6 +100,7 @@ export const ListingPop = ({ listing }: { listing: Listing | null }) => {
       !isDeadlineOver(listing.deadline, serverTime()) &&
       popupsShowed < 1 &&
       !open &&
+      CONVERSION_POPUPS_ENABLED &&
       process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ) {
       initated.current = true;
