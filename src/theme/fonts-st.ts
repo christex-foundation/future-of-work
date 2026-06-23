@@ -1,4 +1,9 @@
-import { Bricolage_Grotesque, Fraunces, Manrope } from 'next/font/google';
+import {
+  Bricolage_Grotesque,
+  Fraunces,
+  Hanken_Grotesk,
+  Manrope,
+} from 'next/font/google';
 import localFont from 'next/font/local';
 
 /**
@@ -87,6 +92,17 @@ const manrope = Manrope({
 });
 
 /**
+ * Hanken Grotesk - Calm grotesk body font for the Daybreak landing,
+ * paired with Fraunces (matches the agreed design system).
+ */
+const hanken = Hanken_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-hanken',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
+
+/**
  * Combined font class names for applying to ST pages
  */
 export const stFontVariables = [
@@ -96,4 +112,5 @@ export const stFontVariables = [
   fraunces.variable,
   bricolage.variable,
   manrope.variable,
+  hanken.variable,
 ].join(' ');

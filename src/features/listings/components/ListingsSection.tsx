@@ -7,6 +7,7 @@ import { EmptySection } from '@/components/shared/EmptySection';
 import { Separator } from '@/components/ui/separator';
 import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { useServerTimeSync } from '@/hooks/use-server-time';
+import { cn } from '@/utils/cn';
 import { dayjs } from '@/utils/dayjs';
 import { formatNumberWithSuffix } from '@/utils/formatNumberWithSuffix';
 
@@ -15,7 +16,10 @@ import { HACKATHONS } from '@/features/hackathon/constants/hackathons';
 import { sponsorStageQuery } from '@/features/home/queries/sponsor-stage';
 import { SponsorStage } from '@/features/home/types/sponsor-stage';
 import { getRegionSlug } from '@/features/listings/utils/region';
-import BountyCard from '@/features/stfun/components/cards/BountyCard';
+import {
+  DaybreakBountyCard,
+  type LiveBounty,
+} from '@/features/stfun/components/daybreak/DaybreakBountyCard';
 
 const SKELETON_COUNT = 6;
 const skeletonArray = Array.from({ length: SKELETON_COUNT }, (_, i) => i);
@@ -45,14 +49,27 @@ const TYPE_LABELS: Record<string, string> = {
   hackathon: 'Hackathon',
 };
 
-const getInitials = (name?: string) =>
-  (name ?? '?')
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join('')
-    .toUpperCase() || '?';
+// Daybreak board controls (talent /earn home view).
+const BOARD_CATEGORIES: ReadonlyArray<{
+  label: string;
+  value: ListingCategory;
+}> = [
+  { label: 'All', value: 'All' },
+  { label: 'Design', value: 'Design' },
+  { label: 'Development', value: 'Development' },
+  { label: 'Content', value: 'Content' },
+  { label: 'Other', value: 'Other' },
+];
+
+const BOARD_SORTS: ReadonlyArray<{
+  label: string;
+  sortBy: ListingSortOption;
+  order: 'asc' | 'desc';
+}> = [
+  { label: 'Freshest', sortBy: 'Date', order: 'desc' },
+  { label: 'Biggest prize', sortBy: 'Prize', order: 'desc' },
+  { label: 'Most active', sortBy: 'Submissions', order: 'desc' },
+];
 
 const getPrize = (listing: Listing): { prize: string; currency: string } => {
   const token = listing.token ?? '';
@@ -75,28 +92,40 @@ const getPrize = (listing: Listing): { prize: string; currency: string } => {
   }
 };
 
-// Maps a real listing into the props of the landing-page BountyCard design.
-const toBountyCardProps = (listing: Listing, now: number) => {
-  const daysLeft = Math.max(0, dayjs(listing.deadline).diff(dayjs(now), 'day'));
+// Maps a real listing into the canonical DaybreakBountyCard's props,
+// so the /earn board uses the exact same card as the marketing homepage.
+const toLiveBounty = (listing: Listing, now: number): LiveBounty => {
   const tags = Array.from(
     new Set((listing.skills ?? []).map((s) => s.skills)),
   ).slice(0, 3);
   const { prize, currency } = getPrize(listing);
+  const isBeforeDeadline = dayjs(now).isBefore(dayjs(listing.deadline));
+  const daysLeft = isBeforeDeadline
+    ? Math.max(1, dayjs(listing.deadline).diff(dayjs(now), 'day'))
+    : null;
+
+  let status = 'Open';
+  let dueLabel: string | undefined;
+  if (listing.isWinnersAnnounced) {
+    status = 'Completed';
+    dueLabel = 'Winners announced';
+  } else if (!isBeforeDeadline) {
+    status = 'In review';
+    dueLabel = 'Submissions closed';
+  }
+
   return {
-    logo: getInitials(listing.sponsor?.name),
-    org: listing.sponsor?.name ?? 'Sponsor',
-    location:
-      listing.region && listing.region.toLowerCase() !== 'global'
-        ? listing.region
-        : 'Global',
     title: listing.title ?? '',
-    type: TYPE_LABELS[listing.type ?? 'bounty'] ?? 'Bounty',
+    slug: listing.slug ?? '',
+    sponsor: listing.sponsor?.name ?? 'Sponsor',
+    cat: tags[0] ?? TYPE_LABELS[listing.type ?? 'bounty'] ?? 'Bounty',
+    reward: null,
+    prizeLabel: prize === 'Variable' ? 'Variable' : `$${prize}`,
+    token: currency || 'USDC',
     tags,
     daysLeft,
-    submitted: listing._count?.Submission ?? 0,
-    currency,
-    prize,
-    href: `/earn/listing/${listing.slug}`,
+    status,
+    dueLabel,
   };
 };
 
@@ -272,7 +301,10 @@ export const ListingsSection = ({
     return `${basePath}?${params.toString()}`;
   };
 
-  const gridClass = 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3';
+  const gridClass =
+    type === 'home'
+      ? 'grid grid-cols-1 gap-5 md:grid-cols-2'
+      : 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3';
 
   const renderContent = () => {
     if (isLoading) {
@@ -340,9 +372,9 @@ export const ListingsSection = ({
             />
           )}
           {listings.map((listing) => (
-            <BountyCard
+            <DaybreakBountyCard
               key={listing.id}
-              {...toBountyCardProps(listing, serverTime())}
+              bounty={toLiveBounty(listing, serverTime())}
             />
           ))}
         </div>
@@ -437,6 +469,46 @@ export const ListingsSection = ({
 
           <div className="mb-2 h-px w-full bg-slate-200" />
         </>
+      )}
+
+      {type === 'home' && (
+        <div
+          style={{ fontFamily: 'var(--font-hanken), sans-serif' }}
+          className="mb-7 flex flex-wrap items-center justify-between gap-4"
+        >
+          <div className="flex flex-wrap gap-2">
+            {BOARD_CATEGORIES.map((c) => (
+              <button
+                key={c.value}
+                onClick={() => handleCategoryChange(c.value)}
+                className={cn(
+                  'rounded-full border px-4 py-1.5 text-[13px] font-medium transition',
+                  activeCategory === c.value
+                    ? 'border-[#2C3A2E] bg-[#2C3A2E] text-[#FBF7EF]'
+                    : 'border-[#E6DCC9] bg-white text-[#5C5147] hover:border-[#c9a98f] hover:text-[#221A14]',
+                )}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-1 rounded-full border border-[#E6DCC9] bg-white p-1">
+            {BOARD_SORTS.map((s) => (
+              <button
+                key={s.label}
+                onClick={() => handleSortChange(s.sortBy, s.order)}
+                className={cn(
+                  'rounded-full px-3.5 py-1.5 text-[12.5px] font-medium transition',
+                  activeSortBy === s.sortBy && activeOrder === s.order
+                    ? 'bg-[#F2EAD9] text-[#221A14]'
+                    : 'text-[#5C5147] hover:text-[#221A14]',
+                )}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
 
       <AnimateChangeInHeight disableOnHeightZero>

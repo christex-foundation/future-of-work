@@ -33,9 +33,12 @@ function isSTRoute(pathname: string): boolean {
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isST = isSTRoute(router.pathname);
+  // The homepage uses the light "Daybreak" marketing shell (its own nav +
+  // footer, warm paper background), so it opts out of the dark ST shell.
+  const isDaybreak = router.pathname === '/';
 
   useEffect(() => {
-    if (!isST || typeof window === 'undefined') {
+    if (!isST || isDaybreak || typeof window === 'undefined') {
       return;
     }
 
@@ -85,7 +88,34 @@ function App({ Component, pageProps }: AppProps) {
       document.documentElement.style.backgroundColor = '';
       document.body.style.backgroundColor = '';
     };
-  }, [isST]);
+  }, [isST, isDaybreak]);
+
+  if (isDaybreak) {
+    return (
+      <TokenListProvider>
+        <div className={`${stFontVariables} bg-[#FBF7EF]`}>
+          <TopLoader />
+          <Head>
+            <link
+              rel="icon"
+              type="image/svg+xml"
+              href="/fow-favicon.svg"
+              key="icon-svg"
+            />
+            <link rel="shortcut icon" href="/favicon.ico" key="icon-ico" />
+            <link
+              rel="apple-touch-icon"
+              sizes="180x180"
+              href="/apple-touch-icon.png"
+              key="apple-touch-icon"
+            />
+          </Head>
+          <Component {...pageProps} key={router.asPath} />
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_TRACKING_ID!} />
+        </div>
+      </TokenListProvider>
+    );
+  }
 
   if (isST) {
     return (

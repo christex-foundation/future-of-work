@@ -1,143 +1,94 @@
 import type { GetServerSideProps } from 'next';
-import Head from 'next/head';
 
-import { JsonLd } from '@/components/shared/JsonLd';
 import { ASSET_URL } from '@/constants/ASSET_URL';
 import { Meta } from '@/layouts/Meta';
 import { prisma } from '@/prisma';
-import { generateSuperteamChaptersSchema } from '@/utils/json-ld';
+import { formatNumberWithSuffix } from '@/utils/formatNumberWithSuffix';
 
-import PrimaryButton from '@/features/stfun/components/common/PrimaryButton';
-import Collab from '@/features/stfun/components/sections/Collab';
-import FindWork from '@/features/stfun/components/sections/FindWork';
-import Hero from '@/features/stfun/components/sections/Hero';
-import LoveRespect from '@/features/stfun/components/sections/LoveRespect';
-import Production from '@/features/stfun/components/sections/Production';
+import DaybreakLanding, {
+  type LiveBounty,
+} from '@/features/stfun/components/daybreak/DaybreakLanding';
 
-interface HomePageProps {
-  readonly chapters: Array<{
-    name: string;
-    region: string;
-    displayValue: string;
-    slug: string;
-    code: string;
-    country: string[];
-    icons?: string;
-    link?: string;
-  }>;
-  readonly chaptersForSchema: Array<{
-    name: string;
-    displayValue: string;
-    slug: string;
-    code: string;
-    country: string[];
-    icons?: string;
-    link?: string;
-  }>;
+interface HomeProps {
+  bounties: LiveBounty[];
 }
 
-function parseCountries(rawCountries: unknown): string[] {
-  if (!Array.isArray(rawCountries)) return [];
-  return rawCountries.filter(
-    (country): country is string => typeof country === 'string',
-  );
-}
-
-export default function Home({ chaptersForSchema }: HomePageProps) {
+export default function Home({ bounties }: HomeProps) {
   return (
     <>
       <Meta
-        title="Superteam | The Talent Layer of Solana"
-        description="Superteam is a community of the best talent learning, earning and building in crypto."
-        canonical="https://superteam.fun/"
+        title="Future of Work | Where good work meets fair pay"
+        description="A calm, open marketplace connecting talent who want to earn with companies who need work done — fast, transparent, and paid in USDC."
+        canonical="https://future-of-work-lovat.vercel.app/"
         og={`${ASSET_URL}/st/og/og-home.png`}
       />
-      <JsonLd data={generateSuperteamChaptersSchema(chaptersForSchema)} />
-      <Head>
-        <link
-          rel="preload"
-          as="image"
-          href="/hero-dawn.jpg"
-          // @ts-expect-error fetchpriority is a valid attribute but not typed
-          imagesrcset="/hero-dawn-sm.jpg 860w, /hero-dawn.jpg 1719w"
-          imagesizes="100vw"
-        />
-      </Head>
-
-      <Hero
-        eyebrow="A New Day for Work"
-        heading={
-          <>
-            Talent is everywhere.{' '}
-            <em className="text-[#CE4A2B] italic">Opportunity</em>{' '}
-            shouldn&apos;t be the gap.
-          </>
-        }
-        buttonVisible={false}
-      >
-        <PrimaryButton
-          href="/earn"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 bg-white text-center"
-        >
-          Start Earning
-        </PrimaryButton>
-      </Hero>
-
-      <FindWork />
-
-      <Production />
-
-      <LoveRespect />
-
-      <Collab />
+      <DaybreakLanding bounties={bounties} />
     </>
   );
 }
 
-export const getServerSideProps: GetServerSideProps<
-  HomePageProps
-> = async () => {
-  const chapters = await prisma.chapter.findMany({
-    where: { active: true },
+function skillsToTags(skills: unknown): string[] {
+  if (!Array.isArray(skills)) return [];
+  return skills
+    .map((s) => {
+      if (typeof s === 'string') return s;
+      if (s && typeof s === 'object' && 'skills' in s) {
+        return (s as { skills?: string }).skills;
+      }
+      return undefined;
+    })
+    .filter((s): s is string => Boolean(s))
+    .slice(0, 3);
+}
+
+export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
+  const now = new Date();
+
+  const raw = await prisma.bounties.findMany({
+    where: {
+      isPublished: true,
+      isActive: true,
+      isArchived: false,
+      isPrivate: false,
+      status: 'OPEN',
+      deadline: { gt: now },
+    },
+    orderBy: { deadline: 'asc' },
+    take: 4,
     select: {
-      name: true,
-      region: true,
-      displayValue: true,
+      title: true,
       slug: true,
-      code: true,
-      countries: true,
-      icons: true,
-      link: true,
+      deadline: true,
+      rewardAmount: true,
+      usdValue: true,
+      token: true,
+      type: true,
+      skills: true,
+      sponsor: { select: { name: true, industry: true } },
     },
   });
 
-  const chaptersForSchema = chapters.map((chapter) => ({
-    name: chapter.name,
-    displayValue: chapter.displayValue || chapter.name,
-    slug: chapter.slug,
-    code: chapter.code || '',
-    country: parseCountries(chapter.countries),
-    icons: chapter.icons || undefined,
-    link: chapter.link || undefined,
-  }));
+  const bounties: LiveBounty[] = raw.map((b) => {
+    const tags = skillsToTags(b.skills);
+    const daysLeft = b.deadline
+      ? Math.max(
+          1,
+          Math.ceil((b.deadline.getTime() - now.getTime()) / 86_400_000),
+        )
+      : null;
+    const reward = b.rewardAmount ?? b.usdValue ?? null;
+    return {
+      title: b.title,
+      slug: b.slug,
+      sponsor: b.sponsor?.name ?? 'Sponsor',
+      cat: tags[0] ?? (b.type === 'project' ? 'Project' : 'Bounty'),
+      reward,
+      prizeLabel: reward != null ? `$${formatNumberWithSuffix(reward)}` : undefined,
+      token: b.token ?? 'USDC',
+      tags,
+      daysLeft,
+    };
+  });
 
-  const chaptersForGeographies = chapters.map((chapter) => ({
-    name: chapter.name,
-    region: chapter.region,
-    displayValue: chapter.displayValue || chapter.region,
-    slug: chapter.slug,
-    code: chapter.code || '',
-    country: parseCountries(chapter.countries),
-    icons: chapter.icons || undefined,
-    link: chapter.link || undefined,
-  }));
-
-  return {
-    props: {
-      chapters: chaptersForGeographies,
-      chaptersForSchema,
-    },
-  };
+  return { props: { bounties } };
 };

@@ -1104,3 +1104,376 @@
     top: 2.25%;
   }
 }
+
+/* ============================================================
+   DAYBREAK LANDING  (homepage `/` only — scoped under .daybreak)
+   Editorial × Naturalist blend: warm paper, Fraunces + Hanken,
+   terracotta signature, sage/forest calm. Ported from the
+   approved mockup. Every rule is scoped so it never touches the
+   dark ST shell or the rest of the app.
+   ============================================================ */
+.daybreak{
+  --paper:#FBF7EF; --paper-2:#F2EAD9; --paper-3:#E9E0CD;
+  --ink:#221A14; --ink-soft:#5C5147;
+  --terra:#C4502E; --terra-deep:#A83F22;
+  --sage:#8FA37E; --forest:#2C3A2E; --forest-soft:#3C4D3D; --olive:#6B7A4F;
+  --hair:#E6DCC9; --line-soft:rgba(34,26,20,.08);
+  --shadow:0 22px 60px -34px rgba(54,38,22,.5);
+  --shadow-sm:0 12px 34px -22px rgba(54,38,22,.45);
+  --serif:var(--font-fraunces),serif;
+  --sans:var(--font-hanken),system-ui,sans-serif;
+
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+  overflow-x:hidden;
+}
+.daybreak *{margin:0;padding:0;box-sizing:border-box}
+/* calm paper-grain warmth */
+.daybreak::before{
+  content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;
+  opacity:.42;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+}
+.daybreak .serif{font-family:var(--serif)}
+.daybreak a{color:inherit;text-decoration:none}
+.daybreak .wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+.daybreak .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--terra);
+  display:inline-flex;align-items:center;gap:10px}
+.daybreak .kicker::before{content:"";width:18px;height:1.5px;background:var(--terra)}
+
+/* nav */
+.daybreak header.dbnav{position:sticky;top:0;z-index:100;background:rgba(251,247,239,.82);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft)}
+.daybreak .nav-in{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+.daybreak nav.links{display:flex;gap:34px;align-items:center}
+.daybreak nav.links a{font-size:14.5px;font-weight:500;color:var(--ink-soft);transition:color .2s}
+.daybreak nav.links a:hover{color:var(--ink)}
+.daybreak .nav-cta{display:flex;gap:12px;align-items:center}
+.daybreak .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px;
+  padding:11px 21px;border-radius:40px;border:1px solid transparent;cursor:pointer;transition:.22s;white-space:nowrap}
+.daybreak .btn-ghost{color:var(--ink);border-color:var(--hair);background:transparent}
+.daybreak .btn-ghost:hover{background:var(--paper-2);border-color:#d9ccb2}
+.daybreak .btn-solid{background:var(--forest);color:var(--paper)}
+.daybreak .btn-solid:hover{background:var(--forest-soft);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.daybreak .btn-terra{background:var(--terra);color:#fff}
+.daybreak .btn-terra:hover{background:var(--terra-deep);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+
+/* hero */
+.daybreak .hero{position:relative;padding:96px 0 56px;overflow:hidden}
+.daybreak .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:60px;align-items:center}
+.daybreak .hero .kicker{margin-bottom:28px}
+.daybreak .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(48px,6.2vw,88px);
+  line-height:1.0;letter-spacing:-.02em;margin-bottom:28px}
+.daybreak .hero h1 em{font-style:italic;color:var(--terra)}
+.daybreak .hero h1 .leaf{color:var(--forest)}
+.daybreak .lead{font-size:20px;line-height:1.55;color:var(--ink-soft);max-width:32ch;margin-bottom:34px}
+.daybreak .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.daybreak .tiny-note{font-size:14px;color:var(--ink-soft);margin-top:22px;display:flex;align-items:center;gap:11px}
+.daybreak .tiny-note b{color:var(--forest);font-weight:600}
+.daybreak .tiny-note .av{display:flex}
+.daybreak .tiny-note .av span{width:26px;height:26px;border-radius:50%;border:2px solid var(--paper);margin-left:-8px;
+  background:var(--sage);font-size:10px;display:grid;place-items:center;color:var(--forest);font-weight:700}
+.daybreak .tiny-note .av span:first-child{margin-left:0}
+
+/* hero art plate */
+.daybreak .plate{position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);
+  aspect-ratio:4/5;border:1px solid var(--hair)}
+.daybreak .plate .art{position:absolute;inset:0;
+  background:
+    radial-gradient(120% 90% at 18% 8%,rgba(143,163,126,.9),transparent 55%),
+    radial-gradient(120% 120% at 92% 94%,rgba(44,58,46,.92),transparent 55%),
+    linear-gradient(135deg,#C4502E,#7a2c18);}
+.daybreak .plate .grain{position:absolute;inset:0;opacity:.16;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.daybreak .plate .lines{position:absolute;inset:0;opacity:.45;
+  background-image:repeating-linear-gradient(115deg,rgba(255,255,255,.12) 0 1px,transparent 1px 24px)}
+.daybreak .plate .label{position:absolute;left:24px;bottom:24px;right:24px;color:#fff}
+.daybreak .plate .label .k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85;font-weight:600}
+.daybreak .plate .label .t{font-family:var(--serif);font-size:30px;line-height:1.06;margin-top:8px;font-weight:400}
+.daybreak .plate .chip{position:absolute;top:20px;right:20px;background:rgba(251,247,239,.95);color:var(--ink);
+  font-size:12px;font-weight:600;padding:7px 13px;border-radius:30px;letter-spacing:.02em;display:flex;align-items:center;gap:7px}
+.daybreak .plate .chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sage)}
+.daybreak .plate .float{position:absolute;left:-26px;top:38px;background:var(--paper);border:1px solid var(--hair);
+  border-radius:13px;padding:14px 17px;box-shadow:var(--shadow-sm);font-size:13px;line-height:1.3;
+  animation:dbBob 6s ease-in-out infinite}
+.daybreak .plate .float .amt{font-family:var(--serif);font-size:21px;color:var(--forest)}
+@keyframes dbBob{50%{transform:translateY(-9px)}}
+
+/* trust figure row */
+.daybreak .figrow{margin-top:72px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  display:grid;grid-template-columns:repeat(4,1fr)}
+.daybreak .fig{padding:32px 26px;border-right:1px solid var(--hair)}
+.daybreak .fig:last-child{border-right:0}
+.daybreak .fig .n{font-family:var(--serif);font-size:46px;font-weight:400;letter-spacing:-.02em;line-height:1}
+.daybreak .fig .l{font-size:13.5px;color:var(--ink-soft);margin-top:9px;letter-spacing:.02em}
+.daybreak .fig:nth-child(1) .n{color:var(--terra)}
+.daybreak .fig:nth-child(3) .n{color:var(--forest)}
+
+/* sections */
+.daybreak .sec{padding:108px 0}
+.daybreak .sec-head{max-width:46ch;margin-bottom:50px}
+.daybreak .sec-head .kicker{margin-bottom:18px}
+.daybreak .sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,3.8vw,48px);
+  letter-spacing:-.02em;line-height:1.04}
+.daybreak .sec-head h2 em{font-style:italic;color:var(--terra)}
+.daybreak .sec-head p{max-width:42ch;color:var(--ink-soft);font-size:16.5px;margin-top:16px}
+
+/* dual paths */
+.daybreak .spreads{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--hair);border-radius:18px;overflow:hidden;background:#fff}
+.daybreak .spread{padding:48px 46px;position:relative}
+.daybreak .spread.builders{background:linear-gradient(180deg,#fff,var(--paper))}
+.daybreak .spread.companies{background:linear-gradient(180deg,var(--paper-2),var(--paper));border-left:1px solid var(--hair)}
+.daybreak .spread .authored{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ink-soft);
+  margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.daybreak .spread .authored::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--terra)}
+.daybreak .spread.companies .authored::before{background:var(--forest)}
+.daybreak .spread h3{font-family:var(--serif);font-weight:400;font-size:34px;letter-spacing:-.01em;line-height:1.06;margin-bottom:16px}
+.daybreak .spread h3 em{font-style:italic;color:var(--terra)}
+.daybreak .spread.companies h3 em{color:var(--forest)}
+.daybreak .spread p.body{color:var(--ink-soft);margin-bottom:26px;max-width:38ch}
+.daybreak .spread ul{list-style:none;margin-bottom:32px;display:grid;gap:14px}
+.daybreak .spread li{display:flex;gap:13px;align-items:flex-start;font-size:15.5px}
+.daybreak .spread li .dot{width:8px;height:8px;border-radius:50%;background:var(--terra);margin-top:8px;flex:0 0 auto}
+.daybreak .spread.companies li .dot{background:var(--forest)}
+
+/* featured bounty */
+.daybreak .lead-bounty{display:grid;grid-template-columns:1.1fr .9fr;border:1px solid var(--hair);border-radius:18px;
+  overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.daybreak .lead-bounty .copy{padding:46px 44px}
+.daybreak .lead-bounty .tagline{color:var(--terra);font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.daybreak .lead-bounty h3{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.05;margin:14px 0 16px;letter-spacing:-.01em}
+.daybreak .lead-bounty .by{color:var(--ink-soft);font-size:15px;margin-bottom:24px}
+.daybreak .lead-bounty .by b{color:var(--ink)}
+.daybreak .metarow{display:flex;gap:30px;flex-wrap:wrap;margin:26px 0 30px;padding-top:26px;border-top:1px solid var(--hair)}
+.daybreak .metarow .m .v{font-family:var(--serif);font-size:25px}
+.daybreak .metarow .m .k{font-size:12px;color:var(--ink-soft);letter-spacing:.04em;text-transform:uppercase;margin-top:3px}
+.daybreak .tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.daybreak .tag{font-size:12.5px;border:1px solid var(--hair);padding:5px 12px;border-radius:30px;color:var(--ink-soft);background:var(--paper)}
+.daybreak .lead-bounty .art2{position:relative;min-height:360px;
+  background:
+   radial-gradient(120% 80% at 82% 8%,rgba(143,163,126,.92),transparent 60%),
+   radial-gradient(120% 100% at 8% 100%,rgba(44,58,46,.92),transparent 55%),
+   linear-gradient(150deg,#C4502E,#8c3520)}
+.daybreak .art2 .lines{position:absolute;inset:0;opacity:.38;background-image:repeating-linear-gradient(60deg,rgba(255,255,255,.12) 0 1px,transparent 1px 28px)}
+.daybreak .art2 .prize{position:absolute;left:28px;bottom:28px;color:#fff}
+.daybreak .art2 .prize .k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85;font-weight:600}
+.daybreak .art2 .prize .v{font-family:var(--serif);font-size:58px;font-weight:400;line-height:1}
+.daybreak .art2 .clock{position:absolute;right:24px;top:24px;background:rgba(251,247,239,.95);color:var(--terra);
+  font-weight:700;font-size:13px;padding:8px 14px;border-radius:30px}
+
+/* categories */
+.daybreak .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.daybreak .cat{border:1px solid var(--hair);border-radius:14px;padding:24px 26px;background:#fff;transition:.24s;cursor:pointer}
+.daybreak .cat:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:#d9ccb2}
+.daybreak .cat .cn{font-family:var(--serif);font-size:27px;margin-bottom:5px}
+.daybreak .cat .cm{font-size:13.5px;color:var(--ink-soft)}
+.daybreak .cat .cm b{color:var(--terra);font-weight:600}
+
+/* pull quotes */
+.daybreak .quotes{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.daybreak .quote{padding:40px 38px;border-radius:18px;border:1px solid var(--hair);background:#fff;position:relative;overflow:hidden}
+.daybreak .quote.alt{background:var(--forest);color:var(--paper);border-color:var(--forest)}
+.daybreak .quote .mark{font-family:var(--serif);font-size:86px;line-height:.5;color:var(--terra);opacity:.45;position:absolute;top:40px;left:32px}
+.daybreak .quote.alt .mark{color:var(--sage);opacity:.6}
+.daybreak .quote blockquote{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.34;
+  letter-spacing:-.01em;margin:38px 0 28px;position:relative}
+.daybreak .quote blockquote em{font-style:italic;color:var(--terra)}
+.daybreak .quote.alt blockquote em{color:var(--sage)}
+.daybreak .quote .who{display:flex;align-items:center;gap:14px}
+.daybreak .avatar{width:48px;height:48px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+  font-weight:700;color:#fff;font-size:16px;font-family:var(--serif)}
+.daybreak .who .nm{font-weight:600}
+.daybreak .who .rl{font-size:13px;color:var(--ink-soft)}
+.daybreak .quote.alt .who .rl{color:var(--sage)}
+
+/* CTA band */
+.daybreak .cta{margin:0 0 110px;background:var(--forest);color:var(--paper);border-radius:22px;
+  padding:72px 60px;position:relative;overflow:hidden}
+.daybreak .cta .sungrad{position:absolute;right:-130px;top:-130px;width:440px;height:440px;border-radius:50%;
+  background:radial-gradient(circle,#E8B48E,var(--terra) 58%,transparent 72%);opacity:.32;filter:blur(2px)}
+.daybreak .cta-grid{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:44px;align-items:center}
+.daybreak .cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4vw,52px);line-height:1.04;letter-spacing:-.02em}
+.daybreak .cta h2 em{font-style:italic;color:var(--sage)}
+.daybreak .cta p{color:rgba(251,247,239,.72);margin-top:18px;max-width:36ch}
+.daybreak .cta-actions{display:flex;flex-direction:column;gap:13px}
+.daybreak .cta .btn-terra{justify-content:center;padding:15px}
+.daybreak .cta .btn-paper{background:var(--paper);color:var(--ink);justify-content:center;padding:15px}
+.daybreak .cta .btn-paper:hover{transform:translateY(-1px)}
+
+/* footer */
+.daybreak footer.dbfoot{border-top:1px solid var(--hair);padding:60px 0 40px}
+.daybreak .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
+.daybreak .foot-grid h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:16px;font-weight:600}
+.daybreak .foot-grid a{display:block;color:var(--ink-soft);font-size:14.5px;margin-bottom:10px;transition:color .2s}
+.daybreak .foot-grid a:hover{color:var(--terra)}
+.daybreak .foot-blurb{color:var(--ink-soft);font-size:14.5px;max-width:30ch;margin-top:16px}
+.daybreak .foot-bottom{display:flex;justify-content:space-between;margin-top:50px;padding-top:24px;border-top:1px solid var(--hair);
+  color:var(--ink-soft);font-size:13px}
+
+/* reveal */
+.daybreak .reveal{opacity:0;transform:translateY(22px);transition:opacity .85s cubic-bezier(.2,.7,.2,1),transform .85s cubic-bezier(.2,.7,.2,1)}
+.daybreak .reveal.in{opacity:1;transform:none}
+
+@media(max-width:980px){
+  .daybreak .hero-grid,.daybreak .lead-bounty,.daybreak .cta-grid,.daybreak .spreads,.daybreak .quotes{grid-template-columns:1fr}
+  .daybreak .figrow{grid-template-columns:1fr 1fr}.daybreak .fig:nth-child(2){border-right:0}
+  .daybreak .cats{grid-template-columns:1fr 1fr}
+  .daybreak .foot-grid{grid-template-columns:1fr 1fr}
+  .daybreak nav.links{display:none}
+  .daybreak .plate{aspect-ratio:16/11}
+}
+
+/* ---- hero "sunrise data-panel" variant (the interesting hero graphic) ---- */
+.daybreak .plate.sunrise .art{
+  background:
+    radial-gradient(58% 26% at 50% 56%, rgba(255,224,176,.92), transparent 72%),
+    radial-gradient(120% 80% at 12% 6%, rgba(143,163,126,.42), transparent 55%),
+    linear-gradient(180deg,#8f3320 0%,#C4502E 40%,#e2a86c 55%,#bd4f27 60%,#7a2c18 100%);
+}
+.daybreak .plate.sunrise .horizon{position:absolute;left:0;right:0;top:56%;height:1px;z-index:2;
+  background:linear-gradient(90deg,transparent,rgba(251,247,239,.9),transparent)}
+.daybreak .plate .paid-kicker{position:absolute;left:24px;top:22px;z-index:3;color:#fff;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+  display:flex;align-items:center;gap:9px}
+.daybreak .plate .paid-kicker i{width:7px;height:7px;border-radius:50%;background:var(--sage);
+  box-shadow:0 0 0 4px rgba(143,163,126,.3);animation:dbPulse 2.4s ease-in-out infinite}
+@keyframes dbPulse{50%{box-shadow:0 0 0 7px rgba(143,163,126,0)}}
+.daybreak .plate .payout{position:absolute;right:24px;top:36px;z-index:3;text-align:right;color:#fff}
+.daybreak .plate .payout .cap{font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.82;margin-bottom:5px}
+.daybreak .plate .payout .big{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1;
+  display:flex;align-items:baseline;gap:7px;justify-content:flex-end}
+.daybreak .plate .payout .big .up{font-size:15px;color:#cfe6bf}
+.daybreak .plate .payout .spark{display:block;margin:9px 0 0 auto;width:124px;height:38px;overflow:visible}
+.daybreak .plate .payout .spark .dot{animation:dbDot 2.2s ease-in-out infinite}
+@keyframes dbDot{0%,100%{opacity:.45}50%{opacity:1}}
+.daybreak .plate .sundial{position:absolute;left:50%;top:56%;transform:translate(-50%,-100%);
+  width:160px;height:96px;z-index:2;pointer-events:none}
+.daybreak .plate.sunrise .label{z-index:3}
+.daybreak .plate.sunrise .float{top:auto;bottom:92px;left:18px;right:auto;z-index:4}
+
+/* ============================================================
+   DAYBREAK — company-appeal blocks (Interleave / Sierra Leone)
+   logo strip · delivered gallery · case study · how-it-works · trust
+   ============================================================ */
+/* logo strip */
+.daybreak .logos{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:34px 0;background:var(--paper)}
+.daybreak .logos .eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--ink-soft);
+  text-align:center;margin-bottom:22px}
+.daybreak .logos .marks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 48px}
+.daybreak .logos .marks span{font-family:var(--serif);font-weight:500;font-size:24px;letter-spacing:-.01em;color:var(--ink-soft);
+  opacity:.78;transition:opacity .2s,color .2s}
+.daybreak .logos .marks span:hover{opacity:1;color:var(--ink)}
+
+/* recently delivered — proof-of-work gallery */
+.daybreak .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.daybreak .work{border:1px solid var(--hair);border-radius:16px;overflow:hidden;background:#fff;transition:.24s;
+  display:flex;flex-direction:column}
+.daybreak .work:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);border-color:#d9ccb2}
+.daybreak .work .platetop{position:relative;aspect-ratio:16/10;overflow:hidden}
+.daybreak .work .platetop .art{position:absolute;inset:0}
+.daybreak .work .platetop .lines{position:absolute;inset:0;opacity:.4;
+  background-image:repeating-linear-gradient(115deg,rgba(255,255,255,.13) 0 1px,transparent 1px 22px)}
+.daybreak .work .platetop .grain{position:absolute;inset:0;opacity:.16;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.daybreak .work .disc{position:absolute;top:14px;left:14px;background:rgba(251,247,239,.95);color:var(--ink);
+  font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:5px 11px;border-radius:30px;
+  display:flex;align-items:center;gap:7px}
+.daybreak .work .disc::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--terra)}
+.daybreak .work .copy{padding:22px 22px 24px}
+.daybreak .work .wt{font-family:var(--serif);font-weight:400;font-size:23px;line-height:1.1;letter-spacing:-.01em;margin-bottom:14px}
+.daybreak .work .meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;font-size:13.5px;color:var(--ink-soft);
+  padding-top:14px;border-top:1px solid var(--hair)}
+.daybreak .work .meta .sp{font-weight:600;color:var(--ink)}
+.daybreak .work .meta .pr{font-weight:600;color:var(--terra)}
+.daybreak .work .meta .sep{opacity:.4}
+.daybreak .work .meta .dl{color:var(--forest);font-weight:600}
+.daybreak .art-a{background:radial-gradient(120% 90% at 18% 8%,rgba(143,163,126,.9),transparent 55%),radial-gradient(120% 120% at 92% 94%,rgba(44,58,46,.92),transparent 55%),linear-gradient(135deg,#C4502E,#7a2c18)}
+.daybreak .art-b{background:radial-gradient(120% 90% at 82% 8%,rgba(143,163,126,.85),transparent 58%),radial-gradient(110% 110% at 10% 96%,rgba(196,80,46,.85),transparent 56%),linear-gradient(150deg,#2C3A2E,#1c2620)}
+.daybreak .art-c{background:radial-gradient(120% 100% at 20% 10%,rgba(232,180,142,.9),transparent 55%),radial-gradient(120% 120% at 92% 94%,rgba(44,58,46,.9),transparent 55%),linear-gradient(140deg,#A83F22,#6b2614)}
+.daybreak .art-d{background:radial-gradient(120% 90% at 14% 12%,rgba(143,163,126,.95),transparent 55%),radial-gradient(120% 120% at 90% 92%,rgba(196,80,46,.8),transparent 55%),linear-gradient(135deg,#3C4D3D,#222e23)}
+.daybreak .art-e{background:radial-gradient(120% 90% at 80% 10%,rgba(232,180,142,.9),transparent 56%),radial-gradient(120% 120% at 8% 96%,rgba(44,58,46,.92),transparent 55%),linear-gradient(150deg,#C4502E,#8c3520)}
+.daybreak .art-f{background:radial-gradient(120% 100% at 22% 8%,rgba(143,163,126,.9),transparent 55%),radial-gradient(120% 120% at 94% 96%,rgba(107,122,79,.9),transparent 55%),linear-gradient(140deg,#6B7A4F,#2C3A2E)}
+
+/* case study band */
+.daybreak .casestudy{margin:0;background:var(--forest);color:var(--paper);border-radius:22px;padding:64px 60px;
+  position:relative;overflow:hidden}
+.daybreak .casestudy .sungrad{position:absolute;left:-140px;bottom:-150px;width:440px;height:440px;border-radius:50%;
+  background:radial-gradient(circle,#E8B48E,var(--terra) 58%,transparent 72%);opacity:.3;filter:blur(2px)}
+.daybreak .cs-grid{position:relative;display:grid;grid-template-columns:.85fr 1.15fr;gap:50px;align-items:center}
+.daybreak .cs-logo{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.01em;display:flex;align-items:center;gap:11px}
+.daybreak .cs-logo .vrf{font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--forest);
+  background:var(--sage);padding:4px 11px;border-radius:30px;display:inline-flex;align-items:center;gap:6px}
+.daybreak .cs-logo .vrf::before{content:"✓"}
+.daybreak .cs-metrics{display:grid;gap:0;margin-top:30px;border-top:1px solid rgba(251,247,239,.16)}
+.daybreak .cs-metrics .cm{padding:18px 0;border-bottom:1px solid rgba(251,247,239,.16)}
+.daybreak .cs-metrics .cm .v{font-family:var(--serif);font-size:30px;line-height:1;color:var(--sage)}
+.daybreak .cs-metrics .cm .k{font-size:13px;color:rgba(251,247,239,.66);margin-top:6px;letter-spacing:.02em}
+.daybreak .cs-quote blockquote{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3vw,36px);line-height:1.22;
+  letter-spacing:-.01em;margin-bottom:26px}
+.daybreak .cs-quote blockquote em{font-style:italic;color:var(--sage)}
+.daybreak .cs-quote .who{display:flex;align-items:center;gap:14px}
+.daybreak .cs-quote .who .avatar{background:linear-gradient(135deg,var(--sage),var(--olive))}
+.daybreak .cs-quote .who .nm{font-weight:600}
+.daybreak .cs-quote .who .rl{font-size:13.5px;color:var(--sage)}
+
+/* how it works — 4 numbered steps */
+.daybreak .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.daybreak .step{border:1px solid var(--hair);border-radius:16px;padding:30px 26px 32px;background:#fff;transition:.24s;
+  position:relative;display:flex;flex-direction:column}
+.daybreak .step:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:#d9ccb2}
+.daybreak .step .no{font-family:var(--serif);font-size:46px;font-weight:400;line-height:1;color:var(--terra);
+  letter-spacing:-.02em;margin-bottom:18px}
+.daybreak .step .st{font-family:var(--serif);font-size:22px;font-weight:400;line-height:1.08;margin-bottom:10px;letter-spacing:-.01em}
+.daybreak .step .sb{font-size:14.5px;color:var(--ink-soft);line-height:1.5}
+
+/* trust & safety row */
+.daybreak .trust{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.daybreak .trustcard{border:1px solid var(--hair);border-radius:16px;padding:28px 26px 30px;background:#fff;transition:.24s}
+.daybreak .trustcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:#d9ccb2}
+.daybreak .trustcard .ic{width:38px;height:38px;border-radius:50%;background:var(--paper-2);border:1px solid var(--hair);
+  display:grid;place-items:center;margin-bottom:18px;position:relative}
+.daybreak .trustcard .ic::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--terra)}
+.daybreak .trustcard .tt{font-family:var(--serif);font-size:21px;font-weight:400;line-height:1.1;margin-bottom:9px;letter-spacing:-.01em}
+.daybreak .trustcard .tb{font-size:14.5px;color:var(--ink-soft);line-height:1.5}
+
+@media(max-width:980px){
+  .daybreak .cs-grid{grid-template-columns:1fr;gap:34px}
+  .daybreak .gallery{grid-template-columns:1fr}
+  .daybreak .steps,.daybreak .trust{grid-template-columns:1fr 1fr}
+  .daybreak .casestudy{padding:48px 36px}
+}
+
+/* ---- THE bounty card — Editorial style (one canonical card, reused everywhere) ---- */
+/* Self-contained (carries its own Daybreak palette) so it renders identically
+   on the .daybreak marketing homepage AND the /earn board (which isn't .daybreak-wrapped). */
+.bounty-card{
+  --ink:#221A14;--ink-soft:#5C5147;--terra:#C4502E;--hair:#E6DCC9;
+  --serif:var(--font-fraunces),serif;--sans:var(--font-hanken),'Hanken Grotesk',sans-serif;
+  font-family:var(--sans);color:var(--ink);text-decoration:none;
+  background:linear-gradient(180deg,#fff,#fffdf8);border:1px solid var(--hair);border-radius:6px;padding:38px 38px 32px;display:flex;flex-direction:column;cursor:pointer;
+  box-shadow:0 1px 1px rgba(54,38,22,.04),0 3px 6px rgba(54,38,22,.05),0 18px 44px -28px rgba(54,38,22,.5);
+  transition:transform .3s cubic-bezier(.2,.7,.3,1),box-shadow .3s,border-color .3s}
+.bounty-card:hover{transform:translateY(-5px);border-color:#d9ccb2;
+  box-shadow:0 2px 3px rgba(54,38,22,.05),0 8px 16px rgba(54,38,22,.06),0 34px 64px -30px rgba(54,38,22,.6)}
+.bounty-card .over{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:13px;margin:0 0 16px;display:flex;justify-content:space-between;gap:12px}
+.bounty-card .over b{color:var(--terra);font-weight:600}
+.bounty-card h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.1;letter-spacing:-.01em;color:var(--ink);margin:0 0 14px}
+.bounty-card .lead{color:var(--ink-soft);font-size:13.5px;margin:0 0 22px}
+.bounty-card .figline{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;border-top:2px solid var(--ink);padding-top:16px;margin-top:auto}
+.bounty-card .figline .amt{font-family:var(--serif);font-size:38px;font-weight:400;line-height:.9;color:var(--terra)}
+.bounty-card .figline .amt small{display:block;font-family:var(--sans);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px;font-weight:600}
+.bounty-card .figline .meta{text-align:right;font-size:12.5px;color:var(--ink-soft);line-height:1.6;white-space:nowrap}
+.bounty-card .figline .meta b{color:var(--ink);font-weight:600}
+/* live board heading + browse link */
+.daybreak .board-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:50px}
+.daybreak .board-head .sec-head{margin-bottom:0}
+.daybreak .board-head .browse{font-size:13.5px;color:var(--olive);font-weight:600;white-space:nowrap}
+.daybreak .board-head .browse:hover{color:var(--terra)}
+@media(max-width:980px){.daybreak .board-head{flex-direction:column;align-items:flex-start;gap:14px}}
+
+/* /earn "Live now" ticker marquee */
+@keyframes db-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
