@@ -65,14 +65,14 @@ export const ListingFilters = ({
       }}
     >
       <DropdownMenuTrigger>
-        <div className="relative flex cursor-pointer items-center gap-1.5 rounded-md p-2 hover:bg-[#f4eee3] sm:p-1.5">
-          <span className="hidden text-[0.8rem] font-semibold text-[#6b5e50] sm:flex">
+        <div className="relative flex cursor-pointer items-center gap-1.5 rounded-md p-2 hover:bg-[#F2EAD9] sm:p-1.5">
+          <span className="hidden text-[0.8rem] font-semibold text-[#5C5147] sm:flex">
             Filter
           </span>
-          <LucideListFilter className="size-4 stroke-3 text-[#1d1815]" />
+          <LucideListFilter className="size-4 stroke-3 text-[#221A14]" />
           {!isDefaultFilterApplied && (
             <span
-              className="absolute right-2 bottom-2 block size-1 rounded-full bg-[#ce4a2b] ring-1 ring-[#FBF7EE]"
+              className="absolute right-2 bottom-2 block size-1 rounded-full bg-[#C4502E] ring-1 ring-[#FBF7EF]"
               aria-hidden="true"
             />
           )}
@@ -87,9 +87,9 @@ export const ListingFilters = ({
             key={option.label}
             onSelect={() => onStatusChange(option.params.status)}
             className={cn(
-              'flex items-center gap-2 text-[#1d1815]',
+              'flex items-center gap-2 text-[#221A14]',
               activeStatus === option.params.status &&
-                'bg-[#e6a12b]/25 font-semibold',
+                'bg-[#C4502E]/25 font-semibold',
             )}
           >
             <div
@@ -116,10 +116,10 @@ export const ListingFilters = ({
               onSortChange(option.params.sortBy, option.params.order)
             }
             className={cn(
-              'flex gap-2 text-[#1d1815]',
+              'flex gap-2 text-[#221A14]',
               activeSortBy === option.params.sortBy &&
                 activeOrder === option.params.order &&
-                'bg-[#e6a12b]/25 font-semibold',
+                'bg-[#C4502E]/25 font-semibold',
             )}
           >
             <div className="text-slate-500">{option.icon}</div>

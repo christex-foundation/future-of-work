@@ -48,7 +48,7 @@ const NavItem = ({ onClick, label, className }: NavItemProps) => {
     <div
       onClick={onClick}
       className={cn(
-        'ph-no-capture font-primary flex cursor-pointer items-center rounded-none p-2 text-[#6b5e50] select-none hover:bg-[#f4eee3]',
+        'ph-no-capture font-primary flex cursor-pointer items-center rounded-lg p-2 text-[#5C5147] select-none hover:bg-[#F2EAD9]',
         className,
       )}
     >
@@ -88,7 +88,7 @@ export const MobileDrawer = ({
     <Sheet open={isDrawerOpen} onOpenChange={onDrawerClose}>
       <SheetContent
         side="left"
-        className="w-[300px] overflow-y-auto border-r-2! border-[#1d1815]! bg-[#FBF7EE] p-0 text-sm sm:w-[380px] sm:text-base"
+        className="w-[300px] overflow-y-auto border-r! border-[#E6DCC9]! bg-[#FBF7EF] p-0 text-sm sm:w-[380px] sm:text-base"
         showCloseIcon={false}
         onOpenAutoFocus={() => false}
       >
@@ -111,7 +111,7 @@ export const MobileDrawer = ({
                 id={user?.id}
                 avatar={user?.photo}
               />
-              <p className="font-serif line-clamp-1 text-lg text-[#1d1815]">
+              <p className="font-serif line-clamp-1 text-lg text-[#221A14]">
                 {user?.firstName} {user?.lastName}
               </p>
             </div>
@@ -128,7 +128,7 @@ export const MobileDrawer = ({
           {ready && !authenticated && (
             <div className="ph-no-capture mb-3 ml-2 flex items-center gap-3">
               <div
-                className="text-semibold font-primary cursor-pointer p-0 text-[#6b5e50] hover:text-[#1d1815]"
+                className="text-semibold font-primary cursor-pointer p-0 text-[#5C5147] hover:text-[#221A14]"
                 onClick={() => {
                   posthog.capture('login_navbar');
                   onDrawerClose();
@@ -139,10 +139,10 @@ export const MobileDrawer = ({
               </div>
               <Separator
                 orientation="vertical"
-                className="h-5 bg-[#1d1815]/20"
+                className="h-5 bg-[#E6DCC9]"
               />
               <div
-                className="text-semibold cursor-pointer text-[#ce4a2b] hover:text-[#ce4a2b]/80"
+                className="text-semibold cursor-pointer text-[#C4502E] hover:text-[#A83F22]"
                 onClick={() => {
                   posthog.capture('signup_navbar');
                   onDrawerClose();
@@ -156,7 +156,7 @@ export const MobileDrawer = ({
           {user && !user.currentSponsorId && !user.isTalentFilled && (
             <Button
               variant="ghost"
-              className="text-semibold cursor-pointer text-[#ce4a2b] hover:text-[#ce4a2b]/80"
+              className="text-semibold cursor-pointer text-[#C4502E] hover:text-[#A83F22]"
               onClick={() => {
                 router.push('/earn/new');
               }}
@@ -194,9 +194,9 @@ export const MobileDrawer = ({
                 tabIndex={-1}
                 data-no-focus
                 className={cn(
-                  'font-primary flex w-full items-center justify-between rounded-none p-2 text-[#6b5e50] transition-colors focus:outline-none focus-visible:ring-0 focus-visible:outline-none',
-                  'hover:bg-[#f4eee3]',
-                  categoriesOpen && 'bg-[#f4eee3]',
+                  'font-primary flex w-full items-center justify-between rounded-lg p-2 text-[#5C5147] transition-colors focus:outline-none focus-visible:ring-0 focus-visible:outline-none',
+                  'hover:bg-[#F2EAD9]',
+                  categoriesOpen && 'bg-[#F2EAD9]',
                 )}
               >
                 <span>Browse Categories</span>
@@ -233,9 +233,9 @@ export const MobileDrawer = ({
                 tabIndex={-1}
                 data-no-focus
                 className={cn(
-                  'font-primary flex w-full items-center justify-between rounded-none p-2 text-[#6b5e50] transition-colors focus:outline-none focus-visible:ring-0 focus-visible:outline-none',
-                  'hover:bg-[#f4eee3]',
-                  skillsOpen && 'bg-[#f4eee3]',
+                  'font-primary flex w-full items-center justify-between rounded-lg p-2 text-[#5C5147] transition-colors focus:outline-none focus-visible:ring-0 focus-visible:outline-none',
+                  'hover:bg-[#F2EAD9]',
+                  skillsOpen && 'bg-[#F2EAD9]',
                 )}
               >
                 <span>Browse Skills</span>
@@ -296,7 +296,7 @@ export const MobileDrawer = ({
                   posthog.capture('logout_user menu');
                   logout();
                 }}
-                className="text-[#ce4a2b]"
+                className="text-[#C4502E]"
               />
             )}
           </div>

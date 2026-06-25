@@ -15,7 +15,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        'bg-[#FBF7EE] text-[#1d1815] flex h-full w-full flex-col overflow-hidden rounded-none',
+        'bg-[#FBF7EF] text-[#221A14] flex h-full w-full flex-col overflow-hidden ',
         className,
       )}
       {...props}
@@ -49,16 +49,16 @@ function CommandInput({
     <div
       data-slot="command-input-wrapper"
       className={cn(
-        'flex items-center border-b-2 border-[#1d1815] px-3',
+        'flex items-center border-b border-[#E6DCC9] px-3',
         wrapperClassName,
       )}
       cmdk-input-wrapper=""
     >
-      <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 text-[#6b5e50] opacity-70" />
+      <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 text-[#5C5147] opacity-70" />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(
-          'placeholder:text-[#6b5e50]/60 flex h-10 w-full rounded-none bg-transparent py-3 text-sm text-[#1d1815] outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
+          'placeholder:text-[#5C5147]/60 flex h-10 w-full  bg-transparent py-3 text-sm text-[#221A14] outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         {...props}
@@ -89,7 +89,7 @@ function CommandEmpty({
   return (
     <CommandPrimitive.Empty
       data-slot="command-empty"
-      className="py-6 text-center text-sm text-[#6b5e50]"
+      className="py-6 text-center text-sm text-[#5C5147]"
       {...props}
     />
   );
@@ -103,7 +103,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        'text-[#1d1815] [&_[cmdk-group-heading]]:text-[#6b5e50] [&_[cmdk-group-heading]]:font-secondary [&_[cmdk-group-heading]]:tracking-[0.16em] [&_[cmdk-group-heading]]:uppercase overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-bold',
+        'text-[#221A14] [&_[cmdk-group-heading]]:text-[#5C5147] [&_[cmdk-group-heading]]:font-secondary [&_[cmdk-group-heading]]:tracking-[0.16em] [&_[cmdk-group-heading]]:uppercase overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-bold',
         className,
       )}
       {...props}
@@ -118,7 +118,7 @@ function CommandSeparator({
   return (
     <CommandPrimitive.Separator
       data-slot="command-separator"
-      className={cn('bg-[#1d1815]/15 -mx-1 h-px', className)}
+      className={cn('bg-[#221A14]/15 -mx-1 h-px', className)}
       {...props}
     />
   );
@@ -132,7 +132,7 @@ function CommandItem({
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "data-[selected=true]:bg-[#f4eee3] data-[selected=true]:text-[#1d1815] [&_svg:not([class*='text-'])]:text-[#6b5e50] relative flex cursor-default items-center gap-2 rounded-none px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-[selected=true]:bg-[#F2EAD9] data-[selected=true]:text-[#221A14] [&_svg:not([class*='text-'])]:text-[#5C5147] relative flex cursor-default items-center gap-2  px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -148,7 +148,7 @@ function CommandShortcut({
     <span
       data-slot="command-shortcut"
       className={cn(
-        'text-[#6b5e50] ml-auto text-xs tracking-widest',
+        'text-[#5C5147] ml-auto text-xs tracking-widest',
         className,
       )}
       {...props}

@@ -578,9 +578,9 @@ export const SubmissionDrawer = ({
 
   return (
     <SideDrawer isOpen={isOpen} onClose={handleClose}>
-      <SideDrawerContent className="w-screen max-w-2xl border-l-2 border-[#1d1815] bg-[#FBF7EE] px-2 sm:p-4">
+      <SideDrawerContent className="w-screen max-w-2xl border-l border-[#E6DCC9] bg-[#FBF7EF] px-2 sm:p-4">
         <X
-          className="absolute top-10 right-4 z-10 h-4 w-4 text-[#1d1815] sm:top-8 sm:right-8"
+          className="absolute top-10 right-4 z-10 h-4 w-4 text-[#221A14] sm:top-8 sm:right-8"
           onClick={handleClose}
         />
         <Form {...form}>
@@ -589,12 +589,12 @@ export const SubmissionDrawer = ({
             style={{ width: '100%', height: '100%' }}
           >
             <div className="flex h-full flex-col justify-between gap-6">
-              <ScrollArea className="h-full overflow-x-hidden overflow-y-auto rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] px-2">
-                <div className="mb-4 border-b border-[#1d1815]/20 bg-[#FBF7EE] py-3">
-                  <p className="font-serif text-lg font-semibold text-[#1d1815]">
+              <ScrollArea className="h-full overflow-x-hidden overflow-y-auto  border border-[#E6DCC9] bg-[#FBF7EF] px-2">
+                <div className="mb-4 border-b border-[#E6DCC9]/20 bg-[#FBF7EF] py-3">
+                  <p className="font-serif text-lg font-semibold text-[#221A14]">
                     {headerText}
                   </p>
-                  <p className="font-primary text-sm text-[#6b5e50]">
+                  <p className="font-primary text-sm text-[#5C5147]">
                     {subheadingText}
                   </p>
                 </div>
@@ -618,8 +618,8 @@ export const SubmissionDrawer = ({
                               <div>
                                 <FormControl>
                                   <div className="mr-0.5 flex">
-                                    <div className="flex items-center gap-1 rounded-l-none border-2 border-r-0 border-[#1d1815] bg-[#f4eee3] px-2">
-                                      <p className="font-primary text-sm font-medium text-[#6b5e50]">
+                                    <div className="flex items-center gap-1 rounded-l-none border border-r-0 border-[#E6DCC9] bg-[#F2EAD9] px-2">
+                                      <p className="font-primary text-sm font-medium text-[#5C5147]">
                                         https://
                                       </p>
                                     </div>
@@ -646,7 +646,7 @@ export const SubmissionDrawer = ({
                                           }
                                           size="sm"
                                           className={cn(
-                                            'absolute top-1/2 right-1 h-7 -translate-y-1/2 rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-3 text-xs text-[#1d1815] hover:bg-[#e6a12b]',
+                                            'absolute top-1/2 right-1 h-7 -translate-y-1/2  border border-[#E6DCC9] bg-[#C4502E] px-3 text-xs text-[#221A14] hover:bg-[#C4502E]',
                                           )}
                                         >
                                           Verify
@@ -679,8 +679,8 @@ export const SubmissionDrawer = ({
                               <div>
                                 <FormControl>
                                   <div className="mr-0.5 flex">
-                                    <div className="flex items-center gap-1 rounded-l-none border-2 border-r-0 border-[#1d1815] bg-[#f4eee3] px-2">
-                                      <p className="font-primary text-sm font-medium text-[#6b5e50]">
+                                    <div className="flex items-center gap-1 rounded-l-none border border-r-0 border-[#E6DCC9] bg-[#F2EAD9] px-2">
+                                      <p className="font-primary text-sm font-medium text-[#5C5147]">
                                         https://
                                       </p>
                                     </div>
@@ -707,7 +707,7 @@ export const SubmissionDrawer = ({
                                           }
                                           size="sm"
                                           className={cn(
-                                            'absolute top-1/2 right-1 h-7 -translate-y-1/2 rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-3 text-xs text-[#1d1815] hover:bg-[#e6a12b]',
+                                            'absolute top-1/2 right-1 h-7 -translate-y-1/2  border border-[#E6DCC9] bg-[#C4502E] px-3 text-xs text-[#221A14] hover:bg-[#C4502E]',
                                           )}
                                         >
                                           Verify
@@ -744,8 +744,8 @@ export const SubmissionDrawer = ({
                                 <FormControl>
                                   {e.isLink || e.type === 'link' ? (
                                     <div className="flex">
-                                      <div className="flex items-center gap-1 rounded-l-none border-2 border-r-0 border-[#1d1815] bg-[#f4eee3] px-2">
-                                        <p className="font-primary text-sm font-medium text-[#6b5e50]">
+                                      <div className="flex items-center gap-1 rounded-l-none border border-r-0 border-[#E6DCC9] bg-[#F2EAD9] px-2">
+                                        <p className="font-primary text-sm font-medium text-[#5C5147]">
                                           https://
                                         </p>
                                       </div>
@@ -820,7 +820,7 @@ export const SubmissionDrawer = ({
                     <Checkbox
                       id="terms"
                       className={cn(
-                        'mt-1 rounded-none border-2 border-[#1d1815] data-[state=checked]:border-[#1d1815] data-[state=checked]:bg-[#e6a12b] data-[state=checked]:text-[#1d1815]',
+                        'mt-1  border border-[#E6DCC9] data-[state=checked]:border-[#E6DCC9] data-[state=checked]:bg-[#C4502E] data-[state=checked]:text-[#221A14]',
                       )}
                       checked={termsAccepted}
                       onCheckedChange={(checked) =>
@@ -829,7 +829,7 @@ export const SubmissionDrawer = ({
                     />
                     <label
                       htmlFor="terms"
-                      className="font-primary text-sm leading-none text-[#6b5e50]"
+                      className="font-primary text-sm leading-none text-[#5C5147]"
                     >
                       I confirm that I have reviewed the scope of this track and
                       that my submission adheres to the specified requirements.
@@ -845,7 +845,7 @@ export const SubmissionDrawer = ({
                     <Checkbox
                       id="kyc-acknowledgement"
                       className={cn(
-                        'rounded-none border-2 border-[#1d1815] data-[state=checked]:border-[#1d1815] data-[state=checked]:bg-[#e6a12b] data-[state=checked]:text-[#1d1815]',
+                        ' border border-[#E6DCC9] data-[state=checked]:border-[#E6DCC9] data-[state=checked]:bg-[#C4502E] data-[state=checked]:text-[#221A14]',
                       )}
                       checked={kycAcknowledged}
                       onCheckedChange={(checked) =>
@@ -854,7 +854,7 @@ export const SubmissionDrawer = ({
                     />
                     <label
                       htmlFor="kyc-acknowledgement"
-                      className="font-primary text-sm leading-4 text-[#6b5e50]"
+                      className="font-primary text-sm leading-4 text-[#5C5147]"
                     >
                       {regionAckCopy}
                     </label>
@@ -864,15 +864,15 @@ export const SubmissionDrawer = ({
                 <div className="relative w-full">
                   <Button
                     className={cn(
-                      'ph-no-capture h-11 w-full gap-4 rounded-none border-2 border-[#1d1815] shadow-[3px_3px_0_#1d1815] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_#1d1815]',
+                      'ph-no-capture h-11 w-full gap-4  border border-[#E6DCC9]  ',
                       isNotEligibleForPro
                         ? 'disabled:opacity-100'
                         : 'disabled:cursor-default disabled:opacity-70',
                       isNotEligibleForPro
-                        ? 'bg-[#e7d3c1] text-[#1d1815]'
-                        : 'bg-[#e6a12b] text-[#1d1815] hover:bg-[#e6a12b]',
+                        ? 'bg-[#e7d3c1] text-[#221A14]'
+                        : 'bg-[#C4502E] text-[#221A14] hover:bg-[#C4502E]',
                       editMode &&
-                        'border-[#1d1815] bg-[#FBF7EE] text-[#1d1815] hover:bg-[#FBF7EE] hover:text-[#1d1815]',
+                        'border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] hover:bg-[#FBF7EF] hover:text-[#221A14]',
                     )}
                     disabled={isDisabled}
                     type="submit"
@@ -919,12 +919,12 @@ export const SubmissionDrawer = ({
                     )}
                   </Button>
                 </div>
-                <p className="font-primary mt-2 text-center text-xs text-[#6b5e50] sm:text-sm">
+                <p className="font-primary mt-2 text-center text-xs text-[#5C5147] sm:text-sm">
                   By submitting/applying to this listing, you agree to our{' '}
                   <button
                     type="button"
                     onClick={() => setIsTOSModalOpen(true)}
-                    className="cursor-pointer text-[#ce4a2b] underline underline-offset-2"
+                    className="cursor-pointer text-[#C4502E] underline underline-offset-2"
                     rel="noopener noreferrer"
                   >
                     Terms of Use

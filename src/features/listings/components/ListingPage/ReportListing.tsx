@@ -32,7 +32,7 @@ function RadioOptionLabel({ label, description }: RadioOptionLabelProps) {
   return (
     <div>
       <div className="text-sm font-medium md:text-base">{label}</div>
-      <div className="text-xs text-slate-500 group-has-checked:text-slate-600 md:text-sm">
+      <div className="text-xs text-[#5C5147] group-has-checked:text-[#5C5147] md:text-sm">
         {description}
       </div>
     </div>
@@ -46,7 +46,7 @@ function CustomRadioGroupItem(
     <RadioGroupItem
       {...props}
       className={
-        'data-[state=checked]:border-primary !size-6 border-slate-300 focus-visible:ring-0'
+        'data-[state=checked]:border-primary !size-6 border-[#E6DCC9] focus-visible:ring-0'
       }
       classNames={{
         circleIcon: 'size-4',
@@ -71,7 +71,7 @@ function RadioOptionRow({
   children,
 }: RadioOptionRowProps) {
   return (
-    <label className="group flex cursor-pointer items-center gap-3 rounded bg-slate-100 p-3 text-slate-600 has-checked:bg-indigo-100 has-checked:text-indigo-600">
+    <label className="group flex cursor-pointer items-center gap-3 rounded bg-[#F2EAD9] p-3 text-[#5C5147] has-checked:bg-[#C4502E]/10 has-checked:text-[#C4502E]">
       <CustomRadioGroupItem value={value} aria-label={ariaLabel} />
       <div className="w-full">
         <AnimateChangeInHeight>
@@ -229,28 +229,28 @@ function MainContent({
             className="my-auto"
           >
             <div className="my-auto flex flex-col items-center justify-center gap-6 py-6">
-              <div className="flex items-center justify-center rounded-full bg-indigo-100 p-1">
-                <BiCheck className="size-18 text-indigo-600" />
+              <div className="flex items-center justify-center rounded-full bg-[#C4502E]/10 p-1">
+                <BiCheck className="size-18 text-[#C4502E]" />
               </div>
               <div className="flex flex-col items-center gap-2 px-6">
-                <div className="text-center text-base font-medium text-slate-900">
+                <div className="text-center text-base font-medium text-[#221A14]">
                   Thank you for reporting this listing!
                 </div>
-                <div className="text-center text-sm font-medium text-slate-400">
+                <div className="text-center text-sm font-medium text-[#5C5147]">
                   We&apos;ll take a look at this report. <br />
                   Thanks for flagging — we appreciate it!
                 </div>
               </div>
-              <div className="h-px w-full bg-slate-200" />
+              <div className="h-px w-full bg-[#E6DCC9]" />
               <div className="flex w-full items-center justify-center gap-2 px-6">
-                <div className="text-center text-sm font-medium text-slate-400">
+                <div className="text-center text-sm font-medium text-[#5C5147]">
                   Want to take this further?
                 </div>
                 <Button
                   type="button"
                   asChild
                   variant="link"
-                  className="h-fit p-0 text-slate-500 underline underline-offset-3"
+                  className="h-fit p-0 text-[#5C5147] underline underline-offset-3"
                 >
                   <a
                     href="mailto:support@superteam.fun"
@@ -312,8 +312,8 @@ function MainContent({
                         <TextareaAutosize
                           className={cn(
                             'mt-0 mb-1 w-full resize-none rounded-none border-b-2 p-2 text-sm',
-                            'focus:border-indigo-400 focus:ring-0 focus:outline-hidden',
-                            'max-h-32 min-h-8 placeholder:text-slate-400',
+                            'focus:border-[#C4502E] focus:ring-0 focus:outline-hidden',
+                            'max-h-32 min-h-8 placeholder:text-[#5C5147]',
                           )}
                           rows={3}
                           maxLength={500}
@@ -329,7 +329,7 @@ function MainContent({
                         />
 
                         <div
-                          className="ml-auto w-fit text-xs text-slate-400 select-none"
+                          className="ml-auto w-fit text-xs text-[#5C5147] select-none"
                           style={{ pointerEvents: 'none' }}
                         >
                           {500 - customReason.length} characters left

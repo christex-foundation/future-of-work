@@ -67,113 +67,87 @@ export const SignIn = ({
   };
 
   return (
-    <div>
-      <div className="px-6">
-        <div>
-          <div
-            className={`transform transition-all duration-200 ${
-              loginStep === 0
-                ? 'translate-y-0 opacity-100'
-                : 'translate-y-5 opacity-0'
-            }`}
+    <div className="mt-6 px-9">
+      {loginStep === 0 ? (
+        <div className="flex flex-col gap-3">
+          <Button
+            className="ph-no-capture h-12 w-full gap-2.5 rounded-[13px] bg-[#2C3A2E] text-[15px] font-semibold text-[#FBF7EF] shadow-none transition-all hover:-translate-y-px hover:bg-[#3C4D3D] hover:text-[#FBF7EF] hover:shadow-[0_14px_40px_-22px_rgba(54,38,22,0.45)]"
+            size="lg"
+            onClick={handleGmailSignIn}
+            disabled={isLoading}
           >
-            {loginStep === 0 && (
-              <div className="flex flex-col items-center justify-center gap-2 text-center">
-                <Button
-                  className="ph-no-capture h-12 w-full rounded-none border-2 border-[#1d1815] bg-[#1d1815] font-medium text-[#FBF7EE] shadow-[3px_3px_0_#1d1815] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#1d1815] hover:shadow-[1px_1px_0_#1d1815]"
-                  size="lg"
-                  onClick={handleGmailSignIn}
-                  disabled={isLoading}
-                >
-                  <GoogleIcon />
-                  {isLoading ? (
-                    <span>Connecting...</span>
-                  ) : (
-                    <span>Continue with Google</span>
-                  )}
-                </Button>
-
-                <div className="my-3 flex w-full items-center gap-3">
-                  <div className="h-px flex-1 border-t border-dashed border-[#1d1815]/30" />
-                  <span className="font-secondary text-[11px] font-bold tracking-[0.18em] text-[#6b5e50] uppercase">
-                    Or
-                  </span>
-                  <div className="h-px flex-1 border-t border-dashed border-[#1d1815]/30" />
-                </div>
-
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="h-12 w-full rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] font-medium text-[#1d1815] shadow-[3px_3px_0_#1d1815] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#f4eee3] hover:shadow-[1px_1px_0_#1d1815] active:bg-[#e7d3c1]"
-                  onClick={() => setLoginStep(1)}
-                >
-                  <MdOutlineEmail className="mr-2" />
-                  <span>Continue with Email</span>
-                </Button>
-              </div>
+            <GoogleIcon />
+            {isLoading ? (
+              <span>Connecting&hellip;</span>
+            ) : (
+              <span>Continue with Google</span>
             )}
+          </Button>
+
+          <div className="flex items-center gap-3.5 py-1 text-[12.5px] tracking-[0.08em] text-[#5C5147] uppercase">
+            <span className="h-px flex-1 bg-[#E6DCC9]" />
+            or
+            <span className="h-px flex-1 bg-[#E6DCC9]" />
           </div>
 
-          <div
-            className={`transform transition-all duration-200 ${
-              loginStep === 1
-                ? 'translate-y-0 opacity-100'
-                : 'translate-y-5 opacity-0'
-            }`}
+          <Button
+            variant="outline"
+            size="lg"
+            className="h-12 w-full gap-2.5 rounded-[13px] border border-[#E6DCC9] bg-transparent text-[15px] font-semibold text-[#221A14] shadow-none transition-all hover:border-[#d9ccb2] hover:bg-[#F2EAD9] hover:text-[#221A14]"
+            onClick={() => setLoginStep(1)}
           >
-            {loginStep === 1 && (
-              <EmailSignIn redirectTo={redirectTo} onSuccess={onSuccess} />
-            )}
-          </div>
+            <MdOutlineEmail className="text-[#6B7A4F]" />
+            <span>Continue with Email</span>
+          </Button>
         </div>
+      ) : (
+        <EmailSignIn redirectTo={redirectTo} onSuccess={onSuccess} />
+      )}
 
-        <p className="font-primary mt-4 mb-2 text-center text-xs text-[#6b5e50]">
-          By using this website, you agree to our{' '}
-          <Link
-            href={TERMS_OF_USE}
-            className="font-semibold text-[#ce4a2b] hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Terms of Use
-          </Link>{' '}
-          and our{' '}
-          <Link
-            href={`https://superteam.fun/earn/privacy-policy.pdf`}
-            className="font-semibold text-[#ce4a2b] hover:underline"
-            target="_blank"
-          >
-            Privacy Policy
-          </Link>
-          .
-        </p>
-      </div>
+      <p className="mt-5 text-[12px] leading-[1.5] text-[#5C5147]">
+        By using this site, you agree to our{' '}
+        <Link
+          href={TERMS_OF_USE}
+          className="font-semibold text-[#C4502E] hover:text-[#A83F22] hover:underline hover:underline-offset-2"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Terms of Use
+        </Link>{' '}
+        and{' '}
+        <Link
+          href={`https://superteam.fun/earn/privacy-policy.pdf`}
+          className="font-semibold text-[#C4502E] hover:text-[#A83F22] hover:underline hover:underline-offset-2"
+          target="_blank"
+        >
+          Privacy Policy
+        </Link>
+        .
+      </p>
 
-      <div className="border-t-2 border-[#1d1815] bg-[#f4eee3] py-2">
-        <p className="font-primary text-center text-xs text-[#6b5e50]">
-          Need help? Reach out to us at{' '}
-          {isMD ? (
-            <CopyButton
-              text="eng@christex.foundation"
-              contentProps={{
-                className: 'px-1.5 py-0.5 text-[0.6875rem]',
-              }}
-            >
-              <p className="font-medium text-[#1d1815] underline hover:text-[#ce4a2b]">
-                eng@christex.foundation
-              </p>
-            </CopyButton>
-          ) : (
-            <a
-              href="mailto:eng@christex.foundation"
-              className="font-medium text-[#1d1815] underline hover:text-[#ce4a2b]"
-              target="_blank"
-            >
+      <p className="mt-3.5 border-t border-[#E6DCC9] pt-3 text-[11.5px] text-[#5C5147]">
+        Need help? Reach out at{' '}
+        {isMD ? (
+          <CopyButton
+            text="eng@christex.foundation"
+            contentProps={{
+              className: 'px-1.5 py-0.5 text-[0.6875rem]',
+            }}
+          >
+            <span className="font-semibold text-[#C4502E] hover:underline hover:underline-offset-2">
               eng@christex.foundation
-            </a>
-          )}
-        </p>
-      </div>
+            </span>
+          </CopyButton>
+        ) : (
+          <a
+            href="mailto:eng@christex.foundation"
+            className="font-semibold text-[#C4502E] hover:underline hover:underline-offset-2"
+            target="_blank"
+          >
+            eng@christex.foundation
+          </a>
+        )}
+      </p>
     </div>
   );
 };

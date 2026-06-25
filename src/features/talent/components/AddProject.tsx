@@ -164,15 +164,15 @@ export const AddProject = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[607px] rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] py-[1.4375rem] shadow-[6px_6px_0_#1d1815]">
+      <DialogContent className="max-w-[607px]  border border-[#E6DCC9] bg-[#FBF7EF] py-[1.4375rem] ">
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-5">
-              <div className="border-b-2 border-dashed border-[#1d1815]/20 pb-4">
-                <p className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#e6a12b] uppercase">
+              <div className="border-b border-dashed border-[#E6DCC9]/20 pb-4">
+                <p className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#C4502E] uppercase">
                   Your Portfolio
                 </p>
-                <h2 className="font-serif mt-1 text-2xl leading-tight font-semibold text-[#1d1815]">
+                <h2 className="font-serif mt-1 text-2xl leading-tight font-semibold text-[#221A14]">
                   {selectedProject !== null ? 'Edit Work' : 'Add Work'}
                 </h2>
               </div>
@@ -183,7 +183,7 @@ export const AddProject = ({
                 control={control}
               >
                 <Input
-                  className="rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] text-[#1d1815] placeholder:text-[#6b5e50]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className=" border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Project Title"
                 />
               </FormFieldWrapper>
@@ -200,7 +200,7 @@ export const AddProject = ({
                       <FormControl>
                         <Textarea
                           {...field}
-                          className="rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] text-[#1d1815] placeholder:text-[#6b5e50]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                          className=" border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
                           maxLength={180}
                           placeholder="Project Description"
                         />
@@ -211,8 +211,8 @@ export const AddProject = ({
                           className={cn(
                             'font-primary ml-auto text-xs',
                             (watch('description')?.length || 0) > 160
-                              ? 'text-[#ce4a2b]'
-                              : 'text-[#6b5e50]',
+                              ? 'text-[#C4502E]'
+                              : 'text-[#5C5147]',
                           )}
                         >
                           {180 - (watch('description')?.length || 0)} characters
@@ -278,13 +278,13 @@ export const AddProject = ({
                 isRequired
               >
                 <Input
-                  className="rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] text-[#1d1815] placeholder:text-[#6b5e50]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className=" border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="https://example.com"
                 />
               </FormFieldWrapper>
 
               <Button
-                className="h-[50px] w-full rounded-none border-2 border-[#1d1815] bg-[#e6a12b] font-medium text-[#1d1815] shadow-[3px_3px_0_#1d1815] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]"
+                className="h-[50px] w-full  border border-[#E6DCC9] bg-[#C4502E] font-medium text-[#221A14]  transition-all hover:bg-[#C4502E] "
                 type="submit"
               >
                 {selectedProject !== null ? 'Save Work' : 'Add Work'} →

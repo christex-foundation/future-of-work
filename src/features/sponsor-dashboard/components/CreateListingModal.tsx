@@ -56,7 +56,7 @@ export const CreateListingModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         hideCloseIcon
-        className="overflow-hidden rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-0 shadow-[6px_6px_0_#1d1815] sm:max-w-160"
+        className="overflow-hidden  border border-[#E6DCC9] bg-[#FBF7EF] p-0  sm:max-w-160"
       >
         <button className="sr-only" />
         <ScrollArea
@@ -79,15 +79,15 @@ export const CreateListingModal = ({
             transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
           >
             <div>
-              <div className="flex items-center justify-between border-b-2 border-[#1d1815] px-5 py-4">
-                <h2 className="font-serif text-xl font-semibold text-[#1d1815]">
+              <div className="flex items-center justify-between border-b border-[#E6DCC9] px-5 py-4">
+                <h2 className="font-serif text-xl font-semibold text-[#221A14]">
                   Select the type of listing
                 </h2>
                 <DialogClose asChild>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-[#6b5e50] hover:bg-[#f4eee3] hover:text-[#1d1815]"
+                    className="text-[#5C5147] hover:bg-[#F2EAD9] hover:text-[#221A14]"
                   >
                     <Cross2Icon className="h-4 w-4" />
                   </Button>
@@ -95,44 +95,44 @@ export const CreateListingModal = ({
               </div>
               <div className="grid grid-cols-2 gap-4 p-5">
                 <Button
-                  className="flex h-55 flex-col gap-4 rounded-none border-2 border-[#1d1815] bg-[#f4eee3] whitespace-normal text-[#6b5e50] shadow-[4px_4px_0_#1d1815] transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#f4eee3] hover:text-[#6b5e50] hover:shadow-[6px_6px_0_#1d1815]"
+                  className="flex h-55 flex-col gap-4  border border-[#E6DCC9] bg-[#F2EAD9] whitespace-normal text-[#5C5147]  transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#F2EAD9] hover:text-[#5C5147] "
                   variant="outline"
                   onClick={handleCreateBounty}
                 >
                   <BountyIcon
-                    className="fill-[#ce4a2b]"
+                    className="fill-[#C4502E]"
                     styles={{
                       width: '3rem',
                       height: '3rem',
                     }}
                   />
                   <span className="flex max-w-11/12 flex-col gap-1">
-                    <h3 className="font-serif text-base font-semibold text-[#1d1815]">
+                    <h3 className="font-serif text-base font-semibold text-[#221A14]">
                       Bounty
                     </h3>
-                    <p className="text-sm font-normal text-[#6b5e50]">
+                    <p className="text-sm font-normal text-[#5C5147]">
                       Get multiple submissions for your task and reward the best
                       work
                     </p>
                   </span>
                 </Button>
                 <Button
-                  className="flex h-55 flex-col gap-4 rounded-none border-2 border-[#1d1815] bg-[#f4eee3] whitespace-normal text-[#6b5e50] shadow-[4px_4px_0_#1d1815] transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#f4eee3] hover:text-[#6b5e50] hover:shadow-[6px_6px_0_#1d1815]"
+                  className="flex h-55 flex-col gap-4  border border-[#E6DCC9] bg-[#F2EAD9] whitespace-normal text-[#5C5147]  transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#F2EAD9] hover:text-[#5C5147] "
                   variant="outline"
                   onClick={handleCreateProject}
                 >
                   <ProjectIcon
-                    className="fill-[#123a33]"
+                    className="fill-[#2C3A2E]"
                     styles={{
                       width: '3rem',
                       height: '3rem',
                     }}
                   />
                   <span className="flex max-w-11/12 flex-col gap-1">
-                    <h3 className="font-serif text-base font-semibold text-[#1d1815]">
+                    <h3 className="font-serif text-base font-semibold text-[#221A14]">
                       Project
                     </h3>
-                    <p className="text-sm font-normal text-[#6b5e50]">
+                    <p className="text-sm font-normal text-[#5C5147]">
                       Receive proposals for your work and pick the right
                       candidate
                     </p>
@@ -141,18 +141,18 @@ export const CreateListingModal = ({
                 {visibleHackathons.map((hackathon) => (
                   <Button
                     key={hackathon.id}
-                    className="col-span-2 flex h-55 flex-col gap-4 rounded-none border-2 border-[#1d1815] bg-[#f4eee3] whitespace-normal text-[#6b5e50] shadow-[4px_4px_0_#1d1815] transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#f4eee3] hover:text-[#6b5e50] hover:shadow-[6px_6px_0_#1d1815]"
+                    className="col-span-2 flex h-55 flex-col gap-4  border border-[#E6DCC9] bg-[#F2EAD9] whitespace-normal text-[#5C5147]  transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#F2EAD9] hover:text-[#5C5147] "
                     variant="outline"
                     onClick={() => {
                       handleCreateHackathon(hackathon.slug);
                     }}
                   >
-                    {getListingIcon('hackathon', 'size-12 fill-[#1d1815]')}
+                    {getListingIcon('hackathon', 'size-12 fill-[#221A14]')}
                     <span className="flex max-w-6/12 flex-col gap-1">
-                      <h3 className="font-serif text-base font-semibold text-[#1d1815]">
+                      <h3 className="font-serif text-base font-semibold text-[#221A14]">
                         {hackathon.name} Track
                       </h3>
-                      <p className="text-sm font-normal text-[#6b5e50]">
+                      <p className="text-sm font-normal text-[#5C5147]">
                         Get developers participating in {hackathon.name} to
                         build on top of your project
                       </p>

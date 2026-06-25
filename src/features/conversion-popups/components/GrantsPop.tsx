@@ -112,7 +112,7 @@ const Mobile = ({
         classNames={{
           overlay: isLoginOpen ? 'z-200' : '',
         }}
-        className="border-t-2! border-[#1d1815]! bg-[#FBF7EE] ring-0!"
+        className="border-t! border-[#E6DCC9]! bg-[#FBF7EF] ring-0!"
       >
         <DrawerHeader className="text-left">
           <img
@@ -120,12 +120,12 @@ const Mobile = ({
             alt={`${variant?.title}`}
             width={48}
             height={48}
-            className="w-12 rounded-none border-2 border-[#1d1815] object-contain"
+            className="w-12  border border-[#E6DCC9] object-contain"
           />
-          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
+          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#221A14]">
             {variant?.title}
           </DrawerTitle>
-          <DrawerDescription className="font-primary text-sm text-[#6b5e50]">
+          <DrawerDescription className="font-primary text-sm text-[#5C5147]">
             {variant?.description}
           </DrawerDescription>
         </DrawerHeader>
@@ -151,7 +151,7 @@ const Desktop = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className={cn(
-          'max-w-[23rem] overflow-hidden rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-5 shadow-[6px_6px_0_#1d1815]',
+          'max-w-[23rem] overflow-hidden  border border-[#E6DCC9] bg-[#FBF7EF] p-5 ',
           isLoginOpen && 'invisible',
         )}
         hideCloseIcon
@@ -162,12 +162,12 @@ const Desktop = ({
             alt={`${variant?.title}`}
             width={48}
             height={48}
-            className="w-12 rounded-none border-2 border-[#1d1815] object-contain"
+            className="w-12  border border-[#E6DCC9] object-contain"
           />
-          <DialogTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
+          <DialogTitle className="font-serif pt-2 text-lg font-semibold text-[#221A14]">
             {variant?.title}
           </DialogTitle>
-          <DialogDescription className="font-primary text-sm text-[#6b5e50]">
+          <DialogDescription className="font-primary text-sm text-[#5C5147]">
             {variant?.description}
           </DialogDescription>
         </DialogHeader>

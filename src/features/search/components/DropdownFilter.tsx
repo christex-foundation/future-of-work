@@ -75,18 +75,18 @@ function StatusFilterList({
           key={filter.value}
           onSelect={() => !disabled && onStatusToggle(filter.value)}
           className={cn(
-            'mb-1 flex items-center gap-2 text-sm text-[#1d1815] last:mb-0',
+            'mb-1 flex items-center gap-2 text-sm text-[#221A14] last:mb-0',
             disabled && 'pointer-events-none opacity-50',
             activeStatus.includes(filter.value) &&
-              'bg-[#e6a12b]/25 font-semibold text-[#1d1815]',
+              'bg-[#C4502E]/25 font-semibold text-[#221A14]',
           )}
         >
           <Checkbox
             checked={activeStatus.includes(filter.value)}
             disabled={disabled}
-            className="rounded-none border-[#1d1815] data-[state=checked]:border-[#1d1815] data-[state=checked]:bg-[#e6a12b]"
+            className=" border-[#E6DCC9] data-[state=checked]:border-[#E6DCC9] data-[state=checked]:bg-[#C4502E]"
             classNames={{
-              indicatorClassName: 'text-[#1d1815]',
+              indicatorClassName: 'text-[#221A14]',
             }}
           />
           {filter.label}
@@ -112,10 +112,10 @@ function SkillFilterList({
           key={filter.value}
           onSelect={() => !disabled && onSkillToggle(filter.value)}
           className={cn(
-            'mb-1 flex items-center gap-2 text-[#1d1815] last:mb-0',
+            'mb-1 flex items-center gap-2 text-[#221A14] last:mb-0',
             disabled && 'pointer-events-none opacity-50',
             activeSkills.includes(filter.value) &&
-              'bg-[#e6a12b]/25 font-semibold text-[#1d1815]',
+              'bg-[#C4502E]/25 font-semibold text-[#221A14]',
           )}
         >
           {filter.label}
@@ -161,29 +161,29 @@ export function DropdownFilter({
         >
           <div
             className={cn(
-              'relative flex items-center gap-1.5 rounded-md p-2 hover:bg-[#f4eee3] sm:p-1.5',
-              'text-sm font-normal md:rounded-none md:border-2 md:border-[#1d1815] md:px-2 md:py-0.5',
+              'relative flex items-center gap-1.5 rounded-md p-2 hover:bg-[#F2EAD9] sm:p-1.5',
+              'text-sm font-normal md: md:border md:border-[#E6DCC9] md:px-2 md:py-0.5',
               disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
             )}
           >
             {isMd ? (
               <>
-                <span className="text-sm font-normal text-[#6b5e50]">
+                <span className="text-sm font-normal text-[#5C5147]">
                   Status
                 </span>
-                <ChevronDown className="h-4 w-4 text-[#6b5e50]" />
+                <ChevronDown className="h-4 w-4 text-[#5C5147]" />
               </>
             ) : (
               <LucideListFilter
                 className={cn(
                   'h-4 w-4',
-                  hasActiveFilters ? 'text-[#ce4a2b]' : 'text-[#6b5e50]',
+                  hasActiveFilters ? 'text-[#C4502E]' : 'text-[#5C5147]',
                 )}
               />
             )}
             {!isMd && hasActiveFilters && (
               <span
-                className="absolute top-5 right-2 block h-1 w-1 rounded-full bg-[#ce4a2b]"
+                className="absolute top-5 right-2 block h-1 w-1 rounded-full bg-[#C4502E]"
                 aria-hidden="true"
               />
             )}

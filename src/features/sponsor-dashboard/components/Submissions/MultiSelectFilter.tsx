@@ -77,7 +77,7 @@ export const MultiSelectFilter = ({
       colorMap[value as keyof typeof colorMap] || {
         bg: 'bg-[#ECE2D2]',
         color: 'text-[#6B5E50]',
-        border: 'border-[#1d1815]/12',
+        border: 'border-[#E6DCC9]/12',
       }
     );
   };
@@ -89,14 +89,14 @@ export const MultiSelectFilter = ({
           <LucideListFilter className="size-4 stroke-3 text-[#6B5E50]" />
           {hasActiveFilters && (
             <span
-              className="absolute right-1.5 bottom-1.5 block size-1 rounded-full bg-[#CE4A2B] ring-1 ring-[#FBF7EE]"
+              className="absolute right-1.5 bottom-1.5 block size-1 rounded-full bg-[#CE4A2B] ring-1 ring-[#FBF7EF]"
               aria-hidden="true"
             />
           )}
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="border-[#1d1815]/15" align="end">
+      <DropdownMenuContent className="border-[#E6DCC9]/15" align="end">
         <div className="py-1">
           <DropdownMenuGroup>
             <div className="px-3 py-1 text-xs text-[#6B5E50]">

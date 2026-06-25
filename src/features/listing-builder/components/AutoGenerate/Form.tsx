@@ -75,7 +75,7 @@ export function AutoGenerateForm({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           {getListingIcon(type, '!size-4')}
-          <h2 className="font-serif text-xl font-semibold text-[#1d1815]">
+          <h2 className="font-serif text-xl font-semibold text-[#221A14]">
             Generate your <span className="capitalize">{typeLabel}</span> with
             AI
           </h2>
@@ -111,7 +111,7 @@ export function AutoGenerateForm({
               setShowValidation(true);
             }
           }}
-          className="min-h-55 w-full resize-none rounded-none border-2 border-[#1d1815] bg-[#f4eee3] text-[#1d1815] placeholder:text-[#1d1815]/40 focus-visible:border-[#ce4a2b] focus-visible:ring-0"
+          className="min-h-55 w-full resize-none  border border-[#E6DCC9] bg-[#F2EAD9] text-[#221A14] placeholder:text-[#221A14]/40 focus-visible:border-[#C4502E] focus-visible:ring-0"
         />
         <AnimatePresence>
           {input.length === 0 && (
@@ -141,7 +141,7 @@ export function AutoGenerateForm({
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
-                className="absolute bottom-[0.0625rem] left-2/4 w-[calc(100%-0.125rem)] -translate-x-2/4 border-2 border-[#1d1815] bg-[#f7e4bd] p-2 text-xs font-medium text-[#1d1815]"
+                className="absolute bottom-[0.0625rem] left-2/4 w-[calc(100%-0.125rem)] -translate-x-2/4 border border-[#E6DCC9] bg-[#f7e4bd] p-2 text-xs font-medium text-[#221A14]"
               >
                 <p>
                   Write at least {MIN_CHARACTERS - input.trim().length}{' '}
@@ -160,7 +160,7 @@ export function AutoGenerateForm({
             input?.trim() === '' ||
             (showValidation && input.trim().length < MIN_CHARACTERS)
           }
-          className="w-fit rounded-none border-2 border-[#1d1815] bg-[#e6a12b] font-bold text-[#1d1815] shadow-[3px_3px_0_#1d1815] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815] disabled:opacity-50"
+          className="w-fit  border border-[#E6DCC9] bg-[#C4502E] font-bold text-[#221A14]  transition-all hover:bg-[#C4502E]  disabled:opacity-50"
         >
           <Sparkle />
           Generate Listing

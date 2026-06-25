@@ -52,13 +52,13 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={closeModal} modal>
       <DialogContent
-        className="w-96 gap-0 overflow-hidden rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-0 shadow-[6px_6px_0_#1d1815]"
+        className="w-96 gap-0 overflow-hidden  border border-[#E6DCC9] bg-[#FBF7EF] p-0 "
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
         {!showTerms ? (
           <div className="relative">
-            <div className="border-b-2 border-[#1d1815] bg-[#f4eee3] p-6">
+            <div className="border-b border-[#E6DCC9] bg-[#F2EAD9] p-6">
               <div className="flex items-center gap-3">
                 <div>
                   <ExternalImage
@@ -66,10 +66,10 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
                     alt="Referral Modal Icon"
                     className="h-auto w-14"
                   />
-                  <h2 className="font-serif mt-6 text-xl font-semibold text-[#1d1815]">
+                  <h2 className="font-serif mt-6 text-xl font-semibold text-[#221A14]">
                     Get one credit for
                   </h2>
-                  <p className="font-serif text-xl font-semibold text-[#6b5e50]">
+                  <p className="font-serif text-xl font-semibold text-[#5C5147]">
                     every friend you invite
                   </p>
                 </div>
@@ -77,50 +77,50 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
             </div>
 
             <div className="p-6">
-              <p className="font-primary py-4 text-[#6b5e50]">
+              <p className="font-primary py-4 text-[#5C5147]">
                 You get one credit when a friend you invited makes a non-spam
                 submission. You also get bonus credits every time they win.
               </p>
 
               <div className="mt-4 flex items-center justify-between">
-                <div className="flex items-center gap-1 rounded-none border-2 border-[#1d1815] px-2 py-1 text-[0.93rem] font-semibold text-[#6b5e50]">
-                  <CreditIcon className="size-4 text-[#e6a12b]" />
-                  <span className="text-[#1d1815]">
+                <div className="flex items-center gap-1  border border-[#E6DCC9] px-2 py-1 text-[0.93rem] font-semibold text-[#5C5147]">
+                  <CreditIcon className="size-4 text-[#C4502E]" />
+                  <span className="text-[#221A14]">
                     {10 - (10 - remaining)}
                   </span>{' '}
                   / 10 invites left
                 </div>
                 <button
-                  className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#ce4a2b] uppercase underline underline-offset-4"
+                  className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#C4502E] uppercase underline underline-offset-4"
                   onClick={() => setShowTerms(true)}
                 >
                   READ TERMS
                 </button>
               </div>
 
-              <div className="-mx-6 my-4 h-px border-t border-dashed border-[#1d1815]/20" />
+              <div className="-mx-6 my-4 h-px border-t border-dashed border-[#E6DCC9]/20" />
 
               <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-                <div className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
+                <div className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#5C5147] uppercase">
                   Your Code
                 </div>
-                <div className="text-right text-base tracking-[2px] text-[#1d1815]">
+                <div className="text-right text-base tracking-[2px] text-[#221A14]">
                   {code || '—'}
                 </div>
               </div>
 
-              <div className="relative mt-3 flex items-center justify-between rounded-none border-2 border-[#1d1815] bg-[#f4eee3] px-4 py-3">
-                <p className="font-primary text-sm text-[#1d1815]">{shareUrl}</p>
+              <div className="relative mt-3 flex items-center justify-between  border border-[#E6DCC9] bg-[#F2EAD9] px-4 py-3">
+                <p className="font-primary text-sm text-[#221A14]">{shareUrl}</p>
                 <CopyButton
                   text={shareUrl}
                   onCopy={() => posthog.capture('copy_referral link')}
                   contentProps={{
                     side: 'right',
-                    className: 'text-sm px-2 py-1 text-slate-500',
+                    className: 'text-sm px-2 py-1 text-[#5C5147]',
                   }}
                 >
                   <div className="flex items-center gap-1">
-                    <CopyIcon className="size-4 text-[#1d1815]" />
+                    <CopyIcon className="size-4 text-[#221A14]" />
                   </div>
                 </CopyButton>
               </div>
@@ -131,13 +131,13 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
             <div className="p-4">
               <button
                 onClick={() => setShowTerms(false)}
-                className="font-secondary flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase"
+                className="font-secondary flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-[#5C5147] uppercase"
               >
                 <ArrowLeftIcon className="size-4" /> TERMS
               </button>
             </div>
 
-            <div className="font-primary px-6 py-4 text-[#6b5e50]">
+            <div className="font-primary px-6 py-4 text-[#5C5147]">
               <ol className="list-decimal space-y-4 pb-6 pl-5">
                 <li>
                   Credits are rewarded after your invitee makes a non-spam

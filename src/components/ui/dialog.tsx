@@ -36,7 +36,7 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
       className={cn(
-        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-60 bg-black/50 backdrop-blur-xs',
+        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-60 bg-[#1c140e]/55 backdrop-blur-[2px]',
         className,
       )}
       {...props}
@@ -68,7 +68,7 @@ function DialogContent({
         data-slot="dialog-content"
         className={cn(
           'max-h-screen overflow-y-auto',
-          'bg-background fixed z-60 grid w-full max-w-lg gap-4 border p-6 shadow-lg sm:rounded-lg',
+          'bg-[#FBF7EF] fixed z-60 grid w-full max-w-lg gap-4 border border-[#E6DCC9] p-6 shadow-[0_30px_80px_-32px_rgba(34,22,14,0.5)] sm:rounded-2xl',
           'data-[state=open]:animate-in data-[state=closed]:animate-out duration-200',
           'focus-visible:outline-0',
           !unsetDefaultPosition &&
@@ -86,7 +86,7 @@ function DialogContent({
         {!hideCloseIcon && (
           <DialogPrimitive.Close
             className={cn(
-              'ring-offset-background data-[state=open]:bg-accent data-[state=open]:text-muted-foreground focus:ring-ring absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none',
+              'absolute top-4 right-4 flex size-7 items-center justify-center rounded-full text-[#5C5147] transition-colors hover:bg-[#F2EAD9] hover:text-[#221A14] focus-visible:ring-2 focus-visible:ring-[#C4502E]/40 focus-visible:outline-none disabled:pointer-events-none',
               classNames?.closeIcon,
             )}
           >

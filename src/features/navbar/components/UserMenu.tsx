@@ -1,4 +1,14 @@
-import { ChevronDown } from 'lucide-react';
+import {
+  Bookmark,
+  ChevronDown,
+  CircleHelp,
+  LayoutDashboard,
+  LogOut,
+  Mail,
+  Plus,
+  SquarePen,
+  User as UserIcon,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
@@ -20,6 +30,9 @@ import { cn } from '@/utils/cn';
 
 import { EarnAvatar } from '@/features/talent/components/EarnAvatar';
 import { EmailSettingsModal } from '@/features/talent/components/EmailSettingsModal';
+
+const rowCls =
+  'flex cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-sm tracking-tight text-[#221A14] focus:bg-[#F2EAD9] focus:text-[#221A14] [&_svg]:size-4 [&_svg]:text-[#6B7A4F]';
 
 export function UserMenu({
   variant = 'navbar',
@@ -50,7 +63,6 @@ export function UserMenu({
   }, [isOpen, onOpen]);
 
   const handleClose = async () => {
-    console.log('close -', router);
     await router.replace(
       router.asPath.replace('#emailPreferences', ''),
       undefined,
@@ -62,6 +74,10 @@ export function UserMenu({
   if (isLoading) {
     return <></>;
   }
+
+  const displayName = user?.firstName
+    ? `${user.firstName}${user.lastName ? ` ${user.lastName}` : ''}`
+    : (user?.username ?? 'Your account');
 
   return (
     <>
@@ -88,8 +104,8 @@ export function UserMenu({
           className={cn(
             'ph-no-capture focus:outline-hidden',
             isRail
-              ? 'relative grid size-[42px] place-items-center overflow-hidden rounded-[13px] border-2 border-[#1d1815] transition-transform duration-200 hover:scale-105'
-              : 'rounded-none border-2 border-[#1d1815] px-2 py-1 transition-all duration-100 hover:bg-[#f4eee3] active:bg-[#e7d3c1] data-[state=open]:bg-[#f4eee3]',
+              ? 'relative grid size-[42px] place-items-center overflow-hidden rounded-[13px] border border-[#E6DCC9] transition-transform duration-200 hover:scale-105'
+              : 'rounded-full border border-[#E6DCC9] px-2.5 py-1.5 transition-all duration-150 hover:bg-[#F2EAD9] active:bg-[#E9E0CD] data-[state=open]:bg-[#F2EAD9]',
           )}
           aria-label={isRail ? 'Your profile' : undefined}
           onClick={() => {
@@ -110,125 +126,155 @@ export function UserMenu({
                 avatar={user?.photo}
               />
               <div className="flex items-center">
-                <p className="text-sm font-medium tracking-tight text-[#1d1815]">
+                <p className="text-sm font-medium tracking-tight text-[#221A14]">
                   {user?.firstName ?? user?.email ?? ''}
                 </p>
               </div>
-              <ChevronDown className="block size-4 text-[#6b5e50]" />
+              <ChevronDown className="block size-4 text-[#5C5147]" />
             </div>
           )}
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="ph-no-capture px-0 font-medium"
+          className="ph-no-capture min-w-[260px] overflow-hidden rounded-2xl border border-[#E6DCC9] bg-[#FBF7EF] p-0 font-medium text-[#221A14] shadow-[0_22px_60px_-34px_rgba(54,38,22,0.5)]"
           align={isRail ? 'end' : 'start'}
           side={isRail ? 'right' : 'bottom'}
+          sideOffset={8}
         >
-          {user?.isTalentFilled && (
-            <>
-              <DropdownMenuItem asChild>
-                <Link
-                  href={`/earn/t/${user?.username}`}
-                  onClick={() => {
-                    posthog.capture('profile_user menu');
-                  }}
-                  className="text-sm tracking-tight text-[#1d1815]"
-                >
-                  Profile
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link
-                  href={`/earn/t/${user?.username}/edit`}
-                  onClick={() => {
-                    posthog.capture('edit profile_user menu');
-                  }}
-                  className="text-sm tracking-tight text-[#1d1815]"
-                >
-                  Edit Profile
-                </Link>
-              </DropdownMenuItem>
-            </>
-          )}
-
-          {!!user?.currentSponsorId && (
-            <DropdownMenuItem asChild>
-              <Link
-                href="/earn/dashboard/listings"
-                onClick={() => {
-                  posthog.capture('sponsor dashboard_user menu');
-                }}
-                className="text-sm tracking-tight text-[#1d1815]"
-              >
-                Dashboard
-              </Link>
-            </DropdownMenuItem>
-          )}
-
-          <DropdownMenuSeparator />
-
-          {user?.role === 'GOD' && (
-            <div>
-              <DropdownMenuLabel className="-mb-2">God Mode</DropdownMenuLabel>
-              <DropdownMenuItem asChild>
-                <Link
-                  href="/earn/new/sponsor"
-                  className="text-sm tracking-tight text-[#1d1815]"
-                >
-                  Create New Sponsor
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
+          {/* header — avatar, name, email */}
+          <div className="flex items-center gap-3 px-3.5 pt-3.5 pb-3">
+            <EarnAvatar
+              className="size-9 shrink-0"
+              id={user?.id}
+              avatar={user?.photo}
+            />
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-[#221A14]">
+                {displayName}
+              </p>
+              {user?.email && (
+                <p className="truncate text-xs font-normal text-[#5C5147]">
+                  {user.email}
+                </p>
+              )}
             </div>
-          )}
+          </div>
 
-          {(user?.isTalentFilled || !!user?.currentSponsorId) && (
+          <DropdownMenuSeparator className="my-0 bg-[#E6DCC9]" />
+
+          <div className="p-1.5">
+            {user?.isTalentFilled && (
+              <>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href={`/earn/t/${user?.username}`}
+                    onClick={() => {
+                      posthog.capture('profile_user menu');
+                    }}
+                    className={rowCls}
+                  >
+                    <UserIcon />
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href={`/earn/t/${user?.username}/edit`}
+                    onClick={() => {
+                      posthog.capture('edit profile_user menu');
+                    }}
+                    className={rowCls}
+                  >
+                    <SquarePen />
+                    Edit Profile
+                  </Link>
+                </DropdownMenuItem>
+              </>
+            )}
+
+            {!!user?.currentSponsorId && (
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/earn/dashboard/listings"
+                  onClick={() => {
+                    posthog.capture('sponsor dashboard_user menu');
+                  }}
+                  className={rowCls}
+                >
+                  <LayoutDashboard />
+                  Dashboard
+                </Link>
+              </DropdownMenuItem>
+            )}
+
+            {user?.role === 'GOD' && (
+              <>
+                <DropdownMenuLabel className="px-3 pt-2 pb-1 text-[11px] tracking-[0.12em] text-[#6B7A4F] uppercase">
+                  God Mode
+                </DropdownMenuLabel>
+                <DropdownMenuItem asChild>
+                  <Link href="/earn/new/sponsor" className={rowCls}>
+                    <Plus />
+                    Create New Sponsor
+                  </Link>
+                </DropdownMenuItem>
+              </>
+            )}
+
+            {(user?.isTalentFilled || !!user?.currentSponsorId) && (
+              <DropdownMenuItem
+                onClick={() => {
+                  onOpen();
+                  posthog.capture('email preferences_user menu');
+                }}
+                className={rowCls}
+              >
+                <Mail />
+                Email Preferences
+              </DropdownMenuItem>
+            )}
+
+            {user?.isTalentFilled && (
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/earn/bookmarks"
+                  onClick={() => {
+                    posthog.capture('bookmarks_user menu');
+                  }}
+                  className={rowCls}
+                >
+                  <Bookmark />
+                  Bookmarks
+                </Link>
+              </DropdownMenuItem>
+            )}
+
+            <SupportFormDialog>
+              <DropdownMenuItem
+                className={rowCls}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  posthog.capture('get help_user menu');
+                }}
+              >
+                <CircleHelp />
+                Get Help
+              </DropdownMenuItem>
+            </SupportFormDialog>
+
+            <DropdownMenuSeparator className="mx-1 my-1.5 bg-[#E6DCC9]" />
+
             <DropdownMenuItem
               onClick={() => {
-                onOpen();
-                posthog.capture('email preferences_user menu');
+                posthog.capture('logout_user menu');
+                logout();
               }}
-              className="text-sm tracking-tight text-[#1d1815]"
+              className="flex cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-sm tracking-tight text-[#C4502E] focus:bg-[#C4502E]/10 focus:text-[#C4502E] [&_svg]:size-4 [&_svg]:text-[#C4502E]"
             >
-              Email Preferences
+              <LogOut />
+              Log out
             </DropdownMenuItem>
-          )}
-
-          {user?.isTalentFilled && (
-            <DropdownMenuItem asChild>
-              <Link
-                href="/earn/bookmarks"
-                onClick={() => {
-                  posthog.capture('bookmarks_user menu');
-                }}
-                className="text-sm tracking-tight text-[#1d1815]"
-              >
-                Bookmarks
-              </Link>
-            </DropdownMenuItem>
-          )}
-
-          <SupportFormDialog>
-            <DropdownMenuItem
-              className="text-sm tracking-tight text-[#1d1815]"
-              onSelect={(e) => {
-                e.preventDefault();
-                posthog.capture('get help_user menu');
-              }}
-            >
-              Get Help
-            </DropdownMenuItem>
-          </SupportFormDialog>
-
-          <DropdownMenuItem
-            onClick={() => {
-              posthog.capture('logout_user menu');
-              logout();
-            }}
-            className="text-sm tracking-tight text-[#ce4a2b]"
-          >
-            Logout
-          </DropdownMenuItem>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

@@ -34,7 +34,7 @@ function DrawerOverlay({
   return (
     <DrawerPrimitive.Overlay
       data-slot="drawer-overlay"
-      className={cn('fixed inset-0 z-60 bg-black/80', className)}
+      className={cn('fixed inset-0 z-60 bg-[#1c140e]/55 backdrop-blur-[2px]', className)}
       {...props}
     />
   );
@@ -57,14 +57,14 @@ function DrawerContent({
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(
-          'bg-background fixed inset-x-0 bottom-0 z-60 mt-24 flex h-auto flex-col rounded-t-[10px] border',
+          'bg-[#FBF7EF] fixed inset-x-0 bottom-0 z-60 mt-24 flex h-auto flex-col rounded-t-2xl border border-[#E6DCC9]',
           className,
         )}
         {...props}
       >
         <div
           className={cn(
-            'mx-auto my-1 h-1 w-[100px] rounded-full bg-slate-200',
+            'mx-auto mt-2.5 mb-1 h-1.5 w-[44px] rounded-full bg-[#E9E0CD]',
             classNames?.bar,
           )}
         />

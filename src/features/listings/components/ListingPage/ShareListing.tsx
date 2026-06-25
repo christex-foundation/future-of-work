@@ -190,14 +190,14 @@ function MainContent({ listing, grant, source }: SourceType) {
         className="ph-no-capture group w-full justify-between"
         onClick={onListingLinkCopy}
       >
-        <span className="truncate font-normal text-slate-500">
+        <span className="truncate font-normal text-[#5C5147]">
           superteam.fun/earn/{source === 'grant' ? 'grants' : 'listing'}/
           {source === 'grant' ? grant?.slug : listing?.slug}
         </span>
         {hasCopied ? (
-          <Check className="h-5 w-5 text-slate-400" />
+          <Check className="h-5 w-5 text-[#5C5147]" />
         ) : (
-          <Copy className="h-5 w-5 text-slate-400" />
+          <Copy className="h-5 w-5 text-[#5C5147]" />
         )}
       </Button>
 

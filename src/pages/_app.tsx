@@ -168,7 +168,7 @@ function App({ Component, pageProps }: AppProps) {
         <Providers>
           <TopLoader />
           <Component {...pageProps} key={router.asPath} />
-          <Toaster position="bottom-right" richColors />
+          <Toaster position="bottom-right" gap={10} offset={20} />
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_TRACKING_ID!} />
         </Providers>
       </div>

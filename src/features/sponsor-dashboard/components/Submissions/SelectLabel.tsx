@@ -89,7 +89,7 @@ export const SelectLabel = ({ listingSlug, type }: Props) => {
       <DropdownMenuTrigger asChild className="min-w-[110px]">
         <button
           className={cn(
-            'flex w-full items-center justify-between rounded-lg border border-[#1d1815]/12 bg-transparent px-2 py-1 text-xs font-medium text-[#6B5E50] capitalize transition-all duration-300 ease-in-out hover:border-[#1d1815]/20 data-[state=open]:rounded-b-none data-[state=open]:border-[#1d1815]/12',
+            'flex w-full items-center justify-between rounded-lg border border-[#E6DCC9]/12 bg-transparent px-2 py-1 text-xs font-medium text-[#6B5E50] capitalize transition-all duration-300 ease-in-out hover:border-[#E6DCC9]/20 data-[state=open]:rounded-b-none data-[state=open]:border-[#E6DCC9]/12',
             color,
             bg,
             border,

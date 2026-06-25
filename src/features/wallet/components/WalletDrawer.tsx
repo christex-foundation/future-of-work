@@ -79,17 +79,17 @@ export function WalletDrawer({
       toast(
         <div className="relative flex flex-col gap-1">
           <X
-            className="absolute top-0 right-0 size-4 cursor-pointer text-[#6b5e50] hover:text-[#1d1815]"
+            className="absolute top-0 right-0 size-4 cursor-pointer text-[#5C5147] hover:text-[#221A14]"
             onClick={() => toast.dismiss()}
           />
           <div
             className={cn(
-              'font-serif mt-1 pr-6 text-xl font-semibold text-[#1d1815]',
+              'font-serif mt-1 pr-6 text-xl font-semibold text-[#221A14]',
             )}
           >
             Two-Factor Auth is Mandatory
           </div>
-          <div className="font-primary text-sm text-[#6b5e50]">
+          <div className="font-primary text-sm text-[#5C5147]">
             Setting up two-factor authentication is mandatory to continue
             withdrawing. This will keep your funds secure.
           </div>
@@ -98,9 +98,7 @@ export function WalletDrawer({
               await showMfaEnrollmentModal();
               setView('withdraw');
             }}
-            className={cn(
-              'mt-2 w-full rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-4 py-2.5 text-sm font-semibold text-[#1d1815] shadow-[3px_3px_0_#1d1815] transition-colors hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]',
-            )}
+            className="mt-2 w-full rounded-xl bg-[#C4502E] px-4 py-2.5 text-sm font-semibold text-[#FBF7EF] transition-colors hover:bg-[#A83F22]"
           >
             Set up 2FA
           </Button>
@@ -108,7 +106,7 @@ export function WalletDrawer({
         {
           duration: 7000,
           style: {
-            border: '2px solid #1d1815',
+            border: '2px solid #221A14',
             padding: '1rem',
           },
           className: 'shadow-lg',
@@ -122,90 +120,103 @@ export function WalletDrawer({
 
   return (
     <SideDrawer isOpen={isOpen} onClose={handleClose}>
-      <SideDrawerContent className="w-screen overflow-hidden border-l-2 border-[#1d1815] bg-[#FBF7EE] sm:w-120">
+      <SideDrawerContent className="w-screen overflow-hidden border-l border-[#E6DCC9] bg-[#FBF7EF] sm:w-120">
         <ScrollArea className="h-full overflow-y-auto">
-          <X
-            className="absolute top-5 right-4 z-10 h-5 w-5 cursor-pointer text-[#1d1815] sm:hidden"
-            onClick={onClose}
-          />
           <div className="flex h-full flex-col">
+            {/* header */}
             <div
               className={cn(
-                'items-center border-b border-[#1d1815]/20 bg-[#f4eee3] py-5 pb-4',
+                'flex items-start justify-between gap-3 pt-6 pb-3',
                 padding,
               )}
             >
-              <div className="flex items-baseline gap-2">
-                <h2 className="font-serif text-lg font-semibold tracking-tight text-[#1d1815]">
-                  {user?.firstName + "'s Wallet"}
+              <div className="min-w-0">
+                <h2 className="font-serif text-[22px] font-medium tracking-[-0.01em] text-[#221A14]">
+                  {user?.firstName ? `${user.firstName}'s Wallet` : 'Wallet'}
                 </h2>
                 <CopyButton
                   text={user?.walletAddress || ''}
-                  className="font-primary flex cursor-pointer items-center gap-1 text-[#6b5e50] hover:text-[#1d1815]"
                   contentProps={{ side: 'right' }}
                   content={'Click to copy'}
                 >
-                  <p className="text-xs font-medium">
+                  <span className="mt-1.5 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#E6DCC9] bg-[#F2EAD9] px-2.5 py-1 text-xs font-medium text-[#5C5147] transition-colors hover:text-[#221A14]">
                     {truncatePublicKey(user?.walletAddress)}
-                  </p>
-                  <CopyIcon className="size-2.5" />
+                    <CopyIcon className="size-3" />
+                  </span>
                 </CopyButton>
               </div>
-              <p className="font-primary text-sm font-medium text-[#6b5e50]">
-                You will receive payments in this wallet each time you win.{' '}
-                <a
-                  href="https://superteamdao.notion.site/using-your-earn-wallet"
-                  className="text-[#ce4a2b] underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Learn more
-                </a>{' '}
-                about what you can do with your rewards.
-              </p>
+              <button
+                type="button"
+                aria-label="Close"
+                onClick={handleClose}
+                className="flex size-9 flex-none items-center justify-center rounded-full text-[#5C5147] transition-colors hover:bg-[#F2EAD9] hover:text-[#221A14]"
+              >
+                <X className="size-5" />
+              </button>
             </div>
-            <div className={cn('bg-[#f4eee3] py-4', padding)}>
-              <div className="flex items-baseline gap-1">
-                <p className="font-serif text-3xl font-semibold tracking-tight text-[#1d1815]">
+
+            {/* balance card */}
+            <div className={cn('pb-1', padding)}>
+              <div
+                className="relative overflow-hidden rounded-[18px] p-6 text-[#FBF7EF]"
+                style={{ background: 'linear-gradient(160deg, #34433a, #2C3A2E)' }}
+              >
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-[0.16]"
+                  style={{
+                    backgroundImage:
+                      'repeating-linear-gradient(60deg, rgba(255,255,255,.5) 0 1px, transparent 1px 26px)',
+                  }}
+                  aria-hidden="true"
+                />
+                <p className="relative text-[10.5px] font-semibold tracking-[0.2em] text-[#8FA37E] uppercase">
+                  Balance
+                </p>
+                <p className="relative mt-1 font-serif text-[40px] leading-none font-normal">
                   ${formatNumberWithSuffix(totalBalance || 0, 2, true)}
+                  <span className="ml-1.5 text-lg text-[#FBF7EF]/70">USD</span>
                 </p>
-                <p className="font-serif text-xl font-semibold tracking-tight text-[#6b5e50]">
-                  USD
-                </p>
-              </div>
-              <p className="font-secondary text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase">
-                BALANCE
-              </p>
-              {view === 'main' && (
-                <div className="w-full items-end justify-between">
+                {view === 'main' && (
                   <Button
                     onClick={handleWithdraw}
-                    className={cn(
-                      'mt-3 rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-5 text-base text-[#1d1815] shadow-[3px_3px_0_#1d1815] hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815]',
-                      user?.isPro &&
-                        'border-2 border-[#1d1815] bg-[#e6a12b] hover:bg-[#e6a12b]',
-                    )}
                     disabled={!tokens?.length}
+                    className="relative mt-5 h-11 w-full rounded-xl bg-[#C4502E] text-[15px] font-semibold text-[#FBF7EF] shadow-none transition-colors hover:bg-[#A83F22] hover:text-[#FBF7EF] disabled:opacity-60"
                   >
                     Withdraw
-                    <ArrowUpRight className="h-4 w-4" />
+                    <ArrowUpRight className="size-4" />
                   </Button>
-                  <div
+                )}
+              </div>
+              {view === 'main' && (
+                <>
+                  <button
+                    type="button"
                     onClick={() => showMfaEnrollmentModal()}
-                    className="font-primary mt-1.5 cursor-pointer py-0.5 text-xs font-semibold text-[#6b5e50] hover:text-[#1d1815] hover:underline"
+                    className="mt-2.5 cursor-pointer text-xs font-semibold text-[#6B7A4F] transition-colors hover:text-[#C4502E]"
                   >
                     {privyUser?.mfaMethods.length === 0
-                      ? '+ Add Two Factor Authentication'
-                      : 'Edit Two Factor Authentication'}
-                  </div>
-                </div>
+                      ? '+ Add two-factor authentication'
+                      : 'Edit two-factor authentication'}
+                  </button>
+                  <p className="pt-3 text-[13px] leading-snug text-[#5C5147]">
+                    You&apos;ll receive payments here each time you win.{' '}
+                    <a
+                      href="https://superteamdao.notion.site/using-your-earn-wallet"
+                      className="font-medium text-[#C4502E] hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Learn more
+                    </a>
+                  </p>
+                </>
               )}
             </div>
             {view === 'main' && (
               <>
                 <div
                   className={cn(
-                    'font-secondary border-b border-[#1d1815]/20 pt-6 pb-2 text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase',
+                    'pt-6 pb-2 text-[11px] font-semibold tracking-[0.16em] text-[#6B7A4F] uppercase',
                     padding,
                   )}
                 >
@@ -219,7 +230,7 @@ export function WalletDrawer({
 
                 <div
                   className={cn(
-                    'font-secondary border-b border-[#1d1815]/20 pt-6 pb-2 text-[11px] font-bold tracking-[0.2em] text-[#6b5e50] uppercase',
+                    'pt-6 pb-2 text-[11px] font-semibold tracking-[0.16em] text-[#6B7A4F] uppercase',
                     padding,
                   )}
                 >
@@ -229,16 +240,16 @@ export function WalletDrawer({
               </>
             )}
             {view !== 'main' && (
-              <div className="flex items-center border-b border-[#1d1815]/20 py-1.5">
+              <div className="flex items-center border-b border-[#E6DCC9]/20 py-1.5">
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={handleBack}
                   className="mr-1 ml-4"
                 >
-                  <ArrowLeft className="h-4 w-4 text-[#1d1815]" />
+                  <ArrowLeft className="h-4 w-4 text-[#221A14]" />
                 </Button>
-                <h2 className="font-serif text-sm font-semibold text-[#1d1815]">
+                <h2 className="font-serif text-sm font-semibold text-[#221A14]">
                   {view === 'withdraw' && 'Withdraw Funds'}
                   {view === 'success' && 'Successfully Withdrawn'}
                 </h2>
@@ -255,18 +266,18 @@ export function WalletDrawer({
                 />
               </div>
             )}
-            <p className="font-primary sticky bottom-0 mt-auto bg-[#FBF7EE] px-2 py-2 text-center text-xs text-[#6b5e50] sm:text-sm">
+            <p className="font-primary sticky bottom-0 mt-auto bg-[#FBF7EF] px-2 py-2 text-center text-xs text-[#5C5147] sm:text-sm">
               Have questions? Reach out to us at{' '}
               {isMD ? (
                 <CopyButton text="eng@christex.foundation">
-                  <p className="text-[#ce4a2b] underline hover:text-[#ce4a2b]/80">
+                  <p className="text-[#C4502E] underline hover:text-[#C4502E]/80">
                     eng@christex.foundation
                   </p>
                 </CopyButton>
               ) : (
                 <a
                   href="mailto:eng@christex.foundation"
-                  className="text-[#ce4a2b] underline hover:text-[#ce4a2b]/80"
+                  className="text-[#C4502E] underline hover:text-[#C4502E]/80"
                   target="_blank"
                 >
                   eng@christex.foundation

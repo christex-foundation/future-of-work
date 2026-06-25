@@ -31,7 +31,7 @@ function PopoverContent({
           e.stopPropagation();
         }}
         className={cn(
-          'bg-[#FBF7EE] text-[#1d1815] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-[100] w-72 rounded-none border-2 border-[#1d1815] p-4 shadow-[4px_4px_0_#1d1815] outline-hidden',
+          'bg-[#FBF7EF] text-[#221A14] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-[100] w-72 rounded-xl border border-[#E6DCC9] p-4 shadow-[0_22px_60px_-34px_rgba(54,38,22,0.5)] outline-hidden',
           className,
         )}
         {...props}

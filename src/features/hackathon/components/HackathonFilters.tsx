@@ -43,8 +43,8 @@ export const HackathonFilters = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="cursor-pointer rounded-md p-2 hover:bg-[#f4eee3]">
-          <LucideListFilter className="size-4 stroke-3 text-[#1d1815]" />
+        <div className="cursor-pointer rounded-md p-2 hover:bg-[#F2EAD9]">
+          <LucideListFilter className="size-4 stroke-3 text-[#221A14]" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -58,9 +58,9 @@ export const HackathonFilters = ({
               onStatusChange(option.params.status as HackathonStatus)
             }
             className={cn(
-              'flex items-center gap-2 text-[#1d1815]',
+              'flex items-center gap-2 text-[#221A14]',
               activeStatus === option.params.status &&
-                'bg-[#e6a12b]/25 font-semibold',
+                'bg-[#C4502E]/25 font-semibold',
             )}
           >
             <div
@@ -87,10 +87,10 @@ export const HackathonFilters = ({
               onSortChange(option.params.sortBy, option.params.order)
             }
             className={cn(
-              'flex gap-2 text-[#1d1815]',
+              'flex gap-2 text-[#221A14]',
               activeSortBy === option.params.sortBy &&
                 activeOrder === option.params.order &&
-                'bg-[#e6a12b]/25 font-semibold',
+                'bg-[#C4502E]/25 font-semibold',
             )}
           >
             <div className="text-slate-500">{option.icon}</div>

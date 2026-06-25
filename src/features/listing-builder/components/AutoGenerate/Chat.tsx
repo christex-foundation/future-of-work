@@ -65,17 +65,17 @@ export function AutoGenerateChat({
   };
   return (
     <div className="flex min-h-159 flex-col gap-y-4">
-      <div className="sticky top-0 z-100 flex items-center justify-between border-b-2 border-[#1d1815] bg-[#FBF7EE] p-4 py-2">
+      <div className="sticky top-0 z-100 flex items-center justify-between border-b border-[#E6DCC9] bg-[#FBF7EF] p-4 py-2">
         <div className="flex items-center gap-2">
           <Button
             variant="ghost"
             size="icon"
-            className="!size-6 rounded-full px-0 text-xs text-[#6b5e50] hover:text-[#1d1815]"
+            className="!size-6 rounded-full px-0 text-xs text-[#5C5147] hover:text-[#221A14]"
             onClick={handleBack}
           >
-            <ArrowLeft className="size-4! text-[#6b5e50]" />
+            <ArrowLeft className="size-4! text-[#5C5147]" />
           </Button>
-          <h2 className="font-serif text-xl font-semibold text-[#1d1815]">
+          <h2 className="font-serif text-xl font-semibold text-[#221A14]">
             Generated Listing
           </h2>
         </div>
@@ -84,7 +84,7 @@ export function AutoGenerateChat({
             <Button
               variant="ghost"
               size="icon"
-              className="text-[#6b5e50] hover:bg-[#f4eee3] hover:text-[#1d1815]"
+              className="text-[#5C5147] hover:bg-[#F2EAD9] hover:text-[#221A14]"
             >
               <Cross2Icon className="h-4 w-4" />
             </Button>
@@ -102,7 +102,7 @@ export function AutoGenerateChat({
           </div>
         )}
         {description && description.length > 0 && !isRefining && (
-          <div className="m-4 mt-2 mb-0 rounded-none border-2 border-[#1d1815] bg-[#f4eee3] px-4 py-0">
+          <div className="m-4 mt-2 mb-0  border border-[#E6DCC9] bg-[#F2EAD9] px-4 py-0">
             <div
               className={`${styles.content} mt-3 w-full pb-7 [&_h2:first-child]:!mt-0`}
             >
@@ -130,14 +130,14 @@ export function AutoGenerateChat({
           </div>
         )}
         {error && (
-          <div className="m-2 rounded-none border-2 border-[#1d1815] bg-[#f4eee3] px-4 py-2">
-            <p className="w-full border-2 border-[#1d1815] bg-[#f3d6cd] py-4 text-center text-sm font-medium text-[#1d1815]">
+          <div className="m-2  border border-[#E6DCC9] bg-[#F2EAD9] px-4 py-2">
+            <p className="w-full border border-[#E6DCC9] bg-[#f3d6cd] py-4 text-center text-sm font-medium text-[#221A14]">
               {`Failed to generate description, please try again later`}
             </p>
           </div>
         )}
       </div>
-      <div className="sticky bottom-0 z-10 mt-auto flex items-start justify-between gap-x-2 border-t-2 border-[#1d1815] bg-[#FBF7EE] p-4 pb-2">
+      <div className="sticky bottom-0 z-10 mt-auto flex items-start justify-between gap-x-2 border-t border-[#E6DCC9] bg-[#FBF7EF] p-4 pb-2">
         <ProgressiveBlurOut scrollEl={scrollEl} className="absolute -top-22" />
         <div className="relative h-fit w-full">
           <TextareaAutosize
@@ -146,7 +146,7 @@ export function AutoGenerateChat({
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             maxRows={5}
-            className="min-h-10 w-full resize-none rounded-none border-2 border-[#1d1815] bg-[#f4eee3] p-2 pr-7 text-sm text-[#1d1815] placeholder:text-sm placeholder:text-[#1d1815]/40 focus:border-[#ce4a2b] focus:outline-none"
+            className="min-h-10 w-full resize-none  border border-[#E6DCC9] bg-[#F2EAD9] p-2 pr-7 text-sm text-[#221A14] placeholder:text-sm placeholder:text-[#221A14]/40 focus:border-[#C4502E] focus:outline-none"
           />
           {input.length > 0 && (
             <motion.div
@@ -157,7 +157,7 @@ export function AutoGenerateChat({
             >
               <Button
                 onClick={handleRefine}
-                className="flex h-full items-center justify-center rounded-full bg-[#1d1815] px-1 text-[#f4eee3] hover:bg-[#ce4a2b]"
+                className="flex h-full items-center justify-center rounded-full bg-[#221A14] px-1 text-[#F2EAD9] hover:bg-[#C4502E]"
                 disabled={isRefineDisabled || isDisabled}
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
@@ -180,7 +180,7 @@ export function AutoGenerateChat({
         </div>
         {input.length === 0 && (
           <Button
-            className="w-36 rounded-none border-2 border-[#1d1815] bg-[#e6a12b] px-0 font-bold text-[#1d1815] shadow-[3px_3px_0_#1d1815] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#e6a12b] hover:shadow-[1px_1px_0_#1d1815] disabled:opacity-50"
+            className="w-36  border border-[#E6DCC9] bg-[#C4502E] px-0 font-bold text-[#221A14]  transition-all hover:bg-[#C4502E]  disabled:opacity-50"
             onClick={handleProceed}
             disabled={isLoading || isDisabled}
           >

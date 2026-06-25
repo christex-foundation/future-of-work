@@ -138,14 +138,14 @@ const Mobile = ({
         classNames={{
           overlay: isLoginOpen ? 'z-200' : '',
         }}
-        className="border-t-2! border-[#1d1815]! bg-[#FBF7EE] ring-0!"
+        className="border-t! border-[#E6DCC9]! bg-[#FBF7EF] ring-0!"
       >
         <DrawerHeader className="text-left">
           <UserFlag isCode location={st.code} size="44px" />
-          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
+          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#221A14]">
             Exclusive opportunities for {st.nationality}
           </DrawerTitle>
-          <DrawerDescription className="font-primary text-sm text-[#6b5e50]">
+          <DrawerDescription className="font-primary text-sm text-[#5C5147]">
             Sign up and receive exclusive opportunities available only to{' '}
             {st.nationality}.
           </DrawerDescription>
@@ -175,17 +175,17 @@ const Desktop = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className={cn(
-          'max-w-[23rem] overflow-hidden rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-5 shadow-[6px_6px_0_#1d1815]',
+          'max-w-[23rem] overflow-hidden  border border-[#E6DCC9] bg-[#FBF7EF] p-5 ',
           isLoginOpen && 'invisible',
         )}
         hideCloseIcon
       >
         <DialogHeader className="">
           <UserFlag location={st.code} isCode size="44px" />
-          <DialogTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
+          <DialogTitle className="font-serif pt-2 text-lg font-semibold text-[#221A14]">
             Exclusive opportunities for {st.nationality}
           </DialogTitle>
-          <DialogDescription className="font-primary text-sm text-[#6b5e50]">
+          <DialogDescription className="font-primary text-sm text-[#5C5147]">
             Sign up and receive exclusive opportunities available only to{' '}
             {st.nationality}.
           </DialogDescription>
@@ -230,7 +230,7 @@ const People = ({
           ))}
         </AvatarGroupList>
       </AvatarGroup>
-      <p className="font-primary text-sm text-[#6b5e50]">
+      <p className="font-primary text-sm text-[#5C5147]">
         Join {people[0]?.name.split(' ')[0]}, {people[1]?.name.split(' ')[0]} &{' '}
         {totalUsers?.toLocaleString('en-us')} others
       </p>

@@ -163,7 +163,7 @@ const Mobile = ({
         classNames={{
           overlay: isLoginOpen ? 'z-200' : '',
         }}
-        className="border-t-2! border-[#1d1815]! bg-[#FBF7EE] focus:ring-0 focus:ring-transparent focus:ring-offset-0"
+        className="border-t! border-[#E6DCC9]! bg-[#FBF7EF] focus:ring-0 focus:ring-transparent focus:ring-offset-0"
       >
         <DrawerHeader className="text-left">
           <AvatarGroup>
@@ -176,7 +176,7 @@ const Mobile = ({
               ))}
             </AvatarGroupList>
           </AvatarGroup>
-          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#1d1815]">
+          <DrawerTitle className="font-serif pt-2 text-lg font-semibold text-[#221A14]">
             {!totalUsers ? (
               <Skeleton className="h-5 w-3/4" />
             ) : (
@@ -186,7 +186,7 @@ const Mobile = ({
               </>
             )}
           </DrawerTitle>
-          <DrawerDescription className="font-primary text-sm text-[#6b5e50]">
+          <DrawerDescription className="font-primary text-sm text-[#5C5147]">
             Sign up to never miss out on amazing opportunities that pay in
             global standards.
           </DrawerDescription>
@@ -217,7 +217,7 @@ const Desktop = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className={cn(
-          'max-w-[22.5rem] overflow-hidden rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-0 shadow-[6px_6px_0_#1d1815]',
+          'max-w-[22.5rem] overflow-hidden  border border-[#E6DCC9] bg-[#FBF7EF] p-0 ',
           isLoginOpen && 'invisible',
         )}
         hideCloseIcon
@@ -246,13 +246,13 @@ const DesktopVariantOne = ({
 }) => {
   return (
     <>
-      <div className="flex h-44 items-center justify-center border-b-2 border-[#1d1815] bg-[#f4eee3] p-0">
+      <div className="flex h-44 items-center justify-center border-b border-[#E6DCC9] bg-[#F2EAD9] p-0">
         <img src={Female1} alt="female 2" width={68} height={68} />
         <img src={Male1} alt="male 1" width={59} height={59} />
         <img src={Male2} alt="male 2" width={63} height={63} />
       </div>
       <DialogHeader className="px-5 pt-2">
-        <DialogTitle className="font-serif text-lg font-semibold text-[#1d1815]">
+        <DialogTitle className="font-serif text-lg font-semibold text-[#221A14]">
           {!totalUsers ? (
             <>
               <Skeleton className="h-5 w-full" />
@@ -265,7 +265,7 @@ const DesktopVariantOne = ({
             </>
           )}
         </DialogTitle>
-        <DialogDescription className="font-primary text-sm text-[#6b5e50]">
+        <DialogDescription className="font-primary text-sm text-[#5C5147]">
           Sign up to never miss out on amazing opportunities that pay in global
           standards.
         </DialogDescription>
@@ -281,12 +281,12 @@ const DesktopVariantTwo = ({
 }) => {
   return (
     <>
-      <div className="flex h-44 flex-col items-center justify-center gap-2 border-b-2 border-[#1d1815] bg-[#f4eee3] p-0">
-        <span className="font-secondary flex gap-2 text-[11px] font-bold tracking-[0.18em] text-[#6b5e50] uppercase">
-          <PulseIcon w={5} h={5} isPulsing bg={'#e7d3c1'} text="#ce4a2b" />
+      <div className="flex h-44 flex-col items-center justify-center gap-2 border-b border-[#E6DCC9] bg-[#F2EAD9] p-0">
+        <span className="font-secondary flex gap-2 text-[11px] font-bold tracking-[0.18em] text-[#5C5147] uppercase">
+          <PulseIcon w={5} h={5} isPulsing bg={'#e7d3c1'} text="#C4502E" />
           <p>Live Opportunities</p>
         </span>
-        <p className="font-serif text-4xl font-semibold text-[#1d1815]">
+        <p className="font-serif text-4xl font-semibold text-[#221A14]">
           {liveOpportunityWorth ? (
             <>
               $
@@ -300,14 +300,14 @@ const DesktopVariantTwo = ({
         </p>
       </div>
       <DialogHeader className="px-5 pt-2">
-        <DialogTitle className="font-serif text-lg font-semibold text-[#1d1815]">
+        <DialogTitle className="font-serif text-lg font-semibold text-[#221A14]">
           Get access to opportunities worth $
           {formatNumberWithSuffix(
             roundToNearestThousand(liveOpportunityWorth || 0),
           )}
           !
         </DialogTitle>
-        <DialogDescription className="font-primary text-sm text-[#6b5e50]">
+        <DialogDescription className="font-primary text-sm text-[#5C5147]">
           {`Apply to hundreds of bounties & gigs with a single profile.`}
         </DialogDescription>
       </DialogHeader>

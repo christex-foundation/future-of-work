@@ -78,7 +78,7 @@ export const WelcomeModal = () => {
       }}
     >
       <DialogContent
-        className="overflow-hidden border-[#1d181517] bg-[#FBF7EE] p-0 sm:max-w-md sm:rounded-[24px]"
+        className="overflow-hidden border-[#221A1417] bg-[#FBF7EF] p-0 sm:max-w-md sm:rounded-[24px]"
         classNames={{ closeIcon: 'text-[#6B5E50]' }}
       >
         <div className="p-7">
@@ -121,7 +121,7 @@ export const WelcomeModal = () => {
 
           <div className="mt-7 flex flex-col gap-2.5">
             <Button
-              className="h-11 w-full rounded-full bg-[#1D1815] text-[14px] font-semibold text-[#FBF7EE] hover:bg-[#1D1815]/90"
+              className="h-11 w-full rounded-full bg-[#1D1815] text-[14px] font-semibold text-[#FBF7EF] hover:bg-[#1D1815]/90"
               onClick={handleGetStarted}
             >
               Get started

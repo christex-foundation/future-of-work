@@ -165,7 +165,7 @@ export function SelectSponsor({
           ...baseStyles,
           cursor: 'pointer',
           fontSize: '14px',
-          backgroundColor: '#FBF7EE',
+          backgroundColor: '#FBF7EF',
           borderColor: 'rgba(29,24,21,0.12)',
           boxShadow: 'none',
           '&:hover': {

@@ -113,7 +113,7 @@ export function SearchModal({ isOpen, onClose }: Props) {
       <DialogContent
         hideCloseIcon
         className={cn(
-          'rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] p-0 shadow-[6px_6px_0_#1d1815] backdrop-blur-md sm:max-w-xl',
+          ' border border-[#E6DCC9] bg-[#FBF7EF] p-0  backdrop-blur-md sm:max-w-xl',
           'fixed top-20 left-1/2 -translate-x-1/2',
           'block! translate-y-0!',
         )}
@@ -126,12 +126,12 @@ export function SearchModal({ isOpen, onClose }: Props) {
 
             router.push(`/earn/search?q=${encodeURIComponent(inputValue)}`);
           }}
-          className="relative border-b-2 border-[#1d1815]"
+          className="relative border-b border-[#E6DCC9]"
         >
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6b5e50]" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#5C5147]" />
           <Input
             className={cn(
-              'rounded-none border-none bg-[#FBF7EE] pr-10 pl-10 text-[#1d1815] placeholder:text-[#6b5e50]/60',
+              ' border-none bg-[#FBF7EF] pr-10 pl-10 text-[#221A14] placeholder:text-[#5C5147]/60',
               'text-sm md:text-base',
               'focus-visible:ring-0 focus-visible:ring-offset-0',
             )}
@@ -145,10 +145,10 @@ export function SearchModal({ isOpen, onClose }: Props) {
           />
           <button
             type="submit"
-            className="absolute top-1/2 right-3 -translate-y-1/2 text-[#ce4a2b]"
+            className="absolute top-1/2 right-3 -translate-y-1/2 text-[#C4502E]"
           >
             {isFetching ? (
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#6b5e50] border-t-transparent" />
+              <div className="h-4 w-4 animate-spin rounded-full border border-[#5C5147] border-t-transparent" />
             ) : (
               <ArrowRight className="h-4 w-4" />
             )}
@@ -180,8 +180,8 @@ export function SearchModal({ isOpen, onClose }: Props) {
               <Button
                 variant="ghost"
                 className={cn(
-                  'w-full gap-2 text-sm font-normal text-[#1d1815] hover:bg-[#e6a12b] hover:text-[#1d1815]',
-                  'rounded-none border-t-2 border-[#1d1815]',
+                  'w-full gap-2 text-sm font-normal text-[#221A14] hover:bg-[#C4502E] hover:text-[#221A14]',
+                  ' border-t border-[#E6DCC9]',
                 )}
               >
                 View All Results <ArrowRight className="h-4 w-4" />
