@@ -23,26 +23,22 @@ export const NavLink = ({
     <Link
       href={href}
       className={cn(
-        'font-secondary flex items-center gap-1.5 py-2 font-bold uppercase',
-        'h-14',
-        'text-[11px] tracking-[0.12em]',
-        isActive ? 'text-[#1d1815]' : 'text-[#6b5e50]',
-        'hover:text-[#1d1815] hover:no-underline',
-        'relative border-b-2',
-        isActive ? 'border-[#ce4a2b]' : 'border-transparent',
+        'flex items-center gap-1.5 py-2 font-medium',
+        'h-16',
+        'text-[14px] tracking-normal transition-colors duration-200',
+        isActive ? 'text-[#221A14]' : 'text-[#5C5147]',
+        'hover:text-[#221A14] hover:no-underline',
+        'relative border-b',
+        isActive
+          ? isPro
+            ? 'border-[#221A14]'
+            : 'border-[#C4502E]'
+          : 'border-transparent',
         className,
       )}
       {...props}
     >
       {label}
-      {isActive && (
-        <span
-          className={cn(
-            'inline-block size-1.5',
-            isPro ? 'bg-[#1d1815]' : 'bg-[#ce4a2b]',
-          )}
-        />
-      )}
     </Link>
   );
 };

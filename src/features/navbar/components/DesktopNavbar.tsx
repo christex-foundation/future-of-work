@@ -111,7 +111,7 @@ export const DesktopNavbar = ({
   return (
     <div
       className={cn(
-        'hidden h-14 border-b-2 border-[#1d1815] bg-[#f4eee3] text-[#6b5e50] lg:flex',
+        'hidden h-16 border-b border-[#221A14]/10 bg-[#FBF7EF]/85 text-[#5C5147] backdrop-blur-md lg:flex',
         padding,
       )}
     >
@@ -129,7 +129,7 @@ export const DesktopNavbar = ({
               className={cn(
                 'flex items-center hover:no-underline',
                 isDashboardRoute
-                  ? 'h-14 w-[84px] justify-center border-r-2 border-[#1d1815]'
+                  ? 'h-16 w-[84px] justify-center border-r border-[#221A14]/10'
                   : 'gap-3',
               )}
               onClick={() => {
@@ -145,14 +145,14 @@ export const DesktopNavbar = ({
           </LogoContextMenu>
 
           {isDashboardRoute && (
-            <p className="font-secondary text-[11px] font-bold tracking-[0.18em] text-[#1d1815] uppercase">
+            <p className="font-secondary text-[11px] font-bold tracking-[0.18em] text-[#221A14] uppercase">
               SPONSORS
             </p>
           )}
 
           <Separator
             orientation="vertical"
-            className="h-6 bg-[#1d1815]/20"
+            className="h-6 bg-[#221A14]/12"
           />
 
           {!router.pathname.startsWith('/earn/new/') && !isDashboardRoute && (
@@ -179,7 +179,7 @@ export const DesktopNavbar = ({
           {!router.pathname.startsWith('/earn/search') &&
             !router.pathname.startsWith('/earn/new/') && (
               <div
-                className="flex cursor-pointer items-center gap-1.5 rounded-md border border-[#1d1815]/30 px-2 py-2 text-[#6b5e50] transition-all duration-100 hover:border-[#1d1815]/60 hover:bg-[#1d1815]/5 hover:text-[#1d1815]"
+                className="flex cursor-pointer items-center gap-1.5 rounded-full border border-[#221A14]/15 px-2.5 py-2 text-[#5C5147] transition-all duration-150 hover:border-[#221A14]/35 hover:bg-[#221A14]/4 hover:text-[#221A14]"
                 onClick={onSearchOpen}
               >
                 <IoSearchOutline className="size-4" />
@@ -201,7 +201,7 @@ export const DesktopNavbar = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="font-secondary text-[11px] font-bold tracking-[0.1em] text-[#1d1815] uppercase hover:bg-[#1d1815]/5 hover:text-[#1d1815]"
+                  className="rounded-full text-[13px] font-medium text-[#221A14] hover:bg-[#221A14]/5 hover:text-[#221A14]"
                   onClick={() => {
                     posthog.capture('sponsor dashboard_navbar');
                   }}
@@ -209,7 +209,7 @@ export const DesktopNavbar = ({
                 >
                   <Link href="/earn/dashboard/listings">
                     <span>Dashboard</span>
-                    <div className="block size-1.5 bg-[#e6a12b]" />
+                    <div className="size-1.5 rounded-full bg-[#C4502E]" />
                   </Link>
                 </Button>
               )}
@@ -219,9 +219,9 @@ export const DesktopNavbar = ({
                   variant="ghost"
                   size="sm"
                   className={cn(
-                    'font-secondary border border-[#e6a12b] bg-[#e6a12b]/15 text-[11px] font-bold tracking-[0.08em] text-[#1d1815] uppercase hover:bg-[#e6a12b]/25 hover:text-[#1d1815]',
+                    'rounded-full border border-[#8FA37E]/45 bg-[#8FA37E]/15 text-[13px] font-medium text-[#2C3A2E] hover:bg-[#8FA37E]/25 hover:text-[#2C3A2E]',
                     isPro &&
-                      'border-[#1d1815]/20 bg-[#1d1815]/5 text-[#1d1815] hover:bg-[#1d1815]/10',
+                      'border-[#221A14]/15 bg-[#221A14]/5 text-[#221A14] hover:bg-[#221A14]/10',
                   )}
                   onClick={onReferralOpen}
                 >
@@ -233,34 +233,34 @@ export const DesktopNavbar = ({
               {user?.isTalentFilled && (
                 <div className="flex items-center gap-1.5">
                   <div
-                    className="flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-2 text-[#6b5e50] transition-all duration-100 hover:bg-[#1d1815]/5 hover:text-[#1d1815]"
+                    className="flex cursor-pointer items-center gap-1.5 rounded-full px-2 py-2 text-[#5C5147] transition-all duration-150 hover:bg-[#221A14]/5 hover:text-[#221A14]"
                     onClick={openCreditDrawer}
                   >
                     <CreditIcon
                       className={cn(
                         'size-4',
-                        isPro ? 'text-[#1d1815]' : 'text-[#ce4a2b]',
+                        isPro ? 'text-[#221A14]' : 'text-[#C4502E]',
                       )}
                     />
-                    <p className="text-sm font-bold text-[#1d1815]">
+                    <p className="text-sm font-bold text-[#221A14]">
                       {creditBalance}
                     </p>
                   </div>
                   <div className="relative">
                     <div
-                      className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-[#6b5e50] transition-all duration-100 hover:bg-[#1d1815]/5 hover:text-[#1d1815]"
+                      className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-1.5 text-[#5C5147] transition-all duration-150 hover:bg-[#221A14]/5 hover:text-[#221A14]"
                       onClick={onWalletOpen}
                     >
                       <IoWalletOutline
                         className={cn(
                           'size-6',
-                          isPro ? 'text-[#1d1815]' : 'text-[#123a33]',
+                          isPro ? 'text-[#221A14]' : 'text-[#2C3A2E]',
                         )}
                       />
                       <span
                         className={cn(
-                          'font-secondary absolute top-px -right-1.5 block rounded-md px-1 py-px text-[10px] font-bold tracking-tight text-[#f4eee3]',
-                          isPro ? 'bg-[#1d1815]' : 'bg-[#123a33]',
+                          'font-secondary absolute top-px -right-1.5 block rounded-md px-1 py-px text-[10px] font-bold tracking-tight text-[#FBF7EF]',
+                          isPro ? 'bg-[#221A14]' : 'bg-[#2C3A2E]',
                         )}
                       >
                         ${formatNumberWithSuffix(walletBalance || 0, 1, false)}
@@ -280,20 +280,20 @@ export const DesktopNavbar = ({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="font-secondary text-[11px] font-bold tracking-[0.1em] text-[#1d1815] uppercase hover:bg-[#1d1815]/5 hover:text-[#1d1815]"
+                    className="rounded-full text-[13px] font-medium text-[#221A14] hover:bg-[#221A14]/5 hover:text-[#221A14]"
                     onClick={() => {
                       posthog.capture('create a listing_navbar');
                       router.push('/earn/sponsor');
                     }}
                   >
                     <span>Become a Sponsor</span>
-                    <div className="block size-1.5 bg-[#e6a12b]" />
+                    <div className="size-1.5 rounded-full bg-[#C4502E]" />
                   </Button>
                 )}
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="font-secondary text-[11px] font-bold tracking-[0.1em] text-[#1d1815] uppercase hover:bg-[#1d1815]/5 hover:text-[#1d1815]"
+                  className="rounded-full text-[13px] font-medium text-[#221A14] hover:bg-[#221A14]/5 hover:text-[#221A14]"
                   onClick={() => {
                     posthog.capture('login_navbar');
                     onLoginOpen();
@@ -304,7 +304,7 @@ export const DesktopNavbar = ({
               </div>
               <Button
                 size="sm"
-                className="font-secondary my-1 w-full border-2 border-[#1d1815] bg-[#ce4a2b] px-4 text-[11px] font-bold tracking-[0.08em] text-[#f4eee3] uppercase shadow-[3px_3px_0_#1d1815] transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#ce4a2b] hover:text-[#f4eee3] hover:shadow-[5px_5px_0_#1d1815]"
+                className="my-1 rounded-full bg-[#2C3A2E] px-5 text-[13px] font-semibold text-[#FBF7EF] transition-all duration-200 hover:-translate-y-px hover:bg-[#3C4D3D] hover:text-[#FBF7EF] hover:shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]"
                 onClick={() => {
                   posthog.capture('signup_navbar');
                   onLoginOpen();

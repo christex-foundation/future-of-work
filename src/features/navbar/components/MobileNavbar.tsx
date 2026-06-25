@@ -60,10 +60,10 @@ export const MobileNavbar = ({
     <>
       {/* {router.pathname === '/' && <AnnouncementBar />} */}
       <div className="sticky top-0 z-50">
-        <div className="flex min-h-12 items-center justify-between border-b border-black/20 bg-white px-1 py-1 lg:hidden">
+        <div className="flex min-h-12 items-center justify-between border-b border-[#221A14]/10 bg-[#FBF7EF]/90 px-1 py-1 backdrop-blur-md lg:hidden">
           <div className="flex items-center gap-3">
             <div onClick={openDrawer} className="ml-1 cursor-pointer">
-              <Menu className="size-5 text-gray-400" />
+              <Menu className="size-5 text-[#5C5147]" />
             </div>
             <Link
               href="/earn"
@@ -94,10 +94,10 @@ export const MobileNavbar = ({
                   variant="ghost"
                   size="sm"
                   className={cn(
-                    'text-brand-purple hover:text-brand-purple bg-indigo-50 text-xs font-semibold hover:bg-indigo-100',
+                    'rounded-full text-xs font-semibold',
                     user?.isPro
-                      ? 'bg-zinc-200 text-zinc-700 hover:bg-zinc-300 hover:text-zinc-700'
-                      : 'bg-indigo-50 text-xs font-semibold hover:bg-indigo-100',
+                      ? 'bg-[#221A14]/8 text-[#221A14] hover:bg-[#221A14]/12 hover:text-[#221A14]'
+                      : 'bg-[#8FA37E]/18 text-[#2C3A2E] hover:bg-[#8FA37E]/28 hover:text-[#2C3A2E]',
                   )}
                   onClick={onReferralOpen}
                 >
@@ -106,13 +106,13 @@ export const MobileNavbar = ({
                 </Button>
                 <div className="relative">
                   <div
-                    className="flex cursor-pointer items-center gap-1 rounded-md px-2 py-1.5 text-slate-500 transition-all duration-100 hover:bg-slate-100 hover:text-slate-700 md:gap-2"
+                    className="flex cursor-pointer items-center gap-1 rounded-md px-2 py-1.5 text-[#5C5147] transition-all duration-100 hover:bg-[#221A14]/5 hover:text-[#221A14] md:gap-2"
                     onClick={openCreditDrawer}
                   >
                     <CreditIcon
                       className={cn(
                         'size-4.5',
-                        user?.isPro ? 'text-zinc-600' : 'text-brand-purple',
+                        user?.isPro ? 'text-[#221A14]' : 'text-[#C4502E]',
                       )}
                     />
                     <p className="text-sm font-medium">{creditBalance}</p>
@@ -124,7 +124,7 @@ export const MobileNavbar = ({
           {ready && !authenticated && (
             <Button
               variant="ghost"
-              className="ph-no-capture text-brand-purple mr-2 text-base"
+              className="ph-no-capture mr-2 text-base font-medium text-[#221A14] hover:bg-[#221A14]/5 hover:text-[#221A14]"
               onClick={() => {
                 posthog.capture('login_navbar');
                 onLoginOpen();
