@@ -19,6 +19,7 @@ import { DaybreakTicker } from '@/features/home/components/DaybreakTicker';
 import { EarnHomeHero } from '@/features/home/components/EarnHomeHero';
 import { EarnSidebar } from '@/features/home/components/EarnSidebar';
 import { EarnSpotlight } from '@/features/home/components/EarnSpotlight';
+import { StartHereRail } from '@/features/home/components/StartHereRail';
 import { userCountQuery } from '@/features/home/queries/user-count';
 import { type EarnBounty } from '@/features/home/types/earn-board';
 import { ListingsSection } from '@/features/listings/components/ListingsSection';
@@ -92,6 +93,7 @@ export default function HomePage({
           <EarnHomeHero totalUsers={totalUsers} totalSponsors={totalSponsors} />
           <DaybreakTicker items={bounties} />
           <EarnSpotlight bounty={spotlight} />
+          <StartHereRail />
           <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]">
             <main className="min-w-0">
               <ListingsSection
