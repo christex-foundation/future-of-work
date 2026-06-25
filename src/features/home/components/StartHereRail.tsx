@@ -94,11 +94,12 @@ export function StartHereRail() {
     return goodFirstBounties(scorable, skills, 3).map((x) => x._l);
   }, [listings, user?.skills]);
 
-  // First-time users only — a returning/established user doesn't need this.
+  // Only for signed-in FIRST-TIME users — NOT a default section. Hidden for
+  // logged-out visitors and for returning/established users.
   if (isLoading) return null;
-  const established =
-    !!user && (!!user.surveysShown?.onboarding || !!user.isTalentFilled);
-  if (established) return null;
+  const isNewcomer =
+    !!user && !user.surveysShown?.onboarding && !user.isTalentFilled;
+  if (!isNewcomer) return null;
   if (picks.length < 2) return null;
 
   return (
