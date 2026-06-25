@@ -1450,24 +1450,80 @@
 /* ---- THE bounty card — Editorial style (one canonical card, reused everywhere) ---- */
 /* Self-contained (carries its own Daybreak palette) so it renders identically
    on the .daybreak marketing homepage AND the /earn board (which isn't .daybreak-wrapped). */
+/* ===== Canonical Daybreak card · Cover Stories ===== */
 .bounty-card{
-  --ink:#221A14;--ink-soft:#5C5147;--terra:#C4502E;--hair:#E6DCC9;
+  --ink:#221A14;--ink-soft:#5C5147;--terra:#C4502E;--terra-deep:#A83F22;
+  --sage:#8FA37E;--forest:#2C3A2E;--forest-soft:#3C4D3D;--olive:#6B7A4F;
+  --hair:#E6DCC9;--paper:#FBF7EF;--paper-2:#F2EAD9;--paper-3:#E9E0CD;--line-soft:rgba(34,26,20,.08);
   --serif:var(--font-fraunces),serif;--sans:var(--font-hanken),'Hanken Grotesk',sans-serif;
-  font-family:var(--sans);color:var(--ink);text-decoration:none;
-  background:linear-gradient(180deg,#fff,#fffdf8);border:1px solid var(--hair);border-radius:6px;padding:38px 38px 32px;display:flex;flex-direction:column;cursor:pointer;
+  position:relative;font-family:var(--sans);color:var(--ink);text-decoration:none;
+  background:#fff;border:1px solid var(--hair);border-radius:18px;padding:22px;
+  display:flex;flex-direction:column;overflow:hidden;cursor:pointer;
   box-shadow:0 1px 1px rgba(54,38,22,.04),0 3px 6px rgba(54,38,22,.05),0 18px 44px -28px rgba(54,38,22,.5);
-  transition:transform .3s cubic-bezier(.2,.7,.3,1),box-shadow .3s,border-color .3s}
-.bounty-card:hover{transform:translateY(-5px);border-color:#d9ccb2;
+  transition:transform .35s cubic-bezier(.2,.7,.3,1),box-shadow .35s,border-color .3s}
+.bounty-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--olive),var(--sage));opacity:0;transition:opacity .3s;z-index:1}
+.bounty-card.project::before{background:linear-gradient(90deg,var(--forest-soft),var(--sage))}
+.bounty-card:hover{transform:translateY(-4px);border-color:#d9ccb2;
   box-shadow:0 2px 3px rgba(54,38,22,.05),0 8px 16px rgba(54,38,22,.06),0 34px 64px -30px rgba(54,38,22,.6)}
-.bounty-card .over{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:13px;margin:0 0 16px;display:flex;justify-content:space-between;gap:12px}
-.bounty-card .over b{color:var(--terra);font-weight:600}
-.bounty-card h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.1;letter-spacing:-.01em;color:var(--ink);margin:0 0 14px}
-.bounty-card .lead{color:var(--ink-soft);font-size:13.5px;margin:0 0 22px}
-.bounty-card .figline{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;border-top:2px solid var(--ink);padding-top:16px;margin-top:auto}
-.bounty-card .figline .amt{font-family:var(--serif);font-size:38px;font-weight:400;line-height:.9;color:var(--terra)}
-.bounty-card .figline .amt small{display:block;font-family:var(--sans);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px;font-weight:600}
-.bounty-card .figline .meta{text-align:right;font-size:12.5px;color:var(--ink-soft);line-height:1.6;white-space:nowrap}
-.bounty-card .figline .meta b{color:var(--ink);font-weight:600}
+.bounty-card:hover::before{opacity:1}
+.bounty-card .sc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:0 0 14px}
+.bounty-card .sc-spon{display:flex;align-items:center;gap:10px;min-width:0}
+.bounty-card .sc-id{min-width:0}
+.bounty-card .bc-logo{width:36px;height:36px;border-radius:10px;flex:0 0 auto;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;background:var(--paper-2)}
+.bounty-card .bc-logo img{width:100%;height:100%;object-fit:cover}
+.bounty-card .bc-logo-initial{background:var(--forest);color:var(--paper);font-family:var(--serif);font-size:16px}
+.bounty-card .sc-spon .nm{font-size:13px;font-weight:600;color:var(--forest);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bounty-card .sc-spon .cat{font-size:11.5px;color:var(--olive)}
+.bounty-card .type-pill{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  padding:4px 10px;border-radius:30px;white-space:nowrap;flex:0 0 auto}
+.bounty-card .type-pill.bounty{color:var(--terra);background:rgba(196,80,46,.1)}
+.bounty-card .type-pill.project{color:var(--forest);background:rgba(143,163,126,.22)}
+.bounty-card h3{font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-.005em;color:var(--ink);margin:0 0 14px}
+.bounty-card .sc-reward{font-family:var(--serif);font-size:24px;font-weight:500;color:var(--terra);line-height:1;margin:0 0 14px}
+.bounty-card .sc-reward.proj{color:var(--forest)}
+.bounty-card .sc-reward .u{font-size:11px;color:var(--ink-soft);font-family:var(--sans);letter-spacing:.04em;margin-left:6px;font-weight:500}
+.bounty-card .tags{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 16px}
+.bounty-card .tag{font-size:11px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--hair);padding:4px 11px;border-radius:30px}
+.bounty-card .meter-row{display:flex;align-items:center;gap:10px;margin:0 0 14px}
+.bounty-card .meter{flex:1;height:5px;background:var(--paper-3);border-radius:5px;overflow:hidden}
+.bounty-card .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--olive),var(--sage));border-radius:5px}
+.bounty-card .meter-lbl{font-size:11.5px;color:var(--olive);white-space:nowrap}
+.bounty-card .sc-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  margin-top:auto;padding-top:14px;border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--ink-soft)}
+.bounty-card .sc-foot .due{display:flex;align-items:center;gap:6px;color:var(--terra);font-weight:600;white-space:nowrap}
+.bounty-card .sc-foot .due.proj{color:var(--olive)}
+
+/* featured "cover" variant — the same canonical card, art-plate state */
+.bounty-card.cover{padding:0;min-height:420px;border:none;color:#fff;justify-content:flex-end;border-radius:20px}
+.bounty-card.cover::before{display:none}
+.bounty-card.cover:hover{transform:translateY(-5px)}
+.bounty-card.cover .plate{position:absolute;inset:0;z-index:0}
+.bounty-card.cover.bounty .plate{background:radial-gradient(120% 80% at 82% 8%,rgba(143,163,126,.55),transparent 60%),radial-gradient(120% 100% at 8% 100%,rgba(44,58,46,.92),transparent 55%),linear-gradient(150deg,#C4502E,#8c3520)}
+.bounty-card.cover.project .plate{background:radial-gradient(120% 80% at 80% 10%,rgba(196,80,46,.42),transparent 58%),radial-gradient(130% 110% at 12% 100%,rgba(44,58,46,.96),transparent 60%),linear-gradient(150deg,#3C4D3D,#223024)}
+.bounty-card.cover .lines{position:absolute;inset:0;z-index:0;opacity:.34;background-image:repeating-linear-gradient(60deg,rgba(255,255,255,.12) 0 1px,transparent 1px 28px)}
+.bounty-card.cover .type-flag{position:absolute;left:18px;top:18px;z-index:2;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;background:rgba(34,26,20,.34);backdrop-filter:blur(4px);padding:6px 12px;border-radius:30px;color:#fff}
+.bounty-card.cover .clock{position:absolute;right:18px;top:18px;z-index:2;background:rgba(251,247,239,.95);color:var(--terra);font-weight:700;font-size:12.5px;padding:7px 13px;border-radius:30px;white-space:nowrap}
+.bounty-card.cover .cv-body{position:relative;z-index:2;padding:26px 28px 28px}
+.bounty-card.cover .cv-spon{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.bounty-card.cover .cv-spon .nm{font-size:13px;font-weight:600;color:#fff}
+.bounty-card.cover .bc-logo{background:rgba(251,247,239,.92)}
+.bounty-card.cover .bc-logo-initial{background:rgba(251,247,239,.92);color:var(--forest)}
+.bounty-card.cover h2{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.05;letter-spacing:-.01em;color:#fff;margin:0 0 16px;text-shadow:0 2px 18px rgba(0,0,0,.28)}
+.bounty-card.cover .tags{margin-bottom:18px}
+.bounty-card.cover .tags span{font-size:11px;background:rgba(251,247,239,.18);border:1px solid rgba(251,247,239,.28);padding:4px 11px;border-radius:30px;color:#fff}
+.bounty-card.cover .cv-reward{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding-top:16px;border-top:1px solid rgba(251,247,239,.22)}
+.bounty-card.cover .cv-reward .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.82;font-weight:600;margin-bottom:6px}
+.bounty-card.cover .cv-reward .big{font-family:var(--serif);font-size:36px;line-height:1;font-weight:400}
+.bounty-card.cover .cv-reward .right{text-align:right;font-size:13px;opacity:.92;line-height:1.5}
+
+/* Cover Stories masonry mosaic (dedicated browse page) */
+.cover-mosaic{columns:3;column-gap:22px}
+.cover-mosaic > .bounty-card{break-inside:avoid;width:100%;margin:0 0 22px}
+@media(max-width:1024px){.cover-mosaic{columns:2}}
+@media(max-width:680px){.cover-mosaic{columns:1}}
+@media (prefers-reduced-motion:reduce){.bounty-card{transition:none}.bounty-card:hover{transform:none}}
 /* live board heading + browse link */
 .daybreak .board-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:50px}
 .daybreak .board-head .sec-head{margin-bottom:0}
@@ -1477,3 +1533,30 @@
 
 /* /earn "Live now" ticker marquee */
 @keyframes db-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== Daybreak toasts (Sonner) ===== */
+[data-sonner-toast]{
+  position:relative;overflow:hidden;
+  background:#FBF7EF;color:#221A14;border:1px solid #E6DCC9;border-radius:16px;
+  box-shadow:0 22px 60px -34px rgba(54,38,22,.5),0 4px 12px -6px rgba(54,38,22,.18);
+  font-family:var(--font-hanken),'Hanken Grotesk',sans-serif;
+  padding-left:20px;
+}
+[data-sonner-toast] [data-title]{color:#221A14;font-weight:600}
+[data-sonner-toast] [data-description]{color:#5C5147}
+/* left accent bar, tinted by type */
+[data-sonner-toast]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#8FA37E}
+[data-sonner-toast][data-type="success"]::before{background:#8FA37E}
+[data-sonner-toast][data-type="error"]::before{background:#C4502E}
+[data-sonner-toast][data-type="warning"]::before{background:#6B7A4F}
+[data-sonner-toast][data-type="info"]::before{background:#2C3A2E}
+[data-sonner-toast][data-type="loading"]::before{background:#C4A06A}
+[data-sonner-toast][data-type="success"] [data-icon]{color:#2C3A2E}
+[data-sonner-toast][data-type="error"] [data-icon]{color:#C4502E}
+[data-sonner-toast][data-type="warning"] [data-icon]{color:#6B7A4F}
+[data-sonner-toast][data-type="info"] [data-icon]{color:#2C3A2E}
+[data-sonner-toast] [data-action]{background:#2C3A2E;color:#FBF7EF;border-radius:999px;font-weight:600}
+[data-sonner-toast] [data-action]:hover{background:#3C4D3D}
+[data-sonner-toast] [data-cancel]{color:#5C5147;background:transparent}
+[data-sonner-toast] [data-close-button]{background:#FBF7EF;border:1px solid #E6DCC9;color:#5C5147}
+[data-sonner-toast] [data-close-button]:hover{background:#F2EAD9;color:#221A14}

@@ -104,20 +104,41 @@ const toLiveBounty = (listing: Listing, now: number): LiveBounty => {
     ? Math.max(1, dayjs(listing.deadline).diff(dayjs(now), 'day'))
     : null;
 
+  const isProject = listing.type === 'project';
+
   let status = 'Open';
   let dueLabel: string | undefined;
   if (listing.isWinnersAnnounced) {
     status = 'Completed';
-    dueLabel = 'Winners announced';
+    dueLabel = isProject ? 'Role filled' : 'Winners announced';
   } else if (!isBeforeDeadline) {
     status = 'In review';
-    dueLabel = 'Submissions closed';
+    dueLabel = isProject ? 'Applications closed' : 'Submissions closed';
   }
+
+  // Elapsed-time meter (bounties): share of the publish→deadline window used up.
+  let elapsedPct: number | null = null;
+  if (listing.publishedAt && listing.deadline) {
+    const start = dayjs(listing.publishedAt).valueOf();
+    const end = dayjs(listing.deadline).valueOf();
+    if (end > start) {
+      elapsedPct = Math.min(
+        100,
+        Math.max(0, Math.round(((now - start) / (end - start)) * 100)),
+      );
+    }
+  }
+
+  const applyBy =
+    isProject && isBeforeDeadline && listing.deadline
+      ? dayjs(listing.deadline).format('MMM D')
+      : null;
 
   return {
     title: listing.title ?? '',
     slug: listing.slug ?? '',
     sponsor: listing.sponsor?.name ?? 'Sponsor',
+    sponsorLogo: listing.sponsor?.logo ?? null,
     cat: tags[0] ?? TYPE_LABELS[listing.type ?? 'bounty'] ?? 'Bounty',
     reward: null,
     prizeLabel: prize === 'Variable' ? 'Variable' : `$${prize}`,
@@ -126,6 +147,10 @@ const toLiveBounty = (listing: Listing, now: number): LiveBounty => {
     daysLeft,
     status,
     dueLabel,
+    type: isProject ? 'project' : 'bounty',
+    submissions: listing._count?.Submission ?? null,
+    elapsedPct: isProject ? null : elapsedPct,
+    applyBy,
   };
 };
 
@@ -301,8 +326,9 @@ export const ListingsSection = ({
     return `${basePath}?${params.toString()}`;
   };
 
-  const gridClass =
-    type === 'home'
+  const gridClass = isDaybreak
+    ? 'cover-mosaic'
+    : type === 'home'
       ? 'grid grid-cols-1 gap-5 md:grid-cols-2'
       : 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3';
 
@@ -371,10 +397,11 @@ export const ListingsSection = ({
               }
             />
           )}
-          {listings.map((listing) => (
+          {listings.map((listing, index) => (
             <DaybreakBountyCard
               key={listing.id}
               bounty={toLiveBounty(listing, serverTime())}
+              featured={isDaybreak && index === 0}
             />
           ))}
         </div>
@@ -410,10 +437,16 @@ export const ListingsSection = ({
     return (
       <div className="mb-12">
         <DaybreakBrowseHeader
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
           activeCategory={activeCategory}
           onCategoryChange={handleCategoryChange}
+          activeSortBy={activeSortBy}
+          activeOrder={activeOrder}
+          onSortChange={handleSortChange}
+          resultCount={!isLoading && !error ? listings?.length : undefined}
         />
-        <div className="mt-6">
+        <div className="mt-8">
           <AnimateChangeInHeight disableOnHeightZero>
             {renderContent()}
           </AnimateChangeInHeight>

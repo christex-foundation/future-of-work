@@ -14,7 +14,7 @@ interface HomePageProps {
 export default function AllListingsPage({ potentialSession }: HomePageProps) {
   return (
     <Default
-      className="bg-[#6b5e50]"
+      className="bg-[#FBF7EF]"
       meta={
         <Meta
           title="All Crypto Opportunities | Web3 Bounties & Jobs | Future of Work"
