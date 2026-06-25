@@ -37,13 +37,6 @@ import { FooterCompact } from '@/features/navbar/components/FooterCompact';
 import { NavItem } from '@/features/sponsor-dashboard/components/NavItems';
 import { activeHackathonsQuery } from '@/features/sponsor-dashboard/queries/active-hackathons';
 
-const ProListingsAnnouncement = dynamic(
-  () =>
-    import('@/features/announcements/components/ProListingsAnnouncement').then(
-      (m) => m.ProListingsAnnouncement,
-    ),
-  { ssr: false },
-);
 
 const Login = dynamic(
   () => import('@/features/auth/components/Login').then((m) => m.Login),
@@ -230,8 +223,6 @@ export function SponsorLayout({
     ? user?.hackathonId || user?.role === 'GOD'
     : user?.currentSponsor?.id;
 
-  const isAnyModalOpen = isOpen || isSponsorInfoModalOpen || isEntityModalOpen;
-
   const isCreateLocked =
     isCreateListingAllowed !== undefined &&
     isCreateListingAllowed === false &&
@@ -259,7 +250,7 @@ export function SponsorLayout({
           <SponsorAnnouncements isAnyModalOpen={isAnyModalOpen} />
         )} */}
 
-        <ProListingsAnnouncement isAnyModalOpen={isAnyModalOpen} />
+        {/* Pro Listings announcement popup removed for now (pending Daybreak redesign) */}
 
         <EntityNameModal
           isOpen={isEntityModalOpen}
