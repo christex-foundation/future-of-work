@@ -629,7 +629,7 @@ export const ListingsSection = ({
         <>
           <div className="flex w-full items-center justify-between md:mb-1.5">
             {isBookmarksContext ? (
-              <span className="font-secondary mb-2 text-[11px] font-bold tracking-[0.18em] text-[#6b5e50] uppercase">
+              <span className="font-secondary mb-2 text-[11px] font-bold tracking-[0.18em] text-[#5C5147] uppercase">
                 Filter &amp; sort
               </span>
             ) : (
@@ -668,7 +668,7 @@ export const ListingsSection = ({
             />
           </div>
 
-          <div className="mb-2 h-px w-full bg-slate-200" />
+          <div className="mb-2 h-px w-full bg-[#E6DCC9]" />
         </>
       )}
 

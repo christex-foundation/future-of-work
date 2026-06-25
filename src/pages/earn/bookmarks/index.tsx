@@ -7,6 +7,9 @@ import {
   ListingsSection,
 } from '@/features/listings/components/ListingsSection';
 
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")";
+
 export default function BookmarksPage() {
   const customEmptySection = (filters: EmptySectionFilters) => {
     const isAllCategory = filters.activeCategory === 'All';
@@ -21,39 +24,40 @@ export default function BookmarksPage() {
 
   return (
     <Default
-      className="bg-[#6b5e50]"
+      className="bg-[#FBF7EF]"
       meta={
         <Meta
-          title="Bookmarks | Superteam Earn"
-          description="Your bookmarks on Superteam Earn"
+          title="Bookmarks | Future of Work"
+          description="Your saved opportunities on Future of Work"
           canonical="https://superteam.fun/earn/bookmarks/"
         />
       }
     >
-      <div className="w-full grow px-4 py-8 md:px-6 md:py-12">
-        <div className="mx-auto max-w-[1000px]">
-          <div className="overflow-hidden rounded-xl border-2 border-[#1d1815] bg-[#f4eee3] shadow-[8px_8px_0_#1d1815]">
-            <div className="flex items-center justify-between gap-3 bg-[#1d1815] px-4 py-2.5 md:px-7">
-              <span className="font-secondary flex items-center gap-2 text-[10px] font-bold tracking-[0.18em] text-[#f4eee3] uppercase md:text-[11px]">
-                <span className="inline-block size-[7px] bg-[#e6a12b]" />
-                Your Bookmarks
-              </span>
-              <span className="font-secondary hidden text-[10px] font-bold tracking-[0.18em] text-[#c9b9a5] uppercase sm:inline">
-                Future of Work
-              </span>
-            </div>
-            <div className="px-5 pt-6 pb-5 md:px-8 md:pt-8 md:pb-8">
-              <h1 className="font-serif text-[30px] leading-none font-semibold text-[#1d1815] md:text-[38px]">
-                Saved opportunities
-              </h1>
-              <p className="mt-2.5 text-[14px] text-[#6b5e50]">
-                Everything you&apos;ve tucked away to come back to.
-              </p>
-              <ListingsSection
-                type="bookmarks"
-                customEmptySection={customEmptySection}
-              />
-            </div>
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.42] mix-blend-multiply"
+        style={{ backgroundImage: GRAIN }}
+      />
+      <div className="relative z-[1] w-full grow px-4 py-10 md:px-6 md:py-14">
+        <div className="mx-auto max-w-[1200px]">
+          {/* editorial masthead */}
+          <span className="flex items-center gap-2.5 text-[12px] font-semibold tracking-[0.2em] text-[#C4502E] uppercase">
+            <span className="inline-block h-[1.5px] w-[18px] bg-[#C4502E]" />
+            Your bookmarks
+          </span>
+          <h1
+            style={{ fontFamily: 'var(--font-fraunces), serif' }}
+            className="mt-3.5 text-[clamp(34px,4.4vw,52px)] leading-[1.03] font-normal tracking-[-0.02em] text-[#221A14]"
+          >
+            Saved opportunities
+          </h1>
+          <p className="mt-3.5 max-w-[52ch] text-[16.5px] text-[#5C5147]">
+            Everything you&apos;ve tucked away to come back to.
+          </p>
+          <div className="mt-9">
+            <ListingsSection
+              type="bookmarks"
+              customEmptySection={customEmptySection}
+            />
           </div>
         </div>
       </div>
