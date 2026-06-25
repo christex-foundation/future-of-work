@@ -28,7 +28,7 @@ export const CompensationAmount = ({
   isWinnersAnnounced,
 }: CompensationAmountType) => {
   const Token = () => {
-    return <span className="ml-1 text-slate-400">{token}</span>;
+    return <span className="ml-1 text-[#8a7f72]">{token}</span>;
   };
 
   const renderCompensation = () => {

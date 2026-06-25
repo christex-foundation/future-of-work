@@ -189,7 +189,7 @@ export const CommentForm = ({
             <Button
               variant="default"
               className={cn(
-                'h-auto px-5 py-1.5 text-[11px] font-medium md:text-sm',
+                'h-auto rounded-full bg-[#C4502E] px-5 py-1.5 text-[11px] font-medium text-white hover:bg-[#A83F22] md:text-sm',
                 isListingAndUserPro && 'bg-zinc-800 hover:bg-zinc-900',
               )}
               disabled={

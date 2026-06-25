@@ -24,6 +24,10 @@ interface ExtraInfoSectionProps {
   isFndnPaying?: boolean;
 }
 
+const labelClass =
+  'text-[11px] font-semibold tracking-[0.14em] text-[#5C5147] uppercase';
+const bodyClass = 'text-[14px] leading-relaxed text-[#3a322a]';
+
 export function ExtraInfoSection({
   skills,
   Hackathon,
@@ -40,18 +44,29 @@ export function ExtraInfoSection({
   const regionDisplayName =
     regionObject?.displayValue || regionObject?.name || region;
 
+  const hasRegion = !!region && region !== 'Global';
+  const hasSkills = !!skills && skills.length > 0;
+  const hasContent =
+    hasRegion ||
+    !!Hackathon ||
+    !!requirements ||
+    hasSkills ||
+    isFndnPaying ||
+    !!pocSocials ||
+    (!!commitmentDate && !hideWinnerAnnouncement);
+
+  if (!hasContent) return null;
+
   return (
-    <div className="flex w-full flex-col gap-8 pt-2 md:w-[23rem]">
-      {region && region !== 'Global' && (
-        <div className="flex w-full flex-col items-start gap-2 text-sm">
-          <p className="font-semibold text-slate-600">
-            REGIONAL {isGrant ? 'GRANT' : 'LISTING'}
-          </p>
-          <p className="h-full text-slate-500">
+    <div className="flex w-full flex-col gap-7 rounded-2xl border border-[#E6DCC9] bg-white p-5">
+      {hasRegion && (
+        <div className="flex w-full flex-col items-start gap-2">
+          <p className={labelClass}>REGIONAL {isGrant ? 'GRANT' : 'LISTING'}</p>
+          <p className={bodyClass}>
             This {isGrant ? 'grant' : 'listing'} is only open for people in{' '}
             <Link
-              href={`/earn/regions/${getRegionSlug(region, chapters)}`}
-              className="font-semibold text-slate-500 hover:text-slate-700 hover:underline"
+              href={`/earn/regions/${getRegionSlug(region!, chapters)}`}
+              className="font-semibold text-[#C4502E] hover:underline"
             >
               {region}
             </Link>
@@ -60,52 +75,50 @@ export function ExtraInfoSection({
       )}
 
       {Hackathon && (
-        <div className="flex w-full flex-col items-start gap-2 text-sm">
-          <p className="font-semibold text-slate-600">
-            {Hackathon.name?.toUpperCase()} TRACK
-          </p>
-          <p className="text-slate-500">{Hackathon.description}</p>
+        <div className="flex w-full flex-col items-start gap-2">
+          <p className={labelClass}>{Hackathon.name?.toUpperCase()} TRACK</p>
+          <p className={bodyClass}>{Hackathon.description}</p>
           <a
-            className="flex items-center font-medium text-slate-500"
+            className="flex items-center font-medium text-[#C4502E]"
             href={`/earn/hackathon/${Hackathon.name?.toLowerCase()}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            View All Tracks
-            <ExternalLink className="mx-1 mb-1 h-4 w-4 text-[#64768b]" />
+            View all tracks
+            <ExternalLink className="mx-1 mb-0.5 inline h-4 w-4" />
           </a>
         </div>
       )}
 
       {requirements && (
-        <div className="flex w-full flex-col items-start gap-2 text-sm">
-          <p className="h-full font-semibold text-slate-600">ELIGIBILITY</p>
-          <p className="text-slate-500">{requirements}</p>
+        <div className="flex w-full flex-col items-start gap-2">
+          <p className={labelClass}>ELIGIBILITY</p>
+          <p className={bodyClass}>{requirements}</p>
         </div>
       )}
 
-      <div className="hidden w-full flex-col items-start gap-2 text-sm md:flex">
-        <p className="h-full text-center font-semibold text-slate-600">
-          SKILLS NEEDED
-        </p>
-        <div className="flex flex-wrap gap-3">
-          {skills?.map((skill) => (
-            <Link
-              key={skill}
-              href={`/earn/skill/${skill.toLowerCase().replace(/\s+/g, '-')}`}
-              className="m-0 rounded-sm bg-slate-100 px-4 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-200 hover:text-slate-700"
-            >
-              {skill}
-            </Link>
-          ))}
+      {hasSkills && (
+        <div className="hidden w-full flex-col items-start gap-2 md:flex">
+          <p className={labelClass}>SKILLS NEEDED</p>
+          <div className="flex flex-wrap gap-2">
+            {skills!.map((skill) => (
+              <Link
+                key={skill}
+                href={`/earn/skill/${skill.toLowerCase().replace(/\s+/g, '-')}`}
+                className="rounded-full border border-[#E6DCC9] bg-[#FBF7EF] px-3 py-1 text-[12.5px] text-[#5C5147] transition-colors hover:border-[#d9ccb2] hover:text-[#C4502E] hover:no-underline"
+              >
+                {skill}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {isFndnPaying && (
-        <div className="flex w-full flex-col items-start gap-2 text-sm">
-          <p className="h-full font-semibold text-slate-600">KYC REQUIRED</p>
-          <p className="pr-1 text-slate-500">
-            {region && region !== 'Global' ? (
+        <div className="flex w-full flex-col items-start gap-2">
+          <p className={labelClass}>KYC REQUIRED</p>
+          <p className={bodyClass}>
+            {hasRegion ? (
               <>
                 Winners will be required to complete KYC from{' '}
                 {regionDisplayName || 'their region'} to receive their prize
@@ -122,38 +135,33 @@ export function ExtraInfoSection({
       )}
 
       {pocSocials && (
-        <div className="hidden w-full flex-col items-start gap-2 text-sm md:flex">
-          <p className="h-full text-center font-semibold text-slate-600">
-            CONTACT
-          </p>
-          <div className="pr-2">
+        <div className="flex w-full flex-col items-start gap-2">
+          <p className={labelClass}>CONTACT</p>
+          <div>
             <a
-              className="ph-no-capture inline items-center font-medium text-[#64768b]"
+              className="ph-no-capture font-medium text-[#C4502E]"
               href={getURLSanitized(pocSocials)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => posthog.capture('reach out_listing')}
             >
               Reach out
-              <ExternalLink className="mx-1 mb-1 inline h-4 w-4 text-[#64768b]" />
+              <ExternalLink className="mx-1 mb-0.5 inline h-4 w-4" />
             </a>
-            <span className="inline text-slate-500">
+            <span className={bodyClass}>
               if you have any questions about this listing
             </span>
           </div>
         </div>
       )}
+
       {!!commitmentDate && !hideWinnerAnnouncement && (
-        <div className="hidden w-full flex-col items-start gap-2 text-sm md:flex">
-          <p className="h-full text-center font-semibold text-slate-600">
-            WINNER ANNOUNCEMENT BY
+        <div className="flex w-full flex-col items-start gap-2">
+          <p className={labelClass}>WINNER ANNOUNCEMENT BY</p>
+          <p className={bodyClass}>
+            {dayjs(commitmentDate).format('MMMM DD, YYYY')} — as scheduled by the
+            sponsor.
           </p>
-          <div>
-            <span className="inline text-slate-500">
-              {dayjs(commitmentDate).format('MMMM DD, YYYY')} - as scheduled by
-              the sponsor.
-            </span>
-          </div>
         </div>
       )}
     </div>

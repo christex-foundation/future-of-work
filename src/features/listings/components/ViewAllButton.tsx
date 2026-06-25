@@ -13,9 +13,9 @@ export const ViewAllButton = ({
       <Link
         href={href}
         onClick={() => posthog.capture(posthogEvent)}
-        className="ph-no-capture font-secondary flex w-fit items-center gap-2 rounded-md border-2 border-[#1d1815] bg-[#f4eee3] px-6 py-3 text-[12px] font-bold tracking-[0.1em] text-[#1d1815] uppercase shadow-[4px_4px_0_#1d1815] transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#f4eee3] hover:no-underline hover:shadow-[6px_6px_0_#1d1815]"
+        className="ph-no-capture flex w-fit items-center gap-2 rounded-full border border-transparent bg-[#2C3A2E] px-[22px] py-[12px] text-[14.5px] font-semibold whitespace-nowrap text-[#FBF7EF] transition-all duration-200 hover:-translate-y-px hover:bg-[#3C4D3D] hover:text-[#FBF7EF] hover:no-underline hover:shadow-[0_8px_24px_-12px_rgba(34,26,20,0.5)]"
       >
-        View all opportunities &rarr;
+        View all opportunities <span aria-hidden="true">&rarr;</span>
       </Link>
     </div>
   );

@@ -319,14 +319,11 @@ export function DescriptionUI({
 
   return (
     <div
-      className={cn(
-        'w-full overflow-visible border-b-2 border-slate-200 md:border-0',
-        showMore && 'pb-4',
-      )}
+      className={cn('w-full overflow-visible', showMore && 'pb-4')}
     >
       <div
         ref={descriptionRef}
-        className="relative w-full overflow-visible rounded-xl bg-white"
+        className="relative w-full overflow-visible"
       >
         <div
           className={cn(
@@ -344,7 +341,7 @@ export function DescriptionUI({
               className="pointer-events-none absolute right-0 bottom-0 left-0 h-[40%]"
               style={{
                 background:
-                  'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9))',
+                  'linear-gradient(to bottom, rgba(251, 247, 239, 0), rgba(251, 247, 239, 0.95))',
               }}
             />
           )}
@@ -352,7 +349,7 @@ export function DescriptionUI({
         {showCollapser && (
           <Button
             className={cn(
-              'absolute -bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-md border-slate-300 bg-white text-sm font-medium text-slate-500',
+              'absolute -bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full border-[#E6DCC9] bg-[#FBF7EF] text-sm font-medium text-[#5C5147] hover:bg-[#F2EAD9]',
               showMore && '-bottom-8',
             )}
             onClick={() => setShowMore(!showMore)}

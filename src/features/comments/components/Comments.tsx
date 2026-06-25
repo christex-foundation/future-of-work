@@ -169,19 +169,16 @@ export const Comments = ({
   if (isError) return <ErrorInfo />;
 
   return (
-    <div
-      className="flex w-full flex-col items-start gap-4 rounded-xl bg-white"
-      id="comments"
-    >
-      <div className="flex w-full gap-2 pt-4">
+    <div className="flex w-full flex-col items-start gap-4">
+      <div className="flex w-full items-center gap-2">
         <ExternalImage
           className="h-5 w-5"
           alt="Comments Icon"
           src={'/icons/comments.svg'}
         />
-        <div className="flex gap-2">
-          <p className="text-base font-medium text-slate-900">{count}</p>
-          <p className="text-base text-slate-900">
+        <div className="flex gap-1.5">
+          <p className="font-serif text-[18px] text-[#221A14]">{count}</p>
+          <p className="font-serif text-[18px] text-[#221A14]">
             {comments?.length === 1 ? 'Comment' : 'Comments'}
           </p>
         </div>
@@ -233,8 +230,8 @@ export const Comments = ({
         <div className="flex w-full justify-center rounded-md">
           <Button
             className={cn(
-              'text-sm font-normal text-slate-400 hover:bg-slate-400 hover:text-white',
-              'disabled:hover:bg-transparent disabled:hover:text-slate-400',
+              'rounded-full text-sm font-medium text-[#5C5147] hover:bg-[#F2EAD9] hover:text-[#C4502E]',
+              'disabled:hover:bg-transparent disabled:hover:text-[#5C5147]',
             )}
             disabled={isLoadingMore}
             onClick={loadMoreComments}

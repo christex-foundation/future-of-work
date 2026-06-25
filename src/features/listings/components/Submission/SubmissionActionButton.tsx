@@ -290,28 +290,28 @@ export const SubmissionActionButton = ({
       buttonText = isProject
         ? 'Applied Successfully'
         : 'Submitted Successfully';
-      buttonBG = 'bg-[#ff6b3d]';
+      buttonBG = 'bg-[#C4502E] text-white hover:bg-[#A83F22]';
       isBtnDisabled = true;
       btnLoadingText = null;
       break;
 
     case 'kyc':
       buttonText = 'Submit KYC';
-      buttonBG = 'bg-[#ff6b3d]';
+      buttonBG = 'bg-[#C4502E] text-white hover:bg-[#A83F22]';
       isBtnDisabled = false;
       btnLoadingText = null;
       break;
 
     case 'kyc_done':
       buttonText = 'Processing Payment';
-      buttonBG = 'bg-[#ff6b3d]';
+      buttonBG = 'bg-[#C4502E] text-white hover:bg-[#A83F22]';
       isBtnDisabled = true;
       btnLoadingText = null;
       break;
 
     case 'paid':
       buttonText = 'Payment Successful';
-      buttonBG = 'bg-[#ff6b3d]';
+      buttonBG = 'bg-[#C4502E] text-white hover:bg-[#A83F22]';
       isBtnDisabled = true;
       btnLoadingText = null;
       break;
@@ -341,7 +341,10 @@ export const SubmissionActionButton = ({
           listing.compensationType === 'range'
         )
           buttonText = 'Send Quote';
-        buttonBG = isUserPro && isPro ? 'bg-zinc-800' : 'bg-[#ff6b3d]';
+        buttonBG =
+          isUserPro && isPro
+            ? 'bg-zinc-800'
+            : 'bg-[#C4502E] text-white hover:bg-[#A83F22]';
         if (isNotPublished && !isListingSponsor) {
           buttonText = 'Paused';
         }
@@ -374,7 +377,7 @@ export const SubmissionActionButton = ({
 
   if (isLocationCooldown && buttonState === 'submit') {
     buttonText = 'Ineligible';
-    buttonBG = 'bg-[#ff8a5c]';
+    buttonBG = 'bg-[#D9694A] text-white hover:bg-[#C4502E]';
     isBtnDisabled = true;
     isSubmitDisabled = true;
   }
@@ -538,14 +541,14 @@ export const SubmissionActionButton = ({
                       ? 'disabled:opacity-100'
                       : 'disabled:opacity-70',
                     'text-base md:text-lg',
-                    'font-pop font-bold tracking-wide sm:font-bold',
-                    'rounded-2xl border-2 border-[#221a14] shadow-[0_5px_0_#221a14] transition hover:translate-y-0.5 hover:shadow-[0_3px_0_#221a14]',
+                    'font-semibold tracking-wide',
+                    'rounded-full border border-transparent shadow-[0_12px_34px_-22px_rgba(54,38,22,0.5)] transition hover:-translate-y-px',
                     buttonBG,
                     isNotEligible && 'text-zinc-700',
                     isEditMode &&
                       (isPro
                         ? 'border-zinc-700 text-zinc-700 hover:text-white'
-                        : 'border-[#221a14] bg-white text-[#221a14] hover:bg-[#221a14] hover:text-white'),
+                        : 'border-[#E6DCC9] bg-white text-[#221A14] hover:bg-[#F2EAD9]'),
                     isUserPro && isPro && 'hover:bg-black',
                     !isUserPro && isPro && 'hover:opacity-90',
                   )}
