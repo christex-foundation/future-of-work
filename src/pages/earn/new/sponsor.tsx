@@ -30,6 +30,9 @@ import { useUsernameValidation } from '@/features/talent/utils/useUsernameValida
 
 type SocialKey = 'twitter' | 'facebook' | 'instagram' | 'tiktok';
 
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")";
+
 const SOCIAL_PLATFORMS: {
   key: SocialKey;
   label: string;
@@ -42,28 +45,28 @@ const SOCIAL_PLATFORMS: {
     label: 'Facebook',
     prefix: 'facebook.com/',
     field: 'sponsor.socials.facebook',
-    activeClass: 'bg-[#1877f2]',
+    activeClass: 'bg-[#2C3A2E]',
   },
   {
     key: 'instagram',
     label: 'Instagram',
     prefix: 'instagram.com/',
     field: 'sponsor.socials.instagram',
-    activeClass: 'bg-[#d62976]',
+    activeClass: 'bg-[#2C3A2E]',
   },
   {
     key: 'tiktok',
     label: 'TikTok',
     prefix: 'tiktok.com/@',
     field: 'sponsor.socials.tiktok',
-    activeClass: 'bg-[#1d1815]',
+    activeClass: 'bg-[#2C3A2E]',
   },
   {
     key: 'twitter',
     label: 'X',
     prefix: 'x.com/',
     field: 'sponsor.twitter',
-    activeClass: 'bg-black',
+    activeClass: 'bg-[#2C3A2E]',
   },
 ];
 
@@ -345,7 +348,7 @@ const CreateSponsor = () => {
 
   return (
     <Default
-      className="bg-[#f4eee3]"
+      className="bg-[#FBF7EF]"
       hideFooter
       meta={
         <Meta
@@ -356,15 +359,20 @@ const CreateSponsor = () => {
       }
     >
       {!authenticated ? (
-        <div className="flex w-full flex-1 items-center justify-center px-4 py-16">
-          <div className="w-full max-w-[30rem] border-2 border-[#1d1815] bg-[#f4eee3] p-8 text-center">
-            <p className="font-secondary text-[11px] font-extrabold tracking-[0.2em] text-[#6b5e50] uppercase">
+        <div className="relative flex w-full flex-1 items-center justify-center px-4 py-16">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-[5] opacity-[0.42] mix-blend-multiply"
+            style={{ backgroundImage: GRAIN }}
+          />
+          <div className="w-full max-w-[30rem] rounded-[18px] border border-[#E6DCC9] bg-white p-8 text-center shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]">
+            <p className="text-[11px] font-semibold tracking-[0.2em] text-[#2C3A2E] uppercase">
               Future of Work / Company
             </p>
-            <h1 className="font-serif mt-3 mb-1 text-3xl font-semibold text-[#1d1815]">
+            <h1 className="font-serif mt-3 mb-1 text-3xl font-normal text-[#221A14]">
               You&apos;re one step away
             </h1>
-            <p className="mb-6 text-[#6b5e50]">
+            <p className="mb-6 text-[#5C5147]">
               Sign in to set up your company.
             </p>
             <SignIn loginStep={loginStep} setLoginStep={setLoginStep} />
@@ -372,22 +380,27 @@ const CreateSponsor = () => {
         </div>
       ) : (
         <div
-          className="flex w-full flex-1 flex-col"
+          className="relative flex w-full flex-1 flex-col"
           onKeyDown={handleKeyDown}
         >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-[5] opacity-[0.42] mix-blend-multiply"
+            style={{ backgroundImage: GRAIN }}
+          />
           {/* progress */}
-          <div className="h-1.5 shrink-0 bg-[#1d1815]/15">
+          <div className="h-1.5 shrink-0 bg-[#221A14]/10">
             <div
-              className="h-full bg-[#ce4a2b] transition-all duration-300"
+              className="h-full bg-[#2C3A2E] transition-all duration-300"
               style={{ width: `${progressPct}%` }}
             />
           </div>
           {/* top bar */}
           <div className="flex shrink-0 items-center gap-3 px-6 py-3.5 sm:px-10">
-            <span className="font-serif text-base font-semibold text-[#1d1815]">
+            <span className="font-serif text-base text-[#221A14]">
               Future of Work
             </span>
-            <span className="font-secondary ml-auto text-[11px] font-bold tracking-[0.16em] text-[#6b5e50] uppercase">
+            <span className="ml-auto text-[11px] font-semibold tracking-[0.16em] text-[#5C5147] uppercase">
               {step === 0
                 ? 'Welcome'
                 : current === 'review'
@@ -408,7 +421,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         Let&apos;s get your company{' '}
-                        <em className="text-[#ce4a2b] italic">set up.</em>
+                        <em className="text-[#2C3A2E] italic">set up.</em>
                       </>
                     }
                     help="A few quick questions — about a minute. Press Enter to move through each one."
@@ -423,7 +436,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         First, who are{' '}
-                        <em className="text-[#ce4a2b] italic">you?</em>
+                        <em className="text-[#2C3A2E] italic">you?</em>
                       </>
                     }
                     help="You're creating this company account. We'll keep these on your personal profile."
@@ -451,7 +464,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         Pick a{' '}
-                        <em className="text-[#ce4a2b] italic">username.</em>
+                        <em className="text-[#2C3A2E] italic">username.</em>
                       </>
                     }
                     help="Your personal handle on Future of Work."
@@ -485,7 +498,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         Add a{' '}
-                        <em className="text-[#ce4a2b] italic">profile photo.</em>
+                        <em className="text-[#2C3A2E] italic">profile photo.</em>
                       </>
                     }
                     help="Optional, but it helps freelancers recognise who they're working with."
@@ -512,7 +525,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         What&apos;s your company{' '}
-                        <em className="text-[#ce4a2b] italic">called?</em>
+                        <em className="text-[#2C3A2E] italic">called?</em>
                       </>
                     }
                     help="The name freelancers will see on your listings."
@@ -542,7 +555,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         Claim your company{' '}
-                        <em className="text-[#ce4a2b] italic">handle.</em>
+                        <em className="text-[#2C3A2E] italic">handle.</em>
                       </>
                     }
                     help="Your public company page lives here."
@@ -572,7 +585,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         Where can people{' '}
-                        <em className="text-[#ce4a2b] italic">find you?</em>
+                        <em className="text-[#2C3A2E] italic">find you?</em>
                       </>
                     }
                     help="Your company website."
@@ -592,7 +605,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         Which socials is your company{' '}
-                        <em className="text-[#ce4a2b] italic">on?</em>
+                        <em className="text-[#2C3A2E] italic">on?</em>
                       </>
                     }
                     help="Tap the ones you use, then drop your handle. All optional."
@@ -606,18 +619,18 @@ const CreateSponsor = () => {
                             key={p.key}
                             onClick={() => toggleSocial(p.key)}
                             className={cn(
-                              'font-secondary flex items-center gap-2 border-2 border-[#1d1815] px-3.5 py-2 text-sm font-bold transition-transform hover:-translate-y-0.5',
+                              'flex items-center gap-2 rounded-full border border-[#E6DCC9] px-3.5 py-2 text-[13px] font-medium transition-transform hover:-translate-y-0.5',
                               on
-                                ? `${p.activeClass} text-[#f4eee3]`
-                                : 'bg-[#f4eee3] text-[#1d1815]',
+                                ? `${p.activeClass} text-white border-[#2C3A2E]`
+                                : 'bg-white text-[#221A14]',
                             )}
                           >
                             <span
                               className={cn(
-                                'inline-block h-2.5 w-2.5 border-2',
+                                'inline-block h-2.5 w-2.5 rounded-full border-2',
                                 on
-                                  ? 'border-[#f4eee3] bg-[#e6a12b]'
-                                  : 'border-[#1d1815] bg-[#f4eee3]',
+                                  ? 'border-white bg-[#FBF7EF]'
+                                  : 'border-[#d9ccb2] bg-white',
                               )}
                             />
                             {p.label}
@@ -630,13 +643,13 @@ const CreateSponsor = () => {
                         (p) => (
                           <div
                             key={p.key}
-                            className="flex items-baseline gap-1.5 border-b-2 border-[#1d1815]"
+                            className="flex items-baseline gap-1.5 border-b-2 border-[#d9ccb2] focus-within:border-[#2C3A2E]"
                           >
-                            <span className="font-secondary text-xs font-bold whitespace-nowrap text-[#6b5e50]">
+                            <span className="text-xs font-medium whitespace-nowrap text-[#5C5147]">
                               {p.prefix}
                             </span>
                             <input
-                              className="font-serif w-full bg-transparent py-1.5 text-lg text-[#1d1815] outline-none placeholder:text-[#1d1815]/25"
+                              className="font-serif w-full bg-transparent py-1.5 text-lg text-[#221A14] outline-none placeholder:text-[#221A14]/25"
                               placeholder="salonedigital"
                               {...form.register(p.field as any)}
                             />
@@ -658,7 +671,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         What{' '}
-                        <em className="text-[#ce4a2b] italic">industry</em> are
+                        <em className="text-[#2C3A2E] italic">industry</em> are
                         you in?
                       </>
                     }
@@ -673,10 +686,10 @@ const CreateSponsor = () => {
                             key={name}
                             onClick={() => toggleIndustry(name)}
                             className={cn(
-                              'font-secondary border-2 border-[#1d1815] px-3.5 py-2 text-[13px] font-bold transition-transform hover:-translate-y-0.5',
+                              'rounded-full border border-[#E6DCC9] px-3.5 py-2 text-[13px] font-medium transition-transform hover:-translate-y-0.5',
                               on
-                                ? 'bg-[#123a33] text-[#f4eee3]'
-                                : 'bg-[#f4eee3] text-[#1d1815]',
+                                ? 'bg-[#2C3A2E] text-white border-[#2C3A2E]'
+                                : 'bg-white text-[#221A14]',
                             )}
                           >
                             {name}
@@ -694,7 +707,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         Upload your company{' '}
-                        <em className="text-[#ce4a2b] italic">logo.</em>
+                        <em className="text-[#2C3A2E] italic">logo.</em>
                       </>
                     }
                     help="A square logo looks best on listings."
@@ -721,7 +734,7 @@ const CreateSponsor = () => {
                     title={
                       <>
                         Describe your company in{' '}
-                        <em className="text-[#ce4a2b] italic">one line.</em>
+                        <em className="text-[#2C3A2E] italic">one line.</em>
                       </>
                     }
                     help="What do you do? Max 180 characters."
@@ -731,7 +744,7 @@ const CreateSponsor = () => {
                       placeholder="We build mobile money tools for small traders."
                       {...form.register('sponsor.bio')}
                     />
-                    <p className="font-secondary mt-2 text-xs font-semibold text-[#6b5e50]">
+                    <p className="mt-2 text-xs font-semibold text-[#5C5147]">
                       {180 - (form.watch('sponsor.bio')?.length || 0)} characters
                       left
                     </p>
@@ -742,7 +755,7 @@ const CreateSponsor = () => {
 
                 {current === 'review' && (
                   <Screen kicker="Almost done" title={<>Look good?</>}>
-                    <div className="border-2 border-[#1d1815] bg-[#fbf7ef]">
+                    <div className="rounded-[14px] border border-[#E6DCC9] bg-white overflow-hidden">
                       <ReviewRow label="Your name">
                         {`${form.watch('user.firstName') || ''} ${form.watch('user.lastName') || ''}`.trim() ||
                           '—'}
@@ -773,16 +786,16 @@ const CreateSponsor = () => {
                     </div>
 
                     {isError && (
-                      <p className="mt-3 text-center text-sm text-[#ce4a2b]">
+                      <p className="mt-3 text-center text-sm text-[#2C3A2E]">
                         {errorMessage ||
                           'Something went wrong. Please try again.'}
                       </p>
                     )}
 
-                    <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-[#6b5e50]">
+                    <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-[#5C5147]">
                       <input
                         type="checkbox"
-                        className="mt-0.5 h-4 w-4 accent-[#ce4a2b]"
+                        className="mt-0.5 h-4 w-4 accent-[#2C3A2E]"
                         checked={acknowledgementAccepted}
                         onChange={(e) =>
                           setAcknowledgementAccepted(e.target.checked)
@@ -800,7 +813,7 @@ const CreateSponsor = () => {
                         type="button"
                         onClick={submit}
                         disabled={isPending}
-                        className="font-secondary flex items-center gap-2 border-2 border-[#1d1815] bg-[#1d1815] px-6 py-3 text-sm font-bold tracking-[0.06em] text-[#f4eee3] uppercase transition-colors hover:bg-[#123a33] disabled:cursor-not-allowed disabled:opacity-60"
+                        className="flex items-center gap-2 rounded-full bg-[#2C3A2E] px-6 py-3 text-[14.5px] font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:bg-[#3C4D3D] hover:shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)] disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {isPending ? (
                           <>
@@ -814,7 +827,7 @@ const CreateSponsor = () => {
                       <button
                         type="button"
                         onClick={goBack}
-                        className="font-secondary text-[11px] font-bold tracking-[0.14em] text-[#6b5e50] uppercase hover:text-[#ce4a2b]"
+                        className="text-[13px] font-medium text-[#5C5147] hover:text-[#2C3A2E]"
                       >
                         ← Back
                       </button>
@@ -845,15 +858,15 @@ const Screen = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <span className="font-secondary flex items-center gap-2.5 text-[11px] font-extrabold tracking-[0.2em] text-[#ce4a2b] uppercase">
-      <span className="inline-block h-0.5 w-5 bg-[#ce4a2b]" />
+    <span className="flex items-center gap-2.5 text-[11px] font-semibold tracking-[0.2em] text-[#2C3A2E] uppercase">
+      <span className="inline-block h-0.5 w-5 bg-[#2C3A2E]" />
       {kicker}
     </span>
-    <h2 className="font-serif mt-4 text-[clamp(28px,4.4vw,46px)] leading-[1.05] font-semibold tracking-[-0.02em] text-[#1d1815]">
+    <h2 className="font-serif mt-4 text-[clamp(28px,4.4vw,46px)] leading-[1.05] font-normal tracking-[-0.02em] text-[#221A14]">
       {title}
     </h2>
     {help && (
-      <p className="mt-3 max-w-[34rem] text-[15px] leading-relaxed text-[#6b5e50]">
+      <p className="mt-3 max-w-[34rem] text-[15px] leading-relaxed text-[#5C5147]">
         {help}
       </p>
     )}
@@ -869,7 +882,7 @@ const BigInput = ({
     type="text"
     autoComplete="off"
     className={cn(
-      'font-serif w-full border-b-2 border-[#1d1815] bg-transparent py-2 text-2xl text-[#1d1815] outline-none placeholder:text-[#1d1815]/25 focus:border-[#ce4a2b]',
+      'font-serif w-full border-b-2 border-[#d9ccb2] bg-transparent py-2 text-2xl text-[#221A14] outline-none placeholder:text-[#221A14]/25 focus:border-[#2C3A2E]',
       className,
     )}
     {...props}
@@ -880,21 +893,21 @@ const PrefixInput = ({
   prefix,
   ...props
 }: { prefix: string } & React.InputHTMLAttributes<HTMLInputElement>) => (
-  <div className="flex items-baseline gap-1.5 border-b-2 border-[#1d1815] focus-within:border-[#ce4a2b]">
-    <span className="font-secondary text-sm font-bold whitespace-nowrap text-[#6b5e50]">
+  <div className="flex items-baseline gap-1.5 border-b-2 border-[#d9ccb2] focus-within:border-[#2C3A2E]">
+    <span className="text-sm font-medium whitespace-nowrap text-[#5C5147]">
       {prefix}
     </span>
     <input
       type="text"
       autoComplete="off"
-      className="font-serif w-full bg-transparent py-2 text-2xl text-[#1d1815] outline-none placeholder:text-[#1d1815]/25"
+      className="font-serif w-full bg-transparent py-2 text-2xl text-[#221A14] outline-none placeholder:text-[#221A14]/25"
       {...props}
     />
   </div>
 );
 
 const FieldError = ({ msg }: { msg?: string }) =>
-  msg ? <p className="mt-2 text-sm text-[#ce4a2b]">{msg}</p> : null;
+  msg ? <p className="mt-2 text-sm text-[#2C3A2E]">{msg}</p> : null;
 
 const NavRow = ({
   onNext,
@@ -909,13 +922,13 @@ const NavRow = ({
     <button
       type="button"
       onClick={onNext}
-      className="font-secondary border-2 border-[#1d1815] bg-[#1d1815] px-6 py-3 text-sm font-bold tracking-[0.06em] text-[#f4eee3] uppercase transition-colors hover:bg-[#ce4a2b]"
+      className="rounded-full bg-[#2C3A2E] px-6 py-3 text-[14.5px] font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:bg-[#3C4D3D] hover:shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]"
     >
       {nextLabel}
     </button>
-    <span className="font-secondary text-[11px] font-semibold text-[#6b5e50]">
+    <span className="text-[11px] font-medium text-[#5C5147]">
       press{' '}
-      <span className="bg-[#1d1815] px-1.5 py-0.5 text-[10px] tracking-[0.08em] text-[#f4eee3]">
+      <span className="rounded bg-[#221A14] px-1.5 py-0.5 text-[10px] tracking-[0.08em] text-[#FBF7EF]">
         Enter ↵
       </span>
     </span>
@@ -923,7 +936,7 @@ const NavRow = ({
       <button
         type="button"
         onClick={onBack}
-        className="font-secondary ml-auto text-[11px] font-bold tracking-[0.14em] text-[#6b5e50] uppercase hover:text-[#ce4a2b]"
+        className="ml-auto text-[13px] font-medium text-[#5C5147] hover:text-[#2C3A2E]"
       >
         ← Back
       </button>
@@ -943,12 +956,12 @@ const ReviewRow = ({
   <div
     className={cn(
       'flex items-start justify-between gap-4 px-4 py-3',
-      !last && 'border-b-2 border-[#1d1815]/15',
+      !last && 'border-b border-[#E6DCC9]',
     )}
   >
-    <span className="font-secondary text-[11px] font-extrabold tracking-[0.14em] text-[#6b5e50] uppercase">
+    <span className="text-[11px] font-semibold tracking-[0.14em] text-[#5C5147] uppercase">
       {label}
     </span>
-    <span className="text-right text-sm text-[#1d1815]">{children}</span>
+    <span className="text-right text-sm text-[#221A14]">{children}</span>
   </div>
 );

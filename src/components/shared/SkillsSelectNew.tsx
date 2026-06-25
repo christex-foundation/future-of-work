@@ -303,6 +303,7 @@ export const SkillsSelect = React.forwardRef<MultiSelectRef, SkillsSelectProps>(
           onChange={handleChange}
           placeholder="Select skills..."
           className={className}
+          badgeClassName="rounded-full border border-[#E6DCC9] bg-[#F2EAD9] px-2.5 py-0.5 font-medium text-[#221A14] hover:bg-[#E9E0CD]"
           groupBy="group"
           emptyIndicator="No skills found"
         />
@@ -314,11 +315,11 @@ export const SkillsSelect = React.forwardRef<MultiSelectRef, SkillsSelectProps>(
                 key={suggestion.value}
                 variant="outline"
                 size="sm"
-                className="h-fit w-fit rounded-none border-2 border-[#1d1815] bg-[#FBF7EE] px-2 py-1 text-[#1d1815] hover:bg-[#f4eee3]"
+                className="h-fit w-fit rounded-full border border-[#E6DCC9] bg-white px-3 py-1 text-[#221A14] transition-colors hover:border-[#d9ccb2] hover:bg-[#F2EAD9]"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
                 <span>{suggestion.label}</span>
-                <Plus className="h-3! w-3! text-[#6b5e50]" />
+                <Plus className="h-3! w-3! text-[#C4502E]" />
               </Button>
             ))}
           </div>

@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
-import { ChevronRight } from 'lucide-react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 import { useEffect, useMemo, useState } from 'react';
@@ -65,26 +63,6 @@ function WhatWeExpect({ requirements }: { requirements: string }) {
         ))}
       </ul>
     </section>
-  );
-}
-
-function Breadcrumbs({ listing }: { listing: Listing }) {
-  const typeLabel = listing.type === 'project' ? 'Projects' : 'Bounties';
-  return (
-    <nav className="flex items-center gap-1.5 pt-6 pb-1 text-[13px] text-[#5C5147]">
-      <Link href="/earn" className="transition-colors hover:text-[#C4502E]">
-        Browse bounties
-      </Link>
-      <ChevronRight className="h-3.5 w-3.5 opacity-50" />
-      <Link
-        href={listing.type === 'project' ? '/earn/projects' : '/earn/bounties'}
-        className="transition-colors hover:text-[#C4502E]"
-      >
-        {typeLabel}
-      </Link>
-      <ChevronRight className="h-3.5 w-3.5 opacity-50" />
-      <span className="max-w-[40ch] truncate opacity-60">{listing.title}</span>
-    </nav>
   );
 }
 
@@ -219,15 +197,22 @@ export function ListingPageLayout({
         </Head>
       }
     >
-      <div className="bg-[#FBF7EF] text-[#221A14]">
+      <div className="relative bg-[#FBF7EF] text-[#221A14]">
+        {/* Daybreak paper-grain — warms the white panels exactly like the mock */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 z-[5] opacity-[0.42] mix-blend-multiply"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")",
+          }}
+        />
         {initialListing === null && <ErrorSection />}
         {initialListing !== null && !initialListing?.id && (
           <ErrorSection message="Sorry! The bounty you are looking for is not available." />
         )}
         {initialListing !== null && !!initialListing?.id && (
           <div className="mx-auto w-full max-w-[1200px] px-5 lg:px-10">
-            {!isSubmissionPage && <Breadcrumbs listing={initialListing} />}
-
             <ListingHeader
               isTemplate={isTemplate}
               commentCount={commentCount}

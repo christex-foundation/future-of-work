@@ -31,6 +31,9 @@ import {
 import { hasDevSkills } from '@/features/talent/utils/skills';
 import { useUsernameValidation } from '@/features/talent/utils/useUsernameValidation';
 
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")";
+
 // Optional socials a freelancer can add beyond the one required field.
 const OPTIONAL_SOCIALS: SocialType[] = [
   'twitter',
@@ -356,7 +359,7 @@ export default function Talent() {
 
   return (
     <Default
-      className="bg-[#f4eee3]"
+      className="bg-[#FBF7EF]"
       hideFooter
       meta={
         <Meta
@@ -367,35 +370,48 @@ export default function Talent() {
       }
     >
       {!authenticated ? (
-        <div className="flex w-full flex-1 items-center justify-center px-4 py-16">
-          <div className="w-full max-w-[30rem] border-2 border-[#1d1815] bg-[#f4eee3] p-8 text-center">
-            <p className="font-secondary text-[11px] font-extrabold tracking-[0.2em] text-[#6b5e50] uppercase">
+        <div className="relative flex w-full flex-1 items-center justify-center px-4 py-16">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-[5] opacity-[0.42] mix-blend-multiply"
+            style={{ backgroundImage: GRAIN }}
+          />
+          <div className="w-full max-w-[30rem] rounded-[18px] border border-[#E6DCC9] bg-white p-8 text-center shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]">
+            <p className="text-[11px] font-semibold tracking-[0.2em] text-[#C4502E] uppercase">
               Future of Work / Freelancer
             </p>
-            <h1 className="font-serif mt-3 mb-1 text-3xl font-semibold text-[#1d1815]">
+            <h1 className="font-serif mt-3 mb-1 text-3xl font-normal text-[#221A14]">
               You&apos;re one step away
             </h1>
-            <p className="mb-6 text-[#6b5e50]">
+            <p className="mb-6 text-[#5C5147]">
               Sign in to set up your freelancer profile.
             </p>
             <SignIn loginStep={loginStep} setLoginStep={setLoginStep} />
           </div>
         </div>
       ) : (
-        <div className="flex w-full flex-1 flex-col" onKeyDown={handleKeyDown}>
+        <div
+          className="relative flex w-full flex-1 flex-col"
+          onKeyDown={handleKeyDown}
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-[5] opacity-[0.42] mix-blend-multiply"
+            style={{ backgroundImage: GRAIN }}
+          />
           {/* progress */}
-          <div className="h-1.5 shrink-0 bg-[#1d1815]/15">
+          <div className="h-1.5 shrink-0 bg-[#221A14]/10">
             <div
-              className="h-full bg-[#ce4a2b] transition-all duration-300"
+              className="h-full bg-[#C4502E] transition-all duration-300"
               style={{ width: `${progressPct}%` }}
             />
           </div>
           {/* top bar */}
           <div className="flex shrink-0 items-center gap-3 px-6 py-3.5 sm:px-10">
-            <span className="font-serif text-base font-semibold text-[#1d1815]">
+            <span className="font-serif text-base font-semibold text-[#221A14]">
               Future of Work
             </span>
-            <span className="font-secondary ml-auto text-[11px] font-bold tracking-[0.16em] text-[#6b5e50] uppercase">
+            <span className="ml-auto text-[11px] font-semibold tracking-[0.16em] text-[#5C5147] uppercase">
               {step === 0
                 ? 'Welcome'
                 : current === 'review'
@@ -416,7 +432,7 @@ export default function Talent() {
                   title={
                     <>
                       Let&apos;s set up your{' '}
-                      <em className="text-[#ce4a2b] italic">profile.</em>
+                      <em className="text-[#C4502E] italic">profile.</em>
                     </>
                   }
                   help="A few quick questions — about a minute. Press Enter to move through each one."
@@ -431,7 +447,7 @@ export default function Talent() {
                   title={
                     <>
                       First, what&apos;s your{' '}
-                      <em className="text-[#ce4a2b] italic">name?</em>
+                      <em className="text-[#C4502E] italic">name?</em>
                     </>
                   }
                   help="This is how companies will see you across Future of Work."
@@ -466,7 +482,7 @@ export default function Talent() {
                   title={
                     <>
                       Pick a{' '}
-                      <em className="text-[#ce4a2b] italic">username.</em>
+                      <em className="text-[#C4502E] italic">username.</em>
                     </>
                   }
                   help="Your personal handle on Future of Work."
@@ -497,7 +513,7 @@ export default function Talent() {
                   title={
                     <>
                       Add a{' '}
-                      <em className="text-[#ce4a2b] italic">profile photo.</em>
+                      <em className="text-[#C4502E] italic">profile photo.</em>
                     </>
                   }
                   help="Optional, but it helps companies recognise who they're hiring."
@@ -531,13 +547,13 @@ export default function Talent() {
                   title={
                     <>
                       Where are you{' '}
-                      <em className="text-[#ce4a2b] italic">based?</em>
+                      <em className="text-[#C4502E] italic">based?</em>
                     </>
                   }
                   help="We use this to show you the most relevant work."
                 >
                   <RegionCombobox
-                    className="h-11 w-full max-w-[26rem] border-2 border-[#1d1815] bg-transparent"
+                    className="h-11 w-full max-w-[26rem] border-2 border-[#d9ccb2] bg-transparent"
                     value={form.watch('location')}
                     onChange={(e) => form.setValue('location', e)}
                     classNames={{
@@ -554,7 +570,7 @@ export default function Talent() {
                   title={
                     <>
                       What are your{' '}
-                      <em className="text-[#ce4a2b] italic">skills?</em>
+                      <em className="text-[#C4502E] italic">skills?</em>
                     </>
                   }
                   help="Pick all that apply — we'll notify you of matching work."
@@ -577,7 +593,7 @@ export default function Talent() {
                   title={
                     <>
                       Where can people{' '}
-                      <em className="text-[#ce4a2b] italic">find you?</em>
+                      <em className="text-[#C4502E] italic">find you?</em>
                     </>
                   }
                   help={
@@ -609,18 +625,18 @@ export default function Talent() {
                             key={s}
                             onClick={() => toggleSocial(s)}
                             className={cn(
-                              'font-secondary flex items-center gap-2 border-2 border-[#1d1815] px-3.5 py-2 text-sm font-bold transition-transform hover:-translate-y-0.5',
+                              'flex items-center gap-2 rounded-full border border-[#E6DCC9] px-3.5 py-2 text-sm font-medium transition-transform hover:-translate-y-0.5',
                               on
-                                ? 'bg-[#123a33] text-[#f4eee3]'
-                                : 'bg-[#f4eee3] text-[#1d1815]',
+                                ? 'bg-[#C4502E] text-white border-[#C4502E]'
+                                : 'bg-white text-[#221A14]',
                             )}
                           >
                             <span
                               className={cn(
-                                'inline-block h-2.5 w-2.5 border-2',
+                                'inline-block h-2.5 w-2.5 rounded-full border-2',
                                 on
-                                  ? 'border-[#f4eee3] bg-[#e6a12b]'
-                                  : 'border-[#1d1815] bg-[#f4eee3]',
+                                  ? 'border-white bg-[#FBF7EF]'
+                                  : 'border-[#d9ccb2] bg-white',
                               )}
                             />
                             {prettySocial(s)}
@@ -648,7 +664,7 @@ export default function Talent() {
                   title={
                     <>
                       Got a{' '}
-                      <em className="text-[#ce4a2b] italic">referral code?</em>
+                      <em className="text-[#C4502E] italic">referral code?</em>
                     </>
                   }
                   help="Optional. Enter it if someone invited you — otherwise skip ahead."
@@ -665,11 +681,11 @@ export default function Talent() {
                       }
                     />
                     {referralCode && isReferralChecking && (
-                      <Loader2 className="absolute top-2 right-1 h-4 w-4 animate-spin text-[#6b5e50]" />
+                      <Loader2 className="absolute top-2 right-1 h-4 w-4 animate-spin text-[#5C5147]" />
                     )}
                   </div>
                   {referralCode && isReferralValid === true && (
-                    <p className="font-secondary mt-2 text-sm font-semibold text-[#123a33]">
+                    <p className="mt-2 text-sm font-semibold text-[#C4502E]">
                       Code applied ✓
                     </p>
                   )}
@@ -686,7 +702,7 @@ export default function Talent() {
 
               {current === 'review' && (
                 <Screen kicker="Almost done" title={<>Look good?</>}>
-                  <div className="border-2 border-[#1d1815] bg-[#fbf7ef]">
+                  <div className="overflow-hidden rounded-[14px] border border-[#E6DCC9] bg-white">
                     <ReviewRow label="Name">
                       {`${form.watch('firstName') || ''} ${form.watch('lastName') || ''}`.trim() ||
                         '—'}
@@ -709,7 +725,7 @@ export default function Talent() {
                       type="button"
                       onClick={() => form.handleSubmit(onSubmit, onInvalid)()}
                       disabled={isLoading}
-                      className="font-secondary flex items-center gap-2 border-2 border-[#1d1815] bg-[#1d1815] px-6 py-3 text-sm font-bold tracking-[0.06em] text-[#f4eee3] uppercase transition-colors hover:bg-[#ce4a2b] disabled:cursor-not-allowed disabled:opacity-60"
+                      className="flex items-center gap-2 rounded-full bg-[#C4502E] px-6 py-3 text-[14.5px] font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:bg-[#A83F22] hover:shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)] disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       {isLoading ? (
                         <>
@@ -723,7 +739,7 @@ export default function Talent() {
                     <button
                       type="button"
                       onClick={goBack}
-                      className="font-secondary text-[11px] font-bold tracking-[0.14em] text-[#6b5e50] uppercase hover:text-[#ce4a2b]"
+                      className="text-[13px] font-medium text-[#5C5147] hover:text-[#C4502E]"
                     >
                       ← Back
                     </button>
@@ -752,15 +768,15 @@ const Screen = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <span className="font-secondary flex items-center gap-2.5 text-[11px] font-extrabold tracking-[0.2em] text-[#ce4a2b] uppercase">
-      <span className="inline-block h-0.5 w-5 bg-[#ce4a2b]" />
+    <span className="flex items-center gap-2.5 text-[11px] font-semibold tracking-[0.2em] text-[#C4502E] uppercase">
+      <span className="inline-block h-0.5 w-5 bg-[#C4502E]" />
       {kicker}
     </span>
-    <h2 className="font-serif mt-4 text-[clamp(28px,4.4vw,46px)] leading-[1.05] font-semibold tracking-[-0.02em] text-[#1d1815]">
+    <h2 className="font-serif mt-4 text-[clamp(28px,4.4vw,46px)] leading-[1.05] font-normal tracking-[-0.02em] text-[#221A14]">
       {title}
     </h2>
     {help && (
-      <p className="mt-3 max-w-[34rem] text-[15px] leading-relaxed text-[#6b5e50]">
+      <p className="mt-3 max-w-[34rem] text-[15px] leading-relaxed text-[#5C5147]">
         {help}
       </p>
     )}
@@ -777,7 +793,7 @@ const BigInput = React.forwardRef<
     type="text"
     autoComplete="off"
     className={cn(
-      'font-serif w-full border-b-2 border-[#1d1815] bg-transparent py-2 text-2xl text-[#1d1815] outline-none placeholder:text-[#1d1815]/25 focus:border-[#ce4a2b]',
+      'font-serif w-full border-b-2 border-[#d9ccb2] bg-transparent py-2 text-2xl text-[#221A14] outline-none placeholder:text-[#221A14]/25 focus:border-[#C4502E]',
       className,
     )}
     {...props}
@@ -789,14 +805,14 @@ const PrefixInput = ({
   prefix,
   ...props
 }: { prefix: string } & React.InputHTMLAttributes<HTMLInputElement>) => (
-  <div className="flex items-baseline gap-1.5 border-b-2 border-[#1d1815] focus-within:border-[#ce4a2b]">
-    <span className="font-secondary text-sm font-bold whitespace-nowrap text-[#6b5e50]">
+  <div className="flex items-baseline gap-1.5 border-b-2 border-[#d9ccb2] focus-within:border-[#C4502E]">
+    <span className="text-sm font-medium whitespace-nowrap text-[#5C5147]">
       {prefix}
     </span>
     <input
       type="text"
       autoComplete="off"
-      className="font-serif w-full bg-transparent py-2 text-2xl text-[#1d1815] outline-none placeholder:text-[#1d1815]/25"
+      className="font-serif w-full bg-transparent py-2 text-2xl text-[#221A14] outline-none placeholder:text-[#221A14]/25"
       {...props}
     />
   </div>
@@ -813,16 +829,16 @@ const SocialRow = ({
 }) => {
   const { prefix, placeholder } = socialMeta(name);
   return (
-    <div className="flex items-baseline gap-1.5 border-b-2 border-[#1d1815] focus-within:border-[#ce4a2b]">
-      <span className="font-secondary whitespace-nowrap text-xs font-bold text-[#6b5e50]">
+    <div className="flex items-baseline gap-1.5 border-b-2 border-[#d9ccb2] focus-within:border-[#C4502E]">
+      <span className="whitespace-nowrap text-xs font-medium text-[#5C5147]">
         {prefix || `${prettySocial(name).toLowerCase()}/`}
-        {required && <span className="ml-0.5 text-[#ce4a2b]">*</span>}
+        {required && <span className="ml-0.5 text-[#C4502E]">*</span>}
       </span>
       <input
         type="text"
         autoComplete="off"
         placeholder={placeholder}
-        className="font-serif w-full bg-transparent py-1.5 text-lg text-[#1d1815] outline-none placeholder:text-[#1d1815]/25"
+        className="font-serif w-full bg-transparent py-1.5 text-lg text-[#221A14] outline-none placeholder:text-[#221A14]/25"
         {...register(name)}
       />
     </div>
@@ -830,7 +846,7 @@ const SocialRow = ({
 };
 
 const FieldError = ({ msg }: { msg?: string }) =>
-  msg ? <p className="mt-2 text-sm text-[#ce4a2b]">{msg}</p> : null;
+  msg ? <p className="mt-2 text-sm text-[#C4502E]">{msg}</p> : null;
 
 const NavRow = ({
   onNext,
@@ -845,13 +861,13 @@ const NavRow = ({
     <button
       type="button"
       onClick={onNext}
-      className="font-secondary border-2 border-[#1d1815] bg-[#1d1815] px-6 py-3 text-sm font-bold tracking-[0.06em] text-[#f4eee3] uppercase transition-colors hover:bg-[#ce4a2b]"
+      className="rounded-full bg-[#C4502E] px-6 py-3 text-[14.5px] font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:bg-[#A83F22] hover:shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]"
     >
       {nextLabel}
     </button>
-    <span className="font-secondary text-[11px] font-semibold text-[#6b5e50]">
+    <span className="text-[11px] font-medium text-[#5C5147]">
       press{' '}
-      <span className="bg-[#1d1815] px-1.5 py-0.5 text-[10px] tracking-[0.08em] text-[#f4eee3]">
+      <span className="rounded bg-[#221A14] px-1.5 py-0.5 text-[10px] tracking-[0.08em] text-[#FBF7EF]">
         Enter ↵
       </span>
     </span>
@@ -859,7 +875,7 @@ const NavRow = ({
       <button
         type="button"
         onClick={onBack}
-        className="font-secondary ml-auto text-[11px] font-bold tracking-[0.14em] text-[#6b5e50] uppercase hover:text-[#ce4a2b]"
+        className="ml-auto text-[13px] font-medium text-[#5C5147] hover:text-[#C4502E]"
       >
         ← Back
       </button>
@@ -879,12 +895,12 @@ const ReviewRow = ({
   <div
     className={cn(
       'flex items-start justify-between gap-4 px-4 py-3',
-      !last && 'border-b-2 border-[#1d1815]/15',
+      !last && 'border-b border-[#E6DCC9]',
     )}
   >
-    <span className="font-secondary text-[11px] font-extrabold tracking-[0.14em] text-[#6b5e50] uppercase">
+    <span className="text-[11px] font-semibold tracking-[0.14em] text-[#5C5147] uppercase">
       {label}
     </span>
-    <span className="text-right text-sm text-[#1d1815]">{children}</span>
+    <span className="text-right text-sm text-[#221A14]">{children}</span>
   </div>
 );
