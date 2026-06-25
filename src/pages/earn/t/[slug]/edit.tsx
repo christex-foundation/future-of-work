@@ -176,7 +176,7 @@ function LivePreview({
           />
         </div>
         <div className="px-[22px] pb-[22px]">
-          <div className="-mt-[38px] inline-flex size-[74px] overflow-hidden rounded-[18px] border-4 border-white shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]">
+          <div className="relative z-[2] -mt-[38px] inline-flex size-[74px] overflow-hidden rounded-[18px] border-4 border-white shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]">
             <EarnAvatar
               className="size-full rounded-[14px]"
               id={userId}

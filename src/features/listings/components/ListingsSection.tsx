@@ -1,5 +1,6 @@
 import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useMemo } from 'react';
 
 import { AnimateChangeInHeight } from '@/components/shared/AnimateChangeInHeight';
@@ -168,6 +169,9 @@ interface ListingsSectionProps extends ListingTabsProps {
   // 'daybreak' renders the Filing Index masthead + sticky control rail used on
   // the dedicated browse page (/earn/all), in place of the legacy header.
   browseVariant?: 'daybreak';
+  // sponsor-only: renders the catalogue as the Daybreak "editorial index"
+  // (numbered leader rows) used on the company profile, in place of the card grid.
+  sponsorIndex?: boolean;
 }
 const FOR_YOU_SUPPORTED_TYPES: ReadonlyArray<ListingContext> = [
   'home',
@@ -184,6 +188,7 @@ export const ListingsSection = ({
   defaultTab,
   customEmptySection,
   browseVariant,
+  sponsorIndex,
 }: ListingsSectionProps) => {
   const isLg = useBreakpoint('lg');
   const { serverTime } = useServerTimeSync();
@@ -432,6 +437,169 @@ export const ListingsSection = ({
   // the in-page heading, tabs and filter bar are only shown where they are
   // functionally required (sponsor, bookmarks and pro contexts).
   const showHeader = isSponsorContext || isBookmarksContext || isProContext;
+
+  if (sponsorIndex) {
+    const sponsorTabs: { id: ListingTab; title: string }[] = [
+      { id: 'all', title: 'All' },
+      { id: 'bounties', title: 'Bounties' },
+      { id: 'projects', title: 'Projects' },
+    ];
+
+    const indexPill = (status: string) => {
+      if (status === 'Completed')
+        return { cls: 'bg-[#F2EAD9] text-[#5C5147]', dot: 'bg-[#5C5147]' };
+      if (status === 'In review')
+        return { cls: 'bg-[#C4502E]/12 text-[#C4502E]', dot: 'bg-[#C4502E]' };
+      return { cls: 'bg-[#8FA37E]/20 text-[#2C3A2E]', dot: 'bg-[#8FA37E]' };
+    };
+
+    const renderIndex = () => {
+      if (isLoading) {
+        return (
+          <div className="mt-3.5 border-t-[1.5px] border-[#221A14]">
+            {skeletonArray.map((i) => (
+              <div
+                key={i}
+                className="grid grid-cols-[1fr_auto] items-center gap-6 border-b border-[#E6DCC9] px-1.5 py-5 sm:grid-cols-[40px_1fr_auto]"
+              >
+                <div className="hidden h-4 w-6 animate-pulse rounded bg-[#E9E0CD] sm:block" />
+                <div className="space-y-2">
+                  <div className="h-3 w-32 animate-pulse rounded bg-[#E9E0CD]" />
+                  <div className="h-5 w-2/3 animate-pulse rounded bg-[#E9E0CD]" />
+                </div>
+                <div className="h-6 w-16 animate-pulse rounded bg-[#E9E0CD]" />
+              </div>
+            ))}
+          </div>
+        );
+      }
+      if (error) return <EmptySection title="Error loading listings" />;
+      if (!listings?.length) {
+        const emptySectionContent =
+          typeof customEmptySection === 'function'
+            ? customEmptySection({
+                activeTab,
+                activeCategory: effectiveCategory,
+                activeStatus,
+                activeSortBy,
+              })
+            : customEmptySection;
+        return (
+          emptySectionContent ?? (
+            <EmptySection
+              title="No opportunities found"
+              message="We don't have any relevant opportunities for the current filters."
+            />
+          )
+        );
+      }
+      return (
+        <div className="mt-3.5 border-t-[1.5px] border-[#221A14]">
+          {listings.map((listing, i) => {
+            const b = toLiveBounty(listing, serverTime());
+            const status = b.status ?? 'Open';
+            const pill = indexPill(status);
+            const isWin = status === 'Completed';
+            const meta = isWin
+              ? (b.dueLabel ?? 'Winners announced')
+              : [
+                  b.submissions != null
+                    ? `${b.submissions} submission${b.submissions === 1 ? '' : 's'}`
+                    : null,
+                  b.daysLeft != null
+                    ? `${b.daysLeft} day${b.daysLeft === 1 ? '' : 's'} left`
+                    : b.dueLabel,
+                  b.token,
+                ]
+                  .filter(Boolean)
+                  .join(' · ');
+            return (
+              <Link
+                key={listing.id}
+                href={`/earn/listing/${b.slug}`}
+                className="group grid grid-cols-[1fr_auto] items-center gap-5 border-b border-[#E6DCC9] px-1.5 py-5 transition-all hover:rounded-xl hover:bg-white hover:px-4 hover:shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)] sm:grid-cols-[40px_1fr_auto] sm:gap-6"
+              >
+                <span className="hidden text-right font-serif text-[18px] text-[#5C5147] sm:block">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div className="min-w-0">
+                  <div className="mb-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                    <span className="text-[11px] font-semibold tracking-[0.13em] text-[#6B7A4F] uppercase">
+                      {b.cat}
+                    </span>
+                    <span className="text-[#E6DCC9]">·</span>
+                    <span className="text-[11px] font-semibold tracking-[0.13em] text-[#5C5147] uppercase">
+                      {TYPE_LABELS[b.type ?? 'bounty'] ?? b.type ?? 'Bounty'}
+                    </span>
+                    <span
+                      className={cn(
+                        'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold',
+                        pill.cls,
+                      )}
+                    >
+                      <span className={cn('size-1.5 rounded-full', pill.dot)} />
+                      {status}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-[22px] leading-[1.12] font-normal tracking-[-0.01em] text-[#221A14] group-hover:text-[#2C3A2E]">
+                    {b.title}
+                  </h3>
+                  <p className="mt-1 text-[13.5px] text-[#5C5147]">{meta}</p>
+                </div>
+                <div className="text-right whitespace-nowrap">
+                  <div
+                    className={cn(
+                      'font-serif text-[26px] leading-none',
+                      isWin ? 'text-[#C4502E]' : 'text-[#221A14]',
+                    )}
+                  >
+                    {b.prizeLabel}
+                  </div>
+                  <span className="mt-2 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#6B7A4F] transition-all group-hover:gap-2.5 group-hover:text-[#2C3A2E]">
+                    {isWin ? 'View result' : 'View brief'} →
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      );
+    };
+
+    return (
+      <div id="listings" className="mt-2 mb-10">
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <span className="mb-3.5 inline-flex items-center gap-2.5 text-[12px] font-semibold tracking-[0.2em] text-[#6B7A4F] uppercase before:h-[1.5px] before:w-[18px] before:bg-[#6B7A4F] before:content-['']">
+              The work
+            </span>
+            <h2 className="font-serif text-[clamp(28px,4vw,42px)] leading-none font-normal tracking-[-0.015em] text-[#221A14]">
+              Open briefs &amp; the archive.
+            </h2>
+          </div>
+          <div className="flex gap-1 rounded-full border border-[#E6DCC9] bg-[#F2EAD9] p-1.5">
+            {sponsorTabs.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => handleTabChange(t.id, 'sponsor_index')}
+                className={cn(
+                  'rounded-full px-4 py-2 text-[13.5px] font-semibold transition',
+                  activeTab === t.id
+                    ? 'bg-[#2C3A2E] text-[#FBF7EF]'
+                    : 'text-[#5C5147] hover:text-[#221A14]',
+                )}
+              >
+                {t.title}
+              </button>
+            ))}
+          </div>
+        </div>
+        <AnimateChangeInHeight disableOnHeightZero>
+          {renderIndex()}
+        </AnimateChangeInHeight>
+      </div>
+    );
+  }
 
   if (isDaybreak) {
     return (
