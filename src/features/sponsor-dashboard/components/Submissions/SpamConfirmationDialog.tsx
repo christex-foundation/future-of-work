@@ -29,12 +29,12 @@ export const SpamConfirmationDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="m-0 p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogTitle className="text-md font-serif -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
           Mark this as spam?
         </DialogTitle>
         <Separator />
         <div className="space-y-4 px-6 pb-6 text-[0.95rem]">
-          <div className="text-slate-500">
+          <div className="text-[#6b5e50]">
             {isListing ? (
               <>
                 Marking a submission as &quot;Spam&quot; would deduct a
@@ -54,10 +54,10 @@ export const SpamConfirmationDialog = ({
               Cancel
             </Button>
             <Button
-              className="flex-1 rounded-lg border border-orange-400 bg-orange-50 text-orange-500 hover:bg-orange-100"
+              className="flex-1 rounded-lg border-2 border-[#1d1815] bg-[#e6a12b] text-[#1d1815] hover:bg-[#d49223]"
               onClick={handleConfirm}
             >
-              <Flag className="size-2 text-orange-500" />
+              <Flag className="size-2 text-[#1d1815]" />
               <span>Mark as Spam</span>
             </Button>
           </div>

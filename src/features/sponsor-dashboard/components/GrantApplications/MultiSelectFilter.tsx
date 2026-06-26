@@ -56,9 +56,9 @@ export const MultiSelectFilter = ({
   const getFilterColor = (value: GrantApplicationStatus | SubmissionLabels) => {
     return (
       colorMap[value as keyof typeof colorMap] || {
-        bg: 'bg-slate-100',
-        color: 'text-slate-600',
-        border: 'border-slate-200',
+        bg: 'bg-[#F2EAD9]',
+        color: 'text-[#1d1815]',
+        border: 'border-[#e6dcc9]',
       }
     );
   };
@@ -66,21 +66,23 @@ export const MultiSelectFilter = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="relative cursor-pointer rounded-md p-1.5 hover:bg-slate-100">
-          <LucideListFilter className="size-4 stroke-3 text-slate-600" />
+        <div className="relative cursor-pointer rounded-md p-1.5 hover:bg-[#F2EAD9]">
+          <LucideListFilter className="size-4 stroke-3 text-[#1d1815]" />
           {hasActiveFilters && (
             <span
-              className="absolute right-1.5 bottom-1.5 block size-1 rounded-full bg-green-500 ring-1 ring-white"
+              className="absolute right-1.5 bottom-1.5 block size-1 rounded-full bg-[#123a33] ring-1 ring-[#FBF7EF]"
               aria-hidden="true"
             />
           )}
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="border-slate-300" align="end">
+      <DropdownMenuContent className="border-[#e6dcc9]" align="end">
         <div className="py-1">
           <DropdownMenuGroup>
-            <div className="px-3 py-1 text-xs text-slate-400">Decision</div>
+            <div className="font-secondary px-3 py-1 text-xs text-[#6b5e50]">
+              Decision
+            </div>
             <div className="mb-3 space-y-1">
               {DECISION_FILTERS.map((filter) => {
                 const isSelected = selectedFilters.has(filter.value);
@@ -89,13 +91,13 @@ export const MultiSelectFilter = ({
                 return (
                   <label
                     key={filter.value}
-                    className="flex cursor-pointer items-center justify-between rounded-md px-3 py-1 hover:bg-slate-100"
+                    className="flex cursor-pointer items-center justify-between rounded-md px-3 py-1 hover:bg-[#F2EAD9]"
                   >
                     <div className="flex items-center space-x-2">
                       <Switch
                         checked={isSelected}
                         onCheckedChange={() => toggleFilter(filter.value)}
-                        className="data-[state=checked]:bg-brand-purple h-3 w-5.5"
+                        className="data-[state=checked]:bg-[#ce4a2b] h-3 w-5.5"
                         thumbClassName="size-2 data-[state=checked]:translate-x-2.5"
                       />
                       <StatusPill
@@ -114,7 +116,9 @@ export const MultiSelectFilter = ({
           </DropdownMenuGroup>
 
           <DropdownMenuGroup>
-            <div className="px-3 py-1 text-xs text-slate-400">Label</div>
+            <div className="font-secondary px-3 py-1 text-xs text-[#6b5e50]">
+              Label
+            </div>
             <div className="space-y-1">
               {LABEL_FILTERS.map((filter) => {
                 const isSelected = selectedFilters.has(filter.value);
@@ -123,13 +127,13 @@ export const MultiSelectFilter = ({
                 return (
                   <label
                     key={filter.value}
-                    className="flex cursor-pointer items-center justify-between rounded-md px-3 py-1 hover:bg-slate-100"
+                    className="flex cursor-pointer items-center justify-between rounded-md px-3 py-1 hover:bg-[#F2EAD9]"
                   >
                     <div className="flex items-center space-x-2">
                       <Switch
                         checked={isSelected}
                         onCheckedChange={() => toggleFilter(filter.value)}
-                        className="data-[state=checked]:bg-brand-purple h-3 w-5.5"
+                        className="data-[state=checked]:bg-[#ce4a2b] h-3 w-5.5"
                         thumbClassName="size-2 data-[state=checked]:translate-x-2.5"
                       />
                       <StatusPill

@@ -109,13 +109,13 @@ export const SpamButton = ({ listingSlug, isMultiSelectOn }: Props) => {
         variant="destructive"
         className={`rounded-lg border disabled:opacity-100 ${
           isMarkedAsSpam
-            ? 'border-orange-300 bg-orange-100 text-orange-600 hover:bg-orange-200'
-            : 'border-orange-200 bg-orange-50 text-orange-500 hover:bg-orange-100 disabled:opacity-70'
+            ? 'border-[#e6a12b] bg-[#e6a12b]/25 text-[#1d1815] hover:bg-[#e6a12b]/35'
+            : 'border-[#e6a12b]/50 bg-[#e6a12b]/12 text-[#1d1815] hover:bg-[#e6a12b]/20 disabled:opacity-70'
         }`}
         onClick={handleSpamClick}
         disabled={isMarkedAsSpam || isMultiSelectOn}
       >
-        <LucideFlag className="size-1 text-orange-500" />
+        <LucideFlag className="size-1 text-[#e6a12b]" />
         {isMarkedAsSpam ? 'Marked as Spam' : 'Spam'}
       </Button>
 

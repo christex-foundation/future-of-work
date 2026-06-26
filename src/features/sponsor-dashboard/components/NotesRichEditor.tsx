@@ -308,7 +308,7 @@ export const NotesRichEditor: React.FC<NotesRichEditorProps> = ({
           }
 
           .notes-rich-editor p.is-editor-empty:first-child::before {
-            color: var(--color-slate-400);
+            color: #6b5e50;
           }
 
           .notes-rich-editor ul {

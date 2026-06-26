@@ -64,16 +64,16 @@ export function MarkCompleteModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="m-0 p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-serif font-semibold text-[#1d1815]">
           Mark as Completed
         </DialogTitle>
         <Separator />
         <div className="space-y-4 px-6 pb-6 text-[0.95rem]">
-          <p className="text-slate-500">
+          <p className="text-[#6b5e50]">
             We will inform the user that their grant project has been marked as
             completed. This will allow them to apply for this grant again.
           </p>
-          <p className="text-slate-500">
+          <p className="text-[#6b5e50]">
             You cannot undo this action. Are you sure you want to mark this as
             completed?
           </p>
@@ -88,7 +88,7 @@ export function MarkCompleteModal({
               Cancel
             </Button>
             <Button
-              className="flex-1 rounded-lg border border-blue-500 bg-blue-50 text-blue-600 hover:bg-blue-100"
+              className="flex-1 rounded-lg border border-[#123a33] bg-[#F2EAD9] text-[#123a33] hover:bg-[#E9E0CD]"
               disabled={markCompletePending}
               onClick={handleMarkAsCompleted}
             >
@@ -99,8 +99,8 @@ export function MarkCompleteModal({
                 </>
               ) : (
                 <>
-                  <div className="rounded-full bg-blue-600 p-0.5">
-                    <Check className="size-2 text-white" />
+                  <div className="rounded-full bg-[#123a33] p-0.5">
+                    <Check className="size-2 text-[#f4eee3]" />
                   </div>
                   <span>Mark as Completed</span>
                 </>

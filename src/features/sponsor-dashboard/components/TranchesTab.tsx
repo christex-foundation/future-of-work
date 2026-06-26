@@ -276,8 +276,8 @@ export const TranchesTab = ({ slug }: Props) => {
 
   return (
     <>
-      <div className="flex w-full items-start bg-white">
-        <div className="grid min-h-[42rem] w-full grid-cols-[23rem_1fr] bg-white">
+      <div className="flex w-full items-start bg-[#FBF7EF]">
+        <div className="grid min-h-[42rem] w-full grid-cols-[23rem_1fr] bg-[#FBF7EF]">
           <div className="h-full w-full">
             <TrancheList
               tranches={tranches}
@@ -287,7 +287,7 @@ export const TranchesTab = ({ slug }: Props) => {
             />
           </div>
 
-          <div className="h-full w-full rounded-r-lg border-t border-r border-b border-slate-200 bg-white">
+          <div className="h-full w-full rounded-r-lg border-t border-r border-b border-[#1d1815] bg-[#FBF7EF]">
             {!tranches?.length && !searchText && !isTrancheLoading ? (
               <>
                 <ExternalImage
@@ -295,10 +295,10 @@ export const TranchesTab = ({ slug }: Props) => {
                   alt={'talent empty'}
                   src={'/bg/talent-empty.svg'}
                 />
-                <p className="mx-auto mt-5 text-center text-lg font-semibold text-slate-600">
+                <p className="font-serif mx-auto mt-5 text-center text-lg font-semibold text-[#1d1815]">
                   {'Zero Results'}
                 </p>
-                <p className="mx-auto mb-[200px] text-center font-medium text-slate-400">
+                <p className="mx-auto mb-[200px] text-center font-medium text-[#6b5e50]">
                   {'Tranches will start appearing here'}
                 </p>
               </>
@@ -317,7 +317,7 @@ export const TranchesTab = ({ slug }: Props) => {
 
       <div className="mt-4 flex items-center justify-start gap-4">
         {!!searchText && (
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[#6b5e50]">
             Found <span className="font-bold">{tranches?.length || 0}</span>{' '}
             {tranches?.length === 1 ? 'result' : 'results'}
           </p>

@@ -99,7 +99,7 @@ export const SponsorInfoModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={() => null} modal>
       <DialogContent className="px-6 py-5 sm:max-w-xl" hideCloseIcon>
-        <h2 className="mb-3 text-xl font-semibold tracking-tight text-gray-900">
+        <h2 className="font-serif mb-3 text-xl font-semibold tracking-tight text-[#1d1815]">
           Complete Your Profile
         </h2>
         <Form {...form}>

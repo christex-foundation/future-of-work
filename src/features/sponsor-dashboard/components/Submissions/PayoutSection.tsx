@@ -41,7 +41,7 @@ const PaymentDetailsRow = ({
       <TableCell>
         {paymentDetails.map((payment, index) => (
           <div className="my-2 flex items-center justify-between" key={index}>
-            <p className="text-sm font-medium text-slate-500">
+            <p className="text-sm font-medium text-[#6b5e50]">
               Tranche {payment.tranche}
             </p>
           </div>
@@ -56,8 +56,8 @@ const PaymentDetailsRow = ({
                 alt={`${token}`}
                 symbol={token}
               />
-              <p className="text-sm font-medium text-slate-700">
-                {payment.amount} <span className="text-slate-400">{token}</span>
+              <p className="text-sm font-medium text-[#1d1815]">
+                {payment.amount} <span className="text-[#6b5e50]">{token}</span>
               </p>
             </div>
           </div>
@@ -69,7 +69,7 @@ const PaymentDetailsRow = ({
             payment.txId && (
               <div key={index} className="my-2">
                 <div
-                  className="flex cursor-pointer items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900"
+                  className="flex cursor-pointer items-center gap-1 text-sm font-medium text-[#6b5e50] hover:text-[#1d1815]"
                   onClick={() => {
                     window.open(
                       `https://solscan.io/tx/${payment.txId}?cluster=${process.env.NEXT_PUBLIC_PAYMENT_CLUSTER}`,
@@ -77,10 +77,10 @@ const PaymentDetailsRow = ({
                     );
                   }}
                 >
-                  <p className="text-sm font-medium text-slate-500">
+                  <p className="text-sm font-medium text-[#6b5e50]">
                     {truncatePublicKey(payment.txId, 5)}
                   </p>
-                  <ExternalLink className="h-4 w-4 text-slate-400" />
+                  <ExternalLink className="h-4 w-4 text-[#6b5e50]" />
                 </div>
               </div>
             ),
@@ -118,7 +118,7 @@ export const PayoutSection = ({
 
   if (bounty.isFndnPaying) {
     return (
-      <div className="rounded-lg border border-slate-200 bg-white py-8 text-center text-slate-500">
+      <div className="rounded-lg border-2 border-[#1d1815] bg-[#FBF7EF] py-8 text-center text-[#6b5e50] shadow-[5px_5px_0_#1d1815]">
         Payments for this listing are handled by the Solana Foundation.
       </div>
     );
@@ -128,12 +128,12 @@ export const PayoutSection = ({
     return (
       <div className="space-y-4">
         {/* Wallet Connection Header */}
-        <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
+        <div className="flex items-center justify-between rounded-lg border-2 border-[#1d1815] bg-[#FBF7EF] px-4 py-3 shadow-[5px_5px_0_#1d1815]">
           <div className="flex flex-col gap-1">
-            <h3 className="text-sm font-semibold text-slate-900">
+            <h3 className="font-serif text-sm font-semibold text-[#1d1815]">
               Your Wallet
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[#6b5e50]">
               Directly process payments to winners using this wallet
             </p>
           </div>
@@ -141,7 +141,7 @@ export const PayoutSection = ({
         </div>
 
         {/* No Winners Message */}
-        <div className="rounded-lg border border-slate-200 bg-white py-8 text-center text-slate-500">
+        <div className="rounded-lg border-2 border-[#1d1815] bg-[#FBF7EF] py-8 text-center text-[#6b5e50] shadow-[5px_5px_0_#1d1815]">
           No winners have been announced yet.
         </div>
       </div>
@@ -159,12 +159,12 @@ export const PayoutSection = ({
   return (
     <div className="space-y-4">
       {/* Wallet Connection Header */}
-      <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
+      <div className="flex items-center justify-between rounded-lg border-2 border-[#1d1815] bg-[#FBF7EF] px-4 py-3 shadow-[5px_5px_0_#1d1815]">
         <div className="flex flex-col gap-1">
-          <h3 className="text-sm font-semibold text-slate-900">
+          <h3 className="font-serif text-sm font-semibold text-[#1d1815]">
             Wallet Connection
           </h3>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[#6b5e50]">
             {walletConnected
               ? 'Process payments to winners using this wallet'
               : 'Connect your wallet to process payments to winners'}
@@ -174,9 +174,9 @@ export const PayoutSection = ({
       </div>
 
       {/* Payment Table */}
-      <div className="h-full w-full overflow-x-auto rounded-md border border-gray-200">
+      <div className="h-full w-full overflow-x-auto rounded-md border-2 border-[#1d1815] shadow-[5px_5px_0_#1d1815]">
         <Table className="overflow-hidden">
-          <TableHeader className="bg-slate-50">
+          <TableHeader className="bg-[#F2EAD9]">
             <TableRow>
               <TableHead className={cn('w-[40%]', isFndnToPay && 'w-[60%]')}>
                 Winner Name
@@ -234,7 +234,7 @@ export const PayoutSection = ({
                             {submission.user.firstName}{' '}
                             {submission.user.lastName}
                           </div>
-                          <div className="text-xs text-slate-500">
+                          <div className="text-xs text-[#6b5e50]">
                             {'@' + submission.user.username ||
                               submission.user.email ||
                               ''}
@@ -243,7 +243,7 @@ export const PayoutSection = ({
                       </div>
                     </TableCell>
                     <TableCell>
-                      <span className="font-medium text-slate-800 capitalize">
+                      <span className="font-medium text-[#1d1815] capitalize">
                         {isProject
                           ? 'Winner'
                           : getRankLabels(submission.winnerPosition!)}
@@ -253,13 +253,13 @@ export const PayoutSection = ({
                       {submission.user.walletAddress ? (
                         <CopyButton
                           text={submission.user.walletAddress}
-                          className="gap-1 text-sm text-slate-600 underline-offset-1 hover:text-slate-500 hover:underline"
+                          className="gap-1 text-sm text-[#6b5e50] underline-offset-1 hover:text-[#1d1815] hover:underline"
                           contentProps={{ side: 'right' }}
                         >
                           {truncatePublicKey(submission.user.walletAddress, 5)}
                         </CopyButton>
                       ) : (
-                        <span className="text-sm text-slate-400">
+                        <span className="text-sm text-[#6b5e50]">
                           No wallet
                         </span>
                       )}
@@ -271,12 +271,12 @@ export const PayoutSection = ({
                           alt={bounty.token || 'token'}
                           className="h-4 w-4"
                         />
-                        <span className="font-medium text-slate-900">
+                        <span className="font-medium text-[#1d1815]">
                           {!!bounty.rewards &&
                             bounty.rewards[
                               submission.winnerPosition as keyof Rewards
                             ]}{' '}
-                          <span className="text-slate-400">{bounty.token}</span>
+                          <span className="text-[#6b5e50]">{bounty.token}</span>
                         </span>
                       </div>
                     </TableCell>
@@ -287,7 +287,7 @@ export const PayoutSection = ({
                             className="h-1.5 w-16 rounded-full"
                             value={Number(paidPercentage)}
                           />
-                          <p className="text-sm font-medium text-slate-500">
+                          <p className="text-sm font-medium text-[#6b5e50]">
                             {paidPercentage}%
                           </p>
                         </div>
@@ -299,20 +299,20 @@ export const PayoutSection = ({
                           {submission.isPaid && !shouldHideTxLinks ? (
                             isProject && hasMultipleTranches ? (
                               <div
-                                className="flex cursor-pointer items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900"
+                                className="flex cursor-pointer items-center gap-1 text-sm font-medium text-[#6b5e50] hover:text-[#1d1815]"
                                 onClick={() => toggleExpandRow(submission.id)}
                               >
                                 <span>View transaction links</span>
                                 <ChevronDown
                                   className={cn(
-                                    'h-4 w-4 text-slate-400 transition-transform duration-300 ease-in-out',
+                                    'h-4 w-4 text-[#6b5e50] transition-transform duration-300 ease-in-out',
                                     isExpanded ? 'rotate-180' : 'rotate-0',
                                   )}
                                 />
                               </div>
                             ) : (
                               <div
-                                className="flex cursor-pointer items-center text-sm font-medium text-slate-600 hover:text-slate-900"
+                                className="flex cursor-pointer items-center text-sm font-medium text-[#6b5e50] hover:text-[#1d1815]"
                                 onClick={() => {
                                   const txId =
                                     submission.paymentDetails?.[0]?.txId;
@@ -344,7 +344,7 @@ export const PayoutSection = ({
                                 >
                                   <ChevronDown
                                     className={cn(
-                                      'ml-8 h-4 w-4 text-slate-400 transition-transform duration-300 ease-in-out',
+                                      'ml-8 h-4 w-4 text-[#6b5e50] transition-transform duration-300 ease-in-out',
                                       isExpanded ? 'rotate-180' : 'rotate-0',
                                     )}
                                   />

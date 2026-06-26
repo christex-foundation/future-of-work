@@ -1,92 +1,66 @@
+/**
+ * Daybreak status pills.
+ * The palette is intentionally narrow, so statuses are grouped into semantic
+ * families rather than each keeping a unique hue:
+ *   forest #123a33  -> success / approved / done-well
+ *   terra  #ce4a2b  -> rejected / spam / inaccessible (negative)
+ *   gold   #e6a12b  -> pending / needs-review / unreviewed (warning)
+ *   sage   #8FA37E  -> shortlisted / mid-quality (positive-neutral)
+ *   ink    #1d1815  -> reviewed / completed (neutral info)
+ *   muted  #6b5e50  -> low-quality (de-emphasised)
+ * Light tints keep the pills legible on the cream (#f4eee3) dashboard surface.
+ */
+const forest = {
+  bg: 'bg-[#123a33]/12',
+  color: 'text-[#123a33]',
+  border: 'border-[#123a33]/25',
+  focus: 'focus:text-[#123a33] focus:bg-[#123a33]/20',
+};
+const terra = {
+  bg: 'bg-[#ce4a2b]/12',
+  color: 'text-[#ce4a2b]',
+  border: 'border-[#ce4a2b]/30',
+  focus: 'focus:text-[#ce4a2b] focus:bg-[#ce4a2b]/20',
+};
+const gold = {
+  bg: 'bg-[#e6a12b]/20',
+  color: 'text-[#1d1815]',
+  border: 'border-[#e6a12b]/50',
+  focus: 'focus:text-[#1d1815] focus:bg-[#e6a12b]/30',
+};
+const sage = {
+  bg: 'bg-[#8FA37E]/22',
+  color: 'text-[#3C4D3D]',
+  border: 'border-[#8FA37E]/55',
+  focus: 'focus:text-[#3C4D3D] focus:bg-[#8FA37E]/32',
+};
+const ink = {
+  bg: 'bg-[#1d1815]/8',
+  color: 'text-[#1d1815]',
+  border: 'border-[#1d1815]/25',
+  focus: 'focus:text-[#1d1815] focus:bg-[#1d1815]/15',
+};
+const muted = {
+  bg: 'bg-[#1d1815]/6',
+  color: 'text-[#6b5e50]',
+  border: 'border-[#1d1815]/20',
+  focus: 'focus:text-[#6b5e50] focus:bg-[#1d1815]/12',
+};
+
 export const colorMap = {
-  Needs_Review: {
-    bg: 'bg-amber-100',
-    color: 'text-amber-700',
-    border: 'border-amber-300',
-    focus: 'focus:text-amber-700 focus:bg-amber-200',
-  },
-  Inaccessible: {
-    bg: 'bg-red-50',
-    color: 'text-red-800',
-    border: 'border-red-200',
-    focus: 'focus:text-red-800 focus:bg-red-100',
-  },
-  Low_Quality: {
-    bg: 'bg-stone-100',
-    color: 'text-stone-800',
-    border: 'border-stone-300',
-    focus: 'focus:text-stone-900 focus:bg-stone-200',
-  },
-  Mid_Quality: {
-    bg: 'bg-cyan-100',
-    color: 'text-cyan-900',
-    border: 'border-cyan-300',
-    focus: 'focus:text-cyan-900 focus:bg-cyan-200',
-  },
-  High_Quality: {
-    bg: 'bg-purple-100',
-    color: 'text-purple-600',
-    border: 'border-purple-300',
-    focus: 'focus:text-purple-900 focus:bg-purple-200',
-  },
-  Spam: {
-    bg: 'bg-red-100',
-    color: 'text-red-600',
-    border: 'border-red-300',
-    focus: 'focus:text-red-600 focus:bg-red-200',
-  },
-  Reviewed: {
-    bg: 'bg-blue-100',
-    color: 'text-blue-600',
-    border: 'border-blue-300',
-    focus: 'focus:text-blue-900 focus:bg-blue-200',
-  },
-  Unreviewed: {
-    bg: 'bg-orange-50',
-    color: 'text-amber-600',
-    border: 'border-amber-200',
-    focus: 'focus:text-amber-700 focus:bg-orange-100',
-  },
-  Shortlisted: {
-    bg: 'bg-purple-100',
-    color: 'text-purple-600',
-    border: 'border-purple-300',
-    focus: 'focus:text-purple-900 focus:bg-purple-200',
-  },
-  Approved: {
-    bg: 'bg-green-100',
-    color: 'text-green-900',
-    border: 'border-green-300',
-    focus: 'focus:text-green-900 focus:bg-green-200',
-  },
-  Rejected: {
-    bg: 'bg-red-100',
-    color: 'text-red-600',
-    border: 'border-red-300',
-    focus: 'focus:text-red-600 focus:bg-red-200',
-  },
-  Pending: {
-    bg: 'bg-orange-100',
-    color: 'text-orange-700',
-    border: 'border-orange-200',
-    focus: 'focus:text-orange-900 focus:bg-orange-200',
-  },
-  Winner: {
-    bg: 'bg-emerald-100',
-    color: 'text-emerald-600',
-    border: 'border-emerald-300',
-    focus: 'focus:text-emerald-900 focus:bg-emerald-200',
-  },
-  Completed: {
-    bg: 'bg-blue-100',
-    color: 'text-blue-800',
-    border: 'border-blue-300',
-    focus: 'focus:text-blue-900 focus:bg-blue-200',
-  },
-  Paid: {
-    bg: 'bg-blue-100',
-    color: 'text-blue-800',
-    border: 'border-blue-300',
-    focus: 'focus:text-blue-900 focus:bg-blue-200',
-  },
+  Needs_Review: gold,
+  Inaccessible: terra,
+  Low_Quality: muted,
+  Mid_Quality: sage,
+  High_Quality: forest,
+  Spam: terra,
+  Reviewed: ink,
+  Unreviewed: gold,
+  Shortlisted: sage,
+  Approved: forest,
+  Rejected: terra,
+  Pending: gold,
+  Winner: forest,
+  Completed: ink,
+  Paid: forest,
 };

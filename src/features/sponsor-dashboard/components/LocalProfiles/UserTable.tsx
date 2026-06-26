@@ -41,7 +41,7 @@ interface THProps extends React.HTMLAttributes<HTMLTableCellElement> {
   children: ReactNode;
 }
 
-const thClassName = 'text-xs font-medium tracking-wider text-slate-500';
+const thClassName = 'text-xs font-medium tracking-wider text-[#6b5e50]';
 
 const TH = ({ children, className, ...props }: THProps) => {
   return (
@@ -57,10 +57,10 @@ export const UserTable = ({
   setSort,
 }: MembersTableProps) => {
   return (
-    <div className="rounded-md border border-slate-200 bg-white">
+    <div className="rounded-xl border-2 border-[#1d1815] bg-[#FBF7EF] shadow-[5px_5px_0_#1d1815]">
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-100">
+          <TableRow className="border-[#e6dcc9] bg-[#F2EAD9]">
             <SortableTH
               column="rank"
               currentSort={currentSort}
@@ -122,7 +122,7 @@ const MemberRow = ({ user }: { user: LocalProfile }) => {
   const skills = user.skills.flatMap((skills: any) => skills.skills);
   return (
     <TableRow
-      className="hover:bg-brand-slate-50 cursor-pointer"
+      className="cursor-pointer hover:bg-[#F2EAD9]"
       onClick={(e) => {
         if (
           e.target === e.currentTarget ||
@@ -134,7 +134,7 @@ const MemberRow = ({ user }: { user: LocalProfile }) => {
       role="group"
     >
       <TableCell className="w-[3rem] p-1">
-        <p className="max-w-full text-center text-[0.9rem] text-slate-700">
+        <p className="max-w-full text-center text-[0.9rem] text-[#1d1815]">
           #{user?.rank}
         </p>
       </TableCell>
@@ -142,10 +142,10 @@ const MemberRow = ({ user }: { user: LocalProfile }) => {
         <div className="flex items-center">
           <EarnAvatar className="h-9 w-9" id={user?.id} avatar={user?.photo} />
           <div className="ml-2 hidden md:block">
-            <p className="line-clamp-1 w-40 text-sm font-medium text-slate-700 group-hover:underline">
+            <p className="line-clamp-1 w-40 text-sm font-medium text-[#1d1815] group-hover:underline">
               {`${user?.firstName} ${user?.lastName}`}
             </p>
-            <p className="max-w-40 overflow-x-hidden text-sm font-medium text-ellipsis text-slate-500">
+            <p className="max-w-40 overflow-x-hidden text-sm font-medium text-ellipsis text-[#6b5e50]">
               @{user?.username}
             </p>
           </div>
@@ -153,7 +153,7 @@ const MemberRow = ({ user }: { user: LocalProfile }) => {
         <UserDrawer isOpen={isOpen} onClose={onClose} user={user} />
       </TableCell>
       <TableCell className="px-1">
-        <p className="w-[5rem] text-[0.9rem] font-medium text-slate-700">
+        <p className="w-[5rem] text-[0.9rem] font-medium text-[#1d1815]">
           $
           {user.totalEarnings.toLocaleString('en-us', {
             maximumFractionDigits: 0,
@@ -161,12 +161,12 @@ const MemberRow = ({ user }: { user: LocalProfile }) => {
         </p>
       </TableCell>
       <TableCell className="p-0">
-        <p className="text-center text-[0.9rem] text-slate-700">
+        <p className="text-center text-[0.9rem] text-[#1d1815]">
           {user?.totalSubmissions || 0}
         </p>
       </TableCell>
       <TableCell className="p-1">
-        <p className="text-center text-[0.9rem] text-slate-700">
+        <p className="text-center text-[0.9rem] text-[#1d1815]">
           {user?.wins || 0}
         </p>
       </TableCell>
@@ -209,7 +209,7 @@ const MemberRow = ({ user }: { user: LocalProfile }) => {
               }
               contentProps={{ className: 'w-fit max-w-40 px-4 py-2' }}
             >
-              <p className="-mt-4 inline-flex h-[19px] items-center rounded bg-[#EFF1F5] px-2 text-xs font-medium text-[#64739C]">
+              <p className="-mt-4 inline-flex h-[19px] items-center rounded bg-[#E9E0CD] px-2 text-xs font-medium text-[#6b5e50]">
                 +{skills.length - 2}
               </p>
             </Tooltip>
@@ -225,7 +225,7 @@ const MemberRow = ({ user }: { user: LocalProfile }) => {
       </TableCell>
       <TableCell>
         <Link
-          className="inline-flex items-center gap-1 text-[0.9rem] font-medium text-slate-500"
+          className="inline-flex items-center gap-1 text-[0.9rem] font-medium text-[#ce4a2b]"
           href={`/earn/t/${user.username}`}
           onClick={(e) => e.stopPropagation()}
           rel="noopener noreferrer"

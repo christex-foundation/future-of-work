@@ -7,14 +7,14 @@ import { easeOutCubic } from '@/utils/easings';
 function SkeletonCard() {
   return (
     <div className="flex items-start space-x-4">
-      <Skeleton className="h-14 w-14 rounded-[0.5rem] bg-gray-100" />
+      <Skeleton className="h-14 w-14 rounded-[0.5rem] bg-[#F2EAD9]" />
       <div className="flex-1 space-y-2">
         <div className="flex items-center space-x-2">
-          <Skeleton className="h-3 w-2/6 rounded-full bg-gray-100" />
-          <Skeleton className="h-3 w-4/6 rounded-full bg-gray-100" />
+          <Skeleton className="h-3 w-2/6 rounded-full bg-[#F2EAD9]" />
+          <Skeleton className="h-3 w-4/6 rounded-full bg-[#F2EAD9]" />
         </div>
-        <Skeleton className="h-3 w-full rounded-full bg-gray-100 delay-300" />
-        <Skeleton className="h-3 w-full rounded-full bg-gray-100 delay-300" />
+        <Skeleton className="h-3 w-full rounded-full bg-[#F2EAD9] delay-300" />
+        <Skeleton className="h-3 w-full rounded-full bg-[#F2EAD9] delay-300" />
       </div>
     </div>
   );
@@ -35,9 +35,9 @@ function ScannerLine() {
       }}
     >
       <div className="relative h-[0.1875rem] w-full">
-        <div className="h-full w-full bg-indigo-500" />
-        <div className="absolute top-2/4 left-0 h-2 w-2 -translate-y-2/4 rounded-full bg-indigo-500" />
-        <div className="absolute top-2/4 right-0 h-2 w-2 -translate-y-2/4 rounded-full bg-indigo-500" />
+        <div className="h-full w-full bg-[#ce4a2b]" />
+        <div className="absolute top-2/4 left-0 h-2 w-2 -translate-y-2/4 rounded-full bg-[#ce4a2b]" />
+        <div className="absolute top-2/4 right-0 h-2 w-2 -translate-y-2/4 rounded-full bg-[#ce4a2b]" />
       </div>
       <motion.div
         animate={{
@@ -51,7 +51,7 @@ function ScannerLine() {
           delay: 0.1,
         }}
         style={{ originX: 0.5, originY: 0 }}
-        className="absolute inset-0 mx-auto h-2/4 w-[calc(100%-0.7rem)] bg-gradient-to-b from-indigo-500/20 to-indigo-500/0"
+        className="absolute inset-0 mx-auto h-2/4 w-[calc(100%-0.7rem)] bg-gradient-to-b from-[#ce4a2b]/20 to-[#ce4a2b]/0"
       />
     </motion.div>
   );

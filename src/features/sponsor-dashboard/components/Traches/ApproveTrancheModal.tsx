@@ -79,7 +79,7 @@ const CustomNumberInput = ({
         value={value || ''}
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}
-        className="rounded-r-none pr-8 font-semibold text-slate-600"
+        className="rounded-r-none border-[#1d1815] bg-[#FBF7EF] pr-8 font-semibold text-[#1d1815]"
         type="text"
         inputMode="numeric"
         pattern="[0-9]*"
@@ -88,7 +88,7 @@ const CustomNumberInput = ({
         <button
           type="button"
           onClick={increment}
-          className="flex-1 px-1 text-slate-400 hover:text-slate-600"
+          className="flex-1 px-1 text-[#6b5e50] hover:text-[#1d1815]"
           aria-label="Increment value"
         >
           <ChevronUp className="h-3 w-3" />
@@ -96,7 +96,7 @@ const CustomNumberInput = ({
         <button
           type="button"
           onClick={decrement}
-          className="flex-1 px-1 text-slate-400 hover:text-slate-600"
+          className="flex-1 px-1 text-[#6b5e50] hover:text-[#1d1815]"
           aria-label="Decrement value"
         >
           <ChevronDown className="h-3 w-3" />
@@ -247,33 +247,36 @@ export const ApproveTrancheModal = ({
           if (!open) requestClose();
         }}
       >
-        <DialogContent className="m-0 p-0" hideCloseIcon>
-          <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogContent
+          className="m-0 border-2 border-[#1d1815] bg-[#FBF7EF] p-0 shadow-[5px_5px_0_#1d1815]"
+          hideCloseIcon
+        >
+          <DialogTitle className="font-serif text-md -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
             Approve Tranche Payment
           </DialogTitle>
-          <Separator />
+          <Separator className="bg-[#1d1815]" />
           <div className="px-6 pb-6 text-[0.95rem]">
-            <p className="mb-4 text-slate-500">
+            <p className="mb-4 text-[#6b5e50]">
               You are about to approve {granteeName}&apos;s tranche payment.
               They will be notified via email.
             </p>
 
             <div className="mb-6 flex items-center justify-between">
-              <p className="text-slate-500">Tranche Payment</p>
+              <p className="text-[#6b5e50]">Tranche Payment</p>
               <div className="flex items-center">
                 <TokenIcon
                   className="h-5 w-5 rounded-full"
                   alt={`${token} icon`}
                   symbol={token}
                 />
-                <p className="ml-1 font-semibold text-slate-600">
-                  {ask} <span className="text-slate-400">{token}</span>
+                <p className="ml-1 font-semibold text-[#1d1815]">
+                  {ask} <span className="text-[#6b5e50]">{token}</span>
                 </p>
               </div>
             </div>
 
             <div className="mb-6 flex w-full items-center justify-between">
-              <p className="w-full whitespace-nowrap text-slate-500">
+              <p className="w-full whitespace-nowrap text-[#6b5e50]">
                 Approved Amount
               </p>
               <div className="flex">
@@ -283,7 +286,7 @@ export const ApproveTrancheModal = ({
                   min={1}
                   max={maxApprovalAmount}
                 />
-                <div className="flex items-center rounded-r-md border border-l-0 bg-white px-3 text-[0.95rem] text-slate-400">
+                <div className="flex items-center rounded-r-md border border-l-0 border-[#1d1815] bg-[#FBF7EF] px-3 text-[0.95rem] text-[#6b5e50]">
                   <TokenIcon
                     className="mr-1 h-5 w-5 rounded-full"
                     alt={`${token} icon`}
@@ -295,7 +298,7 @@ export const ApproveTrancheModal = ({
             </div>
 
             {warningMessage && (
-              <p className="mb-4 text-center text-sm text-red-500">
+              <p className="mb-4 text-center text-sm text-[#ce4a2b]">
                 {warningMessage}
               </p>
             )}
@@ -336,7 +339,7 @@ export const ApproveTrancheModal = ({
               <div className="flex flex-1">
                 <Button
                   className={cn(
-                    'flex-1 border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600 disabled:border-slate-300 disabled:bg-slate-100 disabled:text-slate-400 disabled:opacity-100',
+                    'flex-1 border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#0d2c27] hover:text-[#f4eee3] disabled:border-[#1d1815]/30 disabled:bg-[#E9E0CD] disabled:text-[#6b5e50] disabled:shadow-none disabled:opacity-100',
                     enableCustomEmail
                       ? 'rounded-l-lg rounded-r-none'
                       : 'rounded-lg',
@@ -361,8 +364,8 @@ export const ApproveTrancheModal = ({
                     </>
                   ) : (
                     <>
-                      <div className="mr-2 rounded-full bg-emerald-600 p-0.5">
-                        <Check className="size-2.5 text-white" />
+                      <div className="mr-2 rounded-full bg-[#1d1815] p-0.5">
+                        <Check className="size-2.5 text-[#f4eee3]" />
                       </div>
                       <span>
                         {isCustomEmailOpen
@@ -377,7 +380,7 @@ export const ApproveTrancheModal = ({
                     <DropdownMenuTrigger asChild>
                       <Button
                         type="button"
-                        className="rounded-l-none rounded-r-lg border border-l-0 border-emerald-500 bg-emerald-50 px-2 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600"
+                        className="rounded-l-none rounded-r-lg border-2 border-l-0 border-[#1d1815] bg-[#123a33] px-2 text-[#f4eee3] hover:bg-[#0d2c27] hover:text-[#f4eee3]"
                         disabled={loading}
                         aria-label="Approve tranche options"
                       >

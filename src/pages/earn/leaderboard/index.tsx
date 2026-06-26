@@ -14,6 +14,7 @@ import { type TalentRankingsWhereInput } from '@/prisma/models/TalentRankings';
 
 import { getPrivyToken } from '@/features/auth/utils/getPrivyToken';
 import { HomepagePop } from '@/features/conversion-popups/components/HomepagePop';
+import { FeedNav } from '@/features/feed/components/FeedNav';
 import { FilterRow } from '@/features/leaderboard/components/FilterRow';
 import { Pagination } from '@/features/leaderboard/components/Pagination';
 import { RanksTable } from '@/features/leaderboard/components/RanksTable';
@@ -126,9 +127,13 @@ function TalentLeaderboard({
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.42] mix-blend-multiply"
         style={{ backgroundImage: GRAIN }}
       />
-      <div className="relative z-[1] mx-auto w-full max-w-[1200px] px-5 pb-24 md:px-10">
-        {/* hero */}
-        <section className="max-w-[780px] pt-12 md:pt-16">
+      <div className="relative z-[1] w-full px-2 pb-24 lg:px-6">
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="flex">
+            <FeedNav />
+            <div className="min-w-0 flex-1 lg:pl-8">
+              {/* hero */}
+              <section className="max-w-[780px] pt-12 md:pt-16">
           <span className="flex items-center gap-2.5 text-[12px] font-semibold tracking-[0.2em] text-[#6B7A4F] uppercase before:h-[1.5px] before:w-[18px] before:bg-[#6B7A4F] before:content-['']">
             The Leaderboard
           </span>
@@ -165,6 +170,9 @@ function TalentLeaderboard({
             page={page}
             setPage={(v: number) => setPage(v)}
           />
+            </div>
+            </div>
+          </div>
         </div>
       </div>
     </Default>

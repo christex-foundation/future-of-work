@@ -120,8 +120,8 @@ export const FeedCardContainer = ({
   return (
     <div
       className={cn(
-        'mx-0 -mt-[1px] px-0 py-4 md:py-8',
-        type === 'activity' && 'border-b border-slate-200 px-5',
+        'mx-0 px-0 py-4 md:py-6',
+        type === 'activity' && 'border-b border-[#E6DCC9] px-1 md:px-2',
       )}
     >
       <div className="flex gap-1.5 sm:gap-3">
@@ -150,7 +150,7 @@ export const FeedCardContainer = ({
           <FeedCardChildWrapper
             isPrivate={isPrivate}
             className={cn(
-              'group mt-4 rounded-md border border-slate-200 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.01)] transition-all duration-100 ease-in-out hover:-translate-y-[0.5px] hover:shadow-[0px_4px_8px_0px_rgba(0,0,0,0.1)]',
+              'group mt-3.5 overflow-hidden rounded-xl border border-[#E6DCC9] bg-[#FBF7EF] transition-all duration-100 ease-in-out hover:-translate-y-[0.5px] hover:shadow-[0_10px_24px_-18px_rgba(54,38,22,0.45)]',
               !isPrivate && 'cursor-pointer',
             )}
             sanitizedLink={sanitizedLink}
@@ -161,7 +161,7 @@ export const FeedCardContainer = ({
           {id && (
             <div
               className={cn(
-                'mt-2 flex w-fit items-center gap-8 pr-8 sm:py-2',
+                'mt-3 flex w-full items-center gap-8',
                 id ? 'pointer-events-auto' : 'pointer-events-none',
               )}
               id="feed-actions"
@@ -177,13 +177,13 @@ export const FeedCardContainer = ({
               >
                 {!isLiked && (
                   <AuthWrapper>
-                    <IoMdHeartEmpty className="h-5 w-5 cursor-pointer text-slate-500 md:h-[22px] md:w-[22px]" />
+                    <IoMdHeartEmpty className="h-5 w-5 cursor-pointer text-[#5C5147] transition-colors hover:text-[#C4502E] md:h-[22px] md:w-[22px]" />
                   </AuthWrapper>
                 )}
                 {isLiked && (
-                  <IoMdHeart className="h-5 w-5 cursor-pointer text-rose-600 md:h-[22px] md:w-[22px]" />
+                  <IoMdHeart className="h-5 w-5 cursor-pointer text-[#C4502E] md:h-[22px] md:w-[22px]" />
                 )}
-                <p className="cursor-pointer text-sm font-medium text-slate-500 sm:text-base">
+                <p className="cursor-pointer text-sm font-medium text-[#5C5147] sm:text-base">
                   {totalLikes}
                 </p>
               </div>
@@ -195,9 +195,9 @@ export const FeedCardContainer = ({
                   onToggleComment();
                 }}
               >
-                <GoComment className="h-[19px] w-[19px] cursor-pointer text-slate-500 md:h-[21px] md:w-[21px]" />
+                <GoComment className="h-[19px] w-[19px] cursor-pointer text-[#5C5147] transition-colors hover:text-[#C4502E] md:h-[21px] md:w-[21px]" />
                 {!!commentCount && (
-                  <p className="cursor-pointer text-sm font-medium text-slate-500 sm:text-base">
+                  <p className="cursor-pointer text-sm font-medium text-[#5C5147] sm:text-base">
                     {commentCount}
                   </p>
                 )}
@@ -250,7 +250,7 @@ export const FeedCardContainer = ({
 
 export const FeedCardContainerSkeleton = () => {
   return (
-    <div className="mx-0 -mt-[1px] border-b border-slate-200 px-5 py-8">
+    <div className="mx-0 border-b border-[#E6DCC9] px-1 py-6 md:px-2">
       <div className="flex gap-3">
         <Skeleton className="h-11 w-11 rounded-full" />
         <div className="flex w-full flex-col">
@@ -258,7 +258,7 @@ export const FeedCardContainerSkeleton = () => {
             <Skeleton className="h-5 w-36" />
             <Skeleton className="h-5 w-24" />
           </div>
-          <Skeleton className="mt-4 h-[200px] rounded-md border border-slate-200 shadow-xs md:h-[300px]" />
+          <Skeleton className="mt-4 h-[200px] rounded-xl border border-[#E6DCC9] shadow-xs md:h-[300px]" />
         </div>
       </div>
     </div>

@@ -65,10 +65,10 @@ export const MultiActionModal = ({
             : `You are about to reject ${applicationIds.length} application${isMultiple ? 's' : ''}. They will be notified via email.`,
           buttonText: `Reject ${applicationIds.length} Application${isMultiple ? 's' : ''}`,
           buttonClass:
-            'rounded-lg border border-red-300 bg-red-50 text-red-600 hover:bg-red-100',
+            'rounded-lg border border-[#ce4a2b] bg-[#F2EAD9] text-[#ce4a2b] hover:bg-[#E9E0CD]',
           icon: (
-            <div className="rounded-full bg-red-600 p-0.5">
-              <X className="size-2.5 text-white" />
+            <div className="rounded-full bg-[#ce4a2b] p-0.5">
+              <X className="size-2.5 text-[#f4eee3]" />
             </div>
           ),
           loadingText: 'Rejecting',
@@ -81,8 +81,8 @@ export const MultiActionModal = ({
           description: `Marking these applications as spam would affect the users' ability to submit to other opportunities on Earn.`,
           buttonText: `Mark as Spam`,
           buttonClass:
-            'rounded-lg border border-orange-400 bg-orange-50 text-orange-500 hover:bg-orange-100',
-          icon: <Flag className="size-2.5 text-orange-500" />,
+            'rounded-lg border border-[#e6a12b] bg-[#F2EAD9] text-[#e6a12b] hover:bg-[#E9E0CD]',
+          icon: <Flag className="size-2.5 text-[#e6a12b]" />,
           loadingText: 'Marking as Spam',
           hasWarning: true,
         };
@@ -146,17 +146,17 @@ export const MultiActionModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="m-0 p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-serif font-semibold text-[#1d1815]">
           {config.title}
         </DialogTitle>
         <Separator />
         <div className="px-6 pb-6 text-[0.95rem]">
-          <p className="mb-4 text-slate-500">{config.description}</p>
+          <p className="mb-4 text-[#6b5e50]">{config.description}</p>
 
           {config.hasWarning && (
             <div className="mb-4 flex items-center gap-1">
-              <AlertTriangle className="h-4 w-4 text-red-600" />
-              <span className="text-sm font-medium text-slate-800">
+              <AlertTriangle className="h-4 w-4 text-[#ce4a2b]" />
+              <span className="text-sm font-medium text-[#1d1815]">
                 This action cannot be undone!
               </span>
             </div>

@@ -51,17 +51,17 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
   return (
     <div
       className={cn(
-        'h-auto w-full overflow-x-auto rounded-md border border-gray-200',
+        'h-auto w-full overflow-x-auto rounded-xl border-2 border-[#1d1815] shadow-[5px_5px_0_#1d1815]',
         scouts.length === 0 ? 'h-25rem' : 'h-auto',
       )}
     >
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-50">
-            <TableHead className="text-xs font-medium text-slate-500">
+          <TableRow className="border-[#e6dcc9] bg-[#F2EAD9]">
+            <TableHead className="text-xs font-medium text-[#6b5e50]">
               User
             </TableHead>
-            <TableHead className="px-1 text-center text-xs font-medium text-slate-500 md:px-2">
+            <TableHead className="px-1 text-center text-xs font-medium text-[#6b5e50] md:px-2">
               <div className="flex items-center justify-center gap-2">
                 $ Earned
                 <Tooltip
@@ -74,7 +74,7 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                 </Tooltip>
               </div>
             </TableHead>
-            <TableHead className="px-1 text-center text-xs font-medium text-slate-500 md:px-2">
+            <TableHead className="px-1 text-center text-xs font-medium text-[#6b5e50] md:px-2">
               <div className="flex items-center justify-center gap-2">
                 Match Score
                 <Tooltip
@@ -90,7 +90,7 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                 </Tooltip>
               </div>
             </TableHead>
-            <TableHead className="px-1 text-left text-xs font-medium text-slate-500 md:px-2">
+            <TableHead className="px-1 text-left text-xs font-medium text-[#6b5e50] md:px-2">
               <div className="flex items-center gap-2">
                 Matched Skills
                 <Tooltip
@@ -106,15 +106,18 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                 </Tooltip>
               </div>
             </TableHead>
-            <TableHead className="px-1 text-left text-xs font-medium text-slate-500 md:px-2">
+            <TableHead className="px-1 text-left text-xs font-medium text-[#6b5e50] md:px-2">
               Invites Left: {invitesLeft}/{MAX_INVITES}
             </TableHead>
           </TableRow>
         </TableHeader>
         {scouts.length > 0 && (
-          <TableBody className="text-sm font-medium text-slate-500">
+          <TableBody className="text-sm font-medium text-[#6b5e50]">
             {scouts.map((scout) => (
-              <TableRow key={scout.id + scout.invited}>
+              <TableRow
+                key={scout.id + scout.invited}
+                className="hover:bg-[#F2EAD9]"
+              >
                 <TableCell className="h-full w-fit text-xs">
                   <Link
                     className="ph-no-capture flex items-center gap-2"
@@ -129,7 +132,7 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                     <EarnAvatar id={scout.id} avatar={scout.pfp || undefined} />
                     <div className="align-start flex flex-col justify-center gap-1 md:justify-start">
                       <div className="flex gap-1">
-                        <p className="max-w-[14rem] overflow-hidden text-xs text-ellipsis text-slate-800">
+                        <p className="max-w-[14rem] overflow-hidden text-xs text-ellipsis text-[#1d1815]">
                           {scout.name}
                         </p>
                         {scout.recommended && (
@@ -152,14 +155,14 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                 </TableCell>
                 <TableCell className="h-full px-1 md:px-2">
                   <div className="flex justify-center gap-2">
-                    <p className="text-center text-slate-600">
+                    <p className="text-center text-[#6b5e50]">
                       {formatter(scout.dollarsEarned)}
                     </p>
                   </div>
                 </TableCell>
                 <TableCell className="h-full px-1 md:px-2">
                   <div className="flex items-center justify-center gap-3">
-                    <p className="text-center text-slate-600">{scout.score}</p>
+                    <p className="text-center text-[#6b5e50]">{scout.score}</p>
                     <ScoreBar score={scout.score} />
                   </div>
                 </TableCell>
@@ -194,13 +197,13 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                       MAX_SHOW_SKILLS && (
                       <Popover>
                         <PopoverTrigger>
-                          <span className="inline-flex rounded-full bg-[#EFF1F5] px-2 text-xs font-medium text-[#64739C]">
+                          <span className="inline-flex rounded-full bg-[#E9E0CD] px-2 text-xs font-medium text-[#6b5e50]">
                             +
                             {scout.skills.filter((s) => s !== null).length -
                               MAX_SHOW_SKILLS}
                           </span>
                         </PopoverTrigger>
-                        <PopoverContent className="w-fit max-w-40 px-4 py-2 shadow-lg">
+                        <PopoverContent className="w-fit max-w-40 border-2 border-[#1d1815] bg-[#FBF7EF] px-4 py-2 shadow-[5px_5px_0_#1d1815]">
                           <div className="flex h-full w-fit flex-wrap gap-2 text-center">
                             {scout.skills
                               .filter((s) => s !== null)
@@ -208,7 +211,7 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                               .map((s) => (
                                 <span
                                   key={s}
-                                  className="inline-flex rounded-full bg-[#EFF1F5] px-2 text-xs font-medium text-[#64739C]"
+                                  className="inline-flex rounded-full bg-[#E9E0CD] px-2 text-xs font-medium text-[#6b5e50]"
                                 >
                                   {s}
                                 </span>
@@ -252,7 +255,7 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
       </Table>
       {scouts.length === 0 && (
         <div className="mx-auto my-12 flex w-full flex-col items-center gap-3">
-          <div className="flex items-center justify-center rounded-full bg-slate-100 p-5">
+          <div className="flex items-center justify-center rounded-full bg-[#F2EAD9] p-5">
             <svg
               width="54"
               height="54"
@@ -267,7 +270,7 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                 width="36"
                 height="13.5"
                 rx="1.5"
-                fill="#94A3B8"
+                fill="#6b5e50"
               />
               <rect
                 x="9"
@@ -275,13 +278,15 @@ export function ScoutTable({ bountyId, scouts, setInvited }: Props) {
                 width="36"
                 height="13.5"
                 rx="1.5"
-                fill="#94A3B8"
+                fill="#6b5e50"
               />
             </svg>
           </div>
           <div className="flex flex-col items-center gap-0 py-4 text-base">
-            <p className="font-semibold">No Profiles Found</p>
-            <p className="font-normal text-slate-500">
+            <p className="font-serif font-semibold text-[#1d1815]">
+              No Profiles Found
+            </p>
+            <p className="font-normal text-[#6b5e50]">
               We couldn’t find any suitable matches for your listing.
             </p>
           </div>
@@ -297,9 +302,9 @@ function ScoreBar({ score }: { score: number }) {
     third = normalizeValue(score, 7, 10);
 
   const getColor = (score: number) => {
-    if (score > 7) return '#0D9488';
-    if (score > 6) return '#84CC16';
-    return '#FDBA74';
+    if (score > 7) return '#123a33';
+    if (score > 6) return '#e6a12b';
+    return '#ce4a2b';
   };
 
   return (

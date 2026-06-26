@@ -379,8 +379,20 @@ export default async function handler(
       `Fetched ${submissions.length} submissions, ${pow.length} PoWs and ${grantApplications} grant applications`,
     );
 
+    // Some legacy rows reference a user that no longer exists; skip those so a
+    // single orphaned record doesn't take down the whole feed.
+    const safeSubmissions = submissions.filter(
+      (sub) =>
+        sub.user ||
+        (shouldIncludeAgentSubmissions &&
+          profileAgentId &&
+          sub.agentId === profileAgentId),
+    );
+    const safePow = pow.filter((p) => p.user);
+    const safeGrants = grantApplications.filter((ga) => ga.user);
+
     const results = [
-      ...submissions.map((sub) => ({
+      ...safeSubmissions.map((sub) => ({
         ...(shouldIncludeAgentSubmissions &&
         profileAgentId &&
         sub.agentId === profileAgentId
@@ -460,7 +472,7 @@ export default async function handler(
         recentCommenters: sub.Comments,
         isPrivate: isOwnerProfile ? false : sub.listing.isPrivate,
       })),
-      ...pow.map((pow) => ({
+      ...safePow.map((pow) => ({
         id: pow.id,
         createdAt: pow.createdAt,
         description: pow.description,
@@ -478,7 +490,7 @@ export default async function handler(
         commentCount: pow._count.Comments,
         recentCommenters: pow.Comments,
       })),
-      ...grantApplications.map((ga) => ({
+      ...safeGrants.map((ga) => ({
         id: isOwnerProfile || !ga.grant.isPrivate ? ga.id : null,
         createdAt: ga.decidedAt || ga.createdAt,
         userId: ga.userId,

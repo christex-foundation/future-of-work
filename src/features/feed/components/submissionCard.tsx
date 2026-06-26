@@ -78,7 +78,7 @@ export function SubmissionCard({ sub, type, commentCount }: SubCardProps) {
             </Avatar>
           )}
           <Link
-            className={`text-xs font-semibold text-gray-500 sm:text-sm md:text-base ${isViewSubmissionHovered ? '' : 'group-hover:underline'} line-clamp-1 group-hover:decoration-current`}
+            className={`text-xs font-semibold text-[#2C3A2E] sm:text-sm md:text-base ${isViewSubmissionHovered ? '' : 'group-hover:underline'} line-clamp-1 group-hover:decoration-current`}
             href={listingLink}
             rel="noopener noreferrer"
             target="_blank"

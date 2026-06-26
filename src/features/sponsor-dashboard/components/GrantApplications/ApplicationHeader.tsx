@@ -141,7 +141,7 @@ export const ApplicationHeader = ({
     <div className="mb-2 flex items-center justify-between">
       <button className="sr-only" />
       <div>
-        <Breadcrumb className="text-slate-400">
+        <Breadcrumb className="text-[#6b5e50]">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink
@@ -157,15 +157,17 @@ export const ApplicationHeader = ({
         <div className="mb-2 flex items-center gap-2">
           <div className="ml-1 flex items-center gap-2">
             {getListingIcon('grant', 'size-5')}
-            <p className="text-xl font-bold text-slate-800">{grant?.title}</p>
+            <p className="font-serif text-xl font-bold text-[#1d1815]">
+              {grant?.title}
+            </p>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className="cursor-pointer rounded-md p-2 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-500">
+              <div className="cursor-pointer rounded-md p-2 text-[#6b5e50] transition-all hover:bg-[#F2EAD9] hover:text-[#1d1815]">
                 <MoreVertical className="h-4 w-4" />
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48 text-slate-500">
+            <DropdownMenuContent align="start" className="w-48 text-[#6b5e50]">
               <DropdownMenuItem
                 disabled={exportMutation.isPending}
                 onClick={() => handleExport()}

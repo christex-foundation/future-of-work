@@ -80,7 +80,7 @@ const CustomNumberInput = ({
         value={value || ''}
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}
-        className="rounded-r-none pr-8 font-semibold text-slate-600"
+        className="rounded-r-none pr-8 font-semibold text-[#1d1815]"
         type="text"
         inputMode="numeric"
         pattern="[0-9]*"
@@ -89,7 +89,7 @@ const CustomNumberInput = ({
         <button
           type="button"
           onClick={increment}
-          className="flex-1 px-1 text-slate-400 hover:text-slate-600"
+          className="flex-1 px-1 text-[#6b5e50] hover:text-[#1d1815]"
           aria-label="Increment value"
         >
           <ChevronUp className="h-3 w-3" />
@@ -97,7 +97,7 @@ const CustomNumberInput = ({
         <button
           type="button"
           onClick={decrement}
-          className="flex-1 px-1 text-slate-400 hover:text-slate-600"
+          className="flex-1 px-1 text-[#6b5e50] hover:text-[#1d1815]"
           aria-label="Decrement value"
         >
           <ChevronDown className="h-3 w-3" />
@@ -239,32 +239,32 @@ export const ApproveModal = ({
         }}
       >
         <DialogContent className="m-0 p-0" hideCloseIcon>
-          <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+          <DialogTitle className="text-md -mb-1 px-6 pt-4 font-serif font-semibold text-[#1d1815]">
             Approve Grant Payment
           </DialogTitle>
           <Separator />
           <div className="px-6 pb-6 text-[0.95rem]">
-            <p className="mb-4 text-slate-500">
+            <p className="mb-4 text-[#6b5e50]">
               You are about to approve {granteeName}&apos;s grant request. They
               will be notified via email.
             </p>
 
             <div className="mb-6 flex items-center justify-between">
-              <p className="text-slate-500">Grant Request</p>
+              <p className="text-[#6b5e50]">Grant Request</p>
               <div className="flex items-center">
                 <TokenIcon
                   className="h-5 w-5 rounded-full"
                   alt={`${token} icon`}
                   symbol={token}
                 />
-                <p className="ml-1 font-semibold text-slate-600">
-                  {ask} <span className="text-slate-400">{token}</span>
+                <p className="ml-1 font-semibold text-[#1d1815]">
+                  {ask} <span className="text-[#6b5e50]">{token}</span>
                 </p>
               </div>
             </div>
 
             <div className="mb-6 flex w-full items-center justify-between">
-              <p className="w-full whitespace-nowrap text-slate-500">
+              <p className="w-full whitespace-nowrap text-[#6b5e50]">
                 Approved Amount
               </p>
               <div className="flex">
@@ -274,7 +274,7 @@ export const ApproveModal = ({
                   min={1}
                   max={max}
                 />
-                <div className="flex items-center rounded-r-md border border-l-0 bg-white px-3 text-[0.95rem] text-slate-400">
+                <div className="flex items-center rounded-r-md border border-l-0 bg-[#FBF7EF] px-3 text-[0.95rem] text-[#6b5e50]">
                   <TokenIcon
                     className="mr-1 h-5 w-5 rounded-full"
                     alt={`${token} icon`}
@@ -286,7 +286,7 @@ export const ApproveModal = ({
             </div>
 
             {warningMessage && (
-              <p className="mb-4 text-center text-sm text-yellow-500">
+              <p className="mb-4 text-center text-sm text-[#e6a12b]">
                 {warningMessage}
               </p>
             )}
@@ -327,7 +327,7 @@ export const ApproveModal = ({
               <div className="flex flex-1">
                 <Button
                   className={cn(
-                    'flex-1 border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600',
+                    'flex-1 border border-[#123a33] bg-[#F2EAD9] text-[#123a33] hover:bg-[#E9E0CD] hover:text-[#123a33]',
                     enableCustomEmail
                       ? 'rounded-l-lg rounded-r-none'
                       : 'rounded-lg',
@@ -352,8 +352,8 @@ export const ApproveModal = ({
                     </>
                   ) : (
                     <>
-                      <div className="mr-2 rounded-full bg-emerald-600 p-0.5">
-                        <Check className="size-2.5 text-white" />
+                      <div className="mr-2 rounded-full bg-[#123a33] p-0.5">
+                        <Check className="size-2.5 text-[#f4eee3]" />
                       </div>
                       <span>
                         {isCustomEmailOpen
@@ -368,7 +368,7 @@ export const ApproveModal = ({
                     <DropdownMenuTrigger asChild>
                       <Button
                         type="button"
-                        className="rounded-l-none rounded-r-lg border border-l-0 border-emerald-500 bg-emerald-50 px-2 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600"
+                        className="rounded-l-none rounded-r-lg border border-l-0 border-[#123a33] bg-[#F2EAD9] px-2 text-[#123a33] hover:bg-[#E9E0CD] hover:text-[#123a33]"
                         disabled={loading}
                         aria-label="Approve options"
                       >

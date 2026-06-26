@@ -109,21 +109,21 @@ export const ExportSheetsModal = ({
               <div className="mb-4 flex justify-center">
                 <div className="relative flex items-center justify-center">
                   <div
-                    className="h-16 w-16 animate-spin rounded-full border-slate-200 border-t-indigo-600"
+                    className="h-16 w-16 animate-spin rounded-full border-[#e6dcc9] border-t-[#ce4a2b]"
                     style={{ borderWidth: '4px' }}
                   />
                   <div className="absolute flex items-center justify-center">
-                    <p className="font-mono text-xl font-bold text-indigo-600">
+                    <p className="font-mono text-xl font-bold text-[#ce4a2b]">
                       {countdown}
                     </p>
                   </div>
                 </div>
               </div>
               <div className="mx-auto flex max-w-[24rem] flex-col items-center gap-3">
-                <p className="text-lg font-semibold text-slate-900">
+                <p className="font-serif text-lg font-semibold text-[#1d1815]">
                   Creating Google Sheet
                 </p>
-                <p className="text-center text-sm text-slate-500">
+                <p className="text-center text-sm text-[#6b5e50]">
                   {`We're exporting your ${entityName} to Google Sheets. This
                   usually takes 10-15 seconds.`}
                 </p>
@@ -143,18 +143,18 @@ export const ExportSheetsModal = ({
           <div className="flex h-full flex-col gap-8">
             <div className="py-10">
               <div className="flex items-center justify-center">
-                <div className="flex items-center justify-center rounded-full bg-emerald-50 p-6">
-                  <div className="rounded-full bg-emerald-600 p-3">
-                    <Check className="h-10 w-10 text-white" strokeWidth={3} />
+                <div className="flex items-center justify-center rounded-full bg-[#E9E0CD] p-6">
+                  <div className="rounded-full bg-[#123a33] p-3">
+                    <Check className="h-10 w-10 text-[#f4eee3]" strokeWidth={3} />
                   </div>
                 </div>
               </div>
 
               <div className="mx-auto flex max-w-[26rem] flex-col items-center gap-2">
-                <p className="mt-6 text-lg font-semibold text-slate-900">
+                <p className="mt-6 font-serif text-lg font-semibold text-[#1d1815]">
                   Google Sheet Ready!
                 </p>
-                <p className="text-center text-sm text-slate-500">
+                <p className="text-center text-sm text-[#6b5e50]">
                   Your {entityName} have been exported successfully. Click the
                   button below to open the sheet in a new tab.
                 </p>
@@ -172,7 +172,7 @@ export const ExportSheetsModal = ({
                 rel="noopener noreferrer"
                 className="flex-1"
               >
-                <Button className="w-full rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600">
+                <Button className="w-full rounded-lg border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#0d2c27] hover:text-[#f4eee3]">
                   <ExternalLink className="size-4" />
                   Open Google Sheet
                 </Button>
@@ -186,18 +186,18 @@ export const ExportSheetsModal = ({
           <div className="flex h-full flex-col">
             <div className="py-8">
               <div className="flex items-center justify-center">
-                <div className="flex items-center justify-center rounded-full bg-red-50 p-6">
-                  <div className="rounded-full bg-red-600 p-3">
-                    <X className="h-10 w-10 text-white" strokeWidth={3} />
+                <div className="flex items-center justify-center rounded-full bg-[#E9E0CD] p-6">
+                  <div className="rounded-full bg-[#ce4a2b] p-3">
+                    <X className="h-10 w-10 text-[#f4eee3]" strokeWidth={3} />
                   </div>
                 </div>
               </div>
 
               <div className="mx-auto flex max-w-[26rem] flex-col items-center gap-2">
-                <p className="mt-8 text-lg font-semibold text-slate-900">
+                <p className="mt-8 font-serif text-lg font-semibold text-[#1d1815]">
                   Export Failed
                 </p>
-                <p className="text-center text-sm text-slate-500">
+                <p className="text-center text-sm text-[#6b5e50]">
                   {`We couldn't create the Google Sheet. This might be due to a
                   temporary issue. Please try again.`}
                 </p>
@@ -210,7 +210,7 @@ export const ExportSheetsModal = ({
                 Close
               </Button>
               <Button
-                className="flex-1 rounded-lg border border-indigo-500 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:text-indigo-600"
+                className="flex-1 rounded-lg border-2 border-[#1d1815] bg-[#ce4a2b] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#A6371C] hover:text-[#f4eee3]"
                 onClick={handleRetry}
               >
                 Try Again
@@ -225,12 +225,12 @@ export const ExportSheetsModal = ({
                 className="text-center"
               >
                 <Button
-                  className="bg-none text-sm font-normal text-slate-400"
+                  className="bg-none text-sm font-normal text-[#6b5e50]"
                   variant="link"
                   type="button"
                 >
                   Still having issues?{' '}
-                  <span className="text-slate-500 underline">Contact Us</span>
+                  <span className="text-[#1d1815] underline">Contact Us</span>
                 </Button>
               </a>
             </div>
@@ -241,11 +241,14 @@ export const ExportSheetsModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose} modal>
-      <DialogContent className="m-0 max-w-xl p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+      <DialogContent
+        className="m-0 max-w-xl border-2 border-[#1d1815] bg-[#FBF7EF] p-0 shadow-[5px_5px_0_#1d1815]"
+        hideCloseIcon
+      >
+        <DialogTitle className="font-serif text-md -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
           Export to Google Sheets
         </DialogTitle>
-        <Separator />
+        <Separator className="bg-[#1d1815]" />
         <div className="px-6 pb-6 text-[0.95rem]">{renderContent()}</div>
       </DialogContent>
     </Dialog>

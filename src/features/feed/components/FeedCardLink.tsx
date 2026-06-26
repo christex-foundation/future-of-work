@@ -29,13 +29,13 @@ export const FeedCardLink = ({
         href={sanitizedHref}
         rel="noopener noreferrer"
         target="_blank"
-        className="hover:decoration-brand-purple flex items-center gap-3 hover:underline hover:underline-offset-2"
+        className="flex items-center gap-3 hover:underline hover:decoration-[#C4502E] hover:underline-offset-2"
         onClick={(event) => handleExternalLinkClick(event, sanitizedHref)}
       >
-        <span className="text-brand-purple text-xs font-medium md:text-base">
+        <span className="text-xs font-semibold text-[#C4502E] md:text-base">
           {children}
         </span>
-        <ArrowRight className="text-brand-purple hidden h-4 w-4 sm:block" />
+        <ArrowRight className="hidden h-4 w-4 text-[#C4502E] sm:block" />
       </Link>
     </div>
   );

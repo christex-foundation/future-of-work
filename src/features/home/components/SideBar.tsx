@@ -1,6 +1,5 @@
 import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
@@ -46,16 +45,6 @@ interface SideBarProps {
     | 'opportunity';
 }
 
-const VibeCard = dynamic(() =>
-  import('@/features/home/components/VibeCard').then((mod) => mod.VibeCard),
-);
-
-const LiveListings = dynamic(() =>
-  import('@/features/home/components/LiveListings').then(
-    (mod) => mod.LiveListings,
-  ),
-);
-
 const SectionHeader = ({
   title,
   href,
@@ -78,19 +67,9 @@ const SectionHeader = ({
   </div>
 );
 
-interface FeedSidebarContentProps {
-  recentEarners: User[] | undefined;
-}
-
-const FeedSidebarContent = ({ recentEarners }: FeedSidebarContentProps) => (
+const FeedSidebarContent = () => (
   <>
-    <VibeCard />
-    {/* <SidebarBanner /> */}
-    <LiveListings>
-      <SectionHeader title="LIVE LISTINGS" href="/earn" />
-    </LiveListings>
     <HowItWorks />
-    <RecentEarners earners={recentEarners} />
   </>
 );
 
@@ -195,7 +174,7 @@ export const HomeSideBar = ({ type }: SideBarProps) => {
 
   const renderContent = () => {
     if (isFeed) {
-      return <FeedSidebarContent recentEarners={recentEarners} />;
+      return <FeedSidebarContent />;
     }
 
     if (isSponsor) {

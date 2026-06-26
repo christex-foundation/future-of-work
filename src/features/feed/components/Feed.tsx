@@ -14,7 +14,6 @@ import { FeedPageLayout } from '@/layouts/Feed';
 import { cn } from '@/utils/cn';
 
 import { HomepagePop } from '@/features/conversion-popups/components/HomepagePop';
-import { VibeCard } from '@/features/home/components/VibeCard';
 
 import { useGetFeed } from '../queries/useGetFeed';
 import { type FeedPostType } from '../types';
@@ -40,8 +39,8 @@ const MenuOption = ({ option, activeMenu, onSelect }: MenuOptionProps) => {
         'cursor-pointer capitalize',
         'text-sm lg:text-base',
         activeMenu === option
-          ? 'font-semibold text-slate-700'
-          : 'font-normal text-slate-500',
+          ? 'font-semibold text-[#C4502E]'
+          : 'font-normal text-[#5C5147] hover:text-[#221A14]',
       )}
       onClick={() => onSelect(option)}
     >
@@ -92,16 +91,16 @@ export const Feed = ({ isWinner = false, id, type, meta }: Props) => {
   return (
     <FeedPageLayout isHomePage meta={meta}>
       <HomepagePop />
-      <div className="border-b py-5 pr-2 pl-6 md:pl-5">
-        <p className="text-lg font-medium text-slate-900 lg:text-xl">
-          Activity Feed
+      <div className="border-b border-[#E6DCC9] py-5 pr-2 pl-6 md:pl-5">
+        <span className="flex items-center gap-2.5 text-[12px] font-semibold tracking-[0.2em] text-[#6B7A4F] uppercase before:h-[1.5px] before:w-[18px] before:bg-[#6B7A4F] before:content-['']">
+          Activity
+        </span>
+        <p className="mt-2 font-serif text-[26px] leading-[1.05] font-normal tracking-[-0.01em] text-[#221A14] lg:text-[30px]">
+          Your community, at work
         </p>
-        <p className="text-base text-slate-500">
-          Discover the best work on Earn
+        <p className="mt-1 text-[15px] text-[#5C5147]">
+          Every win, submission and project — as it happens.
         </p>
-        <div className="flex w-full pt-4 lg:hidden">
-          <VibeCard />
-        </div>
         <div className="mt-4 flex w-full items-center justify-between">
           <div className="mr-3 flex gap-3">
             <MenuOption
@@ -118,10 +117,10 @@ export const Feed = ({ isWinner = false, id, type, meta }: Props) => {
 
           {activeMenu === 'popular' && (
             <Select value={timePeriod} onValueChange={setTimePeriod}>
-              <SelectTrigger className="mr-1 h-6 w-28 text-right text-xs text-slate-500 sm:h-8">
+              <SelectTrigger className="mr-1 h-6 w-28 rounded-full border-[#E6DCC9] bg-[#F2EAD9] text-right text-xs font-semibold text-[#5C5147] sm:h-8">
                 <SelectValue placeholder="Select period" />
               </SelectTrigger>
-              <SelectContent className="text-slate-500">
+              <SelectContent className="text-[#5C5147]">
                 <SelectItem className="text-xs" value="This Week">
                   This Week
                 </SelectItem>
@@ -136,7 +135,7 @@ export const Feed = ({ isWinner = false, id, type, meta }: Props) => {
           )}
         </div>
       </div>
-      <div className="pl-1 md:pl-0">
+      <div className="px-4 py-5 md:px-5">
         <FeedLoop
           feed={feedItems}
           ref={ref}
@@ -150,11 +149,11 @@ export const Feed = ({ isWinner = false, id, type, meta }: Props) => {
               src={'/bg/talent-empty.svg'}
               alt="talent empty"
             />
-            <p className="mx-auto mt-5 w-[200px] text-center text-base font-medium text-slate-500 md:text-lg">
-              No Activity Found
+            <p className="mx-auto mt-5 w-[220px] text-center font-serif text-[22px] text-[#221A14]">
+              No activity found
             </p>
-            <p className="mx-auto mt-1 text-center text-sm text-slate-400 md:text-base">
-              We couldn’t find any activity for your time filter
+            <p className="mx-auto mt-1 text-center text-sm text-[#5C5147] md:text-base">
+              We couldn’t find any activity for your time filter.
             </p>
           </div>
         </FeedLoop>

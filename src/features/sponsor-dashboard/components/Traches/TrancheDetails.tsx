@@ -86,10 +86,10 @@ export const TrancheDetails = ({
   const paidPercentage = (totalPaid / approvedAmount) * 100;
 
   return (
-    <div className="h-full w-full rounded-r-xl bg-white">
+    <div className="h-full w-full rounded-r-xl bg-[#FBF7EF]">
       {tranches?.length ? (
         <>
-          <div className="sticky top-[3rem] rounded-t-xl border-b border-slate-200 bg-white py-1">
+          <div className="sticky top-[3rem] rounded-t-xl border-b border-[#1d1815] bg-[#FBF7EF] py-1">
             <div className="flex w-full items-center justify-between px-4 py-2">
               <div className="flex w-full items-center gap-2">
                 <EarnAvatar
@@ -102,19 +102,19 @@ export const TrancheDetails = ({
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="w-full text-base font-medium whitespace-nowrap text-slate-900">
+                    <p className="w-full font-serif text-base font-medium whitespace-nowrap text-[#1d1815]">
                       {`${selectedTranche?.GrantApplication?.user?.firstName}`}
                       ’s Application
                     </p>
-                    <p className="flex items-center gap-1 text-xs font-semibold whitespace-nowrap text-green-600">
-                      <VerifiedBadge className="text-green-600" />
+                    <p className="flex items-center gap-1 text-xs font-semibold whitespace-nowrap text-[#123a33]">
+                      <VerifiedBadge className="text-[#123a33]" />
                       KYC
                     </p>
                   </div>
 
                   <Link
                     href={`/earn/t/${selectedTranche?.GrantApplication?.user?.username}`}
-                    className="text-brand-purple flex w-full items-center gap-1 text-xs font-medium whitespace-nowrap"
+                    className="flex w-full items-center gap-1 text-xs font-medium whitespace-nowrap text-[#ce4a2b]"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -127,21 +127,21 @@ export const TrancheDetails = ({
                 {isPending && (
                   <>
                     <Button
-                      className="rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="rounded-lg border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#0d2c27] hover:text-[#f4eee3] disabled:cursor-not-allowed disabled:opacity-50"
                       onClick={approveOnOpen}
                     >
-                      <div className="rounded-full bg-emerald-600 p-0.5">
-                        <Check className="size-1 text-white" />
+                      <div className="rounded-full bg-[#1d1815] p-0.5">
+                        <Check className="size-1 text-[#f4eee3]" />
                       </div>
                       Approve
                     </Button>
 
                     <Button
-                      className="rounded-lg border border-red-500 bg-red-50 text-red-600 hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="rounded-lg border-2 border-[#1d1815] bg-[#ce4a2b] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#A6371C] disabled:cursor-not-allowed disabled:opacity-50"
                       onClick={rejectedOnOpen}
                     >
-                      <div className="rounded-full bg-red-600 p-0.5">
-                        <X className="size-1 text-white" />
+                      <div className="rounded-full bg-[#1d1815] p-0.5">
+                        <X className="size-1 text-[#f4eee3]" />
                       </div>
                       Reject
                     </Button>
@@ -150,11 +150,11 @@ export const TrancheDetails = ({
                 {isApproved && (
                   <>
                     <Button
-                      className="rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-100"
+                      className="rounded-lg border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] hover:bg-[#0d2c27] disabled:cursor-not-allowed disabled:opacity-100"
                       disabled={true}
                     >
-                      <div className="rounded-full bg-emerald-600 p-0.5">
-                        <Check className="size-1 text-white" />
+                      <div className="rounded-full bg-[#1d1815] p-0.5">
+                        <Check className="size-1 text-[#f4eee3]" />
                       </div>
                       Approved
                     </Button>
@@ -163,11 +163,11 @@ export const TrancheDetails = ({
                 {isRejected && (
                   <>
                     <Button
-                      className="rounded-lg border border-red-500 bg-red-50 text-red-600 hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-100"
+                      className="rounded-lg border-2 border-[#1d1815] bg-[#ce4a2b] text-[#f4eee3] hover:bg-[#A6371C] disabled:cursor-not-allowed disabled:opacity-100"
                       disabled={true}
                     >
-                      <div className="rounded-full bg-red-600 p-0.5">
-                        <X className="size-1 text-white" />
+                      <div className="rounded-full bg-[#1d1815] p-0.5">
+                        <X className="size-1 text-[#f4eee3]" />
                       </div>
                       Rejected
                     </Button>
@@ -178,7 +178,7 @@ export const TrancheDetails = ({
 
             <div className="flex items-center gap-4 px-4 py-2">
               <div className="flex items-center">
-                <p className="mr-3 text-sm font-semibold whitespace-nowrap text-slate-400">
+                <p className="font-secondary mr-3 text-sm font-semibold tracking-[0.1em] whitespace-nowrap text-[#6b5e50]">
                   TOTAL GRANT
                 </p>
                 <TokenIcon
@@ -187,27 +187,27 @@ export const TrancheDetails = ({
                   symbol={grant?.token}
                 />
 
-                <p className="text-sm font-semibold whitespace-nowrap text-slate-600">
+                <p className="text-sm font-semibold whitespace-nowrap text-[#1d1815]">
                   {`${selectedTranche?.GrantApplication?.approvedAmount?.toLocaleString('en-us')}`}
-                  <span className="ml-0.5 text-slate-400">{grant?.token}</span>
+                  <span className="ml-0.5 text-[#6b5e50]">{grant?.token}</span>
                 </p>
 
                 <div className="mx-3 flex">
                   <CircularProgress
-                    className="h-5 w-5 rounded-full bg-gray-200"
+                    className="h-5 w-5 rounded-full bg-[#E9E0CD]"
                     value={paidPercentage}
                   />
 
-                  <p className="ml-1 text-sm font-medium whitespace-nowrap text-slate-600">
+                  <p className="ml-1 text-sm font-medium whitespace-nowrap text-[#1d1815]">
                     {paidPercentage.toFixed(0)}%{' '}
-                    <span className="text-slate-400">Paid</span>
+                    <span className="text-[#6b5e50]">Paid</span>
                   </p>
                 </div>
               </div>
               {selectedTranche?.GrantApplication?.user?.email && (
                 <CopyButton
                   text={selectedTranche?.GrantApplication?.user?.email || ''}
-                  className="gap-1 text-sm text-slate-400 underline-offset-1 hover:text-slate-500 hover:underline"
+                  className="gap-1 text-sm text-[#6b5e50] underline-offset-1 hover:text-[#1d1815] hover:underline"
                   contentProps={{ side: 'right' }}
                 >
                   <MdOutlineMail />
@@ -220,7 +220,7 @@ export const TrancheDetails = ({
               {selectedTranche?.walletAddress && (
                 <CopyButton
                   text={selectedTranche?.walletAddress || ''}
-                  className="gap-1 text-sm text-slate-400 underline-offset-1 hover:text-slate-500 hover:underline"
+                  className="gap-1 text-sm text-[#6b5e50] underline-offset-1 hover:text-[#1d1815] hover:underline"
                   contentProps={{ side: 'right' }}
                 >
                   <MdOutlineAccountBalanceWallet />
@@ -232,21 +232,21 @@ export const TrancheDetails = ({
 
               <div className="flex gap-2">
                 <Telegram
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#1d1815]"
                   link={selectedTranche?.GrantApplication?.user?.telegram || ''}
                 />
 
                 <Twitter
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#1d1815]"
                   link={selectedTranche?.GrantApplication?.user?.twitter || ''}
                 />
 
                 <Website
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#1d1815]"
                   link={selectedTranche?.GrantApplication?.user?.website || ''}
                 />
               </div>
-              <p className="text-sm whitespace-nowrap text-slate-400">
+              <p className="text-sm whitespace-nowrap text-[#6b5e50]">
                 ${formatNumberWithSuffix(selectedTranche?.totalEarnings || 0)}{' '}
                 Earned
               </p>
@@ -255,12 +255,12 @@ export const TrancheDetails = ({
 
           <div className="flex h-[39.3rem] w-full">
             <ScrollArea
-              className="flex w-full flex-1 flex-col overflow-y-auto border-r border-slate-200 p-4"
+              className="flex w-full flex-1 flex-col overflow-y-auto border-r border-[#1d1815] p-4"
               type="auto"
             >
               {selectedTranche?.trancheNumber === 1 && (
                 <div className="mb-4">
-                  <p className="mb-1 text-xs text-slate-500">
+                  <p className="mb-1 text-xs text-[#6b5e50]">
                     Note: Since this is the first tranche, it was added here
                     automatically upon user&apos;s successful KYC. First
                     tranches do not require explicit approval from the leads.
@@ -271,7 +271,7 @@ export const TrancheDetails = ({
               {(selectedTranche?.status === 'Approved' ||
                 selectedTranche?.status === 'Paid') && (
                 <div className="mb-4">
-                  <p className="mb-1 text-xs font-semibold text-slate-400 uppercase">
+                  <p className="font-secondary mb-1 text-xs font-semibold tracking-[0.1em] text-[#6b5e50] uppercase">
                     APPROVED TRANCHE AMOUNT
                   </p>
                   <div className="flex items-center gap-0.5">
@@ -281,9 +281,9 @@ export const TrancheDetails = ({
                       symbol={grant?.token}
                     />
 
-                    <p className="text-sm font-semibold whitespace-nowrap text-slate-600">
+                    <p className="text-sm font-semibold whitespace-nowrap text-[#1d1815]">
                       {`${selectedTranche?.approvedAmount?.toLocaleString('en-us')}`}
-                      <span className="ml-0.5 text-slate-400">
+                      <span className="ml-0.5 text-[#6b5e50]">
                         {grant?.token}
                       </span>
                     </p>
@@ -292,7 +292,7 @@ export const TrancheDetails = ({
               )}
               {selectedTranche?.trancheNumber !== 1 && (
                 <div className="mb-4">
-                  <p className="mb-1 text-xs font-semibold text-slate-400 uppercase">
+                  <p className="font-secondary mb-1 text-xs font-semibold tracking-[0.1em] text-[#6b5e50] uppercase">
                     TRANCHE ASK
                   </p>
                   <div className="flex items-center gap-0.5">
@@ -302,9 +302,9 @@ export const TrancheDetails = ({
                       symbol={grant?.token}
                     />
 
-                    <p className="text-sm font-semibold whitespace-nowrap text-slate-600">
+                    <p className="text-sm font-semibold whitespace-nowrap text-[#1d1815]">
                       {`${selectedTranche?.ask?.toLocaleString('en-us')}`}
-                      <span className="ml-0.5 text-slate-400">
+                      <span className="ml-0.5 text-[#6b5e50]">
                         {grant?.token}
                       </span>
                     </p>
@@ -427,14 +427,14 @@ export const TrancheDetails = ({
         </>
       ) : isLoading ? (
         <div className="flex h-full items-center justify-center p-3">
-          <p className="text-sm text-slate-400">Loading...</p>
+          <p className="text-sm text-[#6b5e50]">Loading...</p>
         </div>
       ) : (
         <div className="p-3">
-          <p className="text-xl font-medium text-slate-500">
+          <p className="font-serif text-xl font-medium text-[#1d1815]">
             No applications found
           </p>
-          <p className="text-sm text-slate-400">Try a different search query</p>
+          <p className="text-sm text-[#6b5e50]">Try a different search query</p>
         </div>
       )}
     </div>

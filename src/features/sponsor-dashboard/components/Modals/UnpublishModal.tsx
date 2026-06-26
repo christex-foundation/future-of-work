@@ -76,7 +76,7 @@ export const UnpublishModal = ({
             <>
               You can unpublish this listing if you have not found any suitable
               candidate.{' '}
-              <span className="font-semibold text-slate-500">
+              <span className="font-semibold text-[#1d1815]">
                 Unpublishing the listing will send rejection emails to all
                 applicants.
               </span>
@@ -91,13 +91,16 @@ export const UnpublishModal = ({
 
   return (
     <Dialog open={unpublishIsOpen} onOpenChange={unpublishOnClose}>
-      <DialogContent className="m-0 p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+      <DialogContent
+        className="m-0 border-2 border-[#1d1815] bg-[#FBF7EF] p-0 shadow-[5px_5px_0_#1d1815]"
+        hideCloseIcon
+      >
+        <DialogTitle className="font-serif text-md -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
           {dialogContent.header}
         </DialogTitle>
-        <Separator />
+        <Separator className="bg-[#1d1815]" />
         <div className="px-6 pb-6 text-[0.95rem]">
-          <div className="mb-4 text-slate-500">{dialogContent.subtext}</div>
+          <div className="mb-4 text-[#6b5e50]">{dialogContent.subtext}</div>
 
           <div className="flex gap-3">
             <div className="w-1/2" />
@@ -109,7 +112,7 @@ export const UnpublishModal = ({
               Close
             </Button>
             <Button
-              className="flex-1 rounded-lg border border-red-500 bg-red-50 text-red-600 hover:bg-red-100"
+              className="flex-1 rounded-lg border-2 border-[#1d1815] bg-[#ce4a2b] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#A6371C]"
               disabled={updateMutation.isPending}
               onClick={() => changeBountyStatus(false)}
             >
@@ -120,8 +123,8 @@ export const UnpublishModal = ({
                 </>
               ) : (
                 <>
-                  <div className="rounded-full bg-red-600 p-0.5">
-                    <X className="size-2 text-white" />
+                  <div className="rounded-full bg-[#1d1815] p-0.5">
+                    <X className="size-2 text-[#f4eee3]" />
                   </div>
                   <span>Unpublish</span>
                 </>

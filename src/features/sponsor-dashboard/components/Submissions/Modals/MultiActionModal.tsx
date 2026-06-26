@@ -69,10 +69,10 @@ export const MultiActionModal = ({
             : `You are about to reject ${submissionIds.length} application${isMultiple ? 's' : ''}. They will be notified via email.`,
           buttonText: `Reject ${submissionIds.length} Application${isMultiple ? 's' : ''}`,
           buttonClass:
-            'rounded-lg border border-red-300 bg-red-50 text-red-600 hover:bg-red-100',
+            'rounded-lg border-2 border-[#1d1815] bg-[#ce4a2b] text-[#f4eee3] hover:bg-[#A6371C]',
           icon: (
-            <div className="rounded-full bg-red-600 p-0.5">
-              <X className="size-2.5 text-white" />
+            <div className="rounded-full bg-[#1d1815] p-0.5">
+              <X className="size-2.5 text-[#f4eee3]" />
             </div>
           ),
           loadingText: 'Rejecting',
@@ -85,7 +85,7 @@ export const MultiActionModal = ({
           description: `You are about to select ${submissionIds.length} submissions for Bonus spot${isMultiple ? 's' : ''}. You can update this list till you announce winners.`,
           buttonText: `Allocate Bonus spot(s)`,
           buttonClass:
-            'rounded-lg border border-blue-300 bg-blue-50 text-blue-600 hover:bg-blue-100',
+            'rounded-lg border-2 border-[#1d1815] bg-[#e6a12b] text-[#1d1815] hover:bg-[#d49223]',
           loadingText: 'Allocating Bonus',
         };
 
@@ -95,8 +95,8 @@ export const MultiActionModal = ({
           description: `Marking these submissions as spam would affect the users' ability to submit to other opportunities on Earn.`,
           buttonText: `Mark as Spam`,
           buttonClass:
-            'rounded-lg border border-orange-400 bg-orange-50 text-orange-500 hover:bg-orange-100',
-          icon: <Flag className="size-2.5 text-orange-500" />,
+            'rounded-lg border-2 border-[#1d1815] bg-[#FBF7EF] text-[#1d1815] hover:bg-[#F2EAD9]',
+          icon: <Flag className="size-2.5 text-[#1d1815]" />,
           loadingText: 'Marking as Spam',
           hasWarning: true,
         };
@@ -107,7 +107,7 @@ export const MultiActionModal = ({
           description: `You're about to shortlist ${submissionIds.length} submission${isMultiple ? 's' : ''} for further review. You can update this list anytime.`,
           buttonText: `Shortlist ${isMultiple ? 'All' : ''}`,
           buttonClass:
-            'rounded-lg border border-purple-300 bg-purple-50 text-purple-600 hover:bg-purple-100',
+            'rounded-lg border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] hover:bg-[#0d2b26]',
           loadingText: 'Shortlisting',
         };
 
@@ -204,17 +204,17 @@ export const MultiActionModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="m-0 p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogTitle className="text-md font-serif -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
           {config.title}
         </DialogTitle>
         <Separator />
         <div className="px-6 pb-6 text-[0.95rem]">
-          <p className="mb-4 text-slate-500">{config.description}</p>
+          <p className="mb-4 text-[#6b5e50]">{config.description}</p>
 
           {config.hasWarning && (
             <div className="mb-4 flex items-center gap-1">
-              <AlertTriangle className="h-4 w-4 text-red-600" />
-              <span className="text-sm font-medium text-slate-800">
+              <AlertTriangle className="h-4 w-4 text-[#ce4a2b]" />
+              <span className="text-sm font-medium text-[#1d1815]">
                 This action cannot be undone!
               </span>
             </div>

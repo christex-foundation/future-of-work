@@ -103,7 +103,7 @@ export const RecordPaymentModal = ({
   return (
     <Dialog open={recordPaymentIsOpen} onOpenChange={recordPaymentOnClose}>
       <DialogContent className="m-0 p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-serif font-semibold text-[#1d1815]">
           Add Grant Payment
         </DialogTitle>
         <Separator />
@@ -118,13 +118,13 @@ export const RecordPaymentModal = ({
                 name="amount"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[0.95rem] text-slate-500">
+                    <FormLabel className="text-[0.95rem] text-[#6b5e50]">
                       Amount
                     </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        className="focus-visible:ring-brand-purple border-slate-300 text-slate-800"
+                        className="focus-visible:ring-[#ce4a2b] border-[#1d1815] text-[#1d1815]"
                         placeholder="Enter amount"
                         {...field}
                         onChange={(e) => field.onChange(Number(e.target.value))}
@@ -140,12 +140,12 @@ export const RecordPaymentModal = ({
                 name="transactionLink"
                 render={({ field }) => (
                   <FormItem className="mt-4">
-                    <FormLabel className="text-[0.95rem] text-slate-500">
+                    <FormLabel className="text-[0.95rem] text-[#6b5e50]">
                       Transaction Link
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="border-slate-300"
+                        className="border-[#1d1815]"
                         placeholder="Enter transaction link"
                         {...field}
                       />
@@ -166,7 +166,7 @@ export const RecordPaymentModal = ({
                   Close
                 </Button>
                 <Button
-                  className="flex-1 rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600"
+                  className="flex-1 rounded-lg border border-[#123a33] bg-[#F2EAD9] text-[#123a33] hover:bg-[#E9E0CD] hover:text-[#123a33]"
                   disabled={addPaymentMutation.isPending}
                   type="submit"
                 >
@@ -177,8 +177,8 @@ export const RecordPaymentModal = ({
                     </>
                   ) : (
                     <>
-                      <div className="rounded-full bg-emerald-600 p-0.5">
-                        <Plus className="size-2 text-white" />
+                      <div className="rounded-full bg-[#123a33] p-0.5">
+                        <Plus className="size-2 text-[#f4eee3]" />
                       </div>
                       <span>Add Payment</span>
                     </>

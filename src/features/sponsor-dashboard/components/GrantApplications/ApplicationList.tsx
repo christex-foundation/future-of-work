@@ -79,18 +79,18 @@ export const ApplicationList = ({
   }, [selectedApplication?.id]);
 
   return (
-    <div className="h-full w-full rounded-l-lg border border-slate-200 bg-white">
+    <div className="h-full w-full rounded-l-lg border border-[#e6dcc9] bg-[#FBF7EF]">
       <div className="flex w-full items-center justify-between gap-2 p-3">
         <Checkbox
           checked={!isToggleDisabled ? isAllToggled : false}
           disabled={isToggleDisabled}
           onCheckedChange={() => toggleAllApplications()}
-          className="data-[state=checked]:border-brand-purple data-[state=checked]:bg-brand-purple"
+          className="data-[state=checked]:border-[#ce4a2b] data-[state=checked]:bg-[#ce4a2b]"
         />
         <div className="relative w-full">
-          <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6b5e50]" />
           <Input
-            className="placeholder:text-md focus-visible:ring-brand-purple h-10 border-slate-200 bg-white pl-9 placeholder:font-medium placeholder:text-slate-400"
+            className="placeholder:text-md focus-visible:ring-[#ce4a2b] h-10 border-[#e6dcc9] bg-[#FBF7EF] pl-9 placeholder:font-medium placeholder:text-[#6b5e50]"
             onChange={(e) => {
               debouncedSetSearchTextRef.current?.(e.target.value);
             }}
@@ -105,7 +105,7 @@ export const ApplicationList = ({
       </div>
       <div
         ref={scrollContainerRef}
-        className="scrollbar-thin scrollbar-w-1 scrollbar-track-white scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-300 h-[42rem] w-full overflow-y-auto rounded-bl-lg border-t bg-white"
+        className="scrollbar-thin scrollbar-w-1 scrollbar-track-[#FBF7EF] scrollbar-thumb-[#e6dcc9] hover:scrollbar-thumb-[#1d1815]/30 h-[42rem] w-full overflow-y-auto rounded-bl-lg border-t border-[#e6dcc9] bg-[#FBF7EF]"
       >
         {applications?.map((application) => {
           const applicationStatus = application?.applicationStatus;
@@ -135,10 +135,10 @@ export const ApplicationList = ({
               key={application?.id}
               data-application-id={application?.id}
               className={cn(
-                'flex cursor-pointer items-center justify-between gap-4 border-b border-slate-200 px-3 py-2',
-                'hover:bg-slate-100',
+                'flex cursor-pointer items-center justify-between gap-4 border-b border-[#e6dcc9] px-3 py-2',
+                'hover:bg-[#F2EAD9]',
                 selectedApplication?.id === application?.id
-                  ? 'bg-[#F5F3FF80]'
+                  ? 'bg-[#F2EAD9]'
                   : 'bg-transparent',
               )}
               onClick={() => {
@@ -147,7 +147,7 @@ export const ApplicationList = ({
             >
               <div className="flex items-center">
                 <Checkbox
-                  className="data-[state=checked]:border-brand-purple data-[state=checked]:bg-brand-purple mr-2 disabled:invisible"
+                  className="data-[state=checked]:border-[#ce4a2b] data-[state=checked]:bg-[#ce4a2b] mr-2 disabled:invisible"
                   checked={isToggled(application.id)}
                   disabled={application?.applicationStatus !== 'Pending'}
                   onCheckedChange={() => toggleApplication(application.id)}
@@ -159,11 +159,11 @@ export const ApplicationList = ({
                 />
 
                 <div className="ml-2 w-40">
-                  <p className="overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap text-slate-700">
+                  <p className="overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap text-[#1d1815]">
                     {application?.projectTitle}
                   </p>
                   <span className="flex items-center gap-2">
-                    <p className="overflow-hidden text-xs font-medium text-ellipsis whitespace-nowrap text-slate-500">
+                    <p className="overflow-hidden text-xs font-medium text-ellipsis whitespace-nowrap text-[#6b5e50]">
                       {`${application?.user?.firstName} ${application?.user?.lastName}`}
                     </p>
                     {chapter?.icons && (

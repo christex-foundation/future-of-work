@@ -6,7 +6,7 @@ import { JTTG } from '@/constants/Telegram';
 
 export const HelpBanner = () => {
   return (
-    <div className="rounded-md border border-slate-200 bg-slate-50 px-4 py-2 text-white 2xl:bg-indigo-50 2xl:px-8 2xl:py-5">
+    <div className="rounded-md border-2 border-[#1d1815] bg-[#FBF7EF] px-4 py-2 text-[#1d1815] shadow-[5px_5px_0_#1d1815] 2xl:bg-[#FBF7EF] 2xl:px-8 2xl:py-5">
       <a
         className="ph-no-capture no-underline"
         href={JTTG}
@@ -22,21 +22,21 @@ export const HelpBanner = () => {
               src={'/assets/sponsor/jill.png'}
             />
             <div className="flex gap-2 2xl:block">
-              <p className="text-sm font-semibold whitespace-nowrap text-slate-900 2xl:text-base">
+              <p className="text-sm font-semibold whitespace-nowrap text-[#1d1815] 2xl:text-base">
                 Stuck somewhere?
               </p>
-              <p className="text-sm font-semibold whitespace-nowrap text-slate-500 2xl:text-base">
+              <p className="text-sm font-semibold whitespace-nowrap text-[#ce4a2b] 2xl:text-base">
                 Message Us
               </p>
             </div>
           </div>
           <MdOutlineChatBubbleOutline
-            color="#1E293B"
+            color="#1d1815"
             size={20}
             className="2xl:hidden"
           />
           <MdOutlineChatBubbleOutline
-            color="#1E293B"
+            color="#1d1815"
             size={24}
             className="hidden 2xl:block"
           />

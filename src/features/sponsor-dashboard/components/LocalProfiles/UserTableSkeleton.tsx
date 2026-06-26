@@ -9,14 +9,14 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/utils/cn';
 
-const thClassName = 'text-xs font-medium tracking-wider text-slate-500';
+const thClassName = 'text-xs font-medium tracking-wider text-[#6b5e50]';
 
 export const UserTableSkeleton = ({ rows = 10 }: { rows?: number }) => {
   return (
-    <div className="rounded-md border border-slate-200 bg-white">
+    <div className="rounded-xl border-2 border-[#1d1815] bg-[#FBF7EF] shadow-[5px_5px_0_#1d1815]">
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-100">
+          <TableRow className="border-[#e6dcc9] bg-[#F2EAD9]">
             <TableHead className={cn(thClassName, 'pr-2')}># Rank</TableHead>
             <TableHead className={thClassName}>User</TableHead>
             <TableHead className={cn(thClassName, 'px-1')}>$ Earned</TableHead>
@@ -36,46 +36,46 @@ export const UserTableSkeleton = ({ rows = 10 }: { rows?: number }) => {
             <TableRow key={index}>
               <TableCell className="w-12 p-1">
                 <div className="flex justify-center">
-                  <Skeleton className="h-4 w-8" />
+                  <Skeleton className="h-4 w-8 bg-[#E9E0CD]" />
                 </div>
               </TableCell>
               <TableCell>
                 <div className="flex items-center">
-                  <Skeleton className="h-9 w-9 rounded-full" />
+                  <Skeleton className="h-9 w-9 rounded-full bg-[#E9E0CD]" />
                   <div className="ml-2">
-                    <Skeleton className="mb-1 h-4 w-28" />
-                    <Skeleton className="h-3 w-20" />
+                    <Skeleton className="mb-1 h-4 w-28 bg-[#E9E0CD]" />
+                    <Skeleton className="h-3 w-20 bg-[#E9E0CD]" />
                   </div>
                 </div>
               </TableCell>
               <TableCell className="px-1">
-                <Skeleton className="h-4 w-16" />
+                <Skeleton className="h-4 w-16 bg-[#E9E0CD]" />
               </TableCell>
               <TableCell className="p-0">
                 <div className="flex justify-center">
-                  <Skeleton className="h-4 w-6" />
+                  <Skeleton className="h-4 w-6 bg-[#E9E0CD]" />
                 </div>
               </TableCell>
               <TableCell className="p-1">
                 <div className="flex justify-center">
-                  <Skeleton className="h-4 w-6" />
+                  <Skeleton className="h-4 w-6 bg-[#E9E0CD]" />
                 </div>
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <Skeleton className="h-5 w-16 rounded" />
-                  <Skeleton className="h-5 w-14 rounded" />
+                  <Skeleton className="h-5 w-16 rounded bg-[#E9E0CD]" />
+                  <Skeleton className="h-5 w-14 rounded bg-[#E9E0CD]" />
                 </div>
               </TableCell>
               <TableCell>
                 <div className="flex min-w-16 gap-4">
-                  <Skeleton className="h-5 w-5 rounded" />
-                  <Skeleton className="h-5 w-5 rounded" />
-                  <Skeleton className="h-5 w-5 rounded" />
+                  <Skeleton className="h-5 w-5 rounded bg-[#E9E0CD]" />
+                  <Skeleton className="h-5 w-5 rounded bg-[#E9E0CD]" />
+                  <Skeleton className="h-5 w-5 rounded bg-[#E9E0CD]" />
                 </div>
               </TableCell>
               <TableCell>
-                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-24 bg-[#E9E0CD]" />
               </TableCell>
             </TableRow>
           ))}

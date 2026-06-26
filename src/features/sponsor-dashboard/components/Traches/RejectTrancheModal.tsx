@@ -119,27 +119,30 @@ export const RejectTrancheModal = ({
           if (!open) requestClose();
         }}
       >
-        <DialogContent className="m-0 p-0" hideCloseIcon>
-          <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogContent
+          className="m-0 border-2 border-[#1d1815] bg-[#FBF7EF] p-0 shadow-[5px_5px_0_#1d1815]"
+          hideCloseIcon
+        >
+          <DialogTitle className="font-serif text-md -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
             Reject Tranche Payment
           </DialogTitle>
-          <Separator />
+          <Separator className="bg-[#1d1815]" />
           <div className="px-6 pb-6 text-[0.95rem]">
-            <p className="mb-4 text-slate-500">
+            <p className="mb-4 text-[#6b5e50]">
               You are about to reject {granteeName}&apos;s tranche payment. They
               will be notified via email.
             </p>
 
             <div className="mb-6 flex items-center justify-between">
-              <p className="text-slate-500">Tranche Payment</p>
+              <p className="text-[#6b5e50]">Tranche Payment</p>
               <div className="flex items-center">
                 <TokenIcon
                   className="h-5 w-5 rounded-full"
                   alt={`${token} icon`}
                   symbol={token}
                 />
-                <p className="ml-1 font-semibold text-slate-600">
-                  {ask} <span className="text-slate-400">{token}</span>
+                <p className="ml-1 font-semibold text-[#1d1815]">
+                  {ask} <span className="text-[#6b5e50]">{token}</span>
                 </p>
               </div>
             </div>
@@ -178,7 +181,7 @@ export const RejectTrancheModal = ({
               <div className="flex flex-1">
                 <Button
                   className={cn(
-                    'flex-1 border border-red-500 bg-red-50 text-red-600 hover:bg-red-100',
+                    'flex-1 border-2 border-[#1d1815] bg-[#ce4a2b] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#A6371C]',
                     enableCustomEmail
                       ? 'rounded-l-lg rounded-r-none'
                       : 'rounded-lg',
@@ -202,8 +205,8 @@ export const RejectTrancheModal = ({
                     </>
                   ) : (
                     <>
-                      <div className="rounded-full bg-red-600 p-0.5">
-                        <X className="size-2 text-white" />
+                      <div className="rounded-full bg-[#1d1815] p-0.5">
+                        <X className="size-2 text-[#f4eee3]" />
                       </div>
                       <span>
                         {isCustomEmailOpen
@@ -218,7 +221,7 @@ export const RejectTrancheModal = ({
                     <DropdownMenuTrigger asChild>
                       <Button
                         type="button"
-                        className="rounded-l-none rounded-r-lg border border-l-0 border-red-500 bg-red-50 px-2 text-red-600 hover:bg-red-100"
+                        className="rounded-l-none rounded-r-lg border-2 border-l-0 border-[#1d1815] bg-[#ce4a2b] px-2 text-[#f4eee3] hover:bg-[#A6371C]"
                         disabled={loading}
                         aria-label="Reject tranche options"
                       >

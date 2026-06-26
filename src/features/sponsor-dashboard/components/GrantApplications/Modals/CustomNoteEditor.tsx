@@ -39,8 +39,8 @@ export const CustomNoteEditor = ({
     <div className="mb-6">
       <div className="mb-2 flex items-center justify-between">
         <div>
-          <p className="font-medium text-slate-600">Custom Note</p>
-          <p className="text-xs text-slate-400">
+          <p className="font-medium text-[#1d1815]">Custom Note</p>
+          <p className="text-xs text-[#6b5e50]">
             This custom note will be sent to the applicant as part of the{' '}
             {emailType} email.
           </p>
@@ -50,22 +50,22 @@ export const CustomNoteEditor = ({
             <Button
               type="button"
               variant="ghost"
-              className="h-auto px-2 py-1 text-xs font-semibold text-slate-500"
+              className="h-auto px-2 py-1 text-xs font-semibold text-[#6b5e50]"
             >
               <Eye className="size-3.5" />
               Preview
             </Button>
           </DialogTrigger>
           <DialogContent className="max-h-[86vh] max-w-2xl gap-0 overflow-hidden p-0">
-            <div className="border-b border-slate-200 px-5 py-4">
-              <DialogTitle className="text-base font-semibold text-slate-700">
+            <div className="border-b border-[#e6dcc9] px-5 py-4">
+              <DialogTitle className="font-serif text-base font-semibold text-[#1d1815]">
                 Email Preview
               </DialogTitle>
             </div>
-            <div className="max-h-[70vh] overflow-y-auto bg-slate-50 px-4 py-5">
-              <div className="mx-auto rounded-md border border-slate-200 bg-white px-5 py-4 shadow-sm">
+            <div className="max-h-[70vh] overflow-y-auto bg-[#f4eee3] px-4 py-5">
+              <div className="mx-auto rounded-md border border-[#e6dcc9] bg-[#FBF7EF] px-5 py-4 shadow-sm">
                 <div
-                  className="prose prose-sm max-w-none text-slate-600"
+                  className="prose prose-sm max-w-none text-[#1d1815]"
                   dangerouslySetInnerHTML={{ __html: previewHtml }}
                 />
               </div>
@@ -81,11 +81,11 @@ export const CustomNoteEditor = ({
         error={!!error}
         placeholder="Add a note from the grant reviewer"
       />
-      <p className="mt-1 text-right text-xs text-slate-400">
+      <p className="mt-1 text-right text-xs text-[#6b5e50]">
         {noteCharCount.toLocaleString()} /{' '}
         {CUSTOM_EMAIL_MAX_CHARS.toLocaleString()}
       </p>
-      {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+      {error && <p className="mt-2 text-sm text-[#ce4a2b]">{error}</p>}
     </div>
   );
 };

@@ -131,7 +131,7 @@ export function Home({
 
   return (
     <Default
-      className="bg-white"
+      className={cn(type === 'feed' ? 'bg-[#FBF7EF]' : 'bg-white')}
       meta={
         meta || (
           <Meta

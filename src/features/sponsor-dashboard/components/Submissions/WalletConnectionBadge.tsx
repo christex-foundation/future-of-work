@@ -74,16 +74,16 @@ export function WalletConnectionBadge({
 
   return (
     <div className={cn('flex items-center gap-2', className)}>
-      <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2">
+      <div className="flex items-center gap-2 rounded-lg border border-[#e6dcc9] bg-[#FBF7EF] px-3 py-2">
         <div className="flex h-2 w-2 items-center justify-center">
-          <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
+          <div className="h-2 w-2 animate-pulse rounded-full bg-[#123a33]" />
         </div>
-        <Wallet className="h-4 w-4 text-slate-600" />
-        <span className="text-sm font-medium text-slate-900">
+        <Wallet className="h-4 w-4 text-[#6b5e50]" />
+        <span className="text-sm font-medium text-[#1d1815]">
           {truncatePublicKey(publicKey?.toBase58(), 4)}
         </span>
         {wallet && (
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-[#6b5e50]">
             ({wallet.adapter.name})
           </span>
         )}
@@ -94,7 +94,7 @@ export function WalletConnectionBadge({
           <Button
             variant="outline"
             size="sm"
-            className="h-10 gap-1 border-slate-200"
+            className="h-10 gap-1 border-[#1d1815]/20"
           >
             <span className="text-sm">Manage</span>
             <ChevronDown className="h-4 w-4" />
@@ -111,7 +111,7 @@ export function WalletConnectionBadge({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleDisconnect}
-            className="cursor-pointer text-red-600 focus:text-red-600"
+            className="cursor-pointer text-[#ce4a2b] focus:text-[#ce4a2b]"
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Disconnect</span>

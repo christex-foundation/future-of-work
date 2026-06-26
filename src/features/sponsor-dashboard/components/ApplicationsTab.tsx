@@ -384,8 +384,8 @@ export const ApplicationsTab = ({ slug }: Props) => {
 
   return (
     <>
-      <div className="flex w-full items-start bg-white">
-        <div className="grid min-h-[600px] w-full grid-cols-[23rem_1fr] bg-white">
+      <div className="flex w-full items-start bg-[#FBF7EF]">
+        <div className="grid min-h-[600px] w-full grid-cols-[23rem_1fr] bg-[#FBF7EF]">
           <div className="h-full w-full">
             <ApplicationList
               selectedFilters={selectedFilters}
@@ -404,7 +404,7 @@ export const ApplicationsTab = ({ slug }: Props) => {
             />
           </div>
 
-          <div className="h-full w-full rounded-r-xl border-t border-r border-b border-slate-200 bg-white">
+          <div className="h-full w-full rounded-r-xl border-t border-r border-b border-[#1d1815] bg-[#FBF7EF]">
             {!applications?.length && !searchText && !isApplicationsLoading ? (
               <>
                 <ExternalImage
@@ -412,12 +412,12 @@ export const ApplicationsTab = ({ slug }: Props) => {
                   alt={'talent empty'}
                   src={'/bg/talent-empty.svg'}
                 />
-                <p className="mx-auto mt-5 text-center text-lg font-semibold text-slate-600">
+                <p className="font-serif mx-auto mt-5 text-center text-lg font-semibold text-[#1d1815]">
                   {selectedFilters.size > 0 || searchText
                     ? 'Zero Results'
                     : 'People are working!'}
                 </p>
-                <p className="mx-auto mb-[200px] text-center font-medium text-slate-400">
+                <p className="mx-auto mb-[200px] text-center font-medium text-[#6b5e50]">
                   {selectedFilters.size > 0 || searchText
                     ? 'For the filters you have selected'
                     : 'Submissions will start appearing here'}
@@ -439,7 +439,7 @@ export const ApplicationsTab = ({ slug }: Props) => {
 
       <div className="mt-4 flex items-center justify-start gap-4">
         {!!searchText && (
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[#6b5e50]">
             Found <span className="font-bold">{applications?.length || 0}</span>{' '}
             {applications?.length === 1 ? 'result' : 'results'}
           </p>
@@ -459,20 +459,20 @@ export const ApplicationsTab = ({ slug }: Props) => {
         >
           <div className="mx-auto w-fit rounded-lg">
             {selectedApplicationIds.size > 100 && (
-              <p className="pb-2 text-center text-red-500">
+              <p className="pb-2 text-center text-[#ce4a2b]">
                 Cannot select more than 100 applications
               </p>
             )}
 
             <div className="flex items-center gap-3">
-              <p className="text-base font-medium whitespace-nowrap">
+              <p className="text-base font-medium whitespace-nowrap text-[#1d1815]">
                 {selectedApplicationIds.size} Selected
               </p>
 
-              <div className="h-4 w-px bg-slate-300" />
+              <div className="h-4 w-px bg-[#1d1815]/20" />
 
               <Button
-                className="px-2 font-semibold text-slate-500"
+                className="px-2 font-semibold text-[#6b5e50]"
                 onClick={() => {
                   setSelectedApplicationIds(new Set());
                 }}
@@ -482,7 +482,7 @@ export const ApplicationsTab = ({ slug }: Props) => {
               </Button>
 
               <Button
-                className="rounded-lg border border-orange-300 bg-orange-50 text-orange-600 hover:bg-orange-100 disabled:opacity-50"
+                className="rounded-lg border border-[#e6a12b] bg-[#e6a12b]/10 text-[#e6a12b] hover:bg-[#e6a12b]/20 disabled:opacity-50"
                 disabled={selectedApplicationIds.size === 0}
                 onClick={() => handleModalAction('spam')}
               >
@@ -491,7 +491,7 @@ export const ApplicationsTab = ({ slug }: Props) => {
               </Button>
 
               <Button
-                className="rounded-lg border border-red-300 bg-red-50 text-red-600 hover:bg-red-100 disabled:opacity-50"
+                className="rounded-lg border border-[#ce4a2b] bg-[#ce4a2b]/10 text-[#ce4a2b] hover:bg-[#ce4a2b]/20 disabled:opacity-50"
                 disabled={
                   selectedApplicationIds.size === 0 ||
                   selectedApplicationIds.size > 100
@@ -507,7 +507,7 @@ export const ApplicationsTab = ({ slug }: Props) => {
                 >
                   <path
                     d="M6.11111 0.777832C9.49056 0.777832 12.2222 3.5095 12.2222 6.88894C12.2222 10.2684 9.49056 13.0001 6.11111 13.0001C2.73167 13.0001 0 10.2684 0 6.88894C0 3.5095 2.73167 0.777832 6.11111 0.777832ZM8.305 3.83339L6.11111 6.02728L3.91722 3.83339L3.05556 4.69505L5.24944 6.88894L3.05556 9.08283L3.91722 9.9445L6.11111 7.75061L8.305 9.9445L9.16667 9.08283L6.97278 6.88894L9.16667 4.69505L8.305 3.83339Z"
-                    fill="#E11D48"
+                    fill="#ce4a2b"
                   />
                 </svg>
                 Reject All

@@ -87,11 +87,11 @@ export const SelectWinner = ({
               <>
                 <Button
                   variant="destructive"
-                  className="rounded-lg border border-red-500 bg-red-50 text-red-600 hover:bg-red-100 disabled:opacity-50"
+                  className="rounded-lg border border-[#ce4a2b] bg-[#ce4a2b]/10 text-[#ce4a2b] hover:bg-[#ce4a2b]/20 disabled:opacity-50"
                   disabled={isMultiSelectOn}
                   onClick={rejectedOnOpen}
                 >
-                  <div className="rounded-full bg-red-600 p-0.5">
+                  <div className="rounded-full bg-[#ce4a2b] p-0.5">
                     <X className="size-1 text-white" />
                   </div>
                   Reject
@@ -99,9 +99,9 @@ export const SelectWinner = ({
                 <Button
                   disabled={isMultiSelectOn}
                   onClick={onWinnersAnnounceOpen}
-                  className="rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 disabled:opacity-50"
+                  className="rounded-lg border border-[#123a33] bg-[#123a33]/10 text-[#123a33] hover:bg-[#123a33]/20 disabled:opacity-50"
                 >
-                  <div className="rounded-full bg-emerald-600 p-0.5">
+                  <div className="rounded-full bg-[#123a33] p-0.5">
                     <Check className="size-1 text-white" />
                   </div>
                   Announce As Winner
@@ -122,17 +122,17 @@ export const SelectWinner = ({
                         isHackathonPage ||
                         isMultiSelectOn
                       }
-                      className="w-full justify-between rounded-lg border border-emerald-600 bg-emerald-50 py-4 text-emerald-600 transition-all duration-300 ease-out hover:bg-emerald-100 hover:text-emerald-700 disabled:opacity-50 data-[state=open]:rounded-b-none data-[state=open]:border-[#1d1815]/12"
+                      className="w-full justify-between rounded-lg border border-[#123a33] bg-[#123a33]/10 py-4 text-[#123a33] transition-all duration-300 ease-out hover:bg-[#123a33]/20 hover:text-[#123a33] disabled:opacity-50 data-[state=open]:rounded-b-none data-[state=open]:border-[#1d1815]/12"
                     >
                       <div className="flex items-center">
                         <div className="mr-2">
-                          <Trophy className="size-4 text-emerald-600 transition-all duration-300 ease-out" />
+                          <Trophy className="size-4 text-[#123a33] transition-all duration-300 ease-out" />
                         </div>
-                        <span className="text-sm font-semibold text-emerald-600 capitalize">
+                        <span className="text-sm font-semibold text-[#123a33] capitalize">
                           Select Winner
                         </span>
                       </div>
-                      <ChevronDown className="size-4 text-emerald-600" />
+                      <ChevronDown className="size-4 text-[#123a33]" />
                     </Button>
                   </DropdownMenuTrigger>
                 </div>
@@ -212,9 +212,9 @@ export const SelectWinner = ({
                 >
                   <div className="flex items-center">
                     <div className="mr-2">
-                      <Trophy className="size-4 text-emerald-600 transition-all duration-300 ease-out" />
+                      <Trophy className="size-4 text-[#123a33] transition-all duration-300 ease-out" />
                     </div>
-                    <span className="text-sm font-semibold text-emerald-600 capitalize">
+                    <span className="text-sm font-semibold text-[#123a33] capitalize">
                       {selectedSubmission?.winnerPosition &&
                         nthLabelGenerator(selectedSubmission.winnerPosition)}
                     </span>

@@ -74,9 +74,9 @@ export function Survey({ open, setOpen }: Props) {
                 key="form"
                 exit={{ y: 20, opacity: 0, filter: 'blur(4px)' }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.5 }}
-                className="bg-slate-100 p-1"
+                className="bg-[#F2EAD9] p-1"
               >
-                <div className="bg-background relative rounded-lg border-[0.09375rem] border-dashed border-slate-300 p-5">
+                <div className="bg-[#FBF7EF] relative rounded-lg border-[0.09375rem] border-dashed border-[#1d1815]/30 p-5">
                   <button
                     type="button"
                     aria-label="Close survey"
@@ -86,7 +86,7 @@ export function Survey({ open, setOpen }: Props) {
                     <X className="h-4 w-4" />
                   </button>
                   <DialogHeader>
-                    <DialogHeader className="font-medium">
+                    <DialogHeader className="font-serif font-medium text-[#1d1815]">
                       How likely are you to recommend other companies to use
                       Superteam Earn?
                     </DialogHeader>
@@ -107,13 +107,13 @@ export function Survey({ open, setOpen }: Props) {
                 key="final"
                 initial={{ y: -50, opacity: 0, filter: 'blur(4px)' }}
                 animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-                className="flex h-[20.875rem] flex-col items-center justify-center gap-6 bg-slate-100 p-6"
+                className="flex h-[20.875rem] flex-col items-center justify-center gap-6 bg-[#F2EAD9] p-6"
                 transition={{ type: 'spring', bounce: 0, duration: 0.5 }}
               >
-                <div className="flex items-center justify-center rounded-full bg-indigo-100 p-1">
-                  <BiCheck className="size-18 text-indigo-600" />
+                <div className="flex items-center justify-center rounded-full bg-[#E9E0CD] p-1">
+                  <BiCheck className="size-18 text-[#ce4a2b]" />
                 </div>
-                <p className="mb-4 text-lg font-medium text-slate-700">
+                <p className="mb-4 text-lg font-medium text-[#1d1815]">
                   Thank you for your feedback!
                 </p>
               </motion.div>

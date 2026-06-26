@@ -120,7 +120,7 @@ export const SelectLabel = ({ grantSlug }: Props) => {
       <DropdownMenuTrigger asChild className="min-w-[110px]">
         <button
           className={cn(
-            'flex w-full items-center justify-between rounded-lg border border-slate-200 bg-transparent px-2 py-1 text-xs font-medium text-slate-500 capitalize transition-all duration-300 ease-in-out hover:border-slate-200 data-[state=open]:rounded-b-none data-[state=open]:border-slate-200',
+            'flex w-full items-center justify-between rounded-lg border border-[#e6dcc9] bg-transparent px-2 py-1 text-xs font-medium text-[#6b5e50] capitalize transition-all duration-300 ease-in-out hover:border-[#1d1815] data-[state=open]:rounded-b-none data-[state=open]:border-[#e6dcc9]',
             color,
             bg,
             border,

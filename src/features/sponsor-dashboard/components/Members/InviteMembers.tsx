@@ -57,8 +57,11 @@ export function InviteMembers({ isOpen, onClose }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="m-0 p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+      <DialogContent
+        className="m-0 border-2 border-[#1d1815] bg-[#FBF7EF] p-0 shadow-[5px_5px_0_#1d1815]"
+        hideCloseIcon
+      >
+        <DialogTitle className="text-md font-serif -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
           Invite Member
         </DialogTitle>
         <Separator />
@@ -66,9 +69,11 @@ export function InviteMembers({ isOpen, onClose }: Props) {
         {inviteMutation.isSuccess ? (
           <div className="px-6 pb-6 text-[0.95rem]">
             <div className="py-6 text-center">
-              <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-green-600" />
-              <h3 className="mb-2 text-lg font-semibold">Invite Sent!</h3>
-              <p className="text-muted-foreground text-sm">
+              <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-[#123a33]" />
+              <h3 className="font-serif mb-2 text-lg font-semibold text-[#1d1815]">
+                Invite Sent!
+              </h3>
+              <p className="text-sm text-[#6b5e50]">
                 Your team member will receive an email with a link to join
                 Superteam Earn.
               </p>
@@ -85,13 +90,13 @@ export function InviteMembers({ isOpen, onClose }: Props) {
               <div>
                 <FormLabel className="font-medium">Add Email Address</FormLabel>
                 <Input
-                  className="focus-visible:ring-brand-purple mt-1 border-slate-300 text-slate-500"
+                  className="mt-1 border-[#1d1815] bg-[#FBF7EF] text-[#1d1815] placeholder-[#6b5e50] focus-visible:ring-[#ce4a2b]"
                   onChange={(e) => handleInput(e.target.value)}
                   type="email"
                   placeholder="Enter email address"
                 />
                 {inviteMutation.isError && (
-                  <p className="mt-1 text-sm text-red-500">
+                  <p className="mt-1 text-sm text-[#ce4a2b]">
                     Sorry! Error occurred while sending invite.
                   </p>
                 )}
@@ -105,15 +110,15 @@ export function InviteMembers({ isOpen, onClose }: Props) {
                 >
                   <Label
                     htmlFor="member"
-                    className="flex cursor-pointer items-center space-x-2 rounded-md px-2 py-1 hover:bg-slate-100"
+                    className="flex cursor-pointer items-center space-x-2 rounded-md px-2 py-1 hover:bg-[#F2EAD9]"
                   >
                     <RadioGroupItem
                       value="MEMBER"
                       id="member"
-                      className="text-brand-purple"
+                      className="text-[#ce4a2b]"
                     />
                     <div className="ml-2">
-                      <p className="text-sm font-medium text-slate-700">
+                      <p className="text-sm font-medium text-[#1d1815]">
                         Member
                       </p>
                       <p className="text-xs">
@@ -125,15 +130,15 @@ export function InviteMembers({ isOpen, onClose }: Props) {
 
                   <Label
                     htmlFor="admin"
-                    className="flex cursor-pointer items-center space-x-2 rounded-md px-2 py-1 hover:bg-slate-100"
+                    className="flex cursor-pointer items-center space-x-2 rounded-md px-2 py-1 hover:bg-[#F2EAD9]"
                   >
                     <RadioGroupItem
                       value="ADMIN"
                       id="admin"
-                      className="text-brand-purple"
+                      className="text-[#ce4a2b]"
                     />
                     <div className="ml-2">
-                      <p className="text-sm font-medium text-slate-700">
+                      <p className="text-sm font-medium text-[#1d1815]">
                         Member Admin
                       </p>
                       <p className="text-xs">

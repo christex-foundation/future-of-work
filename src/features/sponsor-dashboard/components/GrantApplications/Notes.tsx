@@ -135,16 +135,16 @@ export const Notes = ({ slug }: Props) => {
   );
 
   return (
-    <div className="flex w-full flex-col items-start rounded-xl border border-slate-200 px-4 py-5">
+    <div className="flex w-full flex-col items-start rounded-xl border border-[#e6dcc9] bg-[#FBF7EF] px-4 py-5">
       <div
         className={cn(
-          'mb-2 flex w-full items-center justify-between text-slate-400',
-          isAiCommited && 'text-slate-600',
+          'mb-2 flex w-full items-center justify-between text-[#6b5e50]',
+          isAiCommited && 'text-[#1d1815]',
         )}
       >
         <div className="flex items-center gap-1">
           {isAiCommited && <Wand />}
-          <span className="font-extrabold">Notes</span>
+          <span className="font-serif font-extrabold">Notes</span>
         </div>
         {isSaving ? (
           <Loader2 className="h-3 w-3 animate-spin" />
@@ -154,7 +154,7 @@ export const Notes = ({ slug }: Props) => {
       </div>
       <Textarea
         ref={textareaRef}
-        className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-300 scrollbar-thumb-rounded-md resize-none !border-0 px-1.5 py-0 text-sm whitespace-pre-wrap text-slate-500 !shadow-none !ring-0 placeholder:text-slate-400 focus:!border-0 focus:!shadow-none focus:!ring-0 focus:!outline-none focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!outline-hidden"
+        className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#e6dcc9] scrollbar-thumb-rounded-md resize-none !border-0 px-1.5 py-0 text-sm whitespace-pre-wrap text-[#6b5e50] !shadow-none !ring-0 placeholder:text-[#6b5e50] focus:!border-0 focus:!shadow-none focus:!ring-0 focus:!outline-none focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!outline-hidden"
         key={applicationId}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
@@ -162,7 +162,7 @@ export const Notes = ({ slug }: Props) => {
         rows={20}
         value={notes || ''}
       />
-      <p className="mt-1 w-full text-right text-xs text-slate-400">
+      <p className="mt-1 w-full text-right text-xs text-[#6b5e50]">
         {notes?.length || 0}/{MAX_CHARACTERS}
       </p>
     </div>

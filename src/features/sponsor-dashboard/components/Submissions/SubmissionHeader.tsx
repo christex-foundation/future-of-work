@@ -332,9 +332,9 @@ export const SubmissionHeader = ({
 
           {bounty?.isPro && (
             <ProBadge
-              containerClassName="mr-2 bg-gray-200 px-3 py-1 gap-1"
-              iconClassName="size-3 text-zinc-400"
-              textClassName="text-xs font-medium text-zinc-600"
+              containerClassName="mr-2 bg-[#F2EAD9] px-3 py-1 gap-1"
+              iconClassName="size-3 text-[#6b5e50]"
+              textClassName="text-xs font-medium text-[#6b5e50]"
             />
           )}
 
@@ -389,7 +389,7 @@ export const SubmissionHeader = ({
               </Tooltip>
               {showWarning && (
                 <div className="my-2 flex w-52">
-                  <p className="text-xxs text-red-400">
+                  <p className="text-xxs text-[#ce4a2b]">
                     There aren&apos;t enough eligible{' '}
                     {bounty?.type === 'project'
                       ? 'applications'
@@ -413,7 +413,7 @@ export const SubmissionHeader = ({
                 !isHackathonPage && (
                   <div className="flex w-full py-1 text-xs">
                     {!!(remainings.bonus > 0 || remainings.podiums > 0) ? (
-                      <p className="flex w-full items-center justify-center rounded-md bg-red-100 px-2 py-1 text-[#f55151]">
+                      <p className="flex w-full items-center justify-center rounded-md bg-[#ce4a2b]/12 px-2 py-1 text-[#ce4a2b]">
                         <AlertTriangle className="mr-1 inline-block h-3 w-3" />
                         {remainings.podiums > 0 && (
                           <>

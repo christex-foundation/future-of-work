@@ -115,9 +115,9 @@ export function SelectSponsor({
           />
           <div className="ml-2 hidden md:block">
             <div className="flex">
-              <p className="text-sm text-slate-800">{data?.sponsor?.name}</p>
+              <p className="text-sm text-[#1d1815]">{data?.sponsor?.name}</p>
             </div>
-            <p className="text-xs text-slate-400">{data?.sponsor?.role}</p>
+            <p className="text-xs text-[#6b5e50]">{data?.sponsor?.role}</p>
           </div>
         </div>
       </components.SingleValue>
@@ -136,10 +136,10 @@ export function SelectSponsor({
           />
           <div className="ml-2 hidden md:block">
             <div className="flex flex-wrap items-center">
-              <p className="text-sm text-slate-800">{data?.sponsor?.name}</p>
+              <p className="text-sm text-[#1d1815]">{data?.sponsor?.name}</p>
             </div>
             <div className="flex items-center gap-1">
-              <p className="text-xs text-slate-400">{data?.sponsor?.role}</p>
+              <p className="text-xs text-[#6b5e50]">{data?.sponsor?.role}</p>
               {data?.sponsor?.isVerified && <VerifiedBadge />}
             </div>
           </div>
@@ -176,9 +176,9 @@ export function SelectSponsor({
         }),
         dropdownIndicator: (base) => ({
           ...base,
-          color: '#cbd5e1',
+          color: '#6b5e50',
           '&:hover': {
-            color: '#94a3b8',
+            color: '#1d1815',
           },
           display: isExpanded ? 'block' : 'none',
         }),
@@ -189,9 +189,10 @@ export function SelectSponsor({
         }),
         option: (base, state) => ({
           ...base,
-          backgroundColor: state.isSelected ? '#e2e8f0' : 'white',
+          backgroundColor: state.isSelected ? '#F2EAD9' : '#FBF7EF',
+          color: '#1d1815',
           '&:hover': {
-            backgroundColor: '#f1f5f9',
+            backgroundColor: '#F2EAD9',
           },
         }),
         menuList: (base) => ({
@@ -205,11 +206,11 @@ export function SelectSponsor({
             background: 'transparent',
           },
           '::-webkit-scrollbar-thumb': {
-            background: 'var(--color-slate-300)',
+            background: '#E9E0CD',
             borderRadius: '0.35rem',
           },
           '::-webkit-scrollbar-thumb:hover': {
-            background: 'var(--color-slate-300)',
+            background: '#E9E0CD',
           },
         }),
       }}

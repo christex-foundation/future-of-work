@@ -96,7 +96,7 @@ export const FilterSection = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            className="h-9 w-40 border-slate-300 font-medium text-slate-400 hover:text-slate-500"
+            className="h-9 w-40 border-2 border-[#1d1815] font-medium text-[#6b5e50] hover:text-[#1d1815]"
             size="sm"
             variant="outline"
           >
@@ -111,7 +111,7 @@ export const FilterSection = ({
           {mainSkills.map((skill) => (
             <DropdownMenuItem
               key={skill}
-              className="text-slate-500"
+              className="text-[#6b5e50]"
               onSelect={(e) => {
                 e.preventDefault();
                 handleCheckboxChange(skill);
@@ -119,7 +119,7 @@ export const FilterSection = ({
             >
               <div className="flex items-center">
                 <Checkbox
-                  className="data-[state=checked]:border-brand-purple data-[state=checked]:bg-brand-purple mr-3"
+                  className="mr-3 data-[state=checked]:border-[#ce4a2b] data-[state=checked]:bg-[#ce4a2b]"
                   checked={checkedItems[skill] || false}
                   onCheckedChange={() => handleCheckboxChange(skill)}
                 />
@@ -131,9 +131,9 @@ export const FilterSection = ({
       </DropdownMenu>
 
       <div className="relative w-64">
-        <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6b5e50]" />
         <Input
-          className="placeholder:text-md h-9 border-slate-300 bg-white pl-9 placeholder:font-medium placeholder:text-slate-400 focus-visible:ring-slate-300"
+          className="placeholder:text-md h-9 border-2 border-[#1d1815] bg-[#FBF7EF] pl-9 placeholder:font-medium placeholder:text-[#6b5e50] focus-visible:ring-[#ce4a2b]"
           onChange={(e) => {
             debouncedSetSearchText(e.target.value);
             setCurrentPage(1);
@@ -144,7 +144,7 @@ export const FilterSection = ({
       </div>
 
       <Button
-        className="h-9 border border-slate-300 px-4 font-medium text-slate-400"
+        className="h-9 border-2 border-[#1d1815] px-4 font-medium text-[#6b5e50]"
         disabled={exportMutation.isPending}
         onClick={() => exportMutation.mutate()}
         size="sm"

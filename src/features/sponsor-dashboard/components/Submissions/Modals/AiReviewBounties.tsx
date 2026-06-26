@@ -232,10 +232,10 @@ export default function AiReviewBountiesSubmissionsModal({
             content="Save hours by reviewing with AI"
             contentProps={{
               sideOffset: -4,
-              className: 'bg-black text-white border-none rounded-[0.5rem]',
+              className: 'bg-[#1d1815] text-[#f4eee3] border-none rounded-[0.5rem]',
             }}
             arrowProps={{
-              className: 'fill-black stroke-black',
+              className: 'fill-[#1d1815] stroke-[#1d1815]',
             }}
           >
             <DialogTrigger asChild>
@@ -245,11 +245,11 @@ export default function AiReviewBountiesSubmissionsModal({
                   posthog.capture('open_ai review bounties');
                 }}
               >
-                <div className="relative flex h-full items-center gap-3 overflow-hidden rounded-[0.5rem] border-[0.09375rem] border-indigo-400 bg-indigo-50 px-4 text-sm text-indigo-600 focus:outline-hidden">
+                <div className="relative flex h-full items-center gap-3 overflow-hidden rounded-[0.5rem] border-[0.09375rem] border-[#1d1815] bg-[#FBF7EF] px-4 text-sm text-[#ce4a2b] focus:outline-hidden">
                   <WandAnimated
                     className="!size-4"
-                    stickColor="bg-indigo-500"
-                    starColor="bg-indigo-500"
+                    stickColor="bg-[#ce4a2b]"
+                    starColor="bg-[#ce4a2b]"
                   />
                   Review with AI
                 </div>
@@ -281,24 +281,24 @@ export default function AiReviewBountiesSubmissionsModal({
                   <CardContent className="px-6 py-4">
                     <div className="mb-4 flex flex-col items-start gap-3">
                       <div className="flex items-center justify-center rounded-lg">
-                        <ScanText className="text-brand-purple !size-10" />
+                        <ScanText className="text-[#ce4a2b] !size-10" />
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-lg font-semibold">
+                        <span className="font-serif text-lg font-semibold text-[#1d1815]">
                           Only Works With Text
                         </span>
-                        <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700">
+                        <span className="rounded-full bg-[#F2EAD9] px-2 py-1 text-xs font-medium text-[#6b5e50]">
                           Beta
                         </span>
                       </div>
                     </div>
 
-                    <p className="mb-4 text-slate-600">
+                    <p className="mb-4 text-[#6b5e50]">
                       Submissions that are design, video and other multimedia
                       heavy will require manual review.
                     </p>
 
-                    <ul className="list-disc space-y-2 pl-6 text-slate-500 marker:text-slate-600">
+                    <ul className="list-disc space-y-2 pl-6 text-[#6b5e50] marker:text-[#1d1815]">
                       <li>
                         <span>AI Review works best with written content</span>
                       </li>
@@ -339,7 +339,7 @@ export default function AiReviewBountiesSubmissionsModal({
                   <CardContent className="px-6 py-4">
                     <div className="space-y-2 font-medium">
                       <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-2 text-base text-slate-500">
+                        <span className="flex items-center gap-2 text-base text-[#6b5e50]">
                           Unreviewed Submissions
                           <Tooltip
                             content="We will only review unreviewed submissions. If you've already reviewed some submissions, those will remain untouched."
@@ -349,24 +349,24 @@ export default function AiReviewBountiesSubmissionsModal({
                               },
                             }}
                           >
-                            <InfoIcon className="h-4 w-4 text-slate-400" />
+                            <InfoIcon className="h-4 w-4 text-[#6b5e50]" />
                           </Tooltip>
                         </span>
-                        <span className="text-xl font-semibold">
+                        <span className="font-serif text-xl font-semibold text-[#1d1815]">
                           {totalSubmissions}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-base text-slate-500">
+                        <span className="text-base text-[#6b5e50]">
                           Credits Used
                         </span>
                         <div className="flex items-center gap-2">
-                          <span className="rounded-full bg-green-100 px-2 py-0 text-sm text-green-700">
+                          <span className="rounded-full bg-[#123a33] px-2 py-0 text-sm text-[#f4eee3]">
                             Free
                           </span>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between text-slate-500">
+                      <div className="flex items-center justify-between text-[#6b5e50]">
                         <span className="text-base">Estimated Time</span>
                         <span className="text-lg">{estimatedTime}</span>
                       </div>
@@ -403,22 +403,22 @@ export default function AiReviewBountiesSubmissionsModal({
                     <div className="w-12/12">
                       <ReviewLoadingAnimation />
                     </div>
-                    <div className="relative mt-4 h-2 w-5/6 max-w-md overflow-hidden rounded-md bg-[#f1f5f9]">
+                    <div className="relative mt-4 h-2 w-5/6 max-w-md overflow-hidden rounded-md bg-[#E9E0CD]">
                       <Progress
                         value={progress}
-                        className="w-full bg-slate-100"
-                        indicatorClassName="bg-indigo-500 duration-200"
+                        className="w-full bg-[#E9E0CD]"
+                        indicatorClassName="bg-[#ce4a2b] duration-200"
                       />
                     </div>
 
                     <div className="text-center">
-                      <p className="text-sm font-medium text-slate-500">
+                      <p className="text-sm font-medium text-[#6b5e50]">
                         {`We're reviewing your submissions right now. Sit back and
                         relax, or contemplate your life choices for a moment.`}
                       </p>
                     </div>
                   </CardContent>
-                  <CardFooter className="w-full bg-slate-50 py-3 text-center text-base text-slate-500">
+                  <CardFooter className="w-full bg-[#F2EAD9] py-3 text-center text-base text-[#6b5e50]">
                     <p className="w-full text-sm">
                       Approx. {estimatedTimeSingular} remaining
                     </p>
@@ -434,15 +434,15 @@ export default function AiReviewBountiesSubmissionsModal({
                   transition={{ duration: 0.3 }}
                 >
                   <CardContent className="flex flex-col items-center space-y-8 p-8 text-center">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
-                      <Check className="h-8 w-8 stroke-[2.5] text-emerald-700" />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#123a33]">
+                      <Check className="h-8 w-8 stroke-[2.5] text-[#f4eee3]" />
                     </div>
 
                     <div className="space-y-2">
-                      <h2 className="text-xl font-semibold">
+                      <h2 className="font-serif text-xl font-semibold text-[#1d1815]">
                         Successfully Reviewed
                       </h2>
-                      <p className="mx-auto w-4/5 text-sm text-slate-500">
+                      <p className="mx-auto w-4/5 text-sm text-[#6b5e50]">
                         Remember, AI can make mistakes. Check before finalizing.
                       </p>
                     </div>
@@ -487,7 +487,7 @@ export default function AiReviewBountiesSubmissionsModal({
 
                     <Button
                       variant="outline"
-                      className="w-full border-[#e2e8f0] text-[#62748e]"
+                      className="w-full border-2 border-[#1d1815] text-[#1d1815]"
                       onClick={onComplete}
                     >
                       Have a look
@@ -504,13 +504,13 @@ export default function AiReviewBountiesSubmissionsModal({
                   transition={{ duration: 0.3 }}
                 >
                   <CardContent className="flex flex-col items-center space-y-8 p-8 text-center">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-50">
-                      <XCircle className="h-8 w-8 stroke-[2.5] text-red-600" />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ce4a2b]">
+                      <XCircle className="h-8 w-8 stroke-[2.5] text-[#f4eee3]" />
                     </div>
 
                     <div className="space-y-2">
-                      <h2 className="text-xl font-semibold">Review Failed</h2>
-                      <p className="mx-auto w-4/5 text-sm text-slate-500">
+                      <h2 className="font-serif text-xl font-semibold text-[#1d1815]">Review Failed</h2>
+                      <p className="mx-auto w-4/5 text-sm text-[#6b5e50]">
                         Something went wrong while reviewing the submissions.
                         Please try again.
                       </p>
@@ -518,7 +518,7 @@ export default function AiReviewBountiesSubmissionsModal({
 
                     <Button
                       variant="outline"
-                      className="w-full border-[#e2e8f0] text-[#62748e]"
+                      className="w-full border-2 border-[#1d1815] text-[#1d1815]"
                       onClick={() => setState('INIT')}
                     >
                       Try Again
@@ -544,10 +544,10 @@ const StatItem = ({ label, post, value, dotColor }: StatItemProps) => (
   <div className="flex w-full items-center justify-between">
     <div className="flex items-center gap-2">
       <div className={`h-2 w-2 rounded-full ${dotColor}`} />
-      <span className="text-slate-500">{label}</span>
+      <span className="text-[#6b5e50]">{label}</span>
       {post}
     </div>
-    <span className="font-medium text-[#0f172b]">{value}</span>
+    <span className="font-medium text-[#1d1815]">{value}</span>
   </div>
 );
 

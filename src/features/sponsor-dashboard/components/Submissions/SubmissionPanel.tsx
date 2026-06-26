@@ -70,9 +70,9 @@ export const SubmissionPanel = ({
                     </p>
                     {!!selectedSubmission?.agentId && (
                       <AgentBadge
-                        containerClassName="bg-slate-900 px-2 py-[3px] gap-[3px]"
-                        iconClassName="size-2 text-slate-200"
-                        textClassName="text-[8px] font-medium text-white"
+                        containerClassName="bg-[#1d1815] px-2 py-[3px] gap-[3px]"
+                        iconClassName="size-2 text-[#f4eee3]"
+                        textClassName="text-[8px] font-medium text-[#f4eee3]"
                       />
                     )}
                   </div>
@@ -206,7 +206,7 @@ export const SubmissionPanel = ({
         </>
       ) : (
         <div className="p-3">
-          <p className="text-xl font-medium text-[#1D1815]">
+          <p className="font-serif text-xl font-medium text-[#1D1815]">
             No submissions found
           </p>
           <p className="text-sm text-[#6B5E50]">Try a different search query</p>

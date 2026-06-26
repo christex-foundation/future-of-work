@@ -48,12 +48,12 @@ export const TrancheList = ({
   }, [setSearchText]);
 
   return (
-    <div className="h-full w-full rounded-l-lg border border-slate-200 bg-white">
+    <div className="h-full w-full rounded-l-lg border-2 border-[#1d1815] bg-[#FBF7EF]">
       <div className="flex w-full items-center justify-between gap-2 p-3">
         <div className="relative w-full">
-          <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6b5e50]" />
           <Input
-            className="placeholder:text-md focus-visible:ring-brand-purple h-10 border-slate-200 bg-white pl-9 placeholder:font-medium placeholder:text-slate-400"
+            className="placeholder:text-md h-10 border-[#1d1815] bg-[#FBF7EF] pl-9 text-[#1d1815] placeholder:font-medium placeholder:text-[#6b5e50] focus-visible:ring-[#ce4a2b]"
             onChange={(e) => {
               debouncedSetSearchTextRef.current?.(e.target.value);
             }}
@@ -66,7 +66,7 @@ export const TrancheList = ({
           onFilterChange={onFilterChange}
         />
       </div>
-      <div className="scrollbar-thin scrollbar-w-1 scrollbar-track-white scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-300 h-[42rem] w-full overflow-y-auto rounded-bl-lg border-t bg-white">
+      <div className="scrollbar-thin scrollbar-w-1 scrollbar-track-[#FBF7EF] scrollbar-thumb-[#e6dcc9] hover:scrollbar-thumb-[#1d1815]/30 h-[42rem] w-full overflow-y-auto rounded-bl-lg border-t border-[#1d1815] bg-[#FBF7EF]">
         {tranches?.map((tranche) => {
           const trancheStatus = tranche?.status;
 
@@ -80,10 +80,10 @@ export const TrancheList = ({
             <div
               key={tranche?.id}
               className={cn(
-                'flex cursor-pointer items-center justify-between gap-4 border-b border-slate-200 px-3 py-2',
-                'hover:bg-slate-100',
+                'flex cursor-pointer items-center justify-between gap-4 border-b border-[#e6dcc9] px-3 py-2',
+                'hover:bg-[#F2EAD9]',
                 selectedTranche?.id === tranche?.id
-                  ? 'bg-[#F5F3FF80]'
+                  ? 'bg-[#F2EAD9]'
                   : 'bg-transparent',
               )}
               onClick={() => {
@@ -97,10 +97,10 @@ export const TrancheList = ({
                 />
 
                 <div className="ml-2 w-40">
-                  <p className="overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap text-slate-700">
+                  <p className="overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap text-[#1d1815]">
                     {tranche?.GrantApplication?.projectTitle}
                   </p>
-                  <p className="overflow-hidden text-xs font-medium text-ellipsis whitespace-nowrap text-slate-500">
+                  <p className="overflow-hidden text-xs font-medium text-ellipsis whitespace-nowrap text-[#6b5e50]">
                     {nthLabelGenerator(tranche?.trancheNumber)} Tranche Request
                   </p>
                 </div>

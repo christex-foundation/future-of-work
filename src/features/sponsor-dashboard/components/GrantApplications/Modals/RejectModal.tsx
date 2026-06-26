@@ -139,36 +139,36 @@ export const RejectGrantApplicationModal = ({
         }}
       >
         <DialogContent className="m-0 p-0" hideCloseIcon>
-          <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+          <DialogTitle className="text-md -mb-1 px-6 pt-4 font-serif font-semibold text-[#1d1815]">
             Reject Grant Payment
           </DialogTitle>
           <Separator />
           <div className="px-6 pb-6 text-[0.95rem]">
-            <p className="mb-4 text-slate-500">
+            <p className="mb-4 text-[#6b5e50]">
               You are about to reject {granteeName}&apos;s grant request. They
               will be notified via email.
             </p>
 
             <div className="mb-6 flex items-center justify-between">
-              <p className="text-slate-500">Grant Request</p>
+              <p className="text-[#6b5e50]">Grant Request</p>
               <div className="flex items-center">
                 <TokenIcon
                   className="h-5 w-5 rounded-full"
                   alt={`${token} icon`}
                   symbol={token}
                 />
-                <p className="ml-1 font-semibold text-slate-600">
-                  {ask} <span className="text-slate-400">{token}</span>
+                <p className="ml-1 font-semibold text-[#1d1815]">
+                  {ask} <span className="text-[#6b5e50]">{token}</span>
                 </p>
               </div>
             </div>
 
             <div className="mb-6 flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm font-medium text-slate-500">
+                <p className="text-sm font-medium text-[#1d1815]">
                   Apply 30-day cooldown
                 </p>
-                <p className="mt-0.5 text-xs text-slate-400">
+                <p className="mt-0.5 text-xs text-[#6b5e50]">
                   Turn off to let them reapply immediately.
                 </p>
               </div>
@@ -213,7 +213,7 @@ export const RejectGrantApplicationModal = ({
               <div className="flex flex-1">
                 <Button
                   className={cn(
-                    'flex-1 border border-red-500 bg-red-50 text-red-600 hover:bg-red-100',
+                    'flex-1 border border-[#ce4a2b] bg-[#F2EAD9] text-[#ce4a2b] hover:bg-[#E9E0CD]',
                     enableCustomEmail
                       ? 'rounded-l-lg rounded-r-none'
                       : 'rounded-lg',
@@ -233,8 +233,8 @@ export const RejectGrantApplicationModal = ({
                     </>
                   ) : (
                     <>
-                      <div className="rounded-full bg-red-600 p-0.5">
-                        <X className="size-2 text-white" />
+                      <div className="rounded-full bg-[#ce4a2b] p-0.5">
+                        <X className="size-2 text-[#f4eee3]" />
                       </div>
                       <span>{rejectButtonText}</span>
                     </>
@@ -245,7 +245,7 @@ export const RejectGrantApplicationModal = ({
                     <DropdownMenuTrigger asChild>
                       <Button
                         type="button"
-                        className="rounded-l-none rounded-r-lg border border-l-0 border-red-500 bg-red-50 px-2 text-red-600 hover:bg-red-100"
+                        className="rounded-l-none rounded-r-lg border border-l-0 border-[#ce4a2b] bg-[#F2EAD9] px-2 text-[#ce4a2b] hover:bg-[#E9E0CD]"
                         disabled={loading}
                         aria-label="Reject options"
                       >

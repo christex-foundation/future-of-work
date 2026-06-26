@@ -54,8 +54,8 @@ const PaymentDetailsRow = ({
                 alt={`${token}`}
                 symbol={token}
               />
-              <p className="text-sm font-medium text-slate-700">
-                {payment.amount} <span className="text-slate-400">{token}</span>
+              <p className="text-sm font-medium text-[#1d1815]">
+                {payment.amount} <span className="text-[#6b5e50]">{token}</span>
               </p>
             </div>
           </div>
@@ -64,7 +64,7 @@ const PaymentDetailsRow = ({
       <TableCell>
         {paymentDetails.map((payment, index) => (
           <div className="my-2 flex items-center justify-between" key={index}>
-            <p className="text-sm font-medium text-slate-500">
+            <p className="text-sm font-medium text-[#6b5e50]">
               Milestone {payment.tranche}
             </p>
           </div>
@@ -82,10 +82,10 @@ const PaymentDetailsRow = ({
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <p className="text-sm font-medium text-slate-500">
+                    <p className="text-sm font-medium text-[#6b5e50]">
                       {truncatePublicKey(extractTxId(payment.txId), 6)}
                     </p>
-                    <ExternalLink className="h-4 w-4 text-slate-400" />
+                    <ExternalLink className="h-4 w-4 text-[#6b5e50]" />
                   </a>
                 </div>
               ),
@@ -114,9 +114,9 @@ const GrantTrancheRow = ({
                 alt={`${token}`}
                 symbol={token}
               />
-              <p className="text-sm font-medium text-slate-700">
+              <p className="text-sm font-medium text-[#1d1815]">
                 {payment.approvedAmount}{' '}
-                <span className="text-slate-400">{token}</span>
+                <span className="text-[#6b5e50]">{token}</span>
               </p>
             </div>
           </div>
@@ -125,7 +125,7 @@ const GrantTrancheRow = ({
       <TableCell>
         {paymentDetails.map((payment, index) => (
           <div className="my-2 flex items-center justify-between" key={index}>
-            <p className="text-sm font-medium text-slate-500">
+            <p className="text-sm font-medium text-[#6b5e50]">
               Milestone {payment.trancheNumber}
             </p>
           </div>
@@ -137,7 +137,7 @@ const GrantTrancheRow = ({
 
 const GrantTh = ({ children }: { children?: string }) => {
   return (
-    <TableHead className="text-xs font-medium tracking-tight text-slate-500 uppercase">
+    <TableHead className="font-secondary text-xs font-medium tracking-tight text-[#6b5e50] uppercase">
       {children}
     </TableHead>
   );
@@ -196,13 +196,13 @@ export const PaymentsHistoryTab = ({
             onChange={(e) => setSearchTerm(e.target.value)}
             className="h-10 pl-10"
           />
-          <Search className="absolute top-3 left-3 size-4 text-slate-400" />
+          <Search className="absolute top-3 left-3 size-4 text-[#6b5e50]" />
         </div>
       </div>
-      <div className="overflow-x-auto rounded-md border border-slate-200 bg-white">
+      <div className="overflow-x-auto rounded-md border border-[#e6dcc9] bg-[#FBF7EF]">
         <Table>
           <TableHeader>
-            <TableRow className="text-slate-100">
+            <TableRow className="text-[#e6dcc9]">
               <GrantTh>Approved Grant Title</GrantTh>
               <GrantTh>Approved</GrantTh>
               <GrantTh>Paid Out</GrantTh>
@@ -231,10 +231,10 @@ export const PaymentsHistoryTab = ({
                             className="h-9 w-9"
                           />
                           <div className="flex flex-col">
-                            <p className="text-sm font-medium text-slate-700">
+                            <p className="text-sm font-medium text-[#1d1815]">
                               {grantee?.projectTitle}
                             </p>
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-[#6b5e50]">
                               {grantee.user.firstName} {grantee.user.lastName}
                             </p>
                           </div>
@@ -247,9 +247,9 @@ export const PaymentsHistoryTab = ({
                             alt={grant?.token}
                             symbol={grant?.token}
                           />
-                          <p className="text-sm font-medium text-slate-700">
+                          <p className="text-sm font-medium text-[#1d1815]">
                             {grantee.approvedAmount}{' '}
-                            <span className="text-slate-400">
+                            <span className="text-[#6b5e50]">
                               {grant?.token}
                             </span>
                           </p>
@@ -262,9 +262,9 @@ export const PaymentsHistoryTab = ({
                             alt={grant?.token}
                             symbol={grant?.token}
                           />
-                          <p className="text-sm font-medium text-slate-700">
+                          <p className="text-sm font-medium text-[#1d1815]">
                             {grantee.totalPaid}{' '}
-                            <span className="text-slate-400">
+                            <span className="text-[#6b5e50]">
                               {grant?.token}
                             </span>
                           </p>
@@ -276,7 +276,7 @@ export const PaymentsHistoryTab = ({
                             className="h-1.5 w-20 rounded-full"
                             value={paidPercentage}
                           />
-                          <p className="text-sm font-medium text-slate-500">
+                          <p className="text-sm font-medium text-[#6b5e50]">
                             {paidPercentage}%
                           </p>
                         </div>
@@ -296,12 +296,12 @@ export const PaymentsHistoryTab = ({
                           {isNativeAndNonST && grantee.paymentDetails && (
                             <span
                               className={cn(
-                                'cursor-pointer text-slate-500 transition-transform duration-300',
+                                'cursor-pointer text-[#6b5e50] transition-transform duration-300',
                                 isExpanded ? 'rotate-0' : 'rotate-180',
                               )}
                               onClick={() => toggleExpandRow(grantee.id)}
                             >
-                              <ChevronUp className="h-4 w-4 text-slate-400" />
+                              <ChevronUp className="h-4 w-4 text-[#6b5e50]" />
                             </span>
                           )}
                         </div>
@@ -341,10 +341,10 @@ export const PaymentsHistoryTab = ({
                             className="h-9 w-9"
                           />
                           <div className="flex flex-col">
-                            <p className="text-sm font-medium text-slate-700">
+                            <p className="text-sm font-medium text-[#1d1815]">
                               {grantee?.projectTitle}
                             </p>
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-[#6b5e50]">
                               {grantee.user.firstName} {grantee.user.lastName}
                             </p>
                           </div>
@@ -357,9 +357,9 @@ export const PaymentsHistoryTab = ({
                             alt={grant?.token}
                             symbol={grant?.token}
                           />
-                          <p className="text-sm font-medium text-slate-700">
+                          <p className="text-sm font-medium text-[#1d1815]">
                             {grantee.approvedAmount}{' '}
-                            <span className="text-slate-400">
+                            <span className="text-[#6b5e50]">
                               {grant?.token}
                             </span>
                           </p>
@@ -372,9 +372,9 @@ export const PaymentsHistoryTab = ({
                             alt={grant?.token}
                             symbol={grant?.token}
                           />
-                          <p className="text-sm font-medium text-slate-700">
+                          <p className="text-sm font-medium text-[#1d1815]">
                             {grantee.totalPaid}{' '}
-                            <span className="text-slate-400">
+                            <span className="text-[#6b5e50]">
                               {grant?.token}
                             </span>
                           </p>
@@ -386,7 +386,7 @@ export const PaymentsHistoryTab = ({
                             className="h-1.5 w-20 rounded-full"
                             value={paidPercentage}
                           />
-                          <p className="text-sm font-medium text-slate-500">
+                          <p className="text-sm font-medium text-[#6b5e50]">
                             {paidPercentage}%
                           </p>
                         </div>
@@ -397,12 +397,12 @@ export const PaymentsHistoryTab = ({
                             <div className="flex items-center gap-2">
                               <span
                                 className={cn(
-                                  'cursor-pointer text-slate-500 transition-transform duration-300',
+                                  'cursor-pointer text-[#6b5e50] transition-transform duration-300',
                                   isExpanded ? 'rotate-0' : 'rotate-180',
                                 )}
                                 onClick={() => toggleExpandRow(grantee.id)}
                               >
-                                <ChevronUp className="h-4 w-4 text-slate-400" />
+                                <ChevronUp className="h-4 w-4 text-[#6b5e50]" />
                               </span>
                             </div>
                           )}
@@ -425,7 +425,7 @@ export const PaymentsHistoryTab = ({
             {grantees?.length === 0 && (
               <TableRow>
                 <TableCell colSpan={5} className="h-24 text-center">
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-[#6b5e50]">
                     {searchTerm
                       ? 'No matching grantees found. Try a different search term.'
                       : 'No approved grantees found.'}

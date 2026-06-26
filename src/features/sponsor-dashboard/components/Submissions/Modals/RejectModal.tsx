@@ -39,12 +39,12 @@ export const RejectSubmissionModal = ({
   return (
     <Dialog open={rejectIsOpen} onOpenChange={rejectOnClose}>
       <DialogContent className="m-0 p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogTitle className="text-md font-serif -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
           Reject Application
         </DialogTitle>
         <Separator />
         <div className="px-6 pb-6 text-[0.95rem]">
-          <p className="mb-4 text-slate-500">
+          <p className="mb-4 text-[#6b5e50]">
             You are about to reject {applicantName}&apos;s submission request.
             They will be notified via email.
           </p>
@@ -55,7 +55,7 @@ export const RejectSubmissionModal = ({
               Close
             </Button>
             <Button
-              className="flex-1 rounded-lg border border-red-500 bg-red-50 text-red-600 hover:bg-red-100"
+              className="flex-1 rounded-lg border-2 border-[#1d1815] bg-[#ce4a2b] text-[#f4eee3] hover:bg-[#A6371C]"
               disabled={loading}
               onClick={rejectGrant}
             >
@@ -66,8 +66,8 @@ export const RejectSubmissionModal = ({
                 </>
               ) : (
                 <>
-                  <div className="rounded-full bg-red-600 p-0.5">
-                    <X className="size-2 text-white" />
+                  <div className="rounded-full bg-[#1d1815] p-0.5">
+                    <X className="size-2 text-[#f4eee3]" />
                   </div>
                   <span>Reject Application</span>
                 </>

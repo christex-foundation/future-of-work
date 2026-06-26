@@ -121,10 +121,10 @@ export const ApplicationDetails = ({
     [selectedApplication],
   );
   return (
-    <div className="w-full rounded-r-xl bg-white">
+    <div className="w-full rounded-r-xl bg-[#FBF7EF]">
       {applications?.length ? (
         <>
-          <div className="sticky top-12 z-20 rounded-t-xl border-b border-slate-200 bg-white py-1">
+          <div className="sticky top-12 z-20 rounded-t-xl border-b border-[#e6dcc9] bg-[#FBF7EF] py-1">
             <div className="flex w-full items-center justify-between px-4 py-2">
               <div className="flex w-full items-center gap-2">
                 <EarnAvatar
@@ -135,7 +135,7 @@ export const ApplicationDetails = ({
 
                 <div>
                   <span className="flex gap-2">
-                    <p className="w-fit text-base font-medium whitespace-nowrap text-slate-900">
+                    <p className="w-fit text-base font-medium whitespace-nowrap text-[#1d1815]">
                       {`${selectedApplication?.user?.firstName}`}
                     </p>
                     {chapter?.icons && (
@@ -150,7 +150,7 @@ export const ApplicationDetails = ({
                   </span>
                   <Link
                     href={`/earn/t/${selectedApplication?.user?.username}`}
-                    className="text-brand-purple flex w-full items-center gap-1 text-xs font-medium whitespace-nowrap"
+                    className="text-[#ce4a2b] flex w-full items-center gap-1 text-xs font-medium whitespace-nowrap"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -172,23 +172,23 @@ export const ApplicationDetails = ({
                 {isPending && (
                   <>
                     <Button
-                      className="rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="rounded-lg border border-[#123a33] bg-[#F2EAD9] text-[#123a33] hover:bg-[#E9E0CD] hover:text-[#123a33] disabled:cursor-not-allowed disabled:opacity-50"
                       disabled={isMultiSelectOn}
                       onClick={approveOnOpen}
                     >
-                      <div className="rounded-full bg-emerald-600 p-0.5">
-                        <Check className="size-1 text-white" />
+                      <div className="rounded-full bg-[#123a33] p-0.5">
+                        <Check className="size-1 text-[#f4eee3]" />
                       </div>
                       Approve
                     </Button>
 
                     <Button
-                      className="rounded-lg border border-red-500 bg-red-50 text-red-600 hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="rounded-lg border border-[#ce4a2b] bg-[#F2EAD9] text-[#ce4a2b] hover:bg-[#E9E0CD] disabled:cursor-not-allowed disabled:opacity-50"
                       disabled={isMultiSelectOn}
                       onClick={rejectedOnOpen}
                     >
-                      <div className="rounded-full bg-red-600 p-0.5">
-                        <X className="size-1 text-white" />
+                      <div className="rounded-full bg-[#ce4a2b] p-0.5">
+                        <X className="size-1 text-[#f4eee3]" />
                       </div>
                       Reject
                     </Button>
@@ -196,12 +196,12 @@ export const ApplicationDetails = ({
                 )}
                 {isCompleted && (
                   <Button
-                    className="rounded-lg border border-blue-500 bg-blue-50 text-blue-600 hover:bg-blue-100 disabled:opacity-100"
+                    className="rounded-lg border border-[#123a33] bg-[#F2EAD9] text-[#123a33] hover:bg-[#E9E0CD] disabled:opacity-100"
                     disabled={true}
                   >
                     <div className="flex items-center">
-                      <div className="rounded-full bg-blue-600 p-0.5">
-                        <Check className="size-1 text-white" />
+                      <div className="rounded-full bg-[#123a33] p-0.5">
+                        <Check className="size-1 text-[#f4eee3]" />
                       </div>
                     </div>
                     Completed
@@ -229,11 +229,11 @@ export const ApplicationDetails = ({
                           />
                         )}
                       <Button
-                        className="rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-100"
+                        className="rounded-lg border border-[#123a33] bg-[#F2EAD9] text-[#123a33] hover:bg-[#E9E0CD] disabled:cursor-not-allowed disabled:opacity-100"
                         disabled={true}
                       >
-                        <div className="rounded-full bg-emerald-600 p-0.5">
-                          <Check className="size-1 text-white" />
+                        <div className="rounded-full bg-[#123a33] p-0.5">
+                          <Check className="size-1 text-[#f4eee3]" />
                         </div>
                         Approved
                       </Button>
@@ -242,12 +242,12 @@ export const ApplicationDetails = ({
                 {isRejected && (
                   <>
                     <Button
-                      className="rounded-lg border border-red-500 bg-red-50 text-red-600 hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-100"
+                      className="rounded-lg border border-[#ce4a2b] bg-[#F2EAD9] text-[#ce4a2b] hover:bg-[#E9E0CD] disabled:cursor-not-allowed disabled:opacity-100"
                       disabled={true}
                     >
                       <div className="flex items-center">
-                        <div className="rounded-full bg-red-600 p-0.5">
-                          <X className="size-1 text-white" />
+                        <div className="rounded-full bg-[#ce4a2b] p-0.5">
+                          <X className="size-1 text-[#f4eee3]" />
                         </div>
                       </div>
                       Rejected
@@ -260,7 +260,7 @@ export const ApplicationDetails = ({
             <div className="flex items-center gap-4 px-4 py-2">
               {isApproved && (
                 <div className="flex items-center">
-                  <p className="mr-3 text-sm font-semibold whitespace-nowrap text-slate-400">
+                  <p className="font-secondary mr-3 text-sm font-semibold whitespace-nowrap text-[#6b5e50]">
                     APPROVED
                   </p>
                   <TokenIcon
@@ -269,16 +269,16 @@ export const ApplicationDetails = ({
                     symbol={grant?.token}
                   />
 
-                  <p className="text-sm font-semibold whitespace-nowrap text-slate-600">
+                  <p className="text-sm font-semibold whitespace-nowrap text-[#1d1815]">
                     {`${selectedApplication?.approvedAmount?.toLocaleString('en-us')}`}
-                    <span className="ml-0.5 text-slate-400">
+                    <span className="ml-0.5 text-[#6b5e50]">
                       {grant?.token}
                     </span>
                   </p>
                   {isApproved && (
                     <div className="mx-3 flex">
                       <CircularProgress
-                        className="h-5 w-5 rounded-full bg-gray-200"
+                        className="h-5 w-5 rounded-full bg-[#E9E0CD]"
                         value={Number(
                           (
                             (selectedApplication.totalPaid /
@@ -288,7 +288,7 @@ export const ApplicationDetails = ({
                         )}
                       />
 
-                      <p className="ml-1 text-sm font-medium whitespace-nowrap text-slate-600">
+                      <p className="ml-1 text-sm font-medium whitespace-nowrap text-[#1d1815]">
                         {Number(
                           (
                             (selectedApplication.totalPaid /
@@ -296,7 +296,7 @@ export const ApplicationDetails = ({
                             100
                           ).toFixed(2),
                         )}
-                        % <span className="text-slate-400">Paid</span>
+                        % <span className="text-[#6b5e50]">Paid</span>
                       </p>
                     </div>
                   )}
@@ -305,7 +305,7 @@ export const ApplicationDetails = ({
               {selectedApplication?.user?.email && (
                 <CopyButton
                   text={selectedApplication.user.email}
-                  className="flex cursor-pointer items-center justify-start gap-1 text-sm text-slate-400 underline-offset-1 hover:text-slate-500 hover:underline"
+                  className="flex cursor-pointer items-center justify-start gap-1 text-sm text-[#6b5e50] underline-offset-1 hover:text-[#1d1815] hover:underline"
                   contentProps={{ side: 'right' }}
                 >
                   <MdOutlineMail />
@@ -315,7 +315,7 @@ export const ApplicationDetails = ({
               {selectedApplication?.walletAddress && (
                 <CopyButton
                   text={selectedApplication.walletAddress}
-                  className="flex cursor-pointer items-center justify-start gap-1 text-sm text-slate-400 underline-offset-1 hover:text-slate-500 hover:underline"
+                  className="flex cursor-pointer items-center justify-start gap-1 text-sm text-[#6b5e50] underline-offset-1 hover:text-[#1d1815] hover:underline"
                   contentProps={{ side: 'right' }}
                 >
                   <MdOutlineAccountBalanceWallet />
@@ -327,26 +327,26 @@ export const ApplicationDetails = ({
 
               <div className="flex gap-2">
                 <Telegram
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#1d1815]"
                   link={selectedApplication?.user?.telegram || ''}
                 />
 
                 <Twitter
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#1d1815]"
                   link={selectedApplication?.user?.twitter || ''}
                 />
 
                 <GitHub
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#1d1815]"
                   link={selectedApplication?.user?.github || ''}
                 />
 
                 <Website
-                  className="h-[0.9rem] w-[0.9rem] text-slate-600"
+                  className="h-[0.9rem] w-[0.9rem] text-[#1d1815]"
                   link={selectedApplication?.user?.website || ''}
                 />
               </div>
-              <p className="text-sm whitespace-nowrap text-slate-400">
+              <p className="text-sm whitespace-nowrap text-[#6b5e50]">
                 $
                 {formatNumberWithSuffix(
                   selectedApplication?.totalEarnings || 0,
@@ -362,7 +362,7 @@ export const ApplicationDetails = ({
               className="flex w-2/3 flex-1 flex-col overflow-y-auto px-4"
             >
               <div className="mb-4 pt-2">
-                <p className="mb-1 text-xs font-semibold text-slate-400 uppercase">
+                <p className="font-secondary mb-1 text-xs font-semibold text-[#6b5e50] uppercase">
                   ASK
                 </p>
                 <div className="flex items-center gap-0.5">
@@ -372,9 +372,9 @@ export const ApplicationDetails = ({
                     symbol={grant?.token}
                   />
 
-                  <p className="text-sm font-semibold whitespace-nowrap text-slate-600">
+                  <p className="text-sm font-semibold whitespace-nowrap text-[#1d1815]">
                     {`${selectedApplication?.ask?.toLocaleString('en-us')}`}
-                    <span className="ml-0.5 text-slate-400">
+                    <span className="ml-0.5 text-[#6b5e50]">
                       {grant?.token}
                     </span>
                   </p>
@@ -383,36 +383,36 @@ export const ApplicationDetails = ({
 
               {grant?.sponsor?.chapter && (
                 <div className="mb-4">
-                  <p className="mb-1 text-xs font-semibold text-slate-400 uppercase">
+                  <p className="font-secondary mb-1 text-xs font-semibold text-[#6b5e50] uppercase">
                     SUPERTEAM MEMBER?
                   </p>
-                  <p className="text-sm font-medium whitespace-nowrap text-slate-600">
+                  <p className="text-sm font-medium whitespace-nowrap text-[#1d1815]">
                     {chapter ? `Yes (${chapter.name})` : `No`}
                   </p>
                 </div>
               )}
 
               <div className="mb-4">
-                <div className="mb-1 text-xs font-semibold text-slate-400 uppercase">
+                <div className="font-secondary mb-1 text-xs font-semibold text-[#6b5e50] uppercase">
                   APPLICATION DATE
                 </div>
-                <p className="text-sm font-medium whitespace-nowrap text-slate-600">
+                <p className="text-sm font-medium whitespace-nowrap text-[#1d1815]">
                   {formattedCreatedAt}
                 </p>
               </div>
 
               <div className="mb-4">
-                <p className="mt-1 text-xs font-semibold text-slate-400 uppercase">
+                <p className="font-secondary mt-1 text-xs font-semibold text-[#6b5e50] uppercase">
                   Wallet Address
                 </p>
                 <CopyButton
                   text={selectedApplication?.walletAddress || ''}
-                  className="flex cursor-pointer items-center gap-1 text-sm font-medium whitespace-nowrap text-slate-600"
+                  className="flex cursor-pointer items-center gap-1 text-sm font-medium whitespace-nowrap text-[#1d1815]"
                   contentProps={{ side: 'right' }}
                   content="Click to copy"
                 >
                   {selectedApplication?.walletAddress}
-                  <Copy className="h-4 w-4 text-slate-400" />
+                  <Copy className="h-4 w-4 text-[#6b5e50]" />
                 </CopyButton>
               </div>
 
@@ -525,10 +525,10 @@ export const ApplicationDetails = ({
         </>
       ) : isLoading ? null : (
         <div className="p-3">
-          <p className="text-xl font-medium text-slate-500">
+          <p className="font-serif text-xl font-medium text-[#1d1815]">
             No applications found
           </p>
-          <p className="text-sm text-slate-400">Try a different search query</p>
+          <p className="text-sm text-[#6b5e50]">Try a different search query</p>
         </div>
       )}
     </div>

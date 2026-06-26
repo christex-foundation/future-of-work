@@ -170,15 +170,15 @@ export function PublishResults({
       }}
     >
       <DialogContent className="m-0 max-w-lg p-0" hideCloseIcon>
-        <DialogTitle className="text-md -mb-1 px-6 pt-4 font-semibold text-slate-900">
+        <DialogTitle className="font-serif text-md -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
           Publish Results
         </DialogTitle>
         <Separator />
         <div className="px-6 pb-6 text-[0.95rem]">
           {isWinnersAnnounced && (
             <div className="py-6 text-center">
-              <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-green-600" />
-              <h3 className="mb-2 text-lg font-semibold">
+              <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-[#123a33]" />
+              <h3 className="font-serif mb-2 text-lg font-semibold text-[#1d1815]">
                 Results Announced Successfully!
               </h3>
               <p className="text-muted-foreground text-sm">
@@ -196,10 +196,10 @@ export function PublishResults({
             <div className="space-y-4">
               {rewards && totalWinners === rewards && alertType !== 'error' && (
                 <div className="space-y-3">
-                  <p className="text-sm text-slate-800">
+                  <p className="text-sm text-[#1d1815]">
                     Publishing will make the results public for everyone to see.
                   </p>
-                  <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-medium text-amber-700">
+                  <p className="rounded-md border border-[#e6a12b] bg-[#e6a12b]/10 px-3 py-2 text-sm font-medium text-[#e6a12b]">
                     Note: You cannot undo this action once published.
                   </p>
                 </div>
@@ -210,10 +210,10 @@ export function PublishResults({
                   variant={alertType === 'error' ? 'destructive' : 'default'}
                 >
                   <AlertTriangle className="-mt-1 size-4" />
-                  <AlertTitle className="text-slate-800">
+                  <AlertTitle className="text-[#1d1815]">
                     {alertTitle}
                   </AlertTitle>
-                  <AlertDescription className="mt-2 text-[13px] text-slate-700">
+                  <AlertDescription className="mt-2 text-[13px] text-[#6b5e50]">
                     {alertDescription}
                   </AlertDescription>
                 </Alert>
@@ -222,10 +222,10 @@ export function PublishResults({
               {rewards && totalWinners === rewards && !isDeadlinePassed && (
                 <Alert variant="destructive">
                   <AlertTriangle className="-mt-1 size-4" />
-                  <AlertTitle className="text-slate-800">
+                  <AlertTitle className="text-[#1d1815]">
                     Listing Still Active
                   </AlertTitle>
-                  <AlertDescription className="mt-2 text-[13px] text-slate-700">
+                  <AlertDescription className="mt-2 text-[13px] text-[#6b5e50]">
                     Publishing before the deadline will close the listing
                     immediately.
                   </AlertDescription>
@@ -242,7 +242,7 @@ export function PublishResults({
                   Close
                 </Button>
                 <Button
-                  className="flex-1 rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-600"
+                  className="flex-1 rounded-lg border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#0e2d28] hover:text-[#f4eee3]"
                   disabled={
                     !isWinnersAllSelected ||
                     alertType === 'error' ||
@@ -260,8 +260,8 @@ export function PublishResults({
                     </>
                   ) : (
                     <>
-                      <div className="rounded-full bg-emerald-600 p-0.5">
-                        <Check className="text-white" />
+                      <div className="rounded-full bg-[#f4eee3] p-0.5">
+                        <Check className="text-[#123a33]" />
                       </div>
                       <span>Publish</span>
                     </>
