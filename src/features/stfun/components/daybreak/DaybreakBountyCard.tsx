@@ -53,11 +53,15 @@ function SponsorMark({ bounty: b }: { bounty: LiveBounty }) {
 export function DaybreakBountyCard({
   bounty: b,
   featured = false,
+  href,
 }: {
   bounty: LiveBounty;
   featured?: boolean;
+  /** Destination override. Defaults to the public listing page. */
+  href?: string;
 }) {
   const isProject = b.type === 'project';
+  const cardHref = href ?? `/earn/listing/${b.slug}`;
   const prize =
     b.prizeLabel ??
     (b.reward != null ? `$${Number(b.reward).toLocaleString()}` : '—');
@@ -78,7 +82,7 @@ export function DaybreakBountyCard({
   if (featured) {
     return (
       <Link
-        href={`/earn/listing/${b.slug}`}
+        href={cardHref}
         className={`bounty-card cover ${isProject ? 'project' : 'bounty'}`}
       >
         <span className="plate" aria-hidden="true" />
@@ -124,7 +128,7 @@ export function DaybreakBountyCard({
 
   return (
     <Link
-      href={`/earn/listing/${b.slug}`}
+      href={cardHref}
       className={`bounty-card ${isProject ? 'project' : 'bounty'}`}
     >
       <div className="sc-top">
