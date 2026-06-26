@@ -198,7 +198,7 @@ To verify the transaction, the wallet address must match the winner's, and the t
 
 // Recolor the blue inline links baked into the answer HTML to the FOW terra.
 const themeAnswer = (html: string) =>
-  html.replace(/color:\s*blue/gi, 'color:#ce4a2b;text-decoration:underline');
+  html.replace(/color:\s*blue/gi, 'color:#C4502E;text-decoration:underline');
 
 export default function FAQ() {
   return (
@@ -206,14 +206,14 @@ export default function FAQ() {
       <div className="px-8 pt-2 pb-14">
         <div className="mx-auto max-w-[820px]">
           {/* header */}
-          <div className="font-secondary flex items-center gap-2.5 text-[11px] font-bold tracking-[0.26em] text-[#CE4A2B] uppercase">
-            <span className="inline-block h-0.5 w-6 bg-[#CE4A2B]" />
+          <div className="font-secondary flex items-center gap-2.5 text-[11px] font-bold tracking-[0.26em] text-[#C4502E] uppercase">
+            <span className="inline-block h-0.5 w-6 bg-[#C4502E]" />
             Help Center
           </div>
-          <h1 className="font-serif mt-3.5 text-[clamp(30px,3.6vw,46px)] leading-[1.02] font-semibold tracking-[-0.02em] text-[#1D1815]">
+          <h1 className="mt-3.5 font-serif text-[clamp(30px,3.6vw,46px)] leading-[1.02] font-normal tracking-[-0.02em] text-[#221A14]">
             Frequently asked questions
           </h1>
-          <p className="mt-2.5 max-w-[540px] text-[15px] leading-relaxed text-[#6B5E50]">
+          <p className="mt-2.5 max-w-[540px] text-[15px] leading-relaxed text-[#5C5147]">
             Everything you need to post listings, pick winners, and pay people
             out — answered.
           </p>
@@ -223,26 +223,26 @@ export default function FAQ() {
             {faqSections.map((section, index) => (
               <section key={section.title}>
                 <div className="mb-5 flex items-center gap-3">
-                  <span className="font-secondary grid size-7 shrink-0 place-items-center rounded-md border-2 border-[#1d1815] bg-[#E6A12B] text-[12px] font-bold text-[#1d1815]">
+                  <span className="font-secondary grid size-7 shrink-0 place-items-center rounded-full bg-[#E5E8DD] text-[12px] font-bold text-[#2C3A2E]">
                     {index + 1}
                   </span>
-                  <h2 className="font-serif text-[22px] font-semibold text-[#1d1815]">
+                  <h2 className="font-serif text-[22px] font-normal text-[#221A14]">
                     {section.title}
                   </h2>
                 </div>
                 <Accordion type="single" collapsible className="space-y-3">
                   {section.subsections.map((faq) => (
                     <AccordionItem
-                      className="overflow-hidden rounded-xl border-2 border-[#1d1815] bg-[#f4eee3] shadow-[3px_3px_0_#1d1815]"
+                      className="overflow-hidden rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8] shadow-[0_24px_60px_-48px_rgba(54,38,22,0.55)]"
                       key={faq.question}
                       value={faq.question}
                     >
-                      <AccordionTrigger className="gap-4 px-5 py-4 hover:no-underline [&>svg]:text-[#6b5e50] [&[data-state=open]]:bg-[#ECE2D2]">
-                        <span className="flex-1 text-left text-[16px] font-bold text-[#1d1815]">
+                      <AccordionTrigger className="gap-4 px-5 py-4 hover:bg-[#F2EAD9]/45 hover:no-underline [&>svg]:text-[#5C5147] [&[data-state=open]]:bg-[#FBF7EF]">
+                        <span className="flex-1 text-left text-[16px] font-semibold text-[#221A14]">
                           {faq.question}
                         </span>
                       </AccordionTrigger>
-                      <AccordionContent className="fow-faq-answer border-t border-dashed border-[#1d1815]/25 px-5 pt-4 pb-5 text-[14px] leading-relaxed text-[#3a322c]">
+                      <AccordionContent className="fow-faq-answer border-t border-[#E6DCC9] px-5 pt-4 pb-5 text-[14px] leading-relaxed text-[#332B23]">
                         <div
                           dangerouslySetInnerHTML={{
                             __html: themeAnswer(faq.answer),

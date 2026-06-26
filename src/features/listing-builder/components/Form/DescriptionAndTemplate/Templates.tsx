@@ -145,67 +145,75 @@ export function Templates() {
           <DialogTrigger asChild>
             <Button
               variant="ghost"
-              className="text-blue-600 hover:text-blue-600"
+              className="text-[#2C3A2E] hover:bg-[#EEF1E7] hover:text-[#2C3A2E]"
               size="sm"
             >
-              <LayoutGrid className="fill-blue-600" />
+              <LayoutGrid className="fill-[#8FA37E] text-[#2C3A2E]" />
               <span>Browse Templates</span>
             </Button>
           </DialogTrigger>
         )}
         <DialogContent
-          className="invisible w-max max-w-none p-8 md:visible"
+          className="invisible w-[min(1040px,calc(100vw-4rem))] max-w-none rounded-lg border-[#E6DCC9] bg-[#FFFDF8] p-0 text-[#221A14] shadow-[0_28px_80px_rgba(34,26,20,0.22)] md:visible"
           hideCloseIcon={isDisabled}
           classNames={{
             overlay: 'invisible md:visible',
           }}
         >
-          <DialogHeader className="flex flex-row justify-between">
-            <div className="space-y-2">
-              <DialogTitle>
-                {isDisabled ? (
-                  <>You cannot create a listing</>
-                ) : (
-                  <>Start with Templates</>
-                )}
-              </DialogTitle>
+          <div className="border-b border-[#E6DCC9] bg-[#FBF7EF] px-7 py-6">
+            <DialogHeader className="flex flex-row justify-between">
+              <div className="space-y-2">
+                <DialogTitle className="font-serif text-3xl font-semibold text-[#221A14]">
+                  {isDisabled ? (
+                    <>You cannot create a listing</>
+                  ) : (
+                    <>Start from a brief template</>
+                  )}
+                </DialogTitle>
 
-              <DialogDescription className="max-w-2xl">
-                {isDisabled ? (
-                  <p className="text-red-500">
-                    Creating a new listing has been temporarily locked for you
-                    since you have 5 listings which are {`“In Review”`}. Please
-                    announce the winners for such listings to create new
-                    listings.
-                  </p>
-                ) : (
-                  <>Go live in ~2 minutes by using our existing template.</>
-                )}
-              </DialogDescription>
-            </div>
-            {isDisabled && (
-              <div>
-                <Link href="/earn/dashboard/listings">
-                  <Button variant="default" className="text-sm">
-                    Go to Dashboard <ChevronRight />
-                  </Button>
-                </Link>
+                <DialogDescription className="max-w-2xl text-[#5C5147]">
+                  {isDisabled ? (
+                    <p className="text-red-500">
+                      Creating a new listing has been temporarily locked for you
+                      since you have 5 listings which are {`“In Review”`}.
+                      Please announce the winners for such listings to create
+                      new listings.
+                    </p>
+                  ) : (
+                    <>
+                      Choose a structured brief, or open a blank document and
+                      write from scratch.
+                    </>
+                  )}
+                </DialogDescription>
               </div>
-            )}
-          </DialogHeader>
-          <div className="mt-4">
-            <ScrollArea type="auto" className="h-full max-h-[80vh]">
-              <div className="grid h-full gap-6 overflow-y-auto md:grid-cols-3 xl:grid-cols-4">
+              {isDisabled && (
+                <div>
+                  <Link href="/earn/dashboard/listings">
+                    <Button
+                      variant="default"
+                      className="bg-[#2C3A2E] text-sm text-white hover:bg-[#3C4D3D]"
+                    >
+                      Go to Dashboard <ChevronRight />
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </DialogHeader>
+          </div>
+          <div className="p-7">
+            <ScrollArea type="auto" className="h-full max-h-[70vh]">
+              <div className="grid h-full gap-5 overflow-y-auto md:grid-cols-3 xl:grid-cols-4">
                 <DialogClose asChild>
                   <Button
-                    className="ph-no-capture flex h-full w-60 flex-col items-center justify-center gap-4 bg-white text-slate-500 hover:text-slate-700"
+                    className="ph-no-capture flex h-64 w-full flex-col items-center justify-center gap-4 rounded-md border-[#E6DCC9] bg-[#FFFDF8] text-[#5C5147] hover:bg-[#F2EAD9] hover:text-[#221A14]"
                     autoFocus={false}
                     variant="outline"
                     disabled={isDisabled}
                     onClick={handleStartFromScratch}
                   >
-                    <Plus className="!size-10" />
-                    <span className="text-base font-medium">
+                    <Plus className="!size-10 text-[#2C3A2E]" />
+                    <span className="text-base font-semibold">
                       Start from Scratch
                     </span>
                   </Button>
@@ -216,7 +224,7 @@ export function Templates() {
                     .map((_, i) => (
                       <div
                         key={i}
-                        className="flex h-64 w-60 flex-col rounded-lg border"
+                        className="flex h-64 flex-col rounded-lg border border-[#E6DCC9] bg-[#FFFDF8]"
                       >
                         <Skeleton className="h-2/4" />
                         <div className="flex h-2/4 w-full flex-col gap-2 p-4">
@@ -239,13 +247,16 @@ export function Templates() {
                   const uniqueSponsors = sponsors.slice(0, 3);
 
                   return (
-                    <Card key={template.id} className="w-60">
+                    <Card
+                      key={template.id}
+                      className="w-full overflow-hidden rounded-md border-[#E6DCC9] bg-[#FFFDF8] shadow-none"
+                    >
                       <CardHeader
                         className={cn(
-                          'flex h-28 items-center justify-center text-4xl',
+                          'flex h-28 items-center justify-center border-b border-[#E6DCC9] text-4xl',
                         )}
                         style={{
-                          backgroundColor: template.color || 'white',
+                          backgroundColor: template.color || '#F2EAD9',
                         }}
                       >
                         {template.emoji}
@@ -253,7 +264,7 @@ export function Templates() {
 
                       <CardContent className="mt-4 space-y-4">
                         <div className="">
-                          <h3 className="line-clamp-2 h-12 font-medium text-slate-700">
+                          <h3 className="line-clamp-2 h-12 font-semibold text-[#221A14]">
                             {template.title}
                           </h3>
                           {uniqueSponsors.length > 0 ? (
@@ -275,14 +286,14 @@ export function Templates() {
                                   </div>
                                 ))}
                               </div>
-                              <span className="line-clamp-2 text-xs text-slate-400">
+                              <span className="line-clamp-2 text-xs text-[#5C5147]">
                                 Used by {uniqueSponsors[0]?.name}
                                 {uniqueSponsors[1] &&
                                   ` & ${uniqueSponsors[1].name}`}
                               </span>
                             </div>
                           ) : (
-                            <p className="text-sm text-slate-400">{`Pre-fill info with "${template.title}" template`}</p>
+                            <p className="text-sm text-[#5C5147]">{`Pre-fill info with "${template.title}" template`}</p>
                           )}
                         </div>
                       </CardContent>
@@ -291,7 +302,7 @@ export function Templates() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="flex-1 text-slate-500"
+                          className="flex-1 text-[#5C5147] hover:bg-[#F2EAD9] hover:text-[#221A14]"
                           asChild
                         >
                           <Link
@@ -305,7 +316,7 @@ export function Templates() {
                         <Button
                           variant="default"
                           size="sm"
-                          className="ph-no-capture !w-full flex-1"
+                          className="ph-no-capture !w-full flex-1 bg-[#2C3A2E] text-white hover:bg-[#3C4D3D]"
                           disabled={isDisabled}
                           onClick={() => handleUseClick(template)}
                         >

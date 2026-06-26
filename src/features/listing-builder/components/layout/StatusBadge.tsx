@@ -18,23 +18,23 @@ export function StatusBadge({ className }: StatusBadgeProps) {
   > = {
     draft: {
       label: 'Draft',
-      className: 'bg-slate-100 text-slate-500 hover:bg-slate-100',
+      className: 'bg-[#EEF1E7] text-[#2C3A2E] hover:bg-[#EEF1E7]',
     },
     published: {
       label: 'Published',
-      className: 'bg-emerald-50 text-emerald-600 hover:bg-emerald-50',
+      className: 'bg-[#EEF1E7] text-[#2C3A2E] hover:bg-[#EEF1E7]',
     },
     unpublished: {
       label: 'Unpublished',
-      className: 'bg-orange-50 text-orange-600 hover:bg-orange-50',
+      className: 'bg-[#F4E6DF] text-[#C4502E] hover:bg-[#F4E6DF]',
     },
     verifying: {
       label: 'Verifying',
-      className: 'bg-pink-50 text-pink-600 hover:bg-pink-50',
+      className: 'bg-[#F2EAD9] text-[#5C5147] hover:bg-[#F2EAD9]',
     },
     'payment pending': {
       label: 'Payment Pending',
-      className: 'bg-yellow-50 text-yellow-600 hover:bg-yellow-50',
+      className: 'bg-[#F2EAD9] text-[#8A6D2F] hover:bg-[#F2EAD9]',
     },
     completed: {
       label: 'Completed',

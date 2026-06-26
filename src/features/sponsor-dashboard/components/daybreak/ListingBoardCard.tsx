@@ -37,55 +37,55 @@ export function fowStatus(status: string): {
 } {
   switch (status) {
     case 'In Progress':
-      return { label: 'Live', badge: 'bg-[#123a33] text-[#f4eee3]', dot: '#e6a12b' };
+      return { label: 'Live', badge: 'bg-[#2C3A2E] text-[#FBF7EF]', dot: '#8FA37E' };
     case 'In Review':
       return {
         label: 'In review',
-        badge: 'bg-[#e6a12b] text-[#1d1815]',
-        dot: '#1d1815',
+        badge: 'bg-[#8FA37E] text-[#221A14]',
+        dot: '#221A14',
       };
     case 'Payment Pending':
     case 'Fndn to Pay':
       return {
         label: 'Payment due',
-        badge: 'bg-[#ce4a2b] text-[#f4eee3]',
-        dot: '#f4eee3',
+        badge: 'bg-[#F4E6DF] text-[#C4502E]',
+        dot: '#C4502E',
       };
     case 'Completed':
       return {
         label: 'Completed',
-        badge: 'bg-[#1d1815] text-[#f4eee3]',
-        dot: '#e6a12b',
+        badge: 'bg-[#2C3A2E] text-[#FBF7EF]',
+        dot: '#8FA37E',
       };
     case 'Under Verification':
       return {
         label: 'Verifying',
-        badge: 'bg-[#e6a12b] text-[#1d1815]',
-        dot: '#1d1815',
+        badge: 'bg-[#8FA37E] text-[#221A14]',
+        dot: '#221A14',
       };
     case 'Verification Failed':
       return {
         label: 'Verify failed',
-        badge: 'bg-[#ce4a2b] text-[#f4eee3]',
-        dot: '#f4eee3',
+        badge: 'bg-[#F4E6DF] text-[#C4502E]',
+        dot: '#C4502E',
       };
     case 'Closed':
       return {
         label: 'Closed',
-        badge: 'border border-[#1d1815]/30 text-[#6b5e50]',
-        dot: '#6b5e50',
+        badge: 'border border-[#221A14]/30 text-[#5C5147]',
+        dot: '#5C5147',
       };
     case 'Unpublished':
       return {
         label: 'Unpublished',
-        badge: 'border border-[#1d1815]/30 text-[#6b5e50]',
-        dot: '#6b5e50',
+        badge: 'border border-[#221A14]/30 text-[#5C5147]',
+        dot: '#5C5147',
       };
     default:
       return {
         label: 'Draft',
-        badge: 'border border-[#1d1815]/30 text-[#6b5e50]',
-        dot: '#6b5e50',
+        badge: 'border border-[#221A14]/30 text-[#5C5147]',
+        dot: '#5C5147',
       };
   }
 }
@@ -148,10 +148,10 @@ export function ListingBoardCard({
     .slice(0, 2);
 
   const cardClass = cn(
-    'group/card flex flex-col gap-4 rounded-xl border-2 border-[#1d1815] bg-[#f4eee3] p-5 text-[#1d1815] no-underline shadow-[5px_5px_0_#1d1815] transition-all duration-200',
+    'group/card flex flex-col gap-4 rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8] p-5 text-[#221A14] no-underline shadow-[0_24px_60px_-48px_rgba(54,38,22,0.55)] transition-all duration-200',
     shown ? 'opacity-100' : 'opacity-0',
     isClickable &&
-      'hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_#1d1815]',
+      'hover:-translate-y-0.5 hover:border-[#d9ccb2] hover:shadow-[0_30px_70px_-48px_rgba(54,38,22,0.62)]',
   );
 
   const inner = (
@@ -159,7 +159,7 @@ export function ListingBoardCard({
       {/* org + status */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="font-secondary flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-md bg-[#1d1815] text-[12px] font-bold tracking-wide text-[#f4eee3]">
+          <div className="font-secondary flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#2C3A2E] text-[12px] font-bold tracking-wide text-[#FBF7EF] ring-2 ring-[#F2EAD9]">
             {sponsorLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -171,7 +171,7 @@ export function ListingBoardCard({
               initials
             )}
           </div>
-          <span className="font-secondary truncate text-[11px] font-bold tracking-[0.12em] text-[#6b5e50] uppercase">
+          <span className="font-secondary truncate text-[11px] font-bold tracking-[0.12em] text-[#5C5147] uppercase">
             {sponsorName || TYPE_LABEL[type]}
             {listing.region && listing.region !== 'Global'
               ? ` · ${listing.region}`
@@ -196,13 +196,13 @@ export function ListingBoardCard({
 
       {/* tags */}
       <div className="flex flex-wrap gap-2">
-        <span className="font-secondary rounded-md border border-[#ce4a2b] px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-[#ce4a2b] uppercase">
+        <span className="font-secondary rounded-full border border-[#C4502E]/25 bg-[#F4E6DF] px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-[#C4502E] uppercase">
           {TYPE_LABEL[type]}
         </span>
         {skillTags.map((tag) => (
           <span
             key={tag}
-            className="font-secondary rounded-md border border-[#1d1815]/30 px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-[#1d1815]/70 uppercase"
+            className="font-secondary rounded-full border border-[#E6DCC9] bg-[#FBF7EF] px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-[#5C5147] uppercase"
           >
             {tag}
           </span>
@@ -210,7 +210,7 @@ export function ListingBoardCard({
       </div>
 
       {/* meta */}
-      <div className="font-secondary flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-[#6b5e50]">
+      <div className="font-secondary flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-[#5C5147]">
         <span className="flex items-center gap-1.5">
           <Clock className="size-3.5" />
           {deadline}
@@ -222,15 +222,15 @@ export function ListingBoardCard({
       </div>
 
       {/* dashed divider */}
-      <div className="border-t border-dashed border-[#1d1815]/40" />
+      <div className="border-t border-dashed border-[#E6DCC9]" />
 
       {/* footer: prize + action */}
       <div className="flex items-end justify-between gap-3">
         <div className="flex min-w-0 flex-col gap-1">
-          <span className="font-secondary text-[10px] font-bold tracking-[0.14em] text-[#6b5e50] uppercase">
+          <span className="font-secondary text-[10px] font-bold tracking-[0.14em] text-[#5C5147] uppercase">
             {POOL_LABEL[type]}
           </span>
-          <span className="font-secondary flex items-center gap-1.5 text-[18px] font-extrabold text-[#ce4a2b]">
+          <span className="font-secondary flex items-center gap-1.5 text-[18px] font-extrabold text-[#2C3A2E]">
             <TokenIcon
               className="size-4 rounded-full"
               alt={listing.token || 'token'}
@@ -249,16 +249,16 @@ export function ListingBoardCard({
                 maxRewardAsk={listing?.maxRewardAsk}
                 minRewardAsk={listing?.minRewardAsk}
                 rewardAmount={listing?.rewardAmount}
-                className="font-secondary text-[18px] font-extrabold text-[#ce4a2b]"
+                className="font-secondary text-[18px] font-extrabold text-[#2C3A2E]"
               />
             )}
-            <span className="text-[12px] font-bold text-[#6b5e50]">
+            <span className="text-[12px] font-bold text-[#5C5147]">
               {listing.token}
             </span>
           </span>
         </div>
         {isClickable && (
-          <span className="font-secondary flex shrink-0 items-center gap-1.5 rounded-md bg-[#ce4a2b] px-4 py-2 text-[12px] font-bold tracking-[0.08em] text-[#f4eee3] uppercase shadow-[3px_3px_0_#1d1815] transition-transform duration-200 group-hover/card:translate-x-0.5">
+          <span className="font-secondary flex shrink-0 items-center gap-1.5 rounded-full bg-[#2C3A2E] px-4 py-2 text-[12px] font-bold tracking-[0.08em] text-[#FBF7EF] uppercase transition-colors duration-200 group-hover/card:bg-[#3C4D3D]">
             {actionLabel} &rarr;
           </span>
         )}

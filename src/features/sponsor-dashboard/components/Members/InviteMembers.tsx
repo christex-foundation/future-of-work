@@ -58,10 +58,10 @@ export function InviteMembers({ isOpen, onClose }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
-        className="m-0 border-2 border-[#1d1815] bg-[#FBF7EF] p-0 shadow-[5px_5px_0_#1d1815]"
+        className="m-0 border border-[#E6DCC9] bg-[#FFFDF8] p-0 shadow-[0_28px_80px_-58px_rgba(54,38,22,0.55)]"
         hideCloseIcon
       >
-        <DialogTitle className="text-md font-serif -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
+        <DialogTitle className="text-md font-serif -mb-1 px-6 pt-4 font-semibold text-[#221A14]">
           Invite Member
         </DialogTitle>
         <Separator />
@@ -69,11 +69,11 @@ export function InviteMembers({ isOpen, onClose }: Props) {
         {inviteMutation.isSuccess ? (
           <div className="px-6 pb-6 text-[0.95rem]">
             <div className="py-6 text-center">
-              <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-[#123a33]" />
-              <h3 className="font-serif mb-2 text-lg font-semibold text-[#1d1815]">
+              <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-[#2C3A2E]" />
+              <h3 className="font-serif mb-2 text-lg font-semibold text-[#221A14]">
                 Invite Sent!
               </h3>
-              <p className="text-sm text-[#6b5e50]">
+              <p className="text-sm text-[#5C5147]">
                 Your team member will receive an email with a link to join
                 Superteam Earn.
               </p>
@@ -90,13 +90,13 @@ export function InviteMembers({ isOpen, onClose }: Props) {
               <div>
                 <FormLabel className="font-medium">Add Email Address</FormLabel>
                 <Input
-                  className="mt-1 border-[#1d1815] bg-[#FBF7EF] text-[#1d1815] placeholder-[#6b5e50] focus-visible:ring-[#ce4a2b]"
+                  className="mt-1 border-[#E6DCC9] bg-[#FFFDF8] text-[#221A14] placeholder-[#5C5147] focus-visible:border-[#8FA37E] focus-visible:ring-[#8FA37E]"
                   onChange={(e) => handleInput(e.target.value)}
                   type="email"
                   placeholder="Enter email address"
                 />
                 {inviteMutation.isError && (
-                  <p className="mt-1 text-sm text-[#ce4a2b]">
+                  <p className="mt-1 text-sm text-[#C4502E]">
                     Sorry! Error occurred while sending invite.
                   </p>
                 )}
@@ -115,10 +115,10 @@ export function InviteMembers({ isOpen, onClose }: Props) {
                     <RadioGroupItem
                       value="MEMBER"
                       id="member"
-                      className="text-[#ce4a2b]"
+                      className="text-[#2C3A2E]"
                     />
                     <div className="ml-2">
-                      <p className="text-sm font-medium text-[#1d1815]">
+                      <p className="text-sm font-medium text-[#221A14]">
                         Member
                       </p>
                       <p className="text-xs">
@@ -135,10 +135,10 @@ export function InviteMembers({ isOpen, onClose }: Props) {
                     <RadioGroupItem
                       value="ADMIN"
                       id="admin"
-                      className="text-[#ce4a2b]"
+                      className="text-[#2C3A2E]"
                     />
                     <div className="ml-2">
-                      <p className="text-sm font-medium text-[#1d1815]">
+                      <p className="text-sm font-medium text-[#221A14]">
                         Member Admin
                       </p>
                       <p className="text-xs">
@@ -157,12 +157,14 @@ export function InviteMembers({ isOpen, onClose }: Props) {
                 variant="ghost"
                 onClick={onClose}
                 disabled={inviteMutation.isPending}
+                className="rounded-full text-[#5C5147] hover:bg-[#F2EAD9] hover:text-[#221A14]"
               >
                 Close
               </Button>
               <Button
                 disabled={!email || inviteMutation.isPending}
                 onClick={() => inviteMutation.mutate()}
+                className="rounded-full bg-[#2C3A2E] text-[#FBF7EF] hover:bg-[#3C4D3D]"
               >
                 {inviteMutation.isPending ? (
                   <>

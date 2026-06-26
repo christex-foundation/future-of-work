@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
-import BiListUl from '@/components/icons/BiListUl';
+import GoHome from '@/components/icons/GoHome';
 import { type IconType } from '@/components/icons/helpers/GenIcon';
 import MdList from '@/components/icons/MdList';
 import MdOutlineChatBubbleOutline from '@/components/icons/MdOutlineChatBubbleOutline';
@@ -33,10 +33,8 @@ import { cn } from '@/utils/cn';
 
 import { isAutoGenerateOpenAtom } from '@/features/listing-builder/atoms';
 import { isCreateListingAllowedQuery } from '@/features/listing-builder/queries/is-create-allowed';
-import { FooterCompact } from '@/features/navbar/components/FooterCompact';
 import { NavItem } from '@/features/sponsor-dashboard/components/NavItems';
 import { activeHackathonsQuery } from '@/features/sponsor-dashboard/queries/active-hackathons';
-
 
 const Login = dynamic(
   () => import('@/features/auth/components/Login').then((m) => m.Login),
@@ -188,9 +186,9 @@ export function SponsorLayout({
       ]
     : [
         {
-          name: 'My Listings',
+          name: 'Dashboard',
           link: '/listings',
-          icon: BiListUl,
+          icon: GoHome,
         },
         {
           name: 'Team Settings',
@@ -231,8 +229,7 @@ export function SponsorLayout({
   return (
     <SolanaWalletProvider>
       <Default
-        className="bg-[#F4EEE3]"
-        hideFooter
+        className="bg-[#FBF7EF]"
         meta={
           <Meta
             title="Superteam Earn | Work to Earn in Crypto"
@@ -258,7 +255,7 @@ export function SponsorLayout({
         />
 
         <div className="flex min-h-[80vh] px-3 md:hidden">
-          <p className="pt-20 text-center text-xl font-medium text-slate-500">
+          <p className="pt-20 text-center text-xl font-medium text-[#5C5147]">
             The Sponsor Dashboard on Earn is not optimized for mobile yet.
             Please use a desktop to check out the Sponsor Dashboard
           </p>
@@ -267,8 +264,8 @@ export function SponsorLayout({
           {/* slim icon rail */}
           <aside
             className={cn(
-              'z-10 flex w-[84px] max-w-[84px] min-w-[84px] flex-col items-center border-r-2 border-[#1d1815] bg-[#F4EEE3] py-5',
-              isCollapsible ? 'fixed top-12 bottom-0 left-0' : 'static',
+              'fixed top-0 bottom-0 left-0 z-10 flex w-[84px] max-w-[84px] min-w-[84px] flex-col items-center border-r border-[#E6DCC9] bg-[#FBF7EF] py-5',
+              isCollapsible && 'top-12',
             )}
           >
             {/* nav icons */}
@@ -302,7 +299,7 @@ export function SponsorLayout({
                         type="button"
                         aria-label="Create new listing"
                         className={cn(
-                          'ph-no-capture grid size-[46px] place-items-center rounded-[14px] border-2 border-[#1d1815] bg-[#CE4A2B] text-[#f4eee3] transition-all duration-200 hover:bg-[#A6371C]',
+                          'ph-no-capture grid size-[46px] place-items-center rounded-[14px] border border-[#2C3A2E] bg-[#2C3A2E] text-[#FBF7EF] shadow-[0_12px_26px_-18px_rgba(44,58,46,0.7)] transition-all duration-200 hover:bg-[#3C4D3D]',
                           'disabled:cursor-not-allowed disabled:opacity-50',
                         )}
                         disabled={isCreateLocked}
@@ -315,12 +312,12 @@ export function SponsorLayout({
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                      className="min-w-[200px] font-medium text-slate-500"
+                      className="min-w-[200px] border-[#E6DCC9] bg-[#FFFDF8] font-medium text-[#5C5147]"
                       align="start"
                       side="right"
                     >
                       <DropdownMenuItem
-                        className="flex items-center justify-between"
+                        className="flex items-center justify-between rounded-md focus:bg-[#F2EAD9]"
                         onClick={() => {
                           posthog.capture('new generate with ai_sponsor');
                           setAutoGenerateOpen(true);
@@ -331,13 +328,13 @@ export function SponsorLayout({
                           Generate with AI
                         </span>
                         <span>
-                          <span className="rounded-full bg-emerald-50 px-1.5 py-0.5 text-[0.65rem] text-emerald-600">
+                          <span className="rounded-full bg-[#E5E8DD] px-1.5 py-0.5 text-[0.65rem] text-[#2C3A2E]">
                             2m
                           </span>
                         </span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        className="flex items-center justify-between"
+                        className="flex items-center justify-between rounded-md focus:bg-[#F2EAD9]"
                         onClick={() => {
                           posthog.capture('new start from scratch_sponsor');
                           onOpen();
@@ -348,7 +345,7 @@ export function SponsorLayout({
                           Start from Scratch
                         </span>
                         <span>
-                          <span className="rounded-full bg-indigo-50 px-1.5 py-0.5 text-[0.65rem] text-indigo-600">
+                          <span className="rounded-full bg-[#F2EAD9] px-1.5 py-0.5 text-[0.65rem] text-[#5C5147]">
                             10m
                           </span>
                         </span>
@@ -360,10 +357,10 @@ export function SponsorLayout({
                 <Link
                   href="/earn/dashboard/new/?type=hackathon"
                   aria-label="Create new track"
-                  className="group relative grid size-[46px] place-items-center rounded-[14px] border-2 border-[#1d1815] bg-[#CE4A2B] text-[#f4eee3] transition-all duration-200 hover:bg-[#A6371C]"
+                  className="group relative grid size-[46px] place-items-center rounded-[14px] border border-[#2C3A2E] bg-[#2C3A2E] text-[#FBF7EF] shadow-[0_12px_26px_-18px_rgba(44,58,46,0.7)] transition-all duration-200 hover:bg-[#3C4D3D]"
                 >
                   <Plus className="size-5" />
-                  <span className="font-secondary pointer-events-none absolute left-full z-40 ml-3 origin-left scale-90 rounded-lg border border-[rgba(231,211,193,0.12)] bg-[#1D1815] px-2.5 py-1.5 text-[11px] font-semibold tracking-[0.04em] whitespace-nowrap text-[#FBF7EE] uppercase opacity-0 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100">
+                  <span className="font-secondary pointer-events-none absolute left-full z-40 ml-3 origin-left scale-90 rounded-lg border border-[#E6DCC9]/20 bg-[#2C3A2E] px-2.5 py-1.5 text-[11px] font-semibold tracking-[0.04em] whitespace-nowrap text-[#FBF7EF] uppercase opacity-0 shadow-[0_8px_24px_-8px_rgba(44,58,46,0.45)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100">
                     Create new track
                   </span>
                 </Link>
@@ -381,15 +378,13 @@ export function SponsorLayout({
           {(showContent || isLoading) && (
             <div
               className={cn(
-                'w-full flex-1 overflow-x-auto bg-[#F4EEE3] py-5 pr-8 pl-4',
-                isCollapsible ? 'ml-[84px]' : 'ml-0',
+                'ml-[84px] w-full flex-1 overflow-x-auto bg-[#FBF7EF] py-5 pr-8 pl-4',
               )}
             >
               {isLoading ? <SponsorContentSkeleton /> : children}
             </div>
           )}
         </div>
-        <FooterCompact />
       </Default>
     </SolanaWalletProvider>
   );

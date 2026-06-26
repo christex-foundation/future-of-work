@@ -104,7 +104,7 @@ export function Deadline() {
       render={({ field }) => {
         return (
           <FormItem className="gap-2">
-            <FormLabel isRequired className="">
+            <FormLabel isRequired className="text-[#5C5147]">
               Deadline (in {Intl.DateTimeFormat().resolvedOptions().timeZone})
             </FormLabel>
             <Tooltip
@@ -116,7 +116,7 @@ export function Deadline() {
               }
               triggerClassName="block w-full text-left"
             >
-              <div className="ring-primary flex rounded-md border has-focus:ring-1 has-[data-[state=open]]:ring-1">
+              <div className="flex rounded-md border border-[#E6DCC9] bg-[#FBF7EF] has-focus:ring-1 has-focus:ring-[#2C3A2E] has-[data-[state=open]]:ring-1 has-[data-[state=open]]:ring-[#2C3A2E]">
                 <DateTimePicker
                   value={field.value ? new Date(field.value) : undefined}
                   onChange={(date, uiOnly) => {
@@ -136,7 +136,7 @@ export function Deadline() {
                   max={maxDeadline ? maxDeadline : undefined}
                   min={minDeadline ? minDeadline : undefined}
                   classNames={{
-                    trigger: 'border-0',
+                    trigger: 'border-0 bg-transparent',
                   }}
                   disabled={isHackathonDeadlineLocked}
                   minDateTooltipContent="Deadline cannot be in the past"
@@ -155,7 +155,7 @@ export function Deadline() {
                     key={option.value}
                     variant="outline"
                     size="sm"
-                    className="h-fit w-fit px-2 py-1"
+                    className="h-fit w-fit border-[#D9CCB2] bg-[#FFFDF8] px-2 py-1 text-[#2C3A2E] hover:bg-[#F2EAD9]"
                     onClick={() => {
                       form.setValue(
                         'deadline',

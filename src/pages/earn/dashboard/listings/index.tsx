@@ -44,8 +44,10 @@ type DashboardStatus =
   | 'Fndn to Pay'
   | 'Payment Pending'
   | 'Completed';
+type DashboardView = 'board' | 'table';
 
 const DEFAULT_TAB: DashboardTab = 'all';
+const DEFAULT_VIEW: DashboardView = 'table';
 
 export default function SponsorListings({ tab: queryTab }: { tab: string }) {
   const { user } = useUser();
@@ -95,8 +97,20 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
     return null;
   }, [searchParams]);
 
+  const activeView = useMemo((): DashboardView => {
+    const viewParam = searchParams.get('view');
+    if (viewParam === 'board' || viewParam === 'table') {
+      return viewParam;
+    }
+    return DEFAULT_VIEW;
+  }, [searchParams]);
+
   const updateQueryParams = useCallback(
-    (updates: { tab?: DashboardTab; status?: DashboardStatus | null }) => {
+    (updates: {
+      tab?: DashboardTab;
+      status?: DashboardStatus | null;
+      view?: DashboardView;
+    }) => {
       const newParams = new URLSearchParams(Array.from(searchParams.entries()));
 
       if (updates.tab !== undefined) {
@@ -112,6 +126,14 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
           newParams.delete('status');
         } else {
           newParams.set('status', updates.status);
+        }
+      }
+
+      if (updates.view !== undefined) {
+        if (updates.view === DEFAULT_VIEW) {
+          newParams.delete('view');
+        } else {
+          newParams.set('view', updates.view);
         }
       }
 
@@ -214,6 +236,13 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
     [updateQueryParams],
   );
 
+  const handleViewChange = useCallback(
+    (view: DashboardView) => {
+      updateQueryParams({ view });
+    },
+    [updateQueryParams],
+  );
+
   useEffect(() => {
     if (queryTab && queryTab !== activeTab) {
       setTimeout(() => {
@@ -222,7 +251,6 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
     }
   }, [queryTab, activeTab, handleTabChange]);
 
-  const [view, setView] = useState<'board' | 'table'>('board');
   const [clientNow, setClientNow] = useState<Date | null>(null);
   useEffect(() => {
     setClientNow(new Date());
@@ -287,7 +315,7 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
 
   return (
     <SponsorLayout>
-      <div className="relative -mt-5 -mr-8 -mb-5 -ml-4 min-h-[calc(100vh-3rem)] overflow-hidden bg-[#F4EEE3]">
+      <div className="relative -mt-5 -mr-8 -mb-5 -ml-4 min-h-[calc(100vh-3rem)] overflow-hidden bg-[#FBF7EF]">
         <div className="relative z-10 px-8 py-7">
           {/* topbar */}
           <div className="mb-9 flex items-center gap-3">
@@ -297,24 +325,24 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
           {/* editorial header + stats */}
           <div className="grid grid-cols-1 gap-x-10 gap-y-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
-              <div className="font-secondary flex items-center gap-2.5 text-[11px] font-bold tracking-[0.26em] text-[#CE4A2B] uppercase">
-                <span className="inline-block h-0.5 w-6 bg-[#CE4A2B]" />
+              <div className="font-secondary flex items-center gap-2.5 text-[11px] font-bold tracking-[0.26em] text-[#C4502E] uppercase">
+                <span className="inline-block h-0.5 w-6 bg-[#C4502E]" />
                 {dateLabel || 'Dashboard'}
               </div>
-              <h1 className="font-serif mt-4 text-[clamp(34px,4.6vw,56px)] leading-[0.98] font-semibold tracking-[-0.02em] text-[#1D1815]">
+              <h1 className="font-serif mt-4 text-[clamp(34px,4.6vw,56px)] leading-[0.98] font-semibold tracking-[-0.02em] text-[#221A14]">
                 Good {timeOfDay},
                 <br />
-                <span className="font-medium text-[#CE4A2B] italic">
+                <span className="font-medium text-[#C4502E] italic">
                   {sponsorName}.
                 </span>
               </h1>
-              <p className="mt-3.5 max-w-[520px] text-[15px] leading-relaxed text-[#6B5E50]">
+              <p className="mt-3.5 max-w-[520px] text-[15px] leading-relaxed text-[#5C5147]">
                 You have{' '}
-                <b className="font-bold text-[#1D1815]">
+                <b className="font-bold text-[#221A14]">
                   {counts.live} listing{counts.live === 1 ? '' : 's'} live
                 </b>{' '}
                 and{' '}
-                <b className="font-bold text-[#1D1815]">
+                <b className="font-bold text-[#221A14]">
                   {counts.inReview} waiting
                 </b>{' '}
                 on your review. The dawn shift is yours — let&apos;s get people
@@ -332,7 +360,7 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
 
           {/* controls */}
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <div className="flex flex-wrap gap-1.5 rounded-full border border-[#1d181517] bg-[#ECE2D2] p-1.5">
+            <div className="flex flex-wrap gap-1.5 rounded-full border border-[#E6DCC9] bg-[#F2EAD9] p-1.5">
               {tabDefs.map((tabDef) => (
                 <button
                   key={tabDef.value}
@@ -340,8 +368,8 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
                   className={cn(
                     'font-secondary rounded-full px-[18px] py-2.5 text-[13px] font-semibold whitespace-nowrap transition-all duration-200',
                     activeTabValue === tabDef.value
-                      ? 'bg-[#1D1815] text-[#FBF7EE] shadow-[0_6px_16px_-8px_rgba(29,24,21,0.6)]'
-                      : 'text-[#6B5E50] hover:text-[#1D1815]',
+                      ? 'bg-[#2C3A2E] text-[#FBF7EF] shadow-[0_6px_16px_-8px_rgba(44,58,46,0.55)]'
+                      : 'text-[#5C5147] hover:text-[#221A14]',
                   )}
                 >
                   {tabDef.label}
@@ -352,7 +380,7 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="font-secondary flex h-10 items-center gap-2 rounded-full border border-[#1d181522] bg-[#FBF7EE] px-4 text-[12px] font-semibold text-[#6B5E50] capitalize transition-all hover:border-[#1d181538] hover:text-[#1D1815]">
+                <button className="font-secondary flex h-10 items-center gap-2 rounded-full border border-[#E6DCC9] bg-[#FBF7EF] px-4 text-[12px] font-semibold text-[#5C5147] capitalize transition-all hover:border-[#d9ccb2] hover:text-[#221A14]">
                   {activeStatus ?? 'All status'}
                   <ChevronDown className="size-4" />
                 </button>
@@ -376,27 +404,27 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <div className="flex gap-1 rounded-xl border border-[#1d181522] bg-[#ECE2D2] p-1">
+            <div className="flex gap-1 rounded-xl border border-[#E6DCC9] bg-[#F2EAD9] p-1">
               <button
-                onClick={() => setView('board')}
+                onClick={() => handleViewChange('board')}
                 aria-label="Board view"
                 className={cn(
                   'grid h-8 w-9 place-items-center rounded-lg transition-all',
-                  view === 'board'
-                    ? 'bg-[#FBF7EE] text-[#1D1815] shadow-[0_2px_6px_-3px_rgba(29,24,21,0.4)]'
-                    : 'text-[#6B5E50]',
+                  activeView === 'board'
+                    ? 'bg-[#FBF7EF] text-[#221A14] shadow-[0_2px_6px_-3px_rgba(34,26,20,0.4)]'
+                    : 'text-[#5C5147]',
                 )}
               >
                 <LayoutGrid className="size-4" />
               </button>
               <button
-                onClick={() => setView('table')}
+                onClick={() => handleViewChange('table')}
                 aria-label="Table view"
                 className={cn(
                   'grid h-8 w-9 place-items-center rounded-lg transition-all',
-                  view === 'table'
-                    ? 'bg-[#FBF7EE] text-[#1D1815] shadow-[0_2px_6px_-3px_rgba(29,24,21,0.4)]'
-                    : 'text-[#6B5E50]',
+                  activeView === 'table'
+                    ? 'bg-[#FBF7EF] text-[#221A14] shadow-[0_2px_6px_-3px_rgba(34,26,20,0.4)]'
+                    : 'text-[#5C5147]',
                 )}
               >
                 <List className="size-4" />
@@ -413,7 +441,7 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
 
           {!isListingsLoading && !!paginatedListings.length && (
             <>
-              {view === 'board' ? (
+              {activeView === 'board' ? (
                 <ListingBoard
                   listings={paginatedListings}
                   onCreate={onOpenCreateListing}
@@ -423,19 +451,19 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
               )}
 
               <div className="mt-7 flex items-center justify-end">
-                <p className="mr-4 text-sm text-[#6B5E50]">
-                  <span className="font-bold text-[#1D1815]">
+                <p className="mr-4 text-sm text-[#5C5147]">
+                  <span className="font-bold text-[#221A14]">
                     {currentPage * listingsPerPage + 1}
                   </span>{' '}
                   -{' '}
-                  <span className="font-bold text-[#1D1815]">
+                  <span className="font-bold text-[#221A14]">
                     {Math.min(
                       (currentPage + 1) * listingsPerPage,
                       filteredListings.length,
                     )}
                   </span>{' '}
                   of{' '}
-                  <span className="font-bold text-[#1D1815]">
+                  <span className="font-bold text-[#221A14]">
                     {filteredListings.length}
                   </span>{' '}
                   listings
@@ -446,7 +474,7 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
                     onClick={() => setCurrentPage((prev) => prev - 1)}
                     size="sm"
                     variant="outline"
-                    className="rounded-full border-[#1d181522] bg-[#FBF7EE] text-[#1D1815] hover:bg-[#ECE2D2]"
+                    className="rounded-full border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] hover:bg-[#F2EAD9]"
                   >
                     <ChevronLeft className="mr-1 size-4" />
                     Previous
@@ -459,7 +487,7 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
                     onClick={() => setCurrentPage((prev) => prev + 1)}
                     size="sm"
                     variant="outline"
-                    className="rounded-full border-[#1d181522] bg-[#FBF7EE] text-[#1D1815] hover:bg-[#ECE2D2]"
+                    className="rounded-full border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] hover:bg-[#F2EAD9]"
                   >
                     Next
                     <ChevronRight className="ml-1 size-4" />
@@ -477,15 +505,15 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
                 alt="No listings yet"
                 src="/bg/talent-empty.svg"
               />
-              <p className="font-serif mt-6 text-[24px] font-semibold text-[#1D1815]">
+              <p className="font-serif mt-6 text-[24px] font-semibold text-[#221A14]">
                 Create your first listing
               </p>
-              <p className="mt-1 text-[#6B5E50]">
+              <p className="mt-1 text-[#5C5147]">
                 and start getting contributions from the community
               </p>
               <button
                 onClick={onOpenCreateListing}
-                className="font-secondary mt-6 flex items-center gap-2 rounded-full bg-[#CE4A2B] px-6 py-3 text-[14px] font-bold text-white transition-all hover:bg-[#A6371C]"
+                className="font-secondary mt-6 flex items-center gap-2 rounded-full bg-[#2C3A2E] px-6 py-3 text-[14px] font-bold text-[#FBF7EF] transition-all hover:bg-[#3C4D3D]"
               >
                 <Plus className="size-4" />
                 Create new listing
@@ -503,10 +531,10 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
                   alt="No matches"
                   src="/bg/talent-empty.svg"
                 />
-                <p className="font-serif mt-6 text-[24px] font-semibold text-[#1D1815]">
+                <p className="font-serif mt-6 text-[24px] font-semibold text-[#221A14]">
                   No matches
                 </p>
-                <p className="mt-1 text-[#6B5E50]">
+                <p className="mt-1 text-[#5C5147]">
                   Nothing fits the current filters — try clearing them.
                 </p>
               </div>
@@ -516,7 +544,7 @@ export default function SponsorListings({ tab: queryTab }: { tab: string }) {
         {/* floating CTA */}
         <button
           onClick={onOpenCreateListing}
-          className="font-secondary fixed right-9 bottom-7 z-40 flex items-center gap-2.5 rounded-full bg-[#CE4A2B] px-5 py-3.5 text-[14px] font-bold text-white shadow-[0_18px_36px_-14px_rgba(206,74,43,0.85)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_24px_44px_-14px_rgba(206,74,43,0.95)]"
+          className="font-secondary fixed right-9 bottom-7 z-40 flex items-center gap-2.5 rounded-full bg-[#2C3A2E] px-5 py-3.5 text-[14px] font-bold text-[#FBF7EF] shadow-[0_18px_36px_-14px_rgba(44,58,46,0.85)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#3C4D3D] hover:shadow-[0_24px_44px_-14px_rgba(44,58,46,0.9)]"
         >
           <span className="grid size-6 place-items-center rounded-full bg-white/20">
             <Plus className="size-3.5" strokeWidth={2.6} />

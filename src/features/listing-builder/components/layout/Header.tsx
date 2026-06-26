@@ -2,13 +2,11 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useIsFetching, useQueryClient } from '@tanstack/react-query';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ChevronLeft, Eye, Loader2 } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 import { useWatch } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
-import { LocalImage } from '@/components/ui/local-image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip } from '@/components/ui/tooltip';
 import { cn } from '@/utils/cn';
@@ -46,25 +44,12 @@ export function Header() {
   const queryClient = useQueryClient();
 
   return (
-    <div className="bg-background sticky top-0 z-50 hidden border-b md:block">
-      <div className={cn('mx-auto flex w-full justify-between px-6 py-2')}>
+    <div className="sticky top-0 z-50 hidden border-b border-[#E6DCC9] bg-[#FFF9EF]/95 backdrop-blur md:block">
+      <div className={cn('mx-auto flex w-full justify-between px-8 py-3')}>
         <div className="flex items-center gap-6">
-          <Link
-            href="/earn"
-            onClick={() => posthog.capture('homepage logo click_universal')}
-            className="flex items-center gap-3 hover:no-underline"
-          >
-            <LocalImage
-              src="/assets/logo.svg"
-              alt="Superteam Earn"
-              className="h-[1.4rem] w-auto cursor-pointer object-contain"
-              loading="eager"
-            />
-            <div className="h-6 w-[1.5px] bg-slate-300" />
-            <p className="text-sm tracking-[1.5px] text-slate-600">SPONSORS</p>
-          </Link>
           <Button
             variant="outline"
+            className="border-[#D9CCB2] bg-[#FFFDF8] text-[#2C3A2E] hover:bg-[#F2EAD9]"
             onClick={() => {
               queryClient.invalidateQueries({
                 queryKey: ['sponsor-dashboard-listing', slug],
@@ -102,7 +87,7 @@ export function Header() {
                 >
                   <Button
                     variant="outline"
-                    className="ph-no-capture text-slate-400"
+                    className="ph-no-capture border-[#D9CCB2] bg-[#FFFDF8] text-[#5C5147] hover:bg-[#F2EAD9]"
                     disabled={
                       isDraftSaving ||
                       !id ||

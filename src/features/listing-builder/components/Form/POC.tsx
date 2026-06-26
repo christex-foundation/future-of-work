@@ -41,11 +41,14 @@ export function POC() {
       render={({ field }) => {
         return (
           <FormItem className="gap-2">
-            <FormLabel isRequired>Point of Contact (TG / X / Email)</FormLabel>
+            <FormLabel isRequired className="text-[#5C5147]">
+              Point of Contact (TG / X / Email)
+            </FormLabel>
             <FormControl>
               <Input
                 placeholder="yb@superteamearn.com"
                 {...field}
+                className="border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#8B8173] focus-visible:ring-[#2C3A2E]"
                 onChange={(e) => {
                   setWasTouched(true);
                   field.onChange(e);

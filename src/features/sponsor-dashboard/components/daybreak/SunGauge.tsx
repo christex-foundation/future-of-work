@@ -59,7 +59,7 @@ export function SunGauge({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="rgba(231,211,193,0.16)"
+          stroke="rgba(230,220,201,0.16)"
           strokeWidth={stroke}
         />
         <circle
@@ -67,7 +67,7 @@ export function SunGauge({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#E6A12B"
+          stroke="#8FA37E"
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -79,10 +79,10 @@ export function SunGauge({
       </svg>
       <div className="absolute inset-0 grid place-items-center text-center">
         <div>
-          <p className="font-serif text-[24px] leading-none font-semibold text-[#FBF7EE]">
+          <p className="font-serif text-[22px] leading-none font-semibold text-[#FBF7EF]">
             {pct}%
           </p>
-          <p className="font-secondary mt-1 text-[8px] font-bold tracking-[0.16em] text-[#E7D3C1] uppercase">
+          <p className="font-secondary mt-0.5 text-[7px] leading-none font-bold tracking-[0.08em] text-[#F2EAD9] uppercase">
             {label}
           </p>
         </div>

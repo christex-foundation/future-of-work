@@ -128,9 +128,9 @@ function TokenNumberInput({
     <div
       data-slot="token-number-input"
       className={cn(
-        'border-input flex w-full items-center rounded-md border bg-transparent font-medium transition-colors',
+        'flex w-full items-center rounded-md border border-[#E6DCC9] bg-[#FFFDF8] font-medium transition-colors',
         disabled && 'cursor-not-allowed opacity-50',
-        'focus-within:ring-primary focus-within:ring-1',
+        'focus-within:ring-1 focus-within:ring-[#2C3A2E]',
         className,
       )}
     >
@@ -142,7 +142,7 @@ function TokenNumberInput({
             showSymbol
             symbol={symbol}
             classNames={{
-              symbol: 'text-slate-600',
+              symbol: 'text-[#5C5147]',
             }}
           />
         </div>
@@ -161,7 +161,7 @@ function TokenNumberInput({
         className={cn(
           'border-0 bg-transparent py-2 pl-2 text-left focus-visible:ring-0 focus-visible:ring-offset-0',
           '[-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
-          'placeholder:text-slate-400',
+          'text-[#221A14] placeholder:text-[#8B8173]',
         )}
       />
     </div>

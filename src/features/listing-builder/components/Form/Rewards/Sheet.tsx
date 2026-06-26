@@ -251,15 +251,15 @@ export function RewardsSheet() {
             render={({}) => {
               return (
                 <FormItem className="group items-start gap-1.5">
-                  <FormLabel isRequired className="">
+                  <FormLabel isRequired className="text-[#5C5147]">
                     Rewards
                   </FormLabel>
-                  <div className="flex w-full items-center rounded-md border border-slate-200 bg-slate-50 py-0.5 pl-3">
+                  <div className="flex w-full items-center rounded-md border border-[#E6DCC9] bg-[#FBF7EF] py-0.5 pl-3">
                     <RewardsLabel />
                     <Button
                       variant="link"
                       size="sm"
-                      className="ml-auto group-hover:underline"
+                      className="ml-auto text-[#2C3A2E] group-hover:underline"
                     >
                       Edit
                     </Button>
@@ -279,7 +279,7 @@ export function RewardsSheet() {
         <SheetContent
           showCloseIcon={false}
           side="right"
-          className="flex h-screen flex-col p-0 sm:max-w-xl"
+          className="flex h-screen flex-col border-[#E6DCC9] bg-[#FFFDF8] p-0 text-[#221A14] sm:max-w-xl"
         >
           <SheetHeader className="shrink-0 space-y-6 p-6 pb-0">
             <SheetTitle>
@@ -325,7 +325,7 @@ export function RewardsSheet() {
             )}
           </div>
 
-          <div className="relative shrink-0 bg-white">
+          <div className="relative shrink-0 bg-[#FFFDF8]">
             <Separator className="mb-4" />
             <SheetFooter className="p-6 pt-0">
               <Footer

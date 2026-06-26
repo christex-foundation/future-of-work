@@ -66,7 +66,9 @@ export function TitleAndType() {
 
   const debouncedTitle = useDebounce(title);
   const slugifiedTitle = useMemo(() => {
-    let slug = slugify(debouncedTitle, {
+    const titleString =
+      typeof debouncedTitle === 'string' ? debouncedTitle : '';
+    let slug = slugify(titleString, {
       lower: true,
       strict: true,
     });
@@ -127,14 +129,16 @@ export function TitleAndType() {
       render={({ field }) => {
         return (
           <FormItem className="gap-2">
-            <FormLabel isRequired>Listing Title</FormLabel>
-            <div className="ring-primary flex w-full rounded-md border has-focus:ring-1">
+            <FormLabel isRequired className="text-[#5C5147]">
+              Listing Title
+            </FormLabel>
+            <div className="flex w-full rounded-md border border-[#E6DCC9] bg-[#FFF9EF] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] has-focus:ring-1 has-focus:ring-[#2C3A2E]">
               <Type />
               <FormControl>
                 <Input
                   placeholder={placeholder}
                   {...field}
-                  className="mt-0 border-none focus-visible:ring-0"
+                  className="mt-0 border-none bg-transparent text-[#221A14] placeholder:text-[#8B8173] focus-visible:ring-0"
                   defaultValue={''}
                   onChange={(e) => {
                     field.onChange(e);
@@ -150,7 +154,7 @@ export function TitleAndType() {
                 ) : (
                   !isEditing &&
                   suggestions.length > 0 && (
-                    <div className="flex shrink gap-1 text-[0.7rem] font-medium text-emerald-600 italic">
+                    <div className="flex shrink gap-1 text-[0.7rem] font-medium text-[#2C3A2E] italic">
                       <p className="w-max">Reference Listings:</p>
                       <div className="flex flex-wrap items-center gap-x-1.5">
                         {suggestions.map((suggestion, index) => (
@@ -171,7 +175,7 @@ export function TitleAndType() {
                               {suggestions.length - 1 !== index && ';'}
                             </a>
                             {suggestions.length - 1 === index && (
-                              <Link className="text-slate-400" size={13} />
+                              <Link className="text-[#8B8173]" size={13} />
                             )}
                           </div>
                         ))}
@@ -180,7 +184,7 @@ export function TitleAndType() {
                   )
                 )}
               </div>
-              <div className="shrink-0 text-right text-xs whitespace-nowrap text-slate-400">
+              <div className="shrink-0 text-right text-xs whitespace-nowrap text-[#8B8173]">
                 {80 - (title?.length || 0)} characters left
               </div>
             </div>
@@ -309,7 +313,7 @@ function Type() {
                   setConfirmDialogOpen(true);
                 }}
               >
-                <SelectTrigger className="h-full w-32 rounded-none border-0 border-r focus:ring-0">
+                <SelectTrigger className="h-full w-32 rounded-none border-0 border-r border-[#E6DCC9] bg-[#F2EAD9] text-[#2C3A2E] focus:ring-0">
                   <div className="flex items-center gap-2">
                     {field.value !== 'hackathon' ? (
                       <SelectValue />

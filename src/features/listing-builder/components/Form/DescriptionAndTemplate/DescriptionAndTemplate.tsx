@@ -111,12 +111,14 @@ export function DescriptionAndTemplate() {
         return (
           <FormItem className="gap-2">
             <div className="flex items-center justify-between">
-              <FormLabel isRequired>Description</FormLabel>
+              <FormLabel isRequired className="text-[#5C5147]">
+                Description
+              </FormLabel>
               <div className="flex items-center gap-2">
                 <Templates />
               </div>
             </div>
-            <div className="ring-primary flex rounded-md border has-focus:ring-1">
+            <div className="flex rounded-md border border-[#E6DCC9] bg-[#FFFDF8] has-focus:ring-1 has-focus:ring-[#2C3A2E]">
               <FormControl>
                 <MinimalTiptapEditor
                   key={descriptionKey}
@@ -127,8 +129,8 @@ export function DescriptionAndTemplate() {
                   }}
                   onBlur={field.onBlur}
                   ref={field.ref}
-                  className="min-h-[60vh] w-full border-0"
-                  editorContentClassName={`${styles.content} mt-4 mb-4 px-2 h-full [&>*:first-child>*:first-child]:mt-0!`}
+                  className="min-h-[66vh] w-full border-0 bg-[#FFFDF8]"
+                  editorContentClassName={`${styles.content} mt-4 mb-4 px-4 h-full [&>*:first-child>*:first-child]:mt-0!`}
                   output="html"
                   placeholder="Type your description here..."
                   editable={true}
@@ -136,7 +138,7 @@ export function DescriptionAndTemplate() {
                   imageSetting={{
                     source: 'description',
                   }}
-                  toolbarClassName="sticky top-18 bg-white z-10"
+                  toolbarClassName="sticky top-18 bg-[#FFF9EF] z-10 border-b border-[#E6DCC9]"
                 />
               </FormControl>
             </div>

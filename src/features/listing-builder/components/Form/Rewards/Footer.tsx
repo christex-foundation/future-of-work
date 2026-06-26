@@ -25,20 +25,16 @@ import {
 import {
   computeEstimatedUsdValue,
   getAllowedMaxStep,
-  hasMoreThan72HoursLeft,
   resolveTargetUsdFromBoost,
 } from '../Boost/utils';
 import { RewardsLabel } from './Sheet';
 
 function RewardsFooter({
   panel,
-  setPanel,
   setOpen,
   boostStep,
   isBoostFromUrl,
   proAdjustment,
-  shouldShowFeaturedWarning,
-  setFeaturedWarningAction,
 }: {
   panel: 'rewards' | 'boost';
   setPanel: (panel: 'rewards' | 'boost') => void;
@@ -83,15 +79,6 @@ function RewardsFooter({
     control: form.control,
     name: 'maxRewardAsk',
   });
-  const deadline = useWatch({
-    control: form.control,
-    name: 'deadline',
-  });
-  const isPrivate = useWatch({
-    control: form.control,
-    name: 'isPrivate',
-  });
-
   const { data: featuredData } = useQuery(featuredAvailabilityQuery());
   const isFeatureAvailable = featuredData?.isAvailable ?? true;
 
@@ -100,7 +87,6 @@ function RewardsFooter({
     [type, maxBonusSpots, rewards],
   );
 
-  const deadlineMoreThan72HoursLeft = hasMoreThan72HoursLeft(deadline);
   const submitListingMutation = useAtomValue(submitListingMutationAtom);
 
   const { data: tokenUsdValueData } = useQuery(
@@ -303,28 +289,14 @@ function RewardsFooter({
       {panel === 'rewards' && (
         <Button
           type="button"
-          className="w-full"
+          className="w-full bg-[#2C3A2E] text-white hover:bg-[#3C4D3D]"
           onClick={async () => {
             if (await form.validateRewards()) {
               if (proAdjustment) {
                 setOpen(false, { bypassPrompt: true });
                 return;
               }
-              // Check if we should show featured removal warning
-              if (shouldShowFeaturedWarning && setFeaturedWarningAction) {
-                setFeaturedWarningAction('boost');
-                return;
-              }
-              if (
-                compensationType === 'fixed' &&
-                deadlineMoreThan72HoursLeft &&
-                type !== 'hackathon' &&
-                !isPrivate
-              ) {
-                setPanel('boost');
-              } else {
-                setOpen(false, { bypassPrompt: true });
-              }
+              setOpen(false, { bypassPrompt: true });
             } else {
               toast.warning('Please resolve all errors in Rewards to Continue');
             }

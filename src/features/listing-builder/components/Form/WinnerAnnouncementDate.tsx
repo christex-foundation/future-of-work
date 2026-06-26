@@ -56,7 +56,7 @@ export function WinnerAnnouncementDate() {
       render={({ field }) => (
         <FormItem className="gap-2">
           <div className="flex items-center gap-2">
-            <FormLabel isRequired>
+            <FormLabel isRequired className="text-[#5C5147]">
               Winner Announcement (
               {Intl.DateTimeFormat().resolvedOptions().timeZone})
             </FormLabel>
@@ -65,10 +65,10 @@ export function WinnerAnnouncementDate() {
                 'You can only select a date up to 30 days after the deadline. This is the date you commit to announcing winners.'
               }
             >
-              <InfoIcon className="h-3 w-3 text-slate-400" />
+              <InfoIcon className="h-3 w-3 text-[#8B8173]" />
             </Tooltip>
           </div>
-          <div className="ring-primary flex rounded-md border has-focus:ring-1 has-[data-[state=open]]:ring-1">
+          <div className="flex rounded-md border border-[#E6DCC9] bg-[#FBF7EF] has-focus:ring-1 has-focus:ring-[#2C3A2E] has-[data-[state=open]]:ring-1 has-[data-[state=open]]:ring-[#2C3A2E]">
             <DateTimePicker
               value={field.value ? new Date(field.value) : undefined}
               onChange={(date, uiOnly) => {
@@ -88,7 +88,7 @@ export function WinnerAnnouncementDate() {
               hideSeconds
               min={minDate}
               max={maxDate}
-              classNames={{ trigger: 'border-0' }}
+              classNames={{ trigger: 'border-0 bg-transparent' }}
               minDateTooltipContent="Must be at least 1 day after the deadline"
               maxDateTooltipContent="Cannot be more than 30 days after the deadline"
             />
@@ -99,7 +99,7 @@ export function WinnerAnnouncementDate() {
                 key={option.value}
                 variant="outline"
                 size="sm"
-                className="h-fit w-fit px-2 py-1"
+                className="h-fit w-fit border-[#D9CCB2] bg-[#FFFDF8] px-2 py-1 text-[#2C3A2E] hover:bg-[#F2EAD9]"
                 onClick={() => handleQuickSelect(option.value)}
                 disabled={!deadline}
               >

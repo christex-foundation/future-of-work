@@ -174,7 +174,9 @@ export const Podiums = () => {
         <FormItem className="flex h-full flex-col gap-2">
           <ScrollArea
             ref={podiumsContainerRef}
-            className={cn('overflow-y-auto rounded-md border')}
+            className={cn(
+              'overflow-y-auto rounded-md border border-[#E6DCC9] bg-[#FFFDF8]',
+            )}
             type="auto"
           >
             <div className="flex min-h-0 shrink flex-col space-y-4 p-4">
@@ -185,7 +187,10 @@ export const Podiums = () => {
                   render={({ field }) => (
                     <FormItem className="group relative gap-2">
                       <div className="flex justify-between">
-                        <FormLabel isRequired className="w-fit capitalize">
+                        <FormLabel
+                          isRequired
+                          className="w-fit text-[#5C5147] capitalize"
+                        >
                           {getRankLabels(position)} Prize
                         </FormLabel>
                       </div>
@@ -235,7 +240,10 @@ export const Podiums = () => {
                         render={({ field }) => (
                           <FormItem className="gap-2">
                             <div className="flex justify-between">
-                              <FormLabel isRequired className="w-fit">
+                              <FormLabel
+                                isRequired
+                                className="w-fit text-[#5C5147]"
+                              >
                                 Bonus Per Prize
                               </FormLabel>
                             </div>
@@ -269,7 +277,9 @@ export const Podiums = () => {
                         name="maxBonusSpots"
                         render={({ field }) => (
                           <FormItem className="gap-2">
-                            <FormLabel isRequired># of Prizes</FormLabel>
+                            <FormLabel isRequired className="text-[#5C5147]">
+                              # of Prizes
+                            </FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <TokenNumberInput
@@ -336,7 +346,7 @@ export const Podiums = () => {
                   type="button"
                   onClick={addReward}
                   variant="link"
-                  className="flex items-center gap-2 px-0 text-[0.9rem]"
+                  className="flex items-center gap-2 px-0 text-[0.9rem] text-[#2C3A2E] hover:text-[#3C4D3D]"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Add Individual Position</span>
@@ -349,7 +359,7 @@ export const Podiums = () => {
                   type="button"
                   onClick={addBonusReward}
                   variant="link"
-                  className="ml-auto flex items-center gap-2 px-0 text-[0.9rem] text-slate-500"
+                  className="ml-auto flex items-center gap-2 px-0 text-[0.9rem] text-[#5C5147] hover:text-[#2C3A2E]"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Add Bonus Prize</span>

@@ -364,7 +364,7 @@ export function TokenSelect() {
 
         return (
           <FormItem className="gap-2">
-            <FormLabel>Payment</FormLabel>
+            <FormLabel className="text-[#5C5147]">Payment</FormLabel>
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <FormControl>
@@ -372,7 +372,7 @@ export function TokenSelect() {
                     variant="outline"
                     role="combobox"
                     className={cn(
-                      'w-full justify-between',
+                      'w-full justify-between border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] hover:bg-[#F2EAD9]',
                       !field.value && 'text-muted-foreground',
                     )}
                   >
@@ -381,8 +381,8 @@ export function TokenSelect() {
                         showIcon
                         showSymbol
                         classNames={{
-                          symbol: 'text-slate-900',
-                          postfix: 'text-slate-900',
+                          symbol: 'text-[#221A14]',
+                          postfix: 'text-[#221A14]',
                         }}
                       />
                     ) : (
@@ -392,7 +392,7 @@ export function TokenSelect() {
                   </Button>
                 </FormControl>
               </PopoverTrigger>
-              <PopoverContent className="w-[33rem] p-0">
+              <PopoverContent className="w-[33rem] border-[#E6DCC9] bg-[#FFFDF8] p-0">
                 <Command shouldFilter={false}>
                   <CommandInput
                     placeholder="Search token name, ticker, or mint address..."

@@ -48,8 +48,8 @@ function StatCard({
 }) {
   const animated = useCountUp(value ?? 0, ready);
   return (
-    <div className="flex flex-col justify-between rounded-[20px] border border-[#1d181517] bg-[#FBF7EE] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
-      <p className="font-secondary flex items-center gap-2 text-[10px] font-bold tracking-[0.18em] text-[#6B5E50] uppercase">
+    <div className="flex flex-col justify-between rounded-[20px] border border-[#E6DCC9] bg-[#FFFDF8] p-4 shadow-[0_24px_60px_-48px_rgba(54,38,22,0.55),inset_0_1px_0_rgba(255,255,255,0.82)]">
+      <p className="font-secondary flex items-center gap-2 text-[10px] font-bold tracking-[0.18em] text-[#5C5147] uppercase">
         <span
           className="inline-block size-[7px] rounded-[3px]"
           style={{ background: dot }}
@@ -57,14 +57,14 @@ function StatCard({
         {label}
       </p>
       {ready ? (
-        <p className="font-serif mt-3 text-[32px] leading-none font-semibold tracking-[-0.02em] text-[#1D1815]">
-          {money && <span className="text-[18px] text-[#6B5E50]">$</span>}
+        <p className="font-serif mt-3 text-[32px] leading-none font-semibold tracking-[-0.02em] text-[#221A14]">
+          {money && <span className="text-[18px] text-[#5C5147]">$</span>}
           {Math.round(animated).toLocaleString('en-US')}
         </p>
       ) : (
-        <Skeleton className="mt-3 h-8 w-20 bg-[#1d18150f]" />
+        <Skeleton className="mt-3 h-8 w-20 bg-[#F2EAD9]" />
       )}
-      <p className="mt-2 text-[12px] text-[#6B5E50]">{meta}</p>
+      <p className="mt-2 text-[12px] text-[#5C5147]">{meta}</p>
     </div>
   );
 }
@@ -82,32 +82,32 @@ export function DaybreakStats({
   return (
     <div className="grid grid-cols-2 gap-3">
       {/* hero — sun gauge */}
-      <div className="flex items-center gap-3.5 rounded-[20px] bg-[#123A33] p-4 text-[#FBF7EE]">
+      <div className="flex items-center gap-3.5 rounded-[20px] bg-[#2C3A2E] p-4 text-[#FBF7EF]">
         <SunGauge
           value={counts.completion}
-          size={76}
+          size={84}
           stroke={8}
           label="Closed"
         />
         <div className="min-w-0">
-          <p className="font-secondary text-[9.5px] font-bold tracking-[0.16em] text-[#E7D3C1] uppercase">
+          <p className="font-secondary text-[9.5px] font-bold tracking-[0.16em] text-[#F2EAD9] uppercase">
             Review progress
           </p>
           <p className="font-serif mt-1.5 text-[24px] leading-none font-semibold">
             {ready ? counts.completed : '—'}
-            <span className="text-[15px] font-medium text-[#E7D3C1]">
+            <span className="text-[15px] font-medium text-[#F2EAD9]">
               {' '}
               / {counts.published}
             </span>
           </p>
-          <p className="mt-1.5 text-[11.5px] text-[#E7D3C1]/70">
+          <p className="mt-1.5 text-[11.5px] text-[#F2EAD9]/70">
             {counts.inReview} need{counts.inReview === 1 ? 's' : ''} a verdict
           </p>
         </div>
       </div>
 
       <StatCard
-        dot="#123A33"
+        dot="#2C3A2E"
         label="Rewarded"
         value={stats?.totalRewardAmount}
         money
@@ -115,14 +115,14 @@ export function DaybreakStats({
         ready={ready}
       />
       <StatCard
-        dot="#E6A12B"
+        dot="#8FA37E"
         label="Listings"
         value={stats?.totalListingsAndGrants}
         meta={`${counts.live} live · ${counts.inReview} in review`}
         ready={ready}
       />
       <StatCard
-        dot="#CE4A2B"
+        dot="#C4502E"
         label="Submissions"
         value={stats?.totalSubmissionsAndApplications}
         meta="Across every listing"

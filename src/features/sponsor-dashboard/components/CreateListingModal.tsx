@@ -56,7 +56,7 @@ export const CreateListingModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         hideCloseIcon
-        className="overflow-hidden  border border-[#E6DCC9] bg-[#FBF7EF] p-0  sm:max-w-160"
+        className="overflow-hidden border border-[#E6DCC9] bg-[#FFFDF8] p-0 shadow-[0_28px_80px_-58px_rgba(54,38,22,0.55)] sm:max-w-160"
       >
         <button className="sr-only" />
         <ScrollArea
@@ -79,8 +79,8 @@ export const CreateListingModal = ({
             transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
           >
             <div>
-              <div className="flex items-center justify-between border-b border-[#E6DCC9] px-5 py-4">
-                <h2 className="font-serif text-xl font-semibold text-[#221A14]">
+              <div className="flex items-center justify-between border-b border-[#E6DCC9] bg-[#FBF7EF] px-5 py-4">
+                <h2 className="font-serif text-xl font-normal text-[#221A14]">
                   Select the type of listing
                 </h2>
                 <DialogClose asChild>
@@ -95,44 +95,48 @@ export const CreateListingModal = ({
               </div>
               <div className="grid grid-cols-2 gap-4 p-5">
                 <Button
-                  className="flex h-55 flex-col gap-4  border border-[#E6DCC9] bg-[#F2EAD9] whitespace-normal text-[#5C5147]  transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#F2EAD9] hover:text-[#5C5147] "
+                  className="group relative flex h-55 flex-col justify-end gap-3 overflow-hidden rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8] px-5 pb-6 whitespace-normal text-[#5C5147] shadow-[0_20px_50px_-42px_rgba(54,38,22,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#d9ccb2] hover:bg-[#FFFDF8] hover:text-[#5C5147] hover:shadow-[0_26px_60px_-42px_rgba(54,38,22,0.65)]"
                   variant="outline"
                   onClick={handleCreateBounty}
                 >
+                  <span className="absolute inset-x-0 top-0 h-16 bg-[#F4E6DF]" />
+                  <span className="absolute top-5 left-5 size-2 rounded-full bg-[#C4502E]" />
                   <BountyIcon
-                    className="fill-[#C4502E]"
+                    className="relative fill-[#C4502E]"
                     styles={{
-                      width: '3rem',
-                      height: '3rem',
+                      width: '2.25rem',
+                      height: '2.25rem',
                     }}
                   />
-                  <span className="flex max-w-11/12 flex-col gap-1">
-                    <h3 className="font-serif text-base font-semibold text-[#221A14]">
+                  <span className="relative flex max-w-11/12 flex-col gap-1 text-left">
+                    <h3 className="font-serif text-[22px] leading-none font-normal text-[#221A14]">
                       Bounty
                     </h3>
-                    <p className="text-sm font-normal text-[#5C5147]">
+                    <p className="text-sm leading-relaxed font-normal text-[#5C5147]">
                       Get multiple submissions for your task and reward the best
                       work
                     </p>
                   </span>
                 </Button>
                 <Button
-                  className="flex h-55 flex-col gap-4  border border-[#E6DCC9] bg-[#F2EAD9] whitespace-normal text-[#5C5147]  transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#F2EAD9] hover:text-[#5C5147] "
+                  className="group relative flex h-55 flex-col justify-end gap-3 overflow-hidden rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8] px-5 pb-6 whitespace-normal text-[#5C5147] shadow-[0_20px_50px_-42px_rgba(54,38,22,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#d9ccb2] hover:bg-[#FFFDF8] hover:text-[#5C5147] hover:shadow-[0_26px_60px_-42px_rgba(54,38,22,0.65)]"
                   variant="outline"
                   onClick={handleCreateProject}
                 >
+                  <span className="absolute inset-x-0 top-0 h-16 bg-[#E5E8DD]" />
+                  <span className="absolute top-5 left-5 size-2 rounded-full bg-[#2C3A2E]" />
                   <ProjectIcon
-                    className="fill-[#2C3A2E]"
+                    className="relative fill-[#2C3A2E]"
                     styles={{
-                      width: '3rem',
-                      height: '3rem',
+                      width: '2.25rem',
+                      height: '2.25rem',
                     }}
                   />
-                  <span className="flex max-w-11/12 flex-col gap-1">
-                    <h3 className="font-serif text-base font-semibold text-[#221A14]">
+                  <span className="relative flex max-w-11/12 flex-col gap-1 text-left">
+                    <h3 className="font-serif text-[22px] leading-none font-normal text-[#221A14]">
                       Project
                     </h3>
-                    <p className="text-sm font-normal text-[#5C5147]">
+                    <p className="text-sm leading-relaxed font-normal text-[#5C5147]">
                       Receive proposals for your work and pick the right
                       candidate
                     </p>
@@ -141,7 +145,7 @@ export const CreateListingModal = ({
                 {visibleHackathons.map((hackathon) => (
                   <Button
                     key={hackathon.id}
-                    className="col-span-2 flex h-55 flex-col gap-4  border border-[#E6DCC9] bg-[#F2EAD9] whitespace-normal text-[#5C5147]  transition-transform duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#F2EAD9] hover:text-[#5C5147] "
+                    className="col-span-2 flex h-48 flex-col gap-4 rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8] whitespace-normal text-[#5C5147] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#d9ccb2] hover:bg-[#FFFDF8] hover:text-[#5C5147]"
                     variant="outline"
                     onClick={() => {
                       handleCreateHackathon(hackathon.slug);

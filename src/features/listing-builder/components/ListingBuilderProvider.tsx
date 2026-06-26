@@ -1,6 +1,7 @@
 import { Provider, useAtomValue, useSetAtom } from 'jotai';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import { useWatch } from 'react-hook-form';
 
 import { Form } from '@/components/ui/form';
 import { Meta } from '@/layouts/Meta';
@@ -44,6 +45,35 @@ import { ListingBuilderFormLayout } from './layout/ListingBuilderFormLayout';
 import { ListingSuccessModal } from './Modals/ListingSuccessModal';
 import { PreviewListingModal } from './Modals/PreviewListingModal';
 import { SponsorVerification } from './SponsorVerification';
+
+const formatSkillPreview = (skills: unknown) => {
+  if (!Array.isArray(skills) || skills.length === 0) {
+    return 'Add skills so talent can find this listing.';
+  }
+
+  return skills
+    .map((skill) => {
+      if (typeof skill === 'string') return skill;
+      if (skill && typeof skill === 'object') {
+        const value = skill as {
+          label?: string;
+          value?: string;
+          name?: string;
+          skills?: string;
+          subskills?: string[];
+        };
+        if (value.label) return value.label;
+        if (value.name) return value.name;
+        if (value.skills) {
+          return [value.skills, ...(value.subskills || [])].join(' / ');
+        }
+        if (value.value) return value.value;
+      }
+      return '';
+    })
+    .filter(Boolean)
+    .join(', ');
+};
 
 function ListingEditor({
   defaultListing,
@@ -101,6 +131,16 @@ function ListingEditor({
 
   const setConfirmModal = useSetAtom(confirmModalAtom);
   const setPreviewModal = useSetAtom(previewAtom);
+  const title = useWatch({ control: form.control, name: 'title' });
+  const type = useWatch({ control: form.control, name: 'type' });
+  const deadline = useWatch({ control: form.control, name: 'deadline' });
+  const skills = useWatch({ control: form.control, name: 'skills' });
+  const rewardAmount = useWatch({
+    control: form.control,
+    name: 'rewardAmount',
+  });
+  const token = useWatch({ control: form.control, name: 'token' });
+
   useEffect(() => {
     return () => {
       setConfirmModal(undefined);
@@ -131,20 +171,107 @@ function ListingEditor({
           className="hidden md:block"
         >
           <ListingBuilderFormLayout>
-            <div className="mx-auto w-full max-w-5xl space-y-8 px-8 py-10">
-              <div className="grid grid-cols-9 gap-4">
-                <div className="col-span-6 space-y-4">
-                  <TitleAndType />
-                  <DescriptionAndTemplate />
+            <div className="mx-auto w-full max-w-[1240px] px-8 py-8">
+              <div className="mb-7 flex items-end justify-between gap-6">
+                <div>
+                  <p className="mb-2 text-xs font-bold tracking-[0.18em] text-[#C4502E] uppercase">
+                    Bounty brief
+                  </p>
+                  <h1 className="font-serif text-[2.6rem] leading-none font-semibold text-[#221A14]">
+                    Create a new listing
+                  </h1>
+                  <p className="mt-3 max-w-2xl text-sm text-[#5C5147]">
+                    Write the public brief like a working document. Keep reward,
+                    timeline, skills, and contact settings pinned alongside it.
+                  </p>
                 </div>
-                <div className="sticky top-20 col-span-3 h-fit space-y-6">
-                  <RewardsSheet />
-                  <Deadline />
-                  <WinnerAnnouncementDate />
-                  <Skills />
-                  <POC />
-                  {/* <EligibilityQuestions /> */}
-                  <EligibilityQuestionsSheet />
+                <div className="hidden rounded-full border border-[#E6DCC9] bg-[#FFFDF8] px-4 py-2 text-xs font-semibold text-[#5C5147] lg:block">
+                  Auto-save keeps your draft current
+                </div>
+              </div>
+
+              <div className="grid grid-cols-[minmax(0,1fr)_360px] gap-6">
+                <div className="min-w-0 rounded-lg border border-[#E6DCC9] bg-[#FFFDF8] shadow-[0_22px_50px_rgba(44,58,46,0.07)]">
+                  <div className="flex items-center gap-2 border-b border-[#E6DCC9] px-8 py-4">
+                    {['B', 'I', 'H', '•', '+'].map((item) => (
+                      <div
+                        key={item}
+                        className="grid size-8 place-items-center rounded-md border border-[#E6DCC9] bg-[#FBF7EF] text-xs font-black text-[#2C3A2E]"
+                      >
+                        {item}
+                      </div>
+                    ))}
+                    <div className="ml-auto rounded-full bg-[#EEF1E7] px-3 py-1.5 text-xs font-bold text-[#2C3A2E]">
+                      Document editor
+                    </div>
+                  </div>
+                  <div className="space-y-7 px-8 py-8">
+                    <TitleAndType />
+                    <DescriptionAndTemplate />
+                  </div>
+                </div>
+
+                <div className="sticky top-24 h-fit space-y-4">
+                  <div className="rounded-lg border border-[#E6DCC9] bg-[#FFFDF8] p-5 shadow-[0_18px_36px_rgba(44,58,46,0.06)]">
+                    <div className="mb-4 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs font-bold tracking-[0.14em] text-[#C4502E] uppercase">
+                          Setup
+                        </p>
+                        <h2 className="mt-1 text-lg font-semibold text-[#221A14]">
+                          Listing settings
+                        </h2>
+                      </div>
+                      <span className="rounded-full bg-[#EEF1E7] px-3 py-1 text-xs font-bold text-[#2C3A2E] capitalize">
+                        {type || 'bounty'}
+                      </span>
+                    </div>
+                    <div className="space-y-5">
+                      <RewardsSheet />
+                      <Deadline />
+                      <WinnerAnnouncementDate />
+                      <Skills />
+                      <POC />
+                      <EligibilityQuestionsSheet />
+                    </div>
+                  </div>
+
+                  <div className="rounded-lg border border-[#E6DCC9] bg-[#FFFDF8] p-5">
+                    <p className="text-xs font-bold tracking-[0.14em] text-[#C4502E] uppercase">
+                      Public preview
+                    </p>
+                    <h3 className="mt-3 font-serif text-2xl leading-tight font-semibold text-[#221A14]">
+                      {title || 'Untitled listing'}
+                    </h3>
+                    <div className="mt-4 grid grid-cols-2 gap-3">
+                      <div className="rounded-md border border-[#E6DCC9] bg-[#FBF7EF] p-3">
+                        <p className="text-[0.68rem] font-bold tracking-[0.12em] text-[#5C5147] uppercase">
+                          Reward
+                        </p>
+                        <p className="mt-1 text-lg font-semibold text-[#221A14]">
+                          {rewardAmount
+                            ? `${rewardAmount} ${token || ''}`
+                            : 'Unset'}
+                        </p>
+                      </div>
+                      <div className="rounded-md border border-[#E6DCC9] bg-[#FBF7EF] p-3">
+                        <p className="text-[0.68rem] font-bold tracking-[0.12em] text-[#5C5147] uppercase">
+                          Deadline
+                        </p>
+                        <p className="mt-1 text-lg font-semibold text-[#221A14]">
+                          {deadline ? 'Set' : 'Unset'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 border-t border-[#E6DCC9] pt-4">
+                      <p className="text-sm font-semibold text-[#221A14]">
+                        Skills
+                      </p>
+                      <p className="mt-1 line-clamp-2 text-sm text-[#5C5147]">
+                        {formatSkillPreview(skills)}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

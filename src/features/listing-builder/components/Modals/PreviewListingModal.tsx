@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { ExternalLink, Info, Loader2 } from 'lucide-react';
+import { ExternalLink, Loader2 } from 'lucide-react';
 import posthog from 'posthog-js';
 import { useMemo, useState } from 'react';
 import { useWatch } from 'react-hook-form';
@@ -12,7 +12,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Tooltip } from '@/components/ui/tooltip';
 
 import { previewAtom } from '../../atoms';
 import { useListingForm } from '../../hooks';
@@ -37,10 +36,13 @@ export const PreviewListingModal = () => {
 
   return (
     <Dialog open={showPreview} onOpenChange={setShowPreview}>
-      <DialogContent hideCloseIcon className="h-full max-w-full p-0">
-        <DialogHeader className="border-b px-6 py-4">
+      <DialogContent
+        hideCloseIcon
+        className="h-full max-w-full bg-[#FBF7EF] p-0 text-[#221A14]"
+      >
+        <DialogHeader className="border-b border-[#E6DCC9] bg-[#FFF9EF] px-8 py-4">
           <div className="grid grid-cols-3 items-center gap-4">
-            <DialogTitle className="text-lg font-semibold text-slate-500">
+            <DialogTitle className="font-serif text-xl font-semibold text-[#221A14]">
               Preview Listing
             </DialogTitle>
 
@@ -49,11 +51,17 @@ export const PreviewListingModal = () => {
               onValueChange={setActiveView}
               className="justify-self-center"
             >
-              <TabsList>
-                <TabsTrigger className="text-base" value="desktop">
+              <TabsList className="border border-[#E6DCC9] bg-[#F2EAD9]">
+                <TabsTrigger
+                  className="text-sm data-[state=active]:bg-[#2C3A2E] data-[state=active]:text-white"
+                  value="desktop"
+                >
                   Desktop
                 </TabsTrigger>
-                <TabsTrigger className="text-base" value="mobile">
+                <TabsTrigger
+                  className="text-sm data-[state=active]:bg-[#2C3A2E] data-[state=active]:text-white"
+                  value="mobile"
+                >
                   Mobile
                 </TabsTrigger>
               </TabsList>
@@ -61,19 +69,9 @@ export const PreviewListingModal = () => {
 
             <div className="flex items-center justify-end gap-4">
               <div className="flex items-center gap-2">
-                <Tooltip content="This link is for preview purposes only and is accessible only to those who have it. It is not your final link for sharing with your community">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-slate-300 hover:text-slate-400"
-                  >
-                    <Info className="h-4 w-4" />
-                  </Button>
-                </Tooltip>
-
                 <Button
                   variant="outline"
-                  className="ph-no-capture"
+                  className="ph-no-capture border-[#D9CCB2] bg-[#FFFDF8] text-[#2C3A2E] hover:bg-[#F2EAD9]"
                   onClick={() => {
                     posthog.capture('new tab_preview');
                     window.open(previewUrl, '_blank');
@@ -85,7 +83,7 @@ export const PreviewListingModal = () => {
               </div>
 
               <Button
-                className="ph-no-capture"
+                className="ph-no-capture bg-[#2C3A2E] text-white hover:bg-[#3C4D3D]"
                 onClick={() => {
                   posthog.capture('continue editing_preview');
                   setShowPreview(false);
@@ -99,14 +97,14 @@ export const PreviewListingModal = () => {
 
         <div className="h-full p-10">
           <div
-            className="relative mx-auto h-[900px] w-4/5 overflow-hidden rounded-lg border-2 border-slate-100"
+            className="relative mx-auto h-[900px] w-4/5 overflow-hidden rounded-lg border border-[#E6DCC9] bg-[#FFFDF8] shadow-[0_22px_60px_rgba(44,58,46,0.12)]"
             style={{
               width: activeView === 'mobile' ? '420px' : '100%',
             }}
           >
             {isLoading && (
-              <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/80">
-                <Loader2 className="text-primary h-8 w-8 animate-spin" />
+              <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#FFFDF8]/80">
+                <Loader2 className="h-8 w-8 animate-spin text-[#2C3A2E]" />
               </div>
             )}
             <iframe

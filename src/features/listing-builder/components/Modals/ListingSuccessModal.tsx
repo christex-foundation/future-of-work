@@ -50,20 +50,20 @@ export const ListingSuccessModal = () => {
     <Dialog open={confirmModal === 'SUCCESS'} onOpenChange={() => null}>
       <DialogContent
         hideCloseIcon
-        className="flex max-w-sm flex-col items-start gap-4 overflow-hidden p-0"
+        className="flex max-w-sm flex-col items-start gap-4 overflow-hidden border-[#E6DCC9] bg-[#FFFDF8] p-0 text-[#221A14]"
       >
-        <div className="w-full bg-emerald-50 py-20">
-          <div className="mx-auto w-fit rounded-full bg-emerald-500 p-3">
+        <div className="w-full bg-[#EEF1E7] py-20">
+          <div className="mx-auto w-fit rounded-full bg-[#2C3A2E] p-3">
             <Check className="h-6 w-6 stroke-3 text-white" />
           </div>
         </div>
 
         <div className="flex w-full flex-col items-start space-y-4 p-6 pt-0">
           <div className="space-y-1">
-            <h3 className="text-lg font-semibold text-slate-700">
+            <h3 className="font-serif text-2xl font-semibold text-[#221A14]">
               Your Listing is Live
             </h3>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-[#5C5147]">
               {"Share the love on your socials and invite Earn's best talent!"}
             </p>
           </div>
@@ -71,30 +71,30 @@ export const ListingSuccessModal = () => {
           <div className="flex w-full flex-col gap-4">
             <Button
               variant="outline"
-              className="group w-full justify-between hover:bg-slate-100"
+              className="group w-full justify-between border-[#D9CCB2] bg-[#FFFDF8] hover:bg-[#F2EAD9]"
               onClick={onCopy}
             >
-              <span className="truncate font-normal text-slate-500">
+              <span className="truncate font-normal text-[#5C5147]">
                 superteam.fun/earn/listing/{slug}
               </span>
               {hasCopied ? (
-                <Check className="h-5 w-5 text-slate-400" />
+                <Check className="h-5 w-5 text-[#2C3A2E]" />
               ) : (
-                <Copy className="h-5 w-5 text-slate-400" />
+                <Copy className="h-5 w-5 text-[#5C5147]" />
               )}
             </Button>
 
             <Link href={handleInvite}>
-              <Button className="w-full gap-2">
+              <Button className="w-full gap-2 bg-[#2C3A2E] text-white hover:bg-[#3C4D3D]">
                 <span>Invite Talent</span> <Plus className="h-4 w-4" />
               </Button>
             </Link>
 
-            <div className="flex w-full justify-between text-sm font-medium text-slate-500">
+            <div className="flex w-full justify-between text-sm font-medium text-[#5C5147]">
               <Link
                 href={twitterShareLink}
                 target="_blank"
-                className="flex items-center gap-1 hover:text-slate-700"
+                className="flex items-center gap-1 hover:text-[#221A14]"
               >
                 Share on
                 <FaXTwitter className="h-4 w-4" />
@@ -102,7 +102,7 @@ export const ListingSuccessModal = () => {
 
               <Link
                 href={`/earn/listing/${slug?.replace(/^[-\s]+|[-\s]+$/g, '')}`}
-                className="flex items-center gap-1 hover:text-slate-700"
+                className="flex items-center gap-1 hover:text-[#221A14]"
               >
                 {'View Listing'}
                 <ChevronRight className="h-4 w-4" />
