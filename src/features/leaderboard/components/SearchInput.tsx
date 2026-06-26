@@ -44,8 +44,8 @@ export function SearchInput({ onSearch, isLoading, currSearch }: Props) {
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        placeholder="Search..."
-        className="h-7 w-full rounded-md border border-slate-200 bg-white px-3 py-1 pr-8 text-xs text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-slate-300 focus:ring-1 focus:ring-slate-300 focus:outline-none"
+        placeholder="Search builders…"
+        className="h-8 w-full rounded-full border border-[#E6DCC9] bg-[#F2EAD9] px-3.5 py-1 pr-8 text-xs text-[#221A14] shadow-none placeholder:text-[#a99e8d] focus:border-[#C4502E] focus:bg-[#F2EAD9] focus:ring-1 focus:ring-[#C4502E]/20 focus:outline-none"
       />
       <div className="absolute right-2 flex h-5 w-5 items-center justify-center">
         <AnimatePresence mode="wait">

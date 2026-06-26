@@ -15,6 +15,9 @@ import { Tooltip } from '@/components/ui/tooltip';
 import { type SKILL, type TIMEFRAME } from '../types';
 import { SearchInput } from './SearchInput';
 
+const triggerCls =
+  'rounded-full px-3 py-1.5 text-[13px] font-semibold whitespace-nowrap text-[#5C5147] transition-colors hover:text-[#C4502E] data-[state=active]:bg-[#C4502E] data-[state=active]:text-white data-[state=active]:shadow-none sm:px-4';
+
 interface Props {
   timeframe: TIMEFRAME;
   setTimeframe: (value: TIMEFRAME) => void;
@@ -81,10 +84,10 @@ export function FilterRow({
         <Tabs
           defaultValue={String(skillIndexOf(skill))}
           onValueChange={(value) => debouncedSetSkill(Number(value))}
-          className="text-slate-400"
+          className="text-[#5C5147]"
         >
-          <TabsList className="flex items-center">
-            <TabsTrigger value="0" className="px-1 sm:px-3">
+          <TabsList className="flex items-center gap-1 bg-transparent">
+            <TabsTrigger value="0" className={triggerCls}>
               Overall Rankings
             </TabsTrigger>
             <div className="relative mx-2">
@@ -102,17 +105,17 @@ export function FilterRow({
                 <Info className="h-3 w-3 cursor-pointer" />
               </Tooltip>
             </div>
-            <div className="mr-1 h-6 w-px bg-slate-200 sm:mr-2" />
-            <TabsTrigger value="1" className="px-1.5 sm:px-3">
+            <div className="mr-1 h-6 w-px bg-[#E6DCC9] sm:mr-2" />
+            <TabsTrigger value="1" className={triggerCls}>
               Content
             </TabsTrigger>
-            <TabsTrigger value="2" className="px-1.5 sm:px-3">
+            <TabsTrigger value="2" className={triggerCls}>
               Design
             </TabsTrigger>
-            <TabsTrigger value="3" className="px-1.5 sm:px-3">
+            <TabsTrigger value="3" className={triggerCls}>
               Development
             </TabsTrigger>
-            <TabsTrigger value="4" className="px-1.5 sm:px-3">
+            <TabsTrigger value="4" className={triggerCls}>
               Others
             </TabsTrigger>
             <div className="relative pl-2">
@@ -144,7 +147,7 @@ export function FilterRow({
           </div>
         </div>
       </div>
-      <div className="-mt-2.5 h-0.5 w-full bg-slate-200 sm:-mt-2" />
+      <div className="-mt-2.5 h-px w-full bg-[#E6DCC9] sm:-mt-2" />
       <div className="mt-3 flex w-full justify-between pl-2 text-xs sm:text-sm md:hidden">
         <div className="flex w-full items-center justify-between gap-4">
           <SearchInput
@@ -178,10 +181,10 @@ function Timeframe({
       onValueChange={(value) => debouncedSetTimeframe(value as TIMEFRAME)}
       value={value}
     >
-      <SelectTrigger className="h-auto gap-2 border-0 p-0 text-xs font-medium text-slate-500 focus:ring-0 focus:ring-offset-0 sm:text-sm">
+      <SelectTrigger className="h-auto gap-2 border-0 p-0 text-xs font-semibold text-[#5C5147] focus:ring-0 focus:ring-offset-0 sm:text-sm">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="text-slate-500">
+      <SelectContent className="text-[#5C5147]">
         <SelectItem value="ALL_TIME">
           <span>All Time</span>
         </SelectItem>

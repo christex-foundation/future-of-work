@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import { type GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState, useTransition } from 'react';
@@ -15,11 +14,7 @@ import { type TalentRankingsWhereInput } from '@/prisma/models/TalentRankings';
 
 import { getPrivyToken } from '@/features/auth/utils/getPrivyToken';
 import { HomepagePop } from '@/features/conversion-popups/components/HomepagePop';
-import { TotalStats } from '@/features/home/components/TotalStats';
-import { totalsQuery } from '@/features/home/queries/totals';
-import { Banner } from '@/features/leaderboard/components/Banner';
 import { FilterRow } from '@/features/leaderboard/components/FilterRow';
-import { Introduction } from '@/features/leaderboard/components/Introduction';
 import { Pagination } from '@/features/leaderboard/components/Pagination';
 import { RanksTable } from '@/features/leaderboard/components/RanksTable';
 import {
@@ -28,6 +23,9 @@ import {
   type TIMEFRAME,
 } from '@/features/leaderboard/types';
 import { getSubskills, skillCategories } from '@/features/leaderboard/utils';
+
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")";
 
 interface Props {
   results: RowType[];
@@ -48,8 +46,6 @@ function TalentLeaderboard({
   userRank,
   search: curSearch,
 }: Props) {
-  const { data: totals, isLoading: isTotalsLoading } = useQuery(totalsQuery);
-
   const [timeframe, setTimeframe] = useState<TIMEFRAME>(curTimeframe);
   const [skill, setSkill] = useState<SKILL>(curSkill);
   const [page, setPage] = useState(curPage);
@@ -117,53 +113,58 @@ function TalentLeaderboard({
 
   return (
     <Default
+      className="bg-[#FBF7EF]"
       meta={
         <Meta
-          title={`Talent Leaderboard | Superteam Earn`}
-          description={`Talent Leaderboard | Superteam Earn`}
+          title={`Talent Leaderboard | Future of Work`}
+          description={`Where you stand among the top builders on Future of Work — a published ranking by total earned, refreshed weekly and paid in USDC.`}
         />
       }
     >
       <HomepagePop />
-      <div className="overflow-hidden bg-white pb-20">
-        <div className="mx-auto flex max-w-7xl gap-4 px-1 py-4 sm:px-3 md:gap-8">
-          <div className="flex w-full flex-col items-start gap-4 md:w-[70%] md:gap-8">
-            <Banner />
-            <div className="flex w-full flex-col gap-4 md:hidden md:gap-8">
-              <Introduction />
-            </div>
-            <div className="flex w-full flex-col items-start gap-3">
-              <FilterRow
-                skill={skill}
-                setSkill={(value: SKILL) => setSkill(value)}
-                timeframe={timeframe}
-                setTimeframe={(value: TIMEFRAME) => setTimeframe(value)}
-                onSearch={setSearch}
-                isSearchLoading={isSearchLoading}
-                search={curSearch || ''}
-              />
-              <RanksTable
-                loading={loading}
-                userRank={userRank}
-                skill={skill}
-                rankings={results}
-                search={search}
-              />
-              <Pagination
-                count={count}
-                page={page}
-                setPage={(v: number) => setPage(v)}
-              />
-            </div>
-          </div>
-          <div className="hidden flex-col gap-6 md:flex md:w-[30%]">
-            <TotalStats
-              TVE={totals?.totalInUSD ?? 0}
-              bountyCount={totals?.count ?? 0}
-              isTotalLoading={isTotalsLoading}
-            />
-            <Introduction />
-          </div>
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.42] mix-blend-multiply"
+        style={{ backgroundImage: GRAIN }}
+      />
+      <div className="relative z-[1] mx-auto w-full max-w-[1200px] px-5 pb-24 md:px-10">
+        {/* hero */}
+        <section className="max-w-[780px] pt-12 md:pt-16">
+          <span className="flex items-center gap-2.5 text-[12px] font-semibold tracking-[0.2em] text-[#6B7A4F] uppercase before:h-[1.5px] before:w-[18px] before:bg-[#6B7A4F] before:content-['']">
+            The Leaderboard
+          </span>
+          <h1 className="mt-4 font-serif text-[clamp(36px,5vw,58px)] leading-[1.02] font-normal tracking-[-0.025em] text-[#221A14]">
+            Where you stand among{' '}
+            <em className="text-[#C4502E] italic">the top builders.</em>
+          </h1>
+          <p className="mt-3.5 max-w-[60ch] text-[18px] leading-[1.5] text-[#5C5147]">
+            A published ranking of every contributor by total earned — across
+            public bounties, projects and hackathon tracks. Refreshed weekly,
+            paid in USDC.
+          </p>
+        </section>
+
+        <div className="mt-9 flex w-full flex-col items-start gap-3">
+          <FilterRow
+            skill={skill}
+            setSkill={(value: SKILL) => setSkill(value)}
+            timeframe={timeframe}
+            setTimeframe={(value: TIMEFRAME) => setTimeframe(value)}
+            onSearch={setSearch}
+            isSearchLoading={isSearchLoading}
+            search={curSearch || ''}
+          />
+          <RanksTable
+            loading={loading}
+            userRank={userRank}
+            skill={skill}
+            rankings={results}
+            search={search}
+          />
+          <Pagination
+            count={count}
+            page={page}
+            setPage={(v: number) => setPage(v)}
+          />
         </div>
       </div>
     </Default>

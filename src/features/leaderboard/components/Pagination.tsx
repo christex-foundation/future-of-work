@@ -72,7 +72,7 @@ export function Pagination({ page, setPage, count }: Props) {
               aria-label="Jump to page"
               className={cn(
                 'h-8 w-14 min-w-0 rounded-md px-2 py-2 text-xs sm:h-9 sm:w-16 sm:text-sm',
-                'border-brand-purple text-brand-purple border',
+                'border-[#C4502E] text-[#C4502E] border',
               )}
             />,
           );
@@ -84,8 +84,8 @@ export function Pagination({ page, setPage, count }: Props) {
                 'h-8 w-8 min-w-0 rounded-md px-2 py-2 text-xs sm:h-9 sm:w-9 sm:text-sm',
                 'border',
                 page === i
-                  ? 'border-brand-purple text-brand-purple'
-                  : 'border-slate-200 text-slate-500',
+                  ? 'border-[#C4502E] text-[#C4502E]'
+                  : 'border-[#E6DCC9] text-[#5C5147]',
                 i === page && 'active',
               )}
               onClick={() => {
@@ -109,7 +109,7 @@ export function Pagination({ page, setPage, count }: Props) {
             className={cn(
               'h-8 w-8 min-w-0 rounded-md px-1 py-2 text-xs sm:h-9 sm:w-9 sm:text-sm',
               'border',
-              'disabled:border-slate-200 disabled:text-slate-500',
+              'disabled:border-[#E6DCC9] disabled:text-[#5C5147]',
             )}
             key={i}
             disabled
@@ -128,7 +128,7 @@ export function Pagination({ page, setPage, count }: Props) {
       <Button
         className={cn(
           'h-8 w-8 min-w-0 rounded-md p-1 sm:h-9 sm:w-9',
-          'disabled:pointer-events-none disabled:border-slate-300 disabled:bg-slate-300 disabled:text-slate-500 disabled:opacity-50',
+          'disabled:pointer-events-none disabled:border-[#E6DCC9] disabled:bg-[#F2EAD9] disabled:text-[#a99e8d] disabled:opacity-50',
         )}
         disabled={page === 1}
         onClick={() => debouncedHandleClick(page - 1)}
@@ -142,7 +142,7 @@ export function Pagination({ page, setPage, count }: Props) {
       <Button
         className={cn(
           'h-8 w-8 min-w-0 rounded-md p-1 sm:h-9 sm:w-9',
-          'disabled:pointer-events-none disabled:border-slate-300 disabled:bg-slate-300 disabled:text-slate-500 disabled:opacity-50',
+          'disabled:pointer-events-none disabled:border-[#E6DCC9] disabled:bg-[#F2EAD9] disabled:text-[#a99e8d] disabled:opacity-50',
         )}
         disabled={page === totalPages}
         onClick={() => debouncedHandleClick(page + 1)}
@@ -153,7 +153,7 @@ export function Pagination({ page, setPage, count }: Props) {
 
       {/* Explicit jump-to-page control */}
       <div className="ml-2 flex items-center gap-2">
-        <span className="text-xs text-slate-500">Go to</span>
+        <span className="text-xs text-[#5C5147]">Go to</span>
         <Input
           value={inputValue}
           onChange={(e) => {
@@ -172,7 +172,7 @@ export function Pagination({ page, setPage, count }: Props) {
           )}
         />
 
-        <span className="text-xs text-slate-400">/ {totalPages}</span>
+        <span className="text-xs text-[#a99e8d]">/ {totalPages}</span>
       </div>
     </div>
   );
