@@ -238,9 +238,13 @@ export const SubmissionHeader = ({
           </BreadcrumbList>
         </Breadcrumb>
         <div className="mb-2 flex items-center gap-2">
-          <div className="ml-1 flex items-center gap-2">
-            {getListingIcon(bounty?.type!, 'size-5')}
-            <p className="text-xl font-bold text-[#1D1815]">{bounty?.title}</p>
+          <div className="ml-1 flex items-center gap-2.5">
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#CE4A2B]/10 text-[#CE4A2B]">
+              {getListingIcon(bounty?.type!, 'size-4')}
+            </span>
+            <p className="font-serif text-2xl font-medium tracking-[-0.01em] text-[#1D1815]">
+              {bounty?.title}
+            </p>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -355,41 +359,59 @@ export const SubmissionHeader = ({
         </div>
       </div>
       {!isProject && !bounty?.isWinnersAnnounced && (
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-end gap-2">
           {activeTab === 'submissions' && (
             <>
-              <Tooltip
-                content={
-                  <>
-                    You cannot change the winners once the results are
-                    published!
-                    <TooltipArrow />
-                  </>
-                }
-                disabled={!bounty?.isWinnersAnnounced}
-                contentProps={{ sideOffset: 5 }}
-              >
-                <ShinyButton
-                  disabled={
-                    !afterAnnounceDate ||
-                    isHackathonPage ||
-                    remainings?.podiums !== 0 ||
-                    (remainings?.bonus > 0 &&
-                      submissions.filter((s) => !s.isWinner).length > 0)
+              <div className="flex items-center gap-3">
+                {!!remainings &&
+                  !isHackathonPage &&
+                  !!(remainings.bonus > 0 || remainings.podiums > 0) && (
+                    <p className="flex items-center gap-1.5 rounded-full border border-[#e6a12b]/40 bg-[#e6a12b]/15 px-3.5 py-2 text-xs font-medium whitespace-nowrap text-[#6e4f12]">
+                      <AlertTriangle className="h-3.5 w-3.5" />
+                      {remainings.podiums > 0 && (
+                        <>
+                          {remainings.podiums}{' '}
+                          {remainings.podiums === 1 ? 'Winner' : 'Winners'}{' '}
+                        </>
+                      )}
+                      {remainings.bonus > 0 && <>{remainings.bonus} Bonus </>}
+                      Remaining
+                    </p>
+                  )}
+                <Tooltip
+                  content={
+                    <>
+                      You cannot change the winners once the results are
+                      published!
+                      <TooltipArrow />
+                    </>
                   }
-                  onClick={onWinnersAnnounceOpen}
-                  animate={true}
-                  classNames={{
-                    button: 'w-52 h-11',
-                  }}
+                  disabled={!bounty?.isWinnersAnnounced}
+                  contentProps={{ sideOffset: 5 }}
                 >
-                  <Check className="size-4" />
-                  Announce Winners
-                </ShinyButton>
-              </Tooltip>
+                  <ShinyButton
+                    disabled={
+                      !afterAnnounceDate ||
+                      isHackathonPage ||
+                      remainings?.podiums !== 0 ||
+                      (remainings?.bonus > 0 &&
+                        submissions.filter((s) => !s.isWinner).length > 0)
+                    }
+                    onClick={onWinnersAnnounceOpen}
+                    animate={true}
+                    classNames={{
+                      button: 'h-11 px-6 rounded-full',
+                      span: 'rounded-full',
+                    }}
+                  >
+                    <Check className="size-4" />
+                    Announce Winners
+                  </ShinyButton>
+                </Tooltip>
+              </div>
               {showWarning && (
-                <div className="my-2 flex w-52">
-                  <p className="text-xxs text-[#ce4a2b]">
+                <div className="flex w-64 justify-end">
+                  <p className="text-xxs text-right text-[#ce4a2b]">
                     There aren&apos;t enough eligible{' '}
                     {bounty?.type === 'project'
                       ? 'applications'
@@ -407,35 +429,6 @@ export const SubmissionHeader = ({
                   </p>
                 </div>
               )}
-              {!!remainings &&
-                !isProject &&
-                !bounty?.isWinnersAnnounced &&
-                !isHackathonPage && (
-                  <div className="flex w-full py-1 text-xs">
-                    {!!(remainings.bonus > 0 || remainings.podiums > 0) ? (
-                      <p className="flex w-full items-center justify-center rounded-md bg-[#ce4a2b]/12 px-2 py-1 text-[#ce4a2b]">
-                        <AlertTriangle className="mr-1 inline-block h-3 w-3" />
-                        {remainings.podiums > 0 && (
-                          <>
-                            {remainings.podiums}{' '}
-                            {remainings.podiums === 1
-                              ? 'Winner'
-                              : 'Winners'}{' '}
-                          </>
-                        )}
-                        {remainings.bonus > 0 && (
-                          <>
-                            {remainings.bonus}{' '}
-                            {remainings.bonus === 1 ? 'Bonus' : 'Bonus'}{' '}
-                          </>
-                        )}
-                        Remaining
-                      </p>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                )}
             </>
           )}
         </div>
@@ -462,7 +455,8 @@ export const SubmissionHeader = ({
           <ShinyButton
             animate={true}
             classNames={{
-              button: 'h-11 w-48',
+              button: 'h-11 px-6 rounded-full',
+              span: 'rounded-full',
             }}
             onClick={() => {
               router.push(

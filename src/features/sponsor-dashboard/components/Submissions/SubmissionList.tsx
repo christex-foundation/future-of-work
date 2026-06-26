@@ -124,7 +124,7 @@ export const SubmissionList = ({
   };
 
   return (
-    <div className="h-full w-full rounded-l-lg border border-[#1d1815]/12 bg-[#FBF7EE]">
+    <div className="h-full w-full overflow-hidden rounded-2xl border border-[#1d1815]/12 bg-[#FBF7EE] shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]">
       <div className="flex w-full items-center justify-between gap-2 p-3">
         {!isMultiSelectDisabled && (
           <Checkbox
@@ -164,7 +164,7 @@ export const SubmissionList = ({
       </div>
       <div
         ref={scrollContainerRef}
-        className="scrollbar-thin scrollbar-w-1 scrollbar-thumb-[#1d1815]/15 hover:scrollbar-thumb-[#1d1815]/25 h-[42rem] w-full overflow-y-auto rounded-bl-lg border-t border-[#1d1815]/12 bg-[#FBF7EE]"
+        className="scrollbar-thin scrollbar-w-1 scrollbar-thumb-[#1d1815]/15 hover:scrollbar-thumb-[#1d1815]/25 h-[42rem] w-full overflow-y-auto border-t border-[#1d1815]/12 bg-[#FBF7EE]"
       >
         {submissions.map((submission) => {
           const { bg, color, border } = getSubmissionColors(submission);

@@ -65,7 +65,7 @@ export const SubmissionPanel = ({
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="w-full font-medium whitespace-nowrap text-[#1D1815]">
+                    <p className="w-full font-serif text-lg font-medium whitespace-nowrap text-[#1D1815]">
                       {`${selectedSubmission?.user?.firstName}'s Submission`}
                     </p>
                     {!!selectedSubmission?.agentId && (
@@ -139,12 +139,12 @@ export const SubmissionPanel = ({
                   )}
               </div>
             </div>
-            <div className="flex items-center gap-5 px-5 py-2">
+            <div className="flex flex-wrap items-center gap-2 px-5 py-2.5">
               {selectedSubmission?.user?.email && (
                 <CopyButton
                   text={selectedSubmission.user.email}
-                  className="gap-1 text-sm text-[#6B5E50] underline-offset-1 hover:text-[#1D1815] hover:underline"
-                  contentProps={{ side: 'right' }}
+                  className="gap-1.5 rounded-full border border-[#1d1815]/12 bg-[#F4EEE3] px-3 py-1 text-xs text-[#6B5E50] hover:text-[#1D1815]"
+                  contentProps={{ side: 'top' }}
                 >
                   {truncateString(selectedSubmission.user.email, 36)}
                 </CopyButton>
@@ -152,8 +152,8 @@ export const SubmissionPanel = ({
 
               {selectedSubmission?.user?.walletAddress && (
                 <CopyButton
-                  className="gap-1 text-sm text-[#6B5E50] underline-offset-1 hover:text-[#1D1815] hover:underline"
-                  contentProps={{ side: 'right' }}
+                  className="gap-1.5 rounded-full border border-[#1d1815]/12 bg-[#F4EEE3] px-3 py-1 text-xs text-[#6B5E50] hover:text-[#1D1815]"
+                  contentProps={{ side: 'top' }}
                   text={selectedSubmission.user.walletAddress}
                 >
                   <MdOutlineAccountBalanceWallet />
@@ -166,30 +166,38 @@ export const SubmissionPanel = ({
                 </CopyButton>
               )}
 
-              <div className="flex gap-2">
-                <Telegram
-                  className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
-                  link={
-                    selectedSubmission?.telegram ||
-                    selectedSubmission?.user?.telegram ||
-                    ''
-                  }
-                />
+              <div className="flex gap-1.5">
+                <span className="flex size-7 items-center justify-center rounded-full border border-[#1d1815]/12 bg-[#F4EEE3]">
+                  <Telegram
+                    className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
+                    link={
+                      selectedSubmission?.telegram ||
+                      selectedSubmission?.user?.telegram ||
+                      ''
+                    }
+                  />
+                </span>
 
-                <Twitter
-                  className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
-                  link={selectedSubmission?.user?.twitter || ''}
-                />
+                <span className="flex size-7 items-center justify-center rounded-full border border-[#1d1815]/12 bg-[#F4EEE3]">
+                  <Twitter
+                    className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
+                    link={selectedSubmission?.user?.twitter || ''}
+                  />
+                </span>
 
-                <GitHub
-                  className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
-                  link={selectedSubmission?.user?.github || ''}
-                />
+                <span className="flex size-7 items-center justify-center rounded-full border border-[#1d1815]/12 bg-[#F4EEE3]">
+                  <GitHub
+                    className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
+                    link={selectedSubmission?.user?.github || ''}
+                  />
+                </span>
 
-                <Website
-                  className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
-                  link={selectedSubmission?.user?.website || ''}
-                />
+                <span className="flex size-7 items-center justify-center rounded-full border border-[#1d1815]/12 bg-[#F4EEE3]">
+                  <Website
+                    className="h-[0.9rem] w-[0.9rem] text-[#6B5E50]"
+                    link={selectedSubmission?.user?.website || ''}
+                  />
+                </span>
               </div>
               {isProject && (
                 <p className="text-sm whitespace-nowrap text-[#6B5E50]">

@@ -21,35 +21,23 @@ export const ShinyButton = ({
   return (
     <button
       className={cn(
-        'relative inline-flex h-10 items-center justify-center gap-2 overflow-hidden rounded-md p-[1.5px] pb-[1.8px]',
-        'bg-brand-purple shadow-[0px_2px_2.3px_0px_#0000002B]',
-        'ph-no-capture cursor-pointer focus:ring-0 focus:outline-hidden',
-        'transition-all duration-300 ease-in-out',
+        'ph-no-capture relative inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-white',
+        'bg-[#2C3A2E] shadow-[0_10px_24px_-14px_rgba(44,58,46,0.85)]',
+        'cursor-pointer transition-all duration-200 ease-out focus:ring-0 focus:outline-hidden',
         !disabled &&
-          'before:absolute before:inset-[-1000%] before:animate-[spin_2s_linear_infinite] before:bg-[conic-gradient(from_90deg_at_50%_50%,#FF6B9D_0%,#E91E63_25%,#00E5FF_50%,#2196F3_75%,#FF6B9D_100%)]',
-        !disabled && 'hover:bg-brand-purple hover:shadow-lg',
+          'hover:-translate-y-0.5 hover:bg-[#3C4D3D] hover:shadow-[0_16px_32px_-14px_rgba(44,58,46,0.95)]',
         !disabled &&
           animate &&
-          'animate-[float_2s_ease-in-out_infinite,bounce_2s_ease-in-out_infinite] hover:[animation-play-state:paused]',
-        !disabled &&
-          animate &&
-          'shadow-[0px_4px_20px_rgba(255,121,193,0.3),0px_2px_10px_rgba(118,197,255,0.3)]',
+          'after:absolute after:inset-0 after:rounded-full after:ring-1 after:ring-[#C4502E]/30 after:ring-offset-2 after:ring-offset-[#FBF7EE]',
         disabled && 'cursor-not-allowed opacity-50',
         classNames?.button,
+        classNames?.span,
       )}
       disabled={disabled}
       onClick={onClick}
       tabIndex={-1}
     >
-      <span
-        className={cn(
-          'bg-brand-purple relative z-10 inline-flex h-full w-full items-center justify-center gap-2 rounded-[calc(0.375rem-1.5px)] px-4 py-1 text-sm font-semibold text-white backdrop-blur-3xl',
-          !disabled && animate && 'font-semibold',
-          classNames?.span,
-        )}
-      >
-        {children}
-      </span>
+      {children}
     </button>
   );
 };

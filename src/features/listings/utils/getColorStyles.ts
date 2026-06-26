@@ -1,69 +1,70 @@
+/**
+ * Daybreak listing-status pills.
+ * Mirrors the narrow palette used by the submission status pills
+ * (see sponsor-dashboard/utils/statusColorMap): statuses are grouped into
+ * semantic families rather than each keeping a unique hue.
+ *   forest #123a33 -> live / published / completed (success)
+ *   terra  #ce4a2b -> failed / unpublished (negative)
+ *   gold   #e6a12b -> needs attention / in review / pending (warning)
+ *   sage   #8FA37E -> in progress (positive-neutral)
+ *   muted  #6b5e50 -> draft (de-emphasised)
+ */
+const forest = {
+  bgColor: 'bg-[#123a33]/12',
+  color: 'text-[#123a33]',
+  borderColor: 'border-[#123a33]/25',
+  focus: 'focus:bg-[#123a33]/20 focus:text-[#123a33]',
+};
+const terra = {
+  bgColor: 'bg-[#ce4a2b]/12',
+  color: 'text-[#ce4a2b]',
+  borderColor: 'border-[#ce4a2b]/30',
+  focus: 'focus:bg-[#ce4a2b]/20 focus:text-[#ce4a2b]',
+};
+const gold = {
+  bgColor: 'bg-[#e6a12b]/20',
+  color: 'text-[#1d1815]',
+  borderColor: 'border-[#e6a12b]/50',
+  focus: 'focus:bg-[#e6a12b]/30 focus:text-[#1d1815]',
+};
+const sage = {
+  bgColor: 'bg-[#8FA37E]/22',
+  color: 'text-[#3C4D3D]',
+  borderColor: 'border-[#8FA37E]/55',
+  focus: 'focus:bg-[#8FA37E]/32 focus:text-[#3C4D3D]',
+};
+const muted = {
+  bgColor: 'bg-[#1d1815]/6',
+  color: 'text-[#6b5e50]',
+  borderColor: 'border-[#1d1815]/20',
+  focus: 'focus:bg-[#1d1815]/12 focus:text-[#6b5e50]',
+};
+
 export const getColorStyles = (status: string) => {
   switch (status) {
     case 'Published':
     case 'Completed':
-      return {
-        bgColor: 'bg-emerald-100',
-        color: 'text-teal-600',
-        borderColor: 'border-emerald-200',
-        focus: 'focus:bg-emerald-200 focus:text-teal-700',
-      };
+      return forest;
     case 'Under Verification':
     case 'Fndn to Pay':
-      return {
-        bgColor: 'bg-pink-100',
-        color: 'text-pink-500',
-        borderColor: 'border-pink-200',
-        focus: 'focus:bg-pink-200 focus:text-pink-700',
-      };
     case 'Payment Pending':
-      return {
-        bgColor: 'bg-amber-100',
-        color: 'text-amber-600',
-        borderColor: 'border-amber-300',
-        focus: 'focus:bg-amber-200 focus:text-amber-700',
-      };
+      return gold;
     case 'Verification Failed':
-      return {
-        bgColor: 'bg-red-100',
-        color: 'text-red-400',
-        borderColor: 'border-red-200',
-        focus: 'focus:bg-red-200 focus:text-red-700',
-      };
+      return terra;
     case 'Draft':
-      return {
-        bgColor: 'bg-slate-100',
-        color: 'text-slate-400',
-        borderColor: 'border-slate-200',
-        focus: 'focus:bg-slate-200 focus:text-slate-700',
-      };
+      return muted;
     case 'In Review':
-      return {
-        bgColor: 'bg-cyan-100',
-        color: 'text-cyan-600',
-        borderColor: 'border-cyan-200',
-        focus: 'focus:bg-cyan-200 focus:text-cyan-700',
-      };
+      return gold;
     case 'In Progress':
-      return {
-        bgColor: 'bg-purple-100',
-        color: 'text-violet-500',
-        borderColor: 'border-purple-200',
-        focus: 'focus:bg-purple-200 focus:text-purple-700',
-      };
+      return sage;
     case 'Unpublished':
-      return {
-        bgColor: 'bg-orange-50',
-        color: 'text-orange-600',
-        borderColor: 'border-orange-200',
-        focus: 'focus:bg-orange-200 focus:text-orange-700',
-      };
+      return terra;
     default:
       return {
-        bgColor: 'bg-gray-500',
-        color: 'text-white',
-        borderColor: 'border-gray-500',
-        focus: 'focus:bg-gray-600 focus:text-gray-100',
+        bgColor: 'bg-[#1d1815]/8',
+        color: 'text-[#1d1815]',
+        borderColor: 'border-[#1d1815]/25',
+        focus: 'focus:bg-[#1d1815]/15 focus:text-[#1d1815]',
       };
   }
 };

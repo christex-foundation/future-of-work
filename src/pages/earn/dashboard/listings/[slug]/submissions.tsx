@@ -9,7 +9,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
-import { ExternalImage } from '@/components/ui/cloudinary-image';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useDisclosure } from '@/hooks/use-disclosure';
@@ -455,24 +454,42 @@ export default function BountySubmissions({ slug }: Props) {
             {bounty?.isPublished && (
               <>
                 <TabsList className="mt-3 gap-4 font-medium text-[#6B5E50]">
-                  <TabsTrigger value="submissions">
+                  <TabsTrigger
+                    value="submissions"
+                    className="data-[state=active]:text-[#1D1815] data-[state=active]:after:bg-[#CE4A2B]"
+                  >
                     Submissions
-                    <div className="text-xxs ml-2 rounded-full bg-[#ECE2D2] px-2 py-0.5 text-[#6B5E50]">
+                    <div
+                      className={cn(
+                        'text-xxs ml-2 rounded-full px-2 py-0.5 font-semibold transition-colors',
+                        activeTab === 'submissions'
+                          ? 'bg-[#CE4A2B] text-white'
+                          : 'bg-[#ECE2D2] text-[#6B5E50]',
+                      )}
+                    >
                       {submissions?.length}
                     </div>
                   </TabsTrigger>
                   {!bounty?.isWinnersAnnounced && !isExpired && (
                     <TabsTrigger
                       value="scout"
-                      className={cn('ph-no-capture')}
+                      className={cn(
+                        'ph-no-capture',
+                        'data-[state=active]:text-[#1D1815] data-[state=active]:after:bg-[#CE4A2B]',
+                      )}
                       onClick={() => posthog.capture('scout tab_scout')}
                     >
                       Scout Talent
-                      <div className="ml-1.5 h-1.5 w-1.5 rounded-full bg-red-500" />
+                      <div className="ml-1.5 h-1.5 w-1.5 rounded-full bg-[#CE4A2B]" />
                     </TabsTrigger>
                   )}
                   {bounty?.isWinnersAnnounced && !bounty?.isFndnPaying && (
-                    <TabsTrigger value="payments">Payments</TabsTrigger>
+                    <TabsTrigger
+                      value="payments"
+                      className="data-[state=active]:text-[#1D1815] data-[state=active]:after:bg-[#CE4A2B]"
+                    >
+                      Payments
+                    </TabsTrigger>
                   )}
                 </TabsList>
                 <div className="h-[1.5px] w-full bg-[#1d1815]/12" />
@@ -480,7 +497,7 @@ export default function BountySubmissions({ slug }: Props) {
             )}
 
             <TabsContent value="submissions" className="w-full px-0">
-              <div className="grid h-160 w-full grid-cols-[23rem_1fr] bg-[#FBF7EE]">
+              <div className="grid h-160 w-full grid-cols-[23rem_1fr] gap-4">
                 <SubmissionList
                   listing={bounty}
                   selectedFilters={selectedFilters}
@@ -495,27 +512,175 @@ export default function BountySubmissions({ slug }: Props) {
                   isMultiSelectDisabled={isMultiSelectDisabled}
                 />
 
-                <div className="h-full w-full rounded-r-xl border-t border-r border-b border-[#1d1815]/12 bg-[#FBF7EE]">
+                <div className="h-full w-full overflow-hidden rounded-2xl border border-[#1d1815]/12 bg-[#FBF7EE] shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)]">
                   {!filteredSubmissions?.length &&
                   !searchText &&
                   !isSubmissionsLoading ? (
-                    <>
-                      <ExternalImage
-                        className="mx-auto mt-32 w-32"
-                        alt={'talent empty'}
-                        src={'/bg/talent-empty.svg'}
-                      />
-                      <p className="mx-auto mt-5 text-center text-lg font-semibold text-[#1D1815]">
+                    <div className="db-working flex h-full flex-col items-center justify-center px-6 py-16 text-center">
+                      <svg
+                        viewBox="0 0 220 170"
+                        className="w-56"
+                        role="img"
+                        aria-label="Someone working at a laptop"
+                      >
+                        <circle cx="110" cy="92" r="64" fill="#F2EAD9" />
+                        <circle
+                          cx="110"
+                          cy="92"
+                          r="64"
+                          fill="none"
+                          stroke="#E6DCC9"
+                          strokeWidth="1.5"
+                        />
+                        <g className="db-float">
+                          <rect
+                            x="50"
+                            y="119"
+                            width="120"
+                            height="7"
+                            rx="3.5"
+                            fill="#E0D4BD"
+                          />
+                          <rect
+                            x="139"
+                            y="84"
+                            width="8"
+                            height="38"
+                            rx="4"
+                            fill="#8FA37E"
+                          />
+                          <circle
+                            className="db-dot"
+                            cx="141"
+                            cy="57"
+                            r="2.4"
+                            fill="#6B7A4F"
+                          />
+                          <circle
+                            className="db-dot db-dot2"
+                            cx="149"
+                            cy="54"
+                            r="2.4"
+                            fill="#6B7A4F"
+                          />
+                          <circle
+                            className="db-dot db-dot3"
+                            cx="157"
+                            cy="52"
+                            r="2.4"
+                            fill="#6B7A4F"
+                          />
+                          <path
+                            d="M64 119 L96 119 L102 110 L70 110 Z"
+                            fill="#3C4D3D"
+                          />
+                          <rect
+                            x="72"
+                            y="80"
+                            width="28"
+                            height="28"
+                            rx="3"
+                            fill="#2C3A2E"
+                          />
+                          <rect
+                            className="db-screen"
+                            x="75"
+                            y="83"
+                            width="22"
+                            height="22"
+                            rx="2"
+                            fill="#C4502E"
+                          />
+                          <rect
+                            x="78"
+                            y="87"
+                            width="13"
+                            height="2"
+                            rx="1"
+                            fill="#F2EAD9"
+                            opacity="0.85"
+                          />
+                          <rect
+                            x="78"
+                            y="92"
+                            width="16"
+                            height="2"
+                            rx="1"
+                            fill="#F2EAD9"
+                            opacity="0.6"
+                          />
+                          <rect
+                            x="78"
+                            y="97"
+                            width="9"
+                            height="2"
+                            rx="1"
+                            fill="#F2EAD9"
+                            opacity="0.6"
+                          />
+                          <path
+                            d="M112 119 C112 97 118 89 126 89 C134 89 140 97 140 119 Z"
+                            fill="#C4502E"
+                          />
+                          <circle cx="126" cy="73" r="11" fill="#2C3A2E" />
+                          <path
+                            className="db-hand"
+                            d="M119 103 C110 105 102 108 96 111"
+                            stroke="#C4502E"
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
+                          <rect
+                            x="150"
+                            y="112"
+                            width="11"
+                            height="9"
+                            rx="2"
+                            fill="#3C4D3D"
+                          />
+                          <path
+                            d="M161 114 q4 1 0 5"
+                            stroke="#3C4D3D"
+                            strokeWidth="1.6"
+                            fill="none"
+                          />
+                          <path
+                            className="db-steam"
+                            d="M155 109 c2 -2 -2 -4 0 -7"
+                            stroke="#8FA37E"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
+                        </g>
+                      </svg>
+                      <p className="mt-6 font-serif text-xl font-medium text-[#1D1815]">
                         {selectedFilters.size > 0
                           ? 'Zero Results'
                           : 'People are working!'}
                       </p>
-                      <p className="mx-auto mb-[200px] text-center font-medium text-[#6B5E50]">
+                      <p className="mt-1 font-medium text-[#6B5E50]">
                         {selectedFilters.size > 0
                           ? 'For the filters you have selected'
                           : 'Submissions will start appearing here'}
                       </p>
-                    </>
+                      <style>{`
+                        .db-working .db-float{animation:dbFloat 3.6s ease-in-out infinite}
+                        @keyframes dbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+                        .db-working .db-screen{animation:dbGlow 1.9s ease-in-out infinite}
+                        @keyframes dbGlow{0%,100%{opacity:.5}50%{opacity:.92}}
+                        .db-working .db-hand{animation:dbType .5s ease-in-out infinite alternate}
+                        @keyframes dbType{from{transform:translateY(0)}to{transform:translateY(1.6px)}}
+                        .db-working .db-dot{animation:dbBlink 1.4s ease-in-out infinite}
+                        .db-working .db-dot2{animation-delay:.2s}
+                        .db-working .db-dot3{animation-delay:.4s}
+                        @keyframes dbBlink{0%,100%{opacity:.25}50%{opacity:1}}
+                        .db-working .db-steam{animation:dbSteam 2.6s ease-in-out infinite}
+                        @keyframes dbSteam{0%{opacity:0;transform:translateY(0)}45%{opacity:.7}100%{opacity:0;transform:translateY(-9px)}}
+                        @media (prefers-reduced-motion:reduce){.db-working *{animation:none!important}}
+                      `}</style>
+                    </div>
                   ) : (
                     <SubmissionPanel
                       isMultiSelectOn={selectedSubmissionIds.size > 0}
