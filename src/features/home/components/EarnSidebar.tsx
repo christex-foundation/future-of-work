@@ -109,6 +109,12 @@ export function EarnSidebar({ closingSoon }: { closingSoon: EarnBounty[] }) {
             Activity shows up here as builders submit and win.
           </p>
         )}
+        <Link
+          href="/earn/feed"
+          className="mt-3 block text-[13px] font-semibold text-[#6B7A4F] hover:text-[#C4502E]"
+        >
+          View all activity →
+        </Link>
       </div>
 
       {/* PANEL 3 — Closing soon (forest-tinted) */}
