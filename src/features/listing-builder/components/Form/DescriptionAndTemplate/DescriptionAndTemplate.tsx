@@ -19,6 +19,7 @@ import {
 } from '@/features/listing-builder/atoms';
 
 import { useListingForm } from '../../../hooks';
+import { BriefExample } from './BriefExample';
 import { Templates } from './Templates';
 
 import styles from '@/styles/listing-description.module.css';
@@ -115,9 +116,21 @@ export function DescriptionAndTemplate() {
                 Description
               </FormLabel>
               <div className="flex items-center gap-2">
+                <BriefExample />
                 <Templates />
               </div>
             </div>
+            <p className="-mt-1 text-xs text-[#5C5147]">
+              A strong brief covers three sections:{' '}
+              <span className="font-semibold text-[#3A322A]">Overview</span> (the
+              full task and context),{' '}
+              <span className="font-semibold text-[#3A322A]">Requirements</span>{' '}
+              (what a valid submission must include), and{' '}
+              <span className="font-semibold text-[#3A322A]">
+                Judging Criteria
+              </span>{' '}
+              (how entries are scored).
+            </p>
             <div className="flex rounded-md border border-[#E6DCC9] bg-[#FFFDF8] has-focus:ring-1 has-focus:ring-[#2C3A2E]">
               <FormControl>
                 <MinimalTiptapEditor

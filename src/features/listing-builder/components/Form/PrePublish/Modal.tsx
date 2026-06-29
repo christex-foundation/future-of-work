@@ -6,11 +6,26 @@ import posthog from 'posthog-js';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Tooltip } from '@/components/ui/tooltip';
 import { useUser } from '@/store/user';
 
 import { isCreateListingAllowedQuery } from '@/features/listing-builder/queries/is-create-allowed';
+import {
+  analyzeBrief,
+  type BriefSection,
+  missingBriefSections,
+} from '@/features/listing-builder/utils/brief';
 
 import {
   confirmModalAtom,
@@ -108,7 +123,20 @@ export function PrePublish() {
     [isEditing, status],
   );
 
-  const submitWithFixedSettings = async () => {
+  const [briefWarning, setBriefWarning] = useState<BriefSection[] | null>(null);
+
+  const handlePublishClick = () => {
+    const missing = missingBriefSections(
+      analyzeBrief(form.getValues('description')),
+    );
+    if (missing.length > 0) {
+      setBriefWarning(missing);
+      return;
+    }
+    runPublish();
+  };
+
+  const runPublish = async () => {
     posthog.capture('basics_sponsor');
     form.setValue('isPrivate', false, { shouldDirty: true });
     form.setValue('agentAccess', 'HUMAN_ONLY', { shouldDirty: true });
@@ -151,8 +179,50 @@ export function PrePublish() {
   };
 
   return (
-    <Tooltip
-      content={
+    <>
+      <AlertDialog
+        open={!!briefWarning}
+        onOpenChange={(open) => {
+          if (!open) setBriefWarning(null);
+        }}
+      >
+        <AlertDialogContent className="border-[#E6DCC9] bg-[#FFFDF8] text-[#221A14]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif text-2xl font-semibold text-[#221A14]">
+              Your brief looks incomplete
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-[#5C5147]">
+              {briefWarning && briefWarning.length > 0 && (
+                <>
+                  It&apos;s missing{' '}
+                  <span className="font-semibold text-[#3A322A]">
+                    {briefWarning.map((s) => s.label).join(' and ')}
+                  </span>
+                  . Listings that clearly explain the task, requirements, and how
+                  entries are judged get better submissions. You can still publish
+                  as-is.
+                </>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-[#E6DCC9] bg-transparent text-[#3A322A] hover:bg-[#EEF1E7]">
+              Add them
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-[#2C3A2E] text-white hover:bg-[#3C4D3D]"
+              onClick={() => {
+                setBriefWarning(null);
+                runPublish();
+              }}
+            >
+              Publish anyway
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <Tooltip
+        content={
         status === 'verification failed' || status === 'blocked' ? (
           <p>Editing this listing is blocked</p>
         ) : (
@@ -168,7 +238,7 @@ export function PrePublish() {
       <Button
         className="ph-no-capture bg-[#2C3A2E] px-6 text-white hover:bg-[#3C4D3D]"
         disabled={isDisabledSoftForButtons}
-        onClick={submitWithFixedSettings}
+        onClick={handlePublishClick}
       >
         {submitListingMutation.isPending || submitListingMutation.isSuccess ? (
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -177,7 +247,8 @@ export function PrePublish() {
         ) : (
           <span>Publish</span>
         )}
-      </Button>
-    </Tooltip>
+        </Button>
+      </Tooltip>
+    </>
   );
 }

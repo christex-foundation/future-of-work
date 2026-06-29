@@ -423,7 +423,7 @@ export const PayoutButton = ({ bounty, submission }: Props) => {
       </div>
       {connected && (
         <Button
-          className="ph-no-capture min-w-[160px] text-center disabled:cursor-not-allowed"
+          className="ph-no-capture min-w-[160px] rounded-md bg-[#2C3A2E] text-center font-semibold text-[#FBF7EF] shadow-sm hover:bg-[#3C4D3D] disabled:cursor-not-allowed"
           disabled={
             !bounty?.isWinnersAnnounced || remainingAmount <= 0 || isPaying
           }
@@ -460,17 +460,20 @@ export const PayoutButton = ({ bounty, submission }: Props) => {
           if (!open) setWarning(null);
         }}
       >
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8]">
           <AlertDialogHeader>
-            <AlertDialogTitle>
+            <AlertDialogTitle className="font-serif text-[#221A14]">
               ⚠️ Important: Check your wallet history
             </AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription className="text-[#5C5147]">
               {`Your payment to ${warning?.firstName ?? 'the winner'} might have gone through. Please check your wallet history before reattempting to pay ${warning?.firstName ?? 'the winner'}.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction onClick={() => setWarning(null)}>
+            <AlertDialogAction
+              className="rounded-md bg-[#2C3A2E] font-semibold text-[#FBF7EF] hover:bg-[#3C4D3D]"
+              onClick={() => setWarning(null)}
+            >
               Understood
             </AlertDialogAction>
           </AlertDialogFooter>

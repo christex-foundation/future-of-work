@@ -11,7 +11,6 @@ import {
   getRegionsForChapterPage,
   getRegionsForCountryPageUsingChapters,
   getRegionsForMultiCountryRegionPageUsingChapters,
-  getRegionsForUserLocationUsingChapters,
 } from '@/utils/chapterRegion';
 
 import { HACKATHONS } from '@/features/hackathon/constants/hackathons';
@@ -149,12 +148,6 @@ function getOrderBy(
   return isDefaultSort ? [{ isFeatured: 'desc' }, primarySort] : primarySort;
 }
 
-async function getUserRegionFilter(
-  userLocation: string | null,
-): Promise<string[]> {
-  return getRegionsForUserLocationUsingChapters(userLocation);
-}
-
 export async function buildListingQuery(
   args: BuildListingQueryArgs,
   user: {
@@ -192,22 +185,14 @@ export async function buildListingQuery(
     });
   }
 
-  if (context === 'home') {
-    andConditions.push({
-      language: { in: ['eng', 'sco'] },
-      OR: [
-        { compensationType: 'fixed', usdValue: { gt: 100 } },
-        { compensationType: 'range', maxRewardAsk: { gt: 100 } },
-        { compensationType: 'variable' },
-      ],
-    });
-  }
+  // FOW: the homepage is not filtered by language or reward size, so small and
+  // non-English listings still surface. (Upstream Superteam restricted home to
+  // language ∈ ['eng','sco'] and usdValue > 100; relaxed for the SL-first launch.)
 
-  if (user?.isTalentFilled && (context === 'all' || context === 'home')) {
-    where.region = {
-      in: await getUserRegionFilter(user.location),
-    };
-  }
+  // FOW launches Sierra Leone first: the default feed is NOT auto-filtered by the
+  // viewer's location, so every freelancer sees all listings whether logged in or
+  // out, with or without a profile location. (Explicit region pages below still
+  // filter via the `region` context.)
 
   if (effectiveCategory === 'For You') {
     const userSkills =

@@ -264,7 +264,7 @@ export function SponsorLayout({
           {/* slim icon rail */}
           <aside
             className={cn(
-              'fixed top-0 bottom-0 left-0 z-10 flex w-[84px] max-w-[84px] min-w-[84px] flex-col items-center border-r border-[#E6DCC9] bg-[#FBF7EF] py-5',
+              'fixed top-0 bottom-0 left-0 z-30 flex w-[84px] max-w-[84px] min-w-[84px] flex-col items-center border-r border-[#E6DCC9] bg-[#FBF7EF] py-5',
               isCollapsible && 'top-12',
             )}
           >

@@ -90,9 +90,14 @@ export default function HomePage({
     >
       <div className="mx-auto w-full px-4 py-6 lg:px-12 lg:py-10">
         <div className="mx-auto w-full max-w-[88rem] p-0">
-          <EarnHomeHero totalUsers={totalUsers} totalSponsors={totalSponsors} />
-          <DaybreakTicker items={bounties} />
           <EarnSpotlight bounty={spotlight} />
+          <div className="mt-12 lg:mt-16">
+            <EarnHomeHero
+              totalUsers={totalUsers}
+              totalSponsors={totalSponsors}
+            />
+          </div>
+          <DaybreakTicker items={bounties} />
           <StartHereRail />
           <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]">
             <main className="min-w-0">

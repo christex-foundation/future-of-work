@@ -1,7 +1,8 @@
 import { Provider, useAtomValue, useSetAtom } from 'jotai';
+import { CheckCircle2, Circle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
-import { useWatch } from 'react-hook-form';
+import { useEffect, useMemo, useRef } from 'react';
+import { type Control, useWatch } from 'react-hook-form';
 
 import { Form } from '@/components/ui/form';
 import { Meta } from '@/layouts/Meta';
@@ -31,6 +32,7 @@ import {
   getListingDefaults,
   transformListingToFormListing,
 } from '../utils/form';
+import { analyzeBrief, BRIEF_SECTIONS } from '../utils/brief';
 import { getOfficialSuperteamRegion } from '../utils/getOfficialSuperteamRegion';
 import { listingToStatus } from '../utils/listingToStatus.ts';
 import { Deadline } from './Form/Deadline';
@@ -74,6 +76,45 @@ const formatSkillPreview = (skills: unknown) => {
     .filter(Boolean)
     .join(', ');
 };
+
+function BriefChecklist({ control }: { control: Control<ListingFormData> }) {
+  const description = useWatch({ control, name: 'description' });
+  const analysis = useMemo(() => analyzeBrief(description), [description]);
+
+  return (
+    <div className="rounded-lg border border-[#E6DCC9] bg-[#FFFDF8] p-5 shadow-[0_18px_36px_rgba(44,58,46,0.06)]">
+      <p className="text-xs font-bold tracking-[0.14em] text-[#C4502E] uppercase">
+        Brief checklist
+      </p>
+      <h3 className="mt-1 text-lg font-semibold text-[#221A14]">
+        A strong brief covers all three
+      </h3>
+      <ul className="mt-4 space-y-3">
+        {BRIEF_SECTIONS.map((section) => {
+          const done = analysis[section.key];
+          return (
+            <li key={section.key} className="flex items-start gap-2.5">
+              {done ? (
+                <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#2C3A2E]" />
+              ) : (
+                <Circle className="mt-0.5 size-4 shrink-0 text-[#5C5147]" />
+              )}
+              <span
+                className={
+                  done
+                    ? 'text-sm font-medium text-[#221A14]'
+                    : 'text-sm text-[#5C5147]'
+                }
+              >
+                {section.label}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
 
 function ListingEditor({
   defaultListing,
@@ -235,6 +276,8 @@ function ListingEditor({
                       <EligibilityQuestionsSheet />
                     </div>
                   </div>
+
+                  <BriefChecklist control={form.control} />
 
                   <div className="rounded-lg border border-[#E6DCC9] bg-[#FFFDF8] p-5">
                     <p className="text-xs font-bold tracking-[0.14em] text-[#C4502E] uppercase">

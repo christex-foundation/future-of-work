@@ -56,9 +56,9 @@ export function InviteButton({
       onClick={handleInvite}
       disabled={invited || maxInvitesReached}
       className={cn(
-        'ph-no-capture h-full gap-2 text-xs',
-        'bg-[#ce4a2b] text-[#f4eee3] hover:bg-[#A6371C]',
-        'disabled:cursor-not-allowed disabled:bg-[#F2EAD9] disabled:text-[#6b5e50]',
+        'ph-no-capture h-full gap-2 rounded-md text-xs font-semibold',
+        'bg-[#2C3A2E] text-[#FBF7EF] hover:bg-[#3C4D3D]',
+        'disabled:cursor-not-allowed disabled:bg-[#F2EAD9] disabled:text-[#5C5147]',
       )}
       {...(inviteMutation.isPending && { 'aria-disabled': true })}
     >

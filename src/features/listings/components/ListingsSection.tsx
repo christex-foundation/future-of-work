@@ -64,6 +64,233 @@ const BOARD_SORTS: ReadonlyArray<{
   { label: 'Most active', sortBy: 'Submissions', order: 'desc' },
 ];
 
+const indexPill = (status: string) => {
+  if (status === 'Completed')
+    return { cls: 'bg-[#F2EAD9] text-[#5C5147]', dot: 'bg-[#5C5147]' };
+  if (status === 'In review')
+    return { cls: 'bg-[#C4502E]/12 text-[#C4502E]', dot: 'bg-[#C4502E]' };
+  return { cls: 'bg-[#8FA37E]/20 text-[#2C3A2E]', dot: 'bg-[#8FA37E]' };
+};
+
+// Daybreak editorial leader-row — the canonical list treatment shared by the
+// talent /earn board and the sponsor profile index.
+function LeaderRow({
+  b,
+  index,
+}: {
+  b: ReturnType<typeof toLiveBounty>;
+  index: number;
+}) {
+  const status = b.status ?? 'Open';
+  const pill = indexPill(status);
+  const isWin = status === 'Completed';
+  const meta = isWin
+    ? (b.dueLabel ?? 'Winners announced')
+    : [
+        b.submissions != null
+          ? `${b.submissions} submission${b.submissions === 1 ? '' : 's'}`
+          : null,
+        b.daysLeft != null
+          ? `${b.daysLeft} day${b.daysLeft === 1 ? '' : 's'} left`
+          : b.dueLabel,
+        b.token,
+      ]
+        .filter(Boolean)
+        .join(' · ');
+  return (
+    <Link
+      href={`/earn/listing/${b.slug}`}
+      className="group grid grid-cols-[1fr_auto] items-center gap-5 border-b border-[#E6DCC9] px-1.5 py-5 transition-all hover:rounded-xl hover:bg-white hover:px-4 hover:shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)] sm:grid-cols-[40px_1fr_auto] sm:gap-6"
+    >
+      <span className="hidden text-right font-serif text-[18px] text-[#5C5147] sm:block">
+        {String(index + 1).padStart(2, '0')}
+      </span>
+      <div className="min-w-0">
+        <div className="mb-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <span className="text-[11px] font-semibold tracking-[0.13em] text-[#6B7A4F] uppercase">
+            {b.cat}
+          </span>
+          <span className="text-[#E6DCC9]">·</span>
+          <span className="text-[11px] font-semibold tracking-[0.13em] text-[#5C5147] uppercase">
+            {TYPE_LABELS[b.type ?? 'bounty'] ?? b.type ?? 'Bounty'}
+          </span>
+          <span
+            className={cn(
+              'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold',
+              pill.cls,
+            )}
+          >
+            <span className={cn('size-1.5 rounded-full', pill.dot)} />
+            {status}
+          </span>
+        </div>
+        <h3 className="font-serif text-[22px] leading-[1.12] font-normal tracking-[-0.01em] text-[#221A14] group-hover:text-[#2C3A2E]">
+          {b.title}
+        </h3>
+        <p className="mt-1 text-[13.5px] text-[#5C5147]">{meta}</p>
+      </div>
+      <div className="text-right whitespace-nowrap">
+        <div
+          className={cn(
+            'font-serif text-[26px] leading-none',
+            isWin ? 'text-[#C4502E]' : 'text-[#221A14]',
+          )}
+        >
+          {b.prizeLabel}
+        </div>
+        <span className="mt-2 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#6B7A4F] transition-all group-hover:gap-2.5 group-hover:text-[#2C3A2E]">
+          {isWin ? 'View result' : 'View brief'} →
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function LeaderRowSkeleton() {
+  return (
+    <div className="grid grid-cols-[1fr_auto] items-center gap-6 border-b border-[#E6DCC9] px-1.5 py-5 sm:grid-cols-[40px_1fr_auto]">
+      <div className="hidden h-4 w-6 animate-pulse rounded bg-[#E9E0CD] sm:block" />
+      <div className="space-y-2">
+        <div className="h-3 w-32 animate-pulse rounded bg-[#E9E0CD]" />
+        <div className="h-5 w-2/3 animate-pulse rounded bg-[#E9E0CD]" />
+      </div>
+      <div className="h-6 w-16 animate-pulse rounded bg-[#E9E0CD]" />
+    </div>
+  );
+}
+
+// Talent /earn board table — mirrors the sponsor dashboard ListingBoardList:
+// title + meta, status pill, submissions + progress, prize, closes.
+const HOME_COLS =
+  'grid grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[minmax(220px,1.4fr)_124px_168px_120px_96px] md:gap-6';
+
+function homeStatusPill(status: string) {
+  if (status === 'Completed')
+    return {
+      label: 'Completed',
+      className: 'bg-[#E7E6E1] text-[#2C3A2E]',
+      dot: '#2C3A2E',
+    };
+  if (status === 'In review')
+    return {
+      label: 'In review',
+      className: 'bg-[#F4E6DF] text-[#C4502E]',
+      dot: '#C4502E',
+    };
+  return {
+    label: 'Open',
+    className: 'bg-[#E5E8DD] text-[#2C3A2E]',
+    dot: '#6F845F',
+  };
+}
+
+function homeCloses(b: ReturnType<typeof toLiveBounty>) {
+  if (b.status === 'Completed') return { label: 'paid', cls: 'text-[#6F845F]' };
+  if (b.status === 'In review') return { label: 'closed', cls: 'text-[#5C5147]' };
+  if (b.daysLeft != null)
+    return {
+      label: `in ${b.daysLeft}d`,
+      cls: b.daysLeft <= 3 ? 'text-[#C4502E]' : 'text-[#5C5147]',
+    };
+  return { label: '—', cls: 'text-[#5C5147]' };
+}
+
+function HomeListRow({
+  b,
+  maxSubmissions,
+}: {
+  b: ReturnType<typeof toLiveBounty>;
+  maxSubmissions: number;
+}) {
+  const pill = homeStatusPill(b.status ?? 'Open');
+  const submissions = b.submissions ?? 0;
+  const progress = maxSubmissions
+    ? Math.max(8, Math.round((submissions / maxSubmissions) * 100))
+    : 0;
+  const closes = homeCloses(b);
+
+  return (
+    <Link
+      href={`/earn/listing/${b.slug}`}
+      className="block transition-colors hover:bg-[#F2EAD9]/45"
+    >
+      <div className={cn(HOME_COLS, 'min-h-[100px] px-5 py-5 md:px-6')}>
+        <div className="min-w-0">
+          <h3 className="max-w-[24rem] truncate font-serif text-[20px] leading-[1.1] font-medium tracking-[-0.01em] text-[#221A14] md:text-[21px]">
+            {b.title}
+          </h3>
+          <p className="mt-1.5 truncate text-[13px] font-medium text-[#5C5147]">
+            {b.sponsor} · {b.cat}
+          </p>
+        </div>
+
+        <div className="hidden md:block">
+          <span
+            className={cn(
+              'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold',
+              pill.className,
+            )}
+          >
+            <span
+              className="size-1.5 rounded-full"
+              style={{ background: pill.dot }}
+            />
+            {pill.label}
+          </span>
+        </div>
+
+        <div className="hidden items-center gap-3 md:flex">
+          <span className="w-7 text-[16px] font-medium text-[#221A14]">
+            {submissions || '—'}
+          </span>
+          <span className="h-1.5 w-24 overflow-hidden rounded-full bg-[#E4D9C7]">
+            {!!submissions && (
+              <span
+                className="block h-full rounded-full bg-[#6F845F]"
+                style={{ width: `${progress}%` }}
+              />
+            )}
+          </span>
+        </div>
+
+        <div className="font-serif text-[20px] leading-none font-medium text-[#221A14] md:text-[22px]">
+          {b.prizeLabel}
+        </div>
+
+        <div
+          className={cn(
+            'hidden text-right text-[13px] font-medium md:block',
+            closes.cls,
+          )}
+        >
+          {closes.label}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function HomeListSkeleton() {
+  return (
+    <section className="overflow-hidden rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8]">
+      <div className="divide-y divide-[#E6DCC9]">
+        {skeletonArray.map((i) => (
+          <div
+            key={i}
+            className="flex items-center justify-between px-6 py-6"
+          >
+            <div className="space-y-2">
+              <div className="h-5 w-64 animate-pulse rounded bg-[#E9E0CD]" />
+              <div className="h-3 w-40 animate-pulse rounded bg-[#E9E0CD]" />
+            </div>
+            <div className="h-6 w-20 animate-pulse rounded bg-[#E9E0CD]" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export type EmptySectionFilters = {
   activeTab: ListingTab;
   activeCategory: ListingCategory;
@@ -246,7 +473,70 @@ export const ListingsSection = ({
       ? 'grid grid-cols-1 gap-5 md:grid-cols-2'
       : 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3';
 
+  const resolveEmpty = () =>
+    typeof customEmptySection === 'function'
+      ? customEmptySection({
+          activeTab,
+          activeCategory: effectiveCategory,
+          activeStatus,
+          activeSortBy,
+        })
+      : customEmptySection;
+
+  // Talent /earn board renders as an editorial leader-row list (not the grid).
+  const isHomeList = type === 'home';
+
   const renderContent = () => {
+    if (isHomeList) {
+      if (isLoading) return <HomeListSkeleton />;
+      if (error) return <EmptySection title="Error loading listings" />;
+      if (!listings?.length) {
+        return (
+          resolveEmpty() ?? (
+            <EmptySection
+              title="No opportunities found"
+              message="We don't have any relevant opportunities for the current filters."
+            />
+          )
+        );
+      }
+      const maxSubmissions = Math.max(
+        1,
+        ...listings.map((l) => l._count?.Submission ?? 0),
+      );
+      return (
+        <>
+          <section className="overflow-hidden rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8] shadow-[0_28px_80px_-58px_rgba(54,38,22,0.55)]">
+            <div
+              className={cn(
+                HOME_COLS,
+                'hidden border-b border-[#E6DCC9] bg-[#FBF7EF] px-6 py-3 text-[10px] font-bold tracking-[0.18em] text-[#5C5147] uppercase md:grid',
+              )}
+            >
+              <span>Bounty</span>
+              <span>Status</span>
+              <span>Submissions</span>
+              <span>Prize</span>
+              <span className="text-right">Closes</span>
+            </div>
+            <div className="divide-y divide-[#E6DCC9] bg-[#FFFDF8]">
+              {listings.map((listing) => (
+                <HomeListRow
+                  key={listing.id}
+                  b={toLiveBounty(listing, serverTime())}
+                  maxSubmissions={maxSubmissions}
+                />
+              ))}
+            </div>
+          </section>
+          <ViewAllButton
+            posthogEvent="viewall bottom_listings"
+            href={viewAllLink()}
+          />
+        </>
+      );
+    }
+
     if (isLoading) {
       return (
         <div className={gridClass}>
@@ -262,15 +552,7 @@ export const ListingsSection = ({
     }
 
     if (!listings?.length) {
-      const emptySectionContent =
-        typeof customEmptySection === 'function'
-          ? customEmptySection({
-              activeTab,
-              activeCategory: effectiveCategory,
-              activeStatus,
-              activeSortBy,
-            })
-          : customEmptySection;
+      const emptySectionContent = resolveEmpty();
 
       return (
         <>
@@ -319,7 +601,7 @@ export const ListingsSection = ({
             />
           ))}
         </div>
-        {(type === 'home' || type === 'region' || type === 'skill') && (
+        {(type === 'region' || type === 'skill') && (
           <ViewAllButton
             posthogEvent="viewall bottom_listings"
             href={viewAllLink()}
@@ -354,47 +636,20 @@ export const ListingsSection = ({
       { id: 'projects', title: 'Projects' },
     ];
 
-    const indexPill = (status: string) => {
-      if (status === 'Completed')
-        return { cls: 'bg-[#F2EAD9] text-[#5C5147]', dot: 'bg-[#5C5147]' };
-      if (status === 'In review')
-        return { cls: 'bg-[#C4502E]/12 text-[#C4502E]', dot: 'bg-[#C4502E]' };
-      return { cls: 'bg-[#8FA37E]/20 text-[#2C3A2E]', dot: 'bg-[#8FA37E]' };
-    };
-
     const renderIndex = () => {
       if (isLoading) {
         return (
           <div className="mt-3.5 border-t-[1.5px] border-[#221A14]">
             {skeletonArray.map((i) => (
-              <div
-                key={i}
-                className="grid grid-cols-[1fr_auto] items-center gap-6 border-b border-[#E6DCC9] px-1.5 py-5 sm:grid-cols-[40px_1fr_auto]"
-              >
-                <div className="hidden h-4 w-6 animate-pulse rounded bg-[#E9E0CD] sm:block" />
-                <div className="space-y-2">
-                  <div className="h-3 w-32 animate-pulse rounded bg-[#E9E0CD]" />
-                  <div className="h-5 w-2/3 animate-pulse rounded bg-[#E9E0CD]" />
-                </div>
-                <div className="h-6 w-16 animate-pulse rounded bg-[#E9E0CD]" />
-              </div>
+              <LeaderRowSkeleton key={i} />
             ))}
           </div>
         );
       }
       if (error) return <EmptySection title="Error loading listings" />;
       if (!listings?.length) {
-        const emptySectionContent =
-          typeof customEmptySection === 'function'
-            ? customEmptySection({
-                activeTab,
-                activeCategory: effectiveCategory,
-                activeStatus,
-                activeSortBy,
-              })
-            : customEmptySection;
         return (
-          emptySectionContent ?? (
+          resolveEmpty() ?? (
             <EmptySection
               title="No opportunities found"
               message="We don't have any relevant opportunities for the current filters."
@@ -404,73 +659,13 @@ export const ListingsSection = ({
       }
       return (
         <div className="mt-3.5 border-t-[1.5px] border-[#221A14]">
-          {listings.map((listing, i) => {
-            const b = toLiveBounty(listing, serverTime());
-            const status = b.status ?? 'Open';
-            const pill = indexPill(status);
-            const isWin = status === 'Completed';
-            const meta = isWin
-              ? (b.dueLabel ?? 'Winners announced')
-              : [
-                  b.submissions != null
-                    ? `${b.submissions} submission${b.submissions === 1 ? '' : 's'}`
-                    : null,
-                  b.daysLeft != null
-                    ? `${b.daysLeft} day${b.daysLeft === 1 ? '' : 's'} left`
-                    : b.dueLabel,
-                  b.token,
-                ]
-                  .filter(Boolean)
-                  .join(' · ');
-            return (
-              <Link
-                key={listing.id}
-                href={`/earn/listing/${b.slug}`}
-                className="group grid grid-cols-[1fr_auto] items-center gap-5 border-b border-[#E6DCC9] px-1.5 py-5 transition-all hover:rounded-xl hover:bg-white hover:px-4 hover:shadow-[0_12px_34px_-22px_rgba(54,38,22,0.45)] sm:grid-cols-[40px_1fr_auto] sm:gap-6"
-              >
-                <span className="hidden text-right font-serif text-[18px] text-[#5C5147] sm:block">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div className="min-w-0">
-                  <div className="mb-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                    <span className="text-[11px] font-semibold tracking-[0.13em] text-[#6B7A4F] uppercase">
-                      {b.cat}
-                    </span>
-                    <span className="text-[#E6DCC9]">·</span>
-                    <span className="text-[11px] font-semibold tracking-[0.13em] text-[#5C5147] uppercase">
-                      {TYPE_LABELS[b.type ?? 'bounty'] ?? b.type ?? 'Bounty'}
-                    </span>
-                    <span
-                      className={cn(
-                        'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold',
-                        pill.cls,
-                      )}
-                    >
-                      <span className={cn('size-1.5 rounded-full', pill.dot)} />
-                      {status}
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-[22px] leading-[1.12] font-normal tracking-[-0.01em] text-[#221A14] group-hover:text-[#2C3A2E]">
-                    {b.title}
-                  </h3>
-                  <p className="mt-1 text-[13.5px] text-[#5C5147]">{meta}</p>
-                </div>
-                <div className="text-right whitespace-nowrap">
-                  <div
-                    className={cn(
-                      'font-serif text-[26px] leading-none',
-                      isWin ? 'text-[#C4502E]' : 'text-[#221A14]',
-                    )}
-                  >
-                    {b.prizeLabel}
-                  </div>
-                  <span className="mt-2 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#6B7A4F] transition-all group-hover:gap-2.5 group-hover:text-[#2C3A2E]">
-                    {isWin ? 'View result' : 'View brief'} →
-                  </span>
-                </div>
-              </Link>
-            );
-          })}
+          {listings.map((listing, i) => (
+            <LeaderRow
+              key={listing.id}
+              b={toLiveBounty(listing, serverTime())}
+              index={i}
+            />
+          ))}
         </div>
       );
     };

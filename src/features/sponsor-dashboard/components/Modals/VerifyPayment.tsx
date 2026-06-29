@@ -306,14 +306,14 @@ export const VerifyPaymentModal = ({
     if (isLoading) {
       return (
         <div className="flex justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#e6dcc9] border-t-[#ce4a2b]" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E6DCC9] border-t-[#C4502E]" />
         </div>
       );
     }
 
     if (error) {
       return (
-        <p className="text-[#ce4a2b]">
+        <p className="text-[#C4502E]">
           Error loading submissions. Please try again.
         </p>
       );
@@ -326,13 +326,13 @@ export const VerifyPaymentModal = ({
             <div className="flex flex-col py-14">
               <div className="mb-4 flex justify-center">
                 <div
-                  className="h-8 w-8 animate-spin rounded-full border-[#e6dcc9] border-t-[#ce4a2b]"
+                  className="h-8 w-8 animate-spin rounded-full border-[#E6DCC9] border-t-[#C4502E]"
                   style={{ borderWidth: '3px' }}
                 />
               </div>
               <div className="mx-auto flex max-w-[20rem] flex-col items-center gap-2">
-                <p className="font-serif font-medium text-[#1d1815]">Verifying Payment</p>
-                <p className="text-center text-sm text-[#6b5e50]">
+                <p className="font-serif font-medium text-[#221A14]">Verifying Payment</p>
+                <p className="text-center text-sm text-[#5C5147]">
                   {`We're`} verifying all your links, hang tight! <br /> This
                   should take less than a minute
                 </p>
@@ -344,7 +344,7 @@ export const VerifyPaymentModal = ({
                 Close
               </Button>
               <Button
-                className="flex-1 cursor-wait border-2 border-[#1d1815] bg-[#E9E0CD] font-medium text-[#6b5e50]"
+                className="flex-1 cursor-wait rounded-md border border-[#E6DCC9] bg-[#F2EAD9] font-medium text-[#5C5147]"
                 disabled
                 type="submit"
               >
@@ -359,18 +359,18 @@ export const VerifyPaymentModal = ({
           <div className="flex h-full flex-col gap-10">
             <div className="py-10">
               <div className="flex items-center justify-center">
-                <div className="flex items-center justify-center rounded-full bg-[#E9E0CD] p-6">
-                  <div className="rounded-full bg-[#123a33] p-3">
-                    <Check className="h-10 w-10 text-[#f4eee3]" strokeWidth={3} />
+                <div className="flex items-center justify-center rounded-full bg-[#F2EAD9] p-6">
+                  <div className="rounded-full bg-[#2C3A2E] p-3">
+                    <Check className="h-10 w-10 text-[#FBF7EF]" strokeWidth={3} />
                   </div>
                 </div>
               </div>
 
               <div className="mx-auto flex max-w-[20rem] flex-col items-center gap-1">
-                <p className="mt-6 font-serif font-medium text-[#1d1815]">
+                <p className="mt-6 font-serif font-medium text-[#221A14]">
                   External Payment(s) Added
                 </p>
-                <p className="text-center text-sm text-[#6b5e50]">
+                <p className="text-center text-sm text-[#5C5147]">
                   We have successfully added external payment(s) to your
                   listing.
                 </p>
@@ -384,7 +384,7 @@ export const VerifyPaymentModal = ({
                   Close
                 </Button>
                 <Button
-                  className="flex-1 rounded-lg border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#0d2c27] hover:text-[#f4eee3]"
+                  className="flex-1 rounded-md bg-[#2C3A2E] font-semibold text-[#FBF7EF] shadow-sm hover:bg-[#3C4D3D] hover:text-[#FBF7EF]"
                   onClick={tryAgain}
                 >
                   Verify More
@@ -398,18 +398,18 @@ export const VerifyPaymentModal = ({
           <div className="flex h-full flex-col">
             <div className="py-6">
               <div className="flex items-center justify-center">
-                <div className="flex items-center justify-center rounded-full bg-[#E9E0CD] p-6">
-                  <div className="rounded-full bg-[#ce4a2b] p-2.5">
-                    <X className="h-7 w-7 text-[#f4eee3]" strokeWidth={3} />
+                <div className="flex items-center justify-center rounded-full bg-[#F2EAD9] p-6">
+                  <div className="rounded-full bg-[#C4502E] p-2.5">
+                    <X className="h-7 w-7 text-[#FBF7EF]" strokeWidth={3} />
                   </div>
                 </div>
               </div>
 
               <div className="mx-auto flex max-w-[24rem] flex-col items-center gap-2">
-                <p className="mt-10 font-serif font-medium text-[#1d1815]">
+                <p className="mt-10 font-serif font-medium text-[#221A14]">
                   Uh-Oh! Verification Failed
                 </p>
-                <p className="text-center text-sm text-[#6b5e50]">
+                <p className="text-center text-sm text-[#5C5147]">
                   We couldn&apos;t verify your payment status. Please check your
                   links again and make sure it&apos;s the exact amount.
                 </p>
@@ -422,7 +422,7 @@ export const VerifyPaymentModal = ({
                 Close
               </Button>
               <Button
-                className="flex-1 rounded-lg border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#0d2c27] hover:text-[#f4eee3]"
+                className="flex-1 rounded-md bg-[#2C3A2E] font-semibold text-[#FBF7EF] shadow-sm hover:bg-[#3C4D3D] hover:text-[#FBF7EF]"
                 onClick={tryAgain}
               >
                 Try Again
@@ -436,12 +436,12 @@ export const VerifyPaymentModal = ({
                 className="text-center"
               >
                 <Button
-                  className="bg-none text-sm font-normal text-[#6b5e50]"
+                  className="bg-none text-sm font-normal text-[#5C5147]"
                   variant="link"
                   type="button"
                 >
                   Think We Made A Mistake?{' '}
-                  <span className="text-[#1d1815] underline">Text Us</span>
+                  <span className="text-[#221A14] underline">Text Us</span>
                 </Button>
               </a>
             </div>
@@ -452,7 +452,7 @@ export const VerifyPaymentModal = ({
           <Form {...form}>
             <form onSubmit={handleSubmit(onSubmit)} className="h-full">
               <div className="flex flex-col items-start gap-2">
-                <p className="text-sm font-normal text-[#6b5e50]">
+                <p className="text-sm font-normal text-[#5C5147]">
                   If you have paid the winners outside of Earn and want to
                   update the status of this listing as &quot;Completed&quot;,
                   please add the transaction links of the payments made to the
@@ -480,14 +480,14 @@ export const VerifyPaymentModal = ({
                               'space-y-2',
                               errors.paymentLinks?.[index]?.root ||
                                 errors.paymentLinks?.[index]?.link
-                                ? 'text-[#ce4a2b]'
+                                ? 'text-[#C4502E]'
                                 : '',
                             )}
                           >
                             <div className="flex flex-col gap-2">
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                  <div className="flex gap-1 text-sm font-medium text-[#6b5e50] uppercase">
+                                  <div className="flex gap-1 text-sm font-medium text-[#5C5147] uppercase">
                                     <p>
                                       {getRankLabels(
                                         submission.winnerPosition || 0,
@@ -515,14 +515,14 @@ export const VerifyPaymentModal = ({
                                     alt={selectedToken?.tokenName}
                                     src={selectedToken?.icon}
                                   />
-                                  <p className="font-semibold text-[#1d1815]">
+                                  <p className="font-semibold text-[#221A14]">
                                     {formatNumberWithSuffix(
                                       listing?.rewards?.[
                                         submission.winnerPosition || 0
                                       ] || 0,
                                     )}
                                   </p>
-                                  <p className="font-medium text-[#6b5e50]">
+                                  <p className="font-medium text-[#5C5147]">
                                     {selectedToken?.tokenSymbol}
                                   </p>
                                 </div>
@@ -534,7 +534,7 @@ export const VerifyPaymentModal = ({
                                       className: 'text-[0.6875rem] px-2 py-0.5',
                                     }}
                                   >
-                                    <div className="flex items-center gap-1 text-sm text-[#1d1815]">
+                                    <div className="flex items-center gap-1 text-sm text-[#221A14]">
                                       <p className="font-medium">
                                         {truncatePublicKey(
                                           submission.user.walletAddress,
@@ -545,7 +545,7 @@ export const VerifyPaymentModal = ({
                                     </div>
                                   </CopyButton>
                                 ) : (
-                                  <p className="text-sm text-[#6b5e50]">
+                                  <p className="text-sm text-[#5C5147]">
                                     Wallet unavailable
                                   </p>
                                 )}
@@ -562,7 +562,7 @@ export const VerifyPaymentModal = ({
                                     >
                                       <Button
                                         type="button"
-                                        className="w-full justify-start border-2 border-[#123a33] text-sm font-medium text-[#1d1815] hover:bg-[#123a33]/10"
+                                        className="w-full justify-start rounded-md border border-[#2C3A2E] text-sm font-medium text-[#221A14] hover:bg-[#2C3A2E]/10"
                                         variant="outline"
                                       >
                                         <p className="mr-2">
@@ -572,15 +572,15 @@ export const VerifyPaymentModal = ({
                                       </Button>
                                     </a>
 
-                                    <div className="h-6 w-6 rounded-full bg-[#123a33] p-1">
-                                      <Check className="h-full w-full stroke-3 text-[#f4eee3]" />
+                                    <div className="h-6 w-6 rounded-full bg-[#2C3A2E] p-1">
+                                      <Check className="h-full w-full stroke-3 text-[#FBF7EF]" />
                                     </div>
                                   </div>
                                 ) : (
                                   <FormControl>
                                     <Input
                                       {...field}
-                                      className="border-[#1d1815] bg-[#FBF7EF] text-sm text-[#1d1815] placeholder:text-[#6b5e50]"
+                                      className="border-[#E6DCC9] bg-[#FBF7EF] text-sm text-[#221A14] placeholder:text-[#5C5147]"
                                       placeholder="Paste your link here"
                                     />
                                   </FormControl>
@@ -623,7 +623,7 @@ export const VerifyPaymentModal = ({
                           <>
                             <div className="flex flex-col gap-3">
                               <div className="flex items-center">
-                                <p className="w-32 font-normal text-[#6b5e50]">
+                                <p className="w-32 font-normal text-[#5C5147]">
                                   Winner Amount
                                 </p>
                                 <div className="flex items-center gap-1">
@@ -632,21 +632,21 @@ export const VerifyPaymentModal = ({
                                     alt={selectedToken?.tokenName}
                                     src={selectedToken?.icon}
                                   />
-                                  <p className="font-medium text-[#1d1815]">
+                                  <p className="font-medium text-[#221A14]">
                                     {formatNumberWithSuffix(
                                       totalPrizeAmount,
                                       2,
                                       true,
                                     )}
                                   </p>
-                                  <p className="font-medium text-[#6b5e50]">
+                                  <p className="font-medium text-[#5C5147]">
                                     {selectedToken?.tokenSymbol}
                                   </p>
                                 </div>
                               </div>
 
                               <div className="flex items-center">
-                                <p className="w-32 font-normal text-[#6b5e50]">
+                                <p className="w-32 font-normal text-[#5C5147]">
                                   Wallet Address
                                 </p>
                                 {winnerSubmission?.user?.walletAddress ? (
@@ -658,7 +658,7 @@ export const VerifyPaymentModal = ({
                                     }}
                                   >
                                     <div className="flex items-center gap-1">
-                                      <p className="text-sm font-medium text-[#1d1815]">
+                                      <p className="text-sm font-medium text-[#221A14]">
                                         {truncatePublicKey(
                                           winnerSubmission.user.walletAddress,
                                           8,
@@ -668,7 +668,7 @@ export const VerifyPaymentModal = ({
                                     </div>
                                   </CopyButton>
                                 ) : (
-                                  <p className="text-sm text-[#6b5e50]">
+                                  <p className="text-sm text-[#5C5147]">
                                     Wallet unavailable
                                   </p>
                                 )}
@@ -678,7 +678,7 @@ export const VerifyPaymentModal = ({
                             {totalPaidAmount > 0 && (
                               <>
                                 <div className="flex items-center gap-8">
-                                  <p className="font-normal text-[#6b5e50]">
+                                  <p className="font-normal text-[#5C5147]">
                                     Remaining Amount
                                   </p>
                                   <div className="flex items-center gap-1">
@@ -687,14 +687,14 @@ export const VerifyPaymentModal = ({
                                       alt={selectedToken?.tokenName}
                                       src={selectedToken?.icon}
                                     />
-                                    <p className="font-medium text-[#1d1815]">
+                                    <p className="font-medium text-[#221A14]">
                                       {formatNumberWithSuffix(
                                         remainingAmount,
                                         2,
                                         true,
                                       )}
                                     </p>
-                                    <p className="font-medium text-[#6b5e50]">
+                                    <p className="font-medium text-[#5C5147]">
                                       {selectedToken?.tokenSymbol}
                                     </p>
                                   </div>
@@ -703,8 +703,8 @@ export const VerifyPaymentModal = ({
                                 {winnerSubmission?.paymentDetails &&
                                   winnerSubmission.paymentDetails.length >
                                     0 && (
-                                    <div className="rounded-lg border border-[#e6dcc9] bg-[#F2EAD9] p-4">
-                                      <p className="mb-3 text-sm font-medium text-[#1d1815]">
+                                    <div className="rounded-lg border border-[#E6DCC9] bg-[#F2EAD9] p-4">
+                                      <p className="mb-3 text-sm font-medium text-[#221A14]">
                                         Existing Payments
                                       </p>
                                       <div className="space-y-2">
@@ -715,7 +715,7 @@ export const VerifyPaymentModal = ({
                                               className="flex items-center justify-between rounded bg-[#FBF7EF] p-3 text-sm"
                                             >
                                               <div className="flex items-center gap-2">
-                                                <span className="text-[#6b5e50]">
+                                                <span className="text-[#5C5147]">
                                                   Tranche {payment.tranche}:
                                                 </span>
                                                 <div className="flex items-center gap-1">
@@ -726,14 +726,14 @@ export const VerifyPaymentModal = ({
                                                     }
                                                     src={selectedToken?.icon}
                                                   />
-                                                  <span className="font-medium text-[#1d1815]">
+                                                  <span className="font-medium text-[#221A14]">
                                                     {formatNumberWithSuffix(
                                                       payment.amount,
                                                       2,
                                                       true,
                                                     )}
                                                   </span>
-                                                  <span className="text-[#6b5e50]">
+                                                  <span className="text-[#5C5147]">
                                                     {selectedToken?.tokenSymbol}
                                                   </span>
                                                 </div>
@@ -742,7 +742,7 @@ export const VerifyPaymentModal = ({
                                                 href={`https://solscan.io/tx/${payment.txId}?cluster=${process.env.NEXT_PUBLIC_PAYMENT_CLUSTER}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-[#ce4a2b] hover:text-[#A6371C]"
+                                                className="text-[#C4502E] hover:text-[#A6371C]"
                                               >
                                                 <ExternalLink className="h-4 w-4" />
                                               </a>
@@ -760,7 +760,7 @@ export const VerifyPaymentModal = ({
                     </div>
 
                     <div className="flex flex-col gap-4">
-                      <p className="font-secondary text-sm font-medium tracking-[0.1em] text-[#6b5e50] uppercase">
+                      <p className="font-secondary text-sm font-medium tracking-[0.1em] text-[#5C5147] uppercase">
                         Transaction Link
                       </p>
 
@@ -774,7 +774,7 @@ export const VerifyPaymentModal = ({
                                 <FormControl>
                                   <Input
                                     {...field}
-                                    className="border-[#1d1815] bg-[#FBF7EF] text-sm text-[#1d1815] placeholder:text-[#6b5e50]"
+                                    className="border-[#221A14] bg-[#FBF7EF] text-sm text-[#221A14] placeholder:text-[#5C5147]"
                                     placeholder="Paste your link here"
                                   />
                                 </FormControl>
@@ -787,7 +787,7 @@ export const VerifyPaymentModal = ({
                               type="button"
                               variant="outline"
                               size="sm"
-                              className="mt-0 flex size-9 items-center justify-center border-2 border-[#1d1815] p-0 text-[#ce4a2b] hover:bg-[#ce4a2b]/10 hover:text-[#A6371C]"
+                              className="mt-0 flex size-9 items-center justify-center rounded-md border border-[#E6DCC9] p-0 text-[#C4502E] hover:bg-[#C4502E]/10 hover:text-[#A6371C]"
                               onClick={() => removePaymentField(index)}
                             >
                               <Trash2 className="size-3" />
@@ -800,7 +800,7 @@ export const VerifyPaymentModal = ({
                         <Button
                           type="button"
                           variant="link"
-                          className="w-fit p-0 text-sm text-[#ce4a2b] hover:text-[#A6371C]"
+                          className="w-fit p-0 text-sm text-[#C4502E] hover:text-[#A6371C]"
                           onClick={() => {
                             setShowMultiplePayments(true);
                             addPaymentField();
@@ -816,7 +816,7 @@ export const VerifyPaymentModal = ({
                           <Button
                             type="button"
                             variant="link"
-                            className="w-fit p-0 text-sm text-[#ce4a2b] hover:text-[#A6371C]"
+                            className="w-fit p-0 text-sm text-[#C4502E] hover:text-[#A6371C]"
                             onClick={addPaymentField}
                           >
                             Click here to add another payment link
@@ -844,12 +844,12 @@ export const VerifyPaymentModal = ({
                   Close
                 </Button>
                 <Button
-                  className="flex-1 rounded-lg border-2 border-[#1d1815] bg-[#123a33] text-[#f4eee3] shadow-[3px_3px_0_#1d1815] hover:bg-[#0d2c27] hover:text-[#f4eee3]"
+                  className="flex-1 rounded-md bg-[#2C3A2E] font-semibold text-[#FBF7EF] shadow-sm hover:bg-[#3C4D3D] hover:text-[#FBF7EF]"
                   disabled={data?.every((sub) => sub.isPaid)}
                   type="submit"
                 >
-                  <div className="rounded-full bg-[#1d1815] p-0.5">
-                    <Check className="size-2 text-[#f4eee3]" />
+                  <div className="rounded-full bg-[#221A14] p-0.5">
+                    <Check className="size-2 text-[#FBF7EF]" />
                   </div>
                   Add External Payment
                 </Button>
@@ -864,18 +864,18 @@ export const VerifyPaymentModal = ({
                     className="text-center"
                   >
                     <Button
-                      className="bg-none text-sm font-normal text-[#6b5e50]"
+                      className="bg-none text-sm font-normal text-[#5C5147]"
                       variant="link"
                       type="button"
                     >
                       Think We Made A Mistake?{' '}
-                      <span className="text-[#1d1815] underline">Text Us</span>
+                      <span className="text-[#221A14] underline">Text Us</span>
                     </Button>
                   </a>
                 </div>
               )}
               <div className="mt-4">
-                <p className="text-sm text-[#6b5e50]">
+                <p className="text-sm text-[#5C5147]">
                   *To verify, ensure the amount, token, and wallet address in
                   the tx link match the details above
                 </p>
@@ -889,13 +889,13 @@ export const VerifyPaymentModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={handleModalOpenChange} modal>
       <DialogContent
-        className="m-0 max-w-2xl border-2 border-[#1d1815] bg-[#FBF7EF] p-0 shadow-[5px_5px_0_#1d1815]"
+        className="m-0 max-w-2xl rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8] p-0 shadow-[0_24px_60px_-48px_rgba(54,38,22,0.55)]"
         hideCloseIcon
       >
-        <DialogTitle className="font-serif text-md -mb-1 px-6 pt-4 font-semibold text-[#1d1815]">
+        <DialogTitle className="font-serif text-md -mb-1 px-6 pt-4 font-semibold text-[#221A14]">
           Add Reward Payment Link
         </DialogTitle>
-        <Separator className="bg-[#1d1815]" />
+        <Separator className="bg-[#E6DCC9]" />
         <div className="px-6 pb-6 text-[0.95rem]">{renderContent()}</div>
       </DialogContent>
     </Dialog>

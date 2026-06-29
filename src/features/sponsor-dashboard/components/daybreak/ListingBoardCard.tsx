@@ -1,17 +1,45 @@
-import { Clock, Users } from 'lucide-react';
+import {
+  Clock,
+  Copy,
+  CopyPlus,
+  DollarSign,
+  ExternalLink,
+  EyeOff,
+  MoreVertical,
+  PencilLine,
+  Trash,
+  Users,
+} from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import posthog from 'posthog-js';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { TokenIcon } from '@/components/ui/token-icon';
+import { useDisclosure } from '@/hooks/use-disclosure';
 import { useUser } from '@/store/user';
 import { cn } from '@/utils/cn';
+import { getURL } from '@/utils/validUrl';
 
 import { grantAmount } from '@/features/grants/utils/grantAmount';
 import { isListingEditable } from '@/features/listing-builder/utils/isListingEditable';
 import { type ListingWithSubmissions } from '@/features/listings/types';
 import { formatDeadline } from '@/features/listings/utils/deadline';
-import { getListingStatus } from '@/features/listings/utils/status';
+import {
+  getListingStatus,
+  getListingTypeLabel,
+} from '@/features/listings/utils/status';
 
+import { DeleteDraftModal } from '../Modals/DeleteDraftModal';
+import { UnpublishModal } from '../Modals/UnpublishModal';
+import { VerifyPaymentModal } from '../Modals/VerifyPayment';
 import { SponsorPrize } from '../SponsorPrize';
 
 type ListingType = 'bounty' | 'project' | 'grant' | 'hackathon';
@@ -147,6 +175,57 @@ export function ListingBoardCard({
     .filter(Boolean)
     .slice(0, 2);
 
+  // ── Row actions (restored from the pre-redesign listings table) ──────────
+  const router = useRouter();
+  const {
+    isOpen: unpublishIsOpen,
+    onOpen: unpublishOnOpen,
+    onClose: unpublishOnClose,
+  } = useDisclosure();
+  const {
+    isOpen: deleteDraftIsOpen,
+    onOpen: deleteDraftOnOpen,
+    onClose: deleteDraftOnClose,
+  } = useDisclosure();
+  const {
+    isOpen: verifyPaymentIsOpen,
+    onOpen: verifyPaymentOnOpen,
+    onClose: verifyPaymentOnClose,
+  } = useDisclosure();
+
+  const isPublished = !!listing.isPublished;
+  const publicLink =
+    listing.type === 'grant'
+      ? `${getURL()}earn/grants/${listing.slug}`
+      : `${getURL()}earn/listing/${listing.slug}`;
+  const duplicateLink = `${router.basePath}/earn/dashboard/listings/${listing.slug}/duplicate`;
+  const listingLabel = status === 'Draft' ? 'Draft' : getListingTypeLabel(type);
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => toast.success('Link Copied'),
+      (err) => console.error('Failed to copy text: ', err),
+    );
+  };
+
+  const canEdit = isListingEditable({ listing, user });
+  const canDuplicate = type === 'bounty' || type === 'project';
+  const canDeleteDraft = status === 'Draft' && listing.type !== 'grant';
+  const canUpdatePayment =
+    status === 'Payment Pending' && listing.type !== 'grant';
+  const canUnpublish =
+    listing.status === 'OPEN' && isPublished && !listing.isWinnersAnnounced;
+  const hasActions =
+    isPublished ||
+    canEdit ||
+    canDuplicate ||
+    canDeleteDraft ||
+    canUpdatePayment ||
+    canUnpublish;
+
+  const menuItemClass =
+    'cursor-pointer text-sm font-medium text-[#5C5147] focus:bg-[#F2EAD9] focus:text-[#221A14]';
+
   const cardClass = cn(
     'group/card flex flex-col gap-4 rounded-[18px] border border-[#E6DCC9] bg-[#FFFDF8] p-5 text-[#221A14] no-underline shadow-[0_24px_60px_-48px_rgba(54,38,22,0.55)] transition-all duration-200',
     shown ? 'opacity-100' : 'opacity-0',
@@ -157,7 +236,12 @@ export function ListingBoardCard({
   const inner = (
     <>
       {/* org + status */}
-      <div className="flex items-start justify-between gap-3">
+      <div
+        className={cn(
+          'flex items-start justify-between gap-3',
+          hasActions && 'pr-9',
+        )}
+      >
         <div className="flex min-w-0 items-center gap-3">
           <div className="font-secondary flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#2C3A2E] text-[12px] font-bold tracking-wide text-[#FBF7EF] ring-2 ring-[#F2EAD9]">
             {sponsorLogo ? (
@@ -266,12 +350,138 @@ export function ListingBoardCard({
     </>
   );
 
-  if (isClickable) {
-    return (
-      <Link href={href} className={cardClass}>
-        {inner}
-      </Link>
-    );
-  }
-  return <div className={cardClass}>{inner}</div>;
+  const card = isClickable ? (
+    <Link href={href} className={cardClass}>
+      {inner}
+    </Link>
+  ) : (
+    <div className={cardClass}>{inner}</div>
+  );
+
+  return (
+    <div className="relative">
+      {card}
+
+      {hasActions && (
+        <div className="absolute top-4 right-4 z-20">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                aria-label="Listing actions"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+                className="grid size-8 place-items-center rounded-full border border-[#d9ccb2] bg-[#F2EAD9] text-[#2C3A2E] shadow-[0_4px_12px_-4px_rgba(54,38,22,0.4)] transition-colors hover:bg-[#E7DCC4] hover:text-[#221A14]"
+              >
+                <MoreVertical className="size-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="max-w-60 border-[#E6DCC9] bg-[#FFFDF8]"
+            >
+              {isPublished && (
+                <DropdownMenuItem
+                  className={menuItemClass}
+                  onClick={() => window.open(publicLink, '_blank')}
+                >
+                  <ExternalLink className="mr-2 size-4" />
+                  View {listingLabel}
+                </DropdownMenuItem>
+              )}
+
+              {isPublished && (
+                <DropdownMenuItem
+                  className={menuItemClass}
+                  onClick={() => copyToClipboard(publicLink)}
+                >
+                  <Copy className="mr-2 size-4" />
+                  Copy Link
+                </DropdownMenuItem>
+              )}
+
+              {canEdit && (
+                <DropdownMenuItem className={menuItemClass} asChild>
+                  <Link href={editLink}>
+                    <PencilLine className="mr-2 size-4" />
+                    Edit {listingLabel}
+                  </Link>
+                </DropdownMenuItem>
+              )}
+
+              {canDuplicate && (
+                <DropdownMenuItem
+                  className={cn('ph-no-capture', menuItemClass)}
+                  onClick={() => {
+                    posthog.capture('duplicate listing_sponsor');
+                    window.open(duplicateLink, '_blank');
+                  }}
+                >
+                  <CopyPlus className="mr-2 size-4" />
+                  Duplicate
+                </DropdownMenuItem>
+              )}
+
+              {canDeleteDraft && (
+                <DropdownMenuItem
+                  className={menuItemClass}
+                  onClick={deleteDraftOnOpen}
+                >
+                  <Trash className="mr-2 size-4" />
+                  Delete Draft
+                </DropdownMenuItem>
+              )}
+
+              {canUpdatePayment && (
+                <DropdownMenuItem
+                  className={menuItemClass}
+                  onClick={verifyPaymentOnOpen}
+                >
+                  <DollarSign className="mr-2 size-4" />
+                  Update Payment Status
+                </DropdownMenuItem>
+              )}
+
+              {canUnpublish && (
+                <DropdownMenuItem
+                  className={menuItemClass}
+                  onClick={unpublishOnOpen}
+                >
+                  <EyeOff className="mr-2 size-4" />
+                  Unpublish
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )}
+
+      {/* Modals mount only while open — avoids running their heavy render
+          bodies (forms, queries) once per card across the whole board. */}
+      {deleteDraftIsOpen && (
+        <DeleteDraftModal
+          deleteDraftIsOpen={deleteDraftIsOpen}
+          deleteDraftOnClose={deleteDraftOnClose}
+          listingId={listing.id}
+          listingType={listing.type}
+        />
+      )}
+      {unpublishIsOpen && (
+        <UnpublishModal
+          listing={listing}
+          unpublishIsOpen={unpublishIsOpen}
+          unpublishOnClose={unpublishOnClose}
+        />
+      )}
+      {verifyPaymentIsOpen && (
+        <VerifyPaymentModal
+          listing={listing}
+          isOpen={verifyPaymentIsOpen}
+          onClose={verifyPaymentOnClose}
+        />
+      )}
+    </div>
+  );
 }

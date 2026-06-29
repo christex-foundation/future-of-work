@@ -46,6 +46,7 @@ import { cleanTemplate } from '@/features/listing-builder/utils/form';
 
 import { isEditingAtom } from '../../../atoms';
 import { useListingForm } from '../../../hooks';
+import { TemplateArt } from './TemplateArt';
 
 export function Templates() {
   const { user } = useUser();
@@ -253,13 +254,16 @@ export function Templates() {
                     >
                       <CardHeader
                         className={cn(
-                          'flex h-28 items-center justify-center border-b border-[#E6DCC9] text-4xl',
+                          'flex h-28 items-center justify-center border-b border-[#E6DCC9]',
                         )}
                         style={{
                           backgroundColor: template.color || '#F2EAD9',
                         }}
                       >
-                        {template.emoji}
+                        <TemplateArt
+                          slug={template.slug}
+                          emoji={template.emoji}
+                        />
                       </CardHeader>
 
                       <CardContent className="mt-4 space-y-4">

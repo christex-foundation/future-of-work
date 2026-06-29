@@ -10,6 +10,7 @@ import { type GeneratedListingData } from '../atoms';
 import { DEADLINE_FORMAT } from '../constants';
 import { type ListingFormData } from '../types';
 import { createListingFormSchema } from '../types/schema';
+import { BRIEF_SCAFFOLD_HTML } from './brief';
 import { calculateTotalRewardsForPodium } from './rewards';
 
 interface ListingDefaults {
@@ -97,6 +98,13 @@ export const getListingDefaults = ({
     }
   }
   defaults['isFndnPaying'] = false;
+
+  // Seed a brand-new brief with the three section headings so companies open a
+  // structured document instead of a blank box. Templates and AI-generate
+  // (below) still override this; edit/duplicate never reach this function.
+  if (!defaults['description']) {
+    defaults['description'] = BRIEF_SCAFFOLD_HTML;
+  }
 
   if (generatedListing) {
     if (generatedListing.type) {
