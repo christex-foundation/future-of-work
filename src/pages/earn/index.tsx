@@ -90,14 +90,30 @@ export default function HomePage({
     >
       <div className="mx-auto w-full px-4 py-6 lg:px-12 lg:py-10">
         <div className="mx-auto w-full max-w-[88rem] p-0">
-          <EarnSpotlight bounty={spotlight} />
-          <div className="mt-12 lg:mt-16">
-            <EarnHomeHero
-              totalUsers={totalUsers}
-              totalSponsors={totalSponsors}
-            />
-          </div>
-          <DaybreakTicker items={bounties} />
+          {/* Hero fills the viewport on desktop; the board, filters and
+              sidebar live below the fold and reveal on scroll. */}
+          <section className="lg:flex lg:min-h-[calc(100vh-6.5rem)] lg:flex-col lg:justify-center">
+            <EarnSpotlight bounty={spotlight} />
+            <div className="mt-12 lg:mt-16">
+              <EarnHomeHero
+                totalUsers={totalUsers}
+                totalSponsors={totalSponsors}
+              />
+            </div>
+            <DaybreakTicker items={bounties} />
+            <div
+              aria-hidden
+              className="mt-10 hidden items-center justify-center gap-2 lg:flex"
+              style={{ fontFamily: 'var(--font-hanken), sans-serif' }}
+            >
+              <span className="text-[11px] font-semibold tracking-[0.2em] text-[#5C5147] uppercase">
+                Scroll to explore
+              </span>
+              <span className="animate-bounce text-[14px] text-[#C4502E]">
+                ↓
+              </span>
+            </div>
+          </section>
           <StartHereRail />
           <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]">
             <main className="min-w-0">
