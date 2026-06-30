@@ -84,7 +84,7 @@ export const analyzeBrief = (html?: string | null): BriefAnalysis => {
 
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      if (!/^h[1-6]$/i.test(node.tagName)) continue;
+      if (!node || !/^h[1-6]$/i.test(node.tagName)) continue;
 
       const section = BRIEF_SECTIONS.find((s) =>
         headingMatchesSection(node.textContent || '', s),
@@ -94,8 +94,10 @@ export const analyzeBrief = (html?: string | null): BriefAnalysis => {
       // Gather text until the next heading.
       let body = '';
       for (let j = i + 1; j < nodes.length; j++) {
-        if (/^h[1-6]$/i.test(nodes[j].tagName)) break;
-        body += nodes[j].textContent || '';
+        const next = nodes[j];
+        if (!next) continue;
+        if (/^h[1-6]$/i.test(next.tagName)) break;
+        body += next.textContent || '';
       }
 
       if (body.trim().length > 0) result[section.key] = true;
