@@ -20,7 +20,7 @@ export function EarnSpotlight({ bounty }: { bounty: EarnBounty | null }) {
       {/* compact slanted "featured" strip — a short ribbon, not a full block */}
       <Link
         href={listing}
-        className="group relative inline-flex max-w-full -rotate-2 items-center gap-3.5 rounded-[10px] bg-[linear-gradient(100deg,#2C3A2E,#23301f)] py-3 pr-3 pl-5 text-[#FBF7EF] shadow-[0_18px_38px_-22px_rgba(54,38,22,0.7)] transition-transform duration-200 hover:-rotate-1 sm:gap-4 sm:pl-6"
+        className="group relative inline-flex max-w-full -rotate-2 items-center gap-3.5 rounded-[10px] bg-[linear-gradient(100deg,#2C3A2E,#23301f)] py-3 pr-20 pl-5 text-[#FBF7EF] shadow-[0_18px_38px_-22px_rgba(54,38,22,0.7)] transition-transform duration-200 hover:-rotate-1 sm:gap-4 sm:pl-6"
       >
         <span className="text-[11px] font-semibold tracking-[0.2em] text-[#E8B48E] uppercase">
           Featured
