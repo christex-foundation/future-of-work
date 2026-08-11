@@ -90,16 +90,24 @@ export default function HomePage({
     >
       <div className="mx-auto w-full px-4 py-6 lg:px-12 lg:py-10">
         <div className="mx-auto w-full max-w-[88rem] p-0">
-          <EarnSpotlight bounty={spotlight} />
-          <div className="mt-12 lg:mt-16">
-            <EarnHomeHero
-              totalUsers={totalUsers}
-              totalSponsors={totalSponsors}
-            />
-          </div>
+          {/* Hero sits above the fold alongside a peek of the live board —
+              it no longer claims the full viewport, so the ticker and
+              bounty rail are visible on first glance. */}
+          <section>
+            <EarnSpotlight bounty={spotlight} />
+            <div className="mt-8 w-full lg:mt-9">
+              <EarnHomeHero
+                totalUsers={totalUsers}
+                totalSponsors={totalSponsors}
+              />
+            </div>
+          </section>
           <DaybreakTicker items={bounties} />
           <StartHereRail />
-          <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]">
+          <div
+            id="listings"
+            className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px] lg:scroll-mt-24"
+          >
             <main className="min-w-0">
               <ListingsSection
                 type="home"

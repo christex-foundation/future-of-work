@@ -67,7 +67,7 @@ export function EarnHomeHero({
 
   return (
     <div
-      className="mb-12 grid grid-cols-1 items-center gap-x-12 gap-y-9 lg:grid-cols-[1.05fr_0.95fr]"
+      className="mb-10 grid w-full grid-cols-1 items-center gap-x-12 gap-y-8 lg:mb-0 lg:grid-cols-[1.05fr_0.95fr]"
       style={{ fontFamily: 'var(--font-hanken), sans-serif' }}
     >
       {/* greeting + intro */}
@@ -85,6 +85,13 @@ export function EarnHomeHero({
           New bounties posted daily. Filter by craft, follow the activity, and
           submit your best work.
         </p>
+        <a
+          href="#listings"
+          className="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-[#6B7A4F] transition-colors hover:text-[#C4502E]"
+        >
+          Browse all opportunities
+          <span aria-hidden>→</span>
+        </a>
       </div>
 
       {/* live stat tiles */}
