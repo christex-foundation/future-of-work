@@ -12,4 +12,6 @@ export function applyE2eEnv(): void {
   process.env.NEXT_PUBLIC_RPC_URL ??= 'example.invalid';
   process.env.NEXT_PUBLIC_RPC_WS_URL ??= 'wss://example.invalid';
   process.env.IS_LOCAL ??= 'true';
+  // Journeys must not call ZeroBounce. The production server reads this.
+  process.env.SKIP_EMAIL_VALIDATION = 'true';
 }

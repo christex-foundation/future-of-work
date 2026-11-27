@@ -50,6 +50,8 @@ pnpm test:e2e
 
 `NEXT_PUBLIC_PRIVY_APP_ID` is inlined at build time, so rebuild after changing the test app id.
 
+The e2e job and the Playwright server both set `SKIP_EMAIL_VALIDATION=true`. Journey 1 posts to `/api/email/validate` before the email code is sent. With that flag the route returns `{ isValid: true }` and does not call ZeroBounce. The harness still keeps the early `return` on the non-production branch in `src/pages/api/email/validate.ts`.
+
 The schema step uses `prisma migrate diff --from-empty` until `prisma/migrations` exists, then `prisma migrate deploy`. Tests do not migrate again. There is no `db push`.
 
 Privy app ids are 25 characters. The workflow also sets unused placeholders for `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, and `NEXTAUTH_SECRET`, because those Earn modules throw or log errors in production when they are missing. The journeys do not call Upstash or next-auth.

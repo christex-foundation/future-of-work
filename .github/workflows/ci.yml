@@ -105,6 +105,8 @@ jobs:
       NEXT_PUBLIC_RPC_URL: example.invalid
       NEXT_PUBLIC_RPC_WS_URL: wss://example.invalid
       IS_LOCAL: "true"
+      # Journey 1 posts to /api/email/validate. Skip ZeroBounce.
+      SKIP_EMAIL_VALIDATION: "true"
       # next-auth logs MissingSecretError in production when this is unset. The journeys do not use it.
       NEXTAUTH_SECRET: e2e-next-auth-unused
       NEXT_PUBLIC_PRIVY_APP_ID: ${{ secrets.PRIVY_TEST_APP_ID }}
