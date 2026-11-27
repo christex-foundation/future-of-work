@@ -42,8 +42,9 @@ Skills-to-jobs platform for MoCTI Sierra Leone, on the `christex-foundation/futu
 | [0017](adr/0017-privy-saas-identity-and-data-residency.md) | Privy holds learner identity outside the data centre | Proposed |
 | [0018](adr/0018-amend-0002-lighter-fork-tooling-advisories-always-checked.md) | Amend ADR-0002. Advisories always checked | Accepted |
 | [0019](adr/0019-future-of-work-project-stack.md) | Future of Work project stack | Accepted |
+| [0020](adr/0020-journey-tests-and-thin-vitest.md) | Journey tests and a thin Vitest layer | Accepted |
 
-The draft ADR-0018 was not copied. The copy already in this repository is the one that applies. Numbers are unique: 0001 through 0019, with no gap and no duplicate.
+The draft ADR-0018 was not copied. The copy already in this repository is the one that applies. Numbers are unique: 0001 through 0020, with no gap and no duplicate.
 
 ### Reconciliation with the 15 ADRs planned in `engineering-plan.md` §10
 

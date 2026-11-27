@@ -32,6 +32,8 @@ jobs:
         run: pnpm check-types
       - name: Ledger paths still imported
         run: python3 scripts/sldtp/upstream-triage.py --check-imported
+      - name: Unit tests
+        run: pnpm test
 
   # Non-blocking while the lockfile still has high and critical advisories.
   # See docs/adr/0018-amend-0002-lighter-fork-tooling-advisories-always-checked.md.
@@ -60,3 +62,98 @@ jobs:
             https://github.com/google/osv-scanner/releases/download/v2.7.1/osv-scanner_linux_amd64
           chmod +x "$RUNNER_TEMP/osv-scanner"
           "$RUNNER_TEMP/osv-scanner" --lockfile pnpm-lock.yaml
+
+  # Playwright journeys. pnpm install and next build sit outside the 3-minute cap.
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: e2e
+          MARIADB_DATABASE: e2e
+          MARIADB_USER: e2e
+          MARIADB_PASSWORD: e2e
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=20
+      # The Earn submission and publish routes enqueue on BullMQ and wait
+      # forever when Redis is down. This is not a product dependency.
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      HUSKY: 0
+      DATABASE_URL: mysql://e2e:e2e@127.0.0.1:3306/e2e
+      REDIS_URL: redis://127.0.0.1:6379
+      AGENT_REDIS_URL: redis://127.0.0.1:6379
+      # Inherited Earn modules throw at import when these are unset. Not used by the journeys.
+      UPSTASH_REDIS_REST_URL: https://example.invalid
+      UPSTASH_REDIS_REST_TOKEN: e2e-unused
+      NEXT_PUBLIC_SITE_URL: http://127.0.0.1:3000/
+      NEXT_PUBLIC_RPC_URL: example.invalid
+      NEXT_PUBLIC_RPC_WS_URL: wss://example.invalid
+      IS_LOCAL: "true"
+      # Journey 1 posts to /api/email/validate. Skip ZeroBounce.
+      SKIP_EMAIL_VALIDATION: "true"
+      # next-auth logs MissingSecretError in production when this is unset. The journeys do not use it.
+      NEXTAUTH_SECRET: e2e-next-auth-unused
+      NEXT_PUBLIC_PRIVY_APP_ID: ${{ secrets.PRIVY_TEST_APP_ID }}
+      PRIVY_APP_SECRET: ${{ secrets.PRIVY_TEST_APP_SECRET }}
+      PRIVY_VERIFICATION_KEY: ${{ secrets.PRIVY_TEST_VERIFICATION_KEY }}
+      PRIVY_TEST_APP_ID: ${{ secrets.PRIVY_TEST_APP_ID }}
+      PRIVY_TEST_APP_SECRET: ${{ secrets.PRIVY_TEST_APP_SECRET }}
+      PRIVY_TEST_VERIFICATION_KEY: ${{ secrets.PRIVY_TEST_VERIFICATION_KEY }}
+      PRIVY_TEST_OTP: ${{ secrets.PRIVY_TEST_OTP }}
+      PRIVY_TEST_TALENT_EMAIL: ${{ secrets.PRIVY_TEST_TALENT_EMAIL }}
+      PRIVY_TEST_EMPLOYER_EMAIL: ${{ secrets.PRIVY_TEST_EMPLOYER_EMAIL }}
+      PRIVY_TEST_TALENT_DID: ${{ secrets.PRIVY_TEST_TALENT_DID }}
+      PRIVY_TEST_EMPLOYER_DID: ${{ secrets.PRIVY_TEST_EMPLOYER_DID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require Privy test secrets
+        run: |
+          set -euo pipefail
+          missing=""
+          check() {
+            if [ -z "${1//[[:space:]]/}" ]; then
+              missing="${missing} ${2}"
+            fi
+          }
+          check "$PRIVY_TEST_APP_ID" PRIVY_TEST_APP_ID
+          check "$PRIVY_TEST_APP_SECRET" PRIVY_TEST_APP_SECRET
+          check "$PRIVY_TEST_VERIFICATION_KEY" PRIVY_TEST_VERIFICATION_KEY
+          check "$PRIVY_TEST_OTP" PRIVY_TEST_OTP
+          check "$PRIVY_TEST_TALENT_EMAIL" PRIVY_TEST_TALENT_EMAIL
+          check "$PRIVY_TEST_EMPLOYER_EMAIL" PRIVY_TEST_EMPLOYER_EMAIL
+          check "$PRIVY_TEST_TALENT_DID" PRIVY_TEST_TALENT_DID
+          check "$PRIVY_TEST_EMPLOYER_DID" PRIVY_TEST_EMPLOYER_DID
+          if [ -n "$missing" ]; then
+            echo "::error::Privy test secrets are missing:${missing}. The e2e job does not skip. Add these GitHub Actions secrets for the dedicated Privy test app. See tests/e2e/README.md."
+            exit 1
+          fi
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Build
+        run: pnpm build
+      - name: Playwright journeys
+        timeout-minutes: 3
+        run: pnpm test:e2e
