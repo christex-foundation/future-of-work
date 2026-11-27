@@ -14,7 +14,7 @@ The org tech-stack guide asks each project for one short ADR of the stack it act
 | Item | What integration uses |
 | --- | --- |
 | Languages | TypeScript 5.8.3 (`typescript` in `package.json`). Deviation from the org guide, which prefers JSDoc: this repository follows the upstream fork, and the code is TypeScript. |
-| Node | CI pins Node 22 (`.github/workflows/ci.yml`, `actions/setup-node` `node-version: 22`, both jobs). `package.json` has no `engines` field. `@types/node` is `24.9.2` and does not select the runtime. The planned production runtime is Node 24 on the app VM ([ADR-0004](0004-hosting-on-prem-primary-cloud-standby-cdn.md)). On 27 Nov 2026 Node 24 is Maintenance LTS (since 20 Oct 2026). Active LTS is Node 26. The plan stays Node 24 until ADR-0004 is revised. |
+| Node | CI pins Node 22 (`.github/workflows/ci.yml`, `actions/setup-node` `node-version: 22`, both jobs). `package.json` has no `engines` field. `@types/node` is `24.9.2` and does not select the runtime. Decision, 27 Nov 2026 ([ADR-0004](0004-hosting-on-prem-primary-cloud-standby-cdn.md)): Node 26 is Active LTS and Node 24 is Maintenance LTS. Future of Work moves from Node 22 to Node 24 now, and to Node 26 once its dependencies support it. The CI bump is a separate CI-hardening PR. This record does not change the workflow. |
 | Package manager | pnpm 10, pinned in CI by `pnpm/action-setup` `version: 10`. Install is `pnpm install --frozen-lockfile`. `vercel.json` uses the same install command. `package.json` has no `packageManager` field. |
 | Web | Next.js 16.4.6 (`next`, exact) and React 19.2.4. UI pages are the Pages Router: 91 files under `src/pages`, excluding `src/pages/api`. [ADR-0014](0014-pages-router-only.md) accepts Pages Router for pages and API routes. The head still has 70 App Router handlers under `src/app/api`, plus `src/app/robots.txt/route.ts`, `src/app/.well-known/agent.json/route.ts` and `src/app/sitemap.ts`. There are no App Router pages. The strip deletes `src/app`. |
 | Backend | Next.js API routes in this one process. There is no separate service. A new standalone service would default to Hono, and that choice needs its own ADR before the service is added. |
@@ -27,7 +27,7 @@ The org tech-stack guide asks each project for one short ADR of the stack it act
 ### Consequences
 
 - Good: one page that matches the tree, with planned rows owned by the ADR that decided them.
-- Bad: JSDoc, a test runner, and a second service on Hono are org defaults this fork does not use. Node 24 in ADR-0004 is Maintenance LTS on the date of this record, while Active LTS is Node 26.
+- Bad: JSDoc, a test runner, and a second service on Hono are org defaults this fork does not use. The runtime this fork moves to now, Node 24, is Maintenance LTS. Active LTS is Node 26, which waits until dependencies support it.
 
 ### Confirmation
 
