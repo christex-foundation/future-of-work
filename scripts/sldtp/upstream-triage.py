@@ -12,6 +12,7 @@ Reads:
   .sldtp/upstream-log.tsv    decisions, tab-separated: upstream_sha, decision, our_sha or -, who, note
 Prints a markdown table, one row per upstream first-parent commit (usually one PR merge).
 Exit 1 with --check if a commit touching kept paths has no decision in upstream-log.tsv.
+Exit 1 with --check-imported if a ledger path still exists and another file imports it.
 """
 import argparse, fnmatch, os, re, subprocess, sys
 
@@ -23,6 +24,66 @@ DEP_FILES = {"package.json", "pnpm-lock.yaml"}
 
 def git(*a):
     return subprocess.run(["git", *a], check=True, capture_output=True, text=True).stdout
+
+def git_ok(*a):
+    result = subprocess.run(["git", *a], check=False, capture_output=True, text=True)
+    if result.returncode not in (0, 1):
+        result.check_returncode()
+    return result.stdout
+
+def module_specifiers(path):
+    rel = path[4:] if path.startswith("src/") else path
+    noext = re.sub(r"\.(tsx|ts|jsx|js)$", "", rel)
+    specs = [f"@/{noext}"]
+    if noext.endswith("/index"):
+        specs.append(f"@/{noext[: -len('/index')]}")
+    return specs
+
+def importer_of(path, rev):
+    """Return another file that imports path, or None.
+
+    The specifier must end at a quote, so ListingTable does not match
+    ListingTableSkeleton.
+    """
+    for spec in module_specifiers(path):
+        out = git_ok("grep", "-F", "-n", spec, rev, "--", "*.ts", "*.tsx")
+        for line in out.splitlines():
+            parts = line.split(":", 2)
+            if len(parts) < 3:
+                continue
+            file, content = parts[1], parts[2]
+            if file == path:
+                continue
+            start = 0
+            while True:
+                idx = content.find(spec, start)
+                if idx < 0:
+                    break
+                after = content[idx + len(spec) : idx + len(spec) + 1]
+                if after in ("'", '"', "`"):
+                    return file
+                start = idx + 1
+    return None
+
+def check_imported(ledger, rev):
+    """Fail when a ledger entry still exists and kept code imports it."""
+    globs = [e for e in read_lines(ledger) if "->" not in e]
+    files = [f for f in git("ls-tree", "-r", "--name-only", rev).split("\n") if f]
+    problems = []
+    for glob in globs:
+        for path in files:
+            if not deleted(path, [glob]):
+                continue
+            importer = importer_of(path, rev)
+            if importer:
+                problems.append(f"{glob} matches {path}, imported from {importer}")
+    if problems:
+        print("deleted-paths entries still exist and are imported:", file=sys.stderr)
+        for problem in problems:
+            print(problem, file=sys.stderr)
+        return 1
+    print(f"ledger import check ok ({len(globs)} deletion entries)")
+    return 0
 
 def read_lines(p):
     if not os.path.exists(p):
@@ -45,7 +106,15 @@ def main():
     ap.add_argument("--log", default=".sldtp/upstream-log.tsv")
     ap.add_argument("--all", action="store_true", help="also list IRRELEVANT rows")
     ap.add_argument("--check", action="store_true", help="exit 1 on untriaged commits touching kept paths")
+    ap.add_argument("--check-imported", action="store_true",
+                    help="exit 1 if a ledger path still exists and is imported")
     a = ap.parse_args()
+
+    if a.check_imported:
+        if check_imported(a.ledger, a.ours):
+            sys.exit(1)
+        if not a.check:
+            return
 
     base = a.base or (read_lines(".sldtp/upstream-baseline") or [None])[0]
     if not base:

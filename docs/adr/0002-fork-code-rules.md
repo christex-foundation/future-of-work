@@ -61,8 +61,8 @@ The touch-budget report in the strategy counts `SLDTP-BEGIN` markers and changed
 - One glob per line. `#` starts a comment.
 - A move is `old/glob/** -> src/sldtp/new/`.
 - The commit that deletes or moves a path updates the ledger in that same commit.
-- Nothing has been deleted yet. The file is a commented template of the planned strips and moves. Those lines are not in force.
-- CI will later reject a deletion whose path is not in the ledger, and a ledger glob that still matches files in the tree. That check is not wired in the change that added this ADR.
+- The file lists the paths the Daybreak line removed that nothing on `main` still imports. Planned strip globs are not listed while that code is still live. `src/features/stfun/**` is not an entry.
+- `upstream-triage.py --check-imported` fails when a ledger entry still exists and is imported. CI runs it after `pnpm install --frozen-lockfile`.
 - Removed env vars go in `.sldtp/deleted-env`. Removed Prisma models are listed in the baseline migration's README. Upstream's `.github/workflows/lockfile.yml` and `schema-sync-notify.yml` go in the ledger too. `schema-sync-notify` posts outside our control, so delete it during FND-02.
 - Delete, don't flag. The ledger is what makes deletion cheap at triage time.
 
@@ -73,7 +73,7 @@ The touch-budget report in the strategy counts `SLDTP-BEGIN` markers and changed
 - New product work does not collide with upstream fetches.
 - A reviewer can find every local edit to an upstream file with a search for `SLDTP-BEGIN` and `SLDTP(`.
 - After a module moves, upstream fixes to the old path show up as `MOVED` instead of disappearing or coming back as a delete/modify conflict.
-- Until the first strip commit, the ledger matches the tree: no path is recorded as deleted.
+- The ledger matches the Daybreak deletions: every entry is a file that is gone, and none of those paths are imported.
 
 ## Licence
 

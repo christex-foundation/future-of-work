@@ -335,8 +335,8 @@ The touch-budget report (section 8) counts `SLDTP-BEGIN` markers and changed ups
 
 ### 7.3 Deletion ledger: `.sldtp/deleted-paths`
 
-- Every strip PR adds the globs it deletes, **in the same commit**. Moves use `old -> new`. The committed file is a commented template of strips A, B, and C plus the two planned moves. Uncomment a line only in the commit that deletes or moves that path.
-- CI will enforce it both ways: a file deleted in a PR whose path is not in the ledger fails, and a ledger glob that still matches files in the tree fails. That job is not in this change.
+- Every strip PR adds the paths it deletes, **in the same commit**. Moves use `old -> new`. The committed file lists the files the Daybreak line removed (`3da3094d2`..`97bfeeb8e`) that nothing on `main` still imports. It does not list planned strip globs. `src/features/stfun/**` stays out: that tree is live.
+- `scripts/sldtp/upstream-triage.py --check-imported` fails when a ledger entry still exists and another file imports it. `.github/workflows/ci.yml` runs that check. It installs with `pnpm install --frozen-lockfile` before `tsc`.
 - The ledger also covers non-code items: removed env vars go in `.sldtp/deleted-env` and removed Prisma models are listed in the baseline migration's README. Upstream's `.github/workflows/lockfile.yml` and `schema-sync-notify.yml` go in the ledger too; `schema-sync-notify` posts outside our control, so delete it during FND-02.
 - Delete, don't flag. The ledger is what makes deletion cheap at triage time.
 
@@ -366,7 +366,7 @@ Today the repo has no tests. Ports are only safe with three minimum layers, whic
 
 ## 8. CI and automation (FND-02, FND-11)
 
-Not in this change. The jobs below are the agreed shape for FND-02. Branch protection on `main` is recommended now, because the branch has none, and it is not turned on here (section 3). The jobs themselves wait for FND-02.
+`.github/workflows/ci.yml` installs with `pnpm install --frozen-lockfile`, runs `tsc --noEmit`, and runs the ledger import check. A loose install resolves past the lockfile and is what produces the extra typecheck errors. The other jobs below are still the FND-02 shape and are not in this change. Branch protection on `main` is recommended and is not turned on here (section 3).
 
 | Job | Trigger | Fails when | Blocks merge? |
 | --- | --- | --- | --- |
@@ -464,7 +464,7 @@ No effort figures here. The sequencing change is:
 | D6 | Code rules: `src/sldtp/`, the seams, the `SLDTP-BEGIN` / `SLDTP-END` markers, adapt-by-move, the deletion ledger | **Yes.** Recorded in [ADR 0002](adr/0002-fork-code-rules.md) |
 | D7 | Database: split schema folder, baseline migration after the strip, `db push` banned outside local throwaway databases | **Yes** |
 | D8 | Dependency policy independent of upstream: exact pins, 48-hour security patches, no majors after 15 February. Next >= 16.4.5 in our own PR | **Yes.** Do not take upstream's Next 16.3.8, React 19.3.0, or TypeScript 7.0.2. React 19.3 only if the Next PR needs it. TypeScript 7 is not worth it now. Detail is in the leverage review |
-| D9 | Required CI checks and branch protection as in section 8 | **Yes.** `main` currently has no branch protection. Turn that on. Squash is the default. The CI jobs themselves are FND-02 and are not in this change |
+| D9 | Required CI checks and branch protection as in section 8 | **Yes.** `main` currently has no branch protection. Turn that on. Squash is the default. This change adds the frozen-lockfile install, typecheck, and ledger import check. The rest of the jobs are still FND-02 |
 | D10 | Contribute anything back to Superteam (for example a `DATABASE_ADAPTER=mariadb` switch) | **Not before March.** Revisit at the June review. There is little to gain while we diverge |
 
 ## Appendix: files in this repository
@@ -473,8 +473,9 @@ No effort figures here. The sequencing change is:
 - `docs/upstream-leverage-review.md`
 - `docs/adr/0002-fork-code-rules.md`
 - `scripts/sldtp/upstream-triage.py`
-- `.sldtp/deleted-paths` (commented template; nothing deleted yet)
+- `.sldtp/deleted-paths` (files Daybreak removed that nothing still imports)
+- `.github/workflows/ci.yml` (`pnpm install --frozen-lockfile`, typecheck, ledger import check)
 
-Not in this repository: rendered diagram images, the sample triage table, `.sldtp/upstream-log.tsv`, `NOTICE.md`, and CI workflows. `.sldtp/upstream-baseline` is the fork point.
+Not in this repository: rendered diagram images, the sample triage table, `.sldtp/upstream-log.tsv`, and `NOTICE.md`. `.sldtp/upstream-baseline` is the fork point.
 
 **Unverified here:** `next build`, `tsc --noEmit`, and a running app on a merge into current `main` (the earlier trial ran `tsc --noEmit` and `prisma generate` only, and only against `3da3094d2`); whether GitHub currently offers self-service fork detachment for this org; the classifier's precision on future upstream commits. The SPDX finding in section 11, the 36-path conflict set, the dependency versions, and `protected: false` on `main` were checked on 27 November 2026.

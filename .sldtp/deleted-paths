@@ -1,53 +1,48 @@
 # Deletion ledger for the SLDTP fork. See docs/fork-and-upstream-sync.md, section 7.3.
 #
-# One glob per line. A line "old/glob/** -> src/sldtp/new/" records a move:
-# upstream edits to the old path stay visible to scripts/sldtp/upstream-triage.py
-# as class MOVED, because the code lives on under src/sldtp/.
-# '#' starts a comment. Blank lines are ignored.
+# One path or glob per line. '#' starts a comment. Blank lines are ignored.
+# A line "old/glob/** -> src/sldtp/new/" records a move.
 #
-# The commit that deletes or moves a path adds or uncomments its line in this
-# file. Ledger checks in CI are described in the strategy and are not wired yet.
-#
-# Nothing has been deleted or moved yet, so there are no active entries.
-# The lines below are the planned strips and moves. They stay commented so the
-# triage script does not treat files we still ship as deleted. Uncomment a
-# line only in the commit that deletes or moves that path.
-
-# Strip A - money and crypto (FND-06)
-# src/context/SolanaWallet.tsx
-# src/features/wallet/**
-# src/features/credits/**
-# src/app/api/wallet/**
-# src/pages/api/tokens/**
-# src/pages/api/token-icon.ts
-# src/constants/tokenList.ts
-
-# Strip B - grants, hackathons, agents, AI, marketing (FND-07)
-# src/features/grants/**
-# src/features/hackathon/**
-# src/components/hackathon/**
-# src/features/agents/**
-# src/pages/api/agents/**
-# src/features/stfun/**
-# src/features/pro/**
-# src/features/membership/**
-# src/features/chapters/**
-# src/features/leaderboard/**
-# src/features/conversion-popups/**
-# src/pages/api/grant-application/**
-# src/pages/api/grants/**
-# src/pages/api/hackathon/**
-# src/app/api/grant-application/**
-# src/app/api/grants/**
-# src/app/api/hackathon/**
-# src/app/api/pro/**
-# src/pages/api/chapters/**
-# src/pages/api/member-invites/**
-
-# Strip C - SaaS clients (FND-08)
-# src/features/kyc/**
-# src/pages/api/sumsub/**
-
-# Moves: code adapted into src/sldtp/. Upstream edits to the old path are class MOVED.
-# src/features/listings/** -> src/sldtp/opportunities/
-# src/features/sponsor-dashboard/** -> src/sldtp/employer/
+# These are the files the Daybreak line removed between 3da3094d2 and 97bfeeb8e.
+# Each one is gone from main, and nothing that remains imports it.
+# Do not add a directory glob for a tree that is still live. src/features/stfun/**
+# is live Daybreak code (header, cards, branding). Only the five files below,
+# which Daybreak actually deleted, belong here.
+src/components/icons/IoDuplicateOutline.tsx
+src/components/icons/MdIosShare.tsx
+src/components/icons/MdOutlineInstallMobile.tsx
+src/components/icons/MdOutlineLock.tsx
+src/components/modals/InstallPWAModal.tsx
+src/components/shared/SkillsCombobox.tsx
+src/components/ui/aspect-ratio.tsx
+src/features/announcements/components/AnnouncementContent.tsx
+src/features/announcements/components/AnnouncementModal.tsx
+src/features/announcements/components/AnnouncementNavigation.tsx
+src/features/announcements/components/AnnouncementPagination.tsx
+src/features/announcements/components/TalentAnnouncements.tsx
+src/features/announcements/talent/Credits.tsx
+src/features/announcements/talent/Wallet.tsx
+src/features/announcements/types/announcement.ts
+src/features/home/components/SidebarBanner.tsx
+src/features/home/components/SponsorStage/BoostBanner.tsx
+src/features/home/components/SponsorStage/BoostedBanner.tsx
+src/features/home/components/SponsorStage/NewSponsorBanner.tsx
+src/features/home/components/SponsorStage/NextListingBanner.tsx
+src/features/home/components/SponsorStage/PaymentPendingBanner.tsx
+src/features/home/components/SponsorStage/ReviewAiBanner.tsx
+src/features/home/components/SponsorStage/ReviewBanner.tsx
+src/features/home/components/SponsorStage/ReviewUrgentBanner.tsx
+src/features/home/components/SponsorStage/SponsorStageBanner.tsx
+src/features/home/components/SponsorStage/UnderVerificationBanner.tsx
+src/features/listings/queries/submissions.tsx
+src/features/navbar/components/AnnouncementBar.tsx
+src/features/pro/components/ProIntroDialog.tsx
+src/features/sponsor-dashboard/components/ListingTable.tsx
+src/features/sponsor-dashboard/components/SelectHackathon.tsx
+src/features/sponsor/icons/Superteam.tsx
+src/features/stfun/components/cards/IllustrationCard.tsx
+src/features/stfun/components/common/Modal.tsx
+src/features/stfun/components/common/SuperteamMap.tsx
+src/features/stfun/components/common/Thunder.tsx
+src/features/stfun/components/sections/Geographies.tsx
+src/hooks/use-scroll-shadow.ts
