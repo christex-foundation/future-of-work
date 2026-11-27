@@ -7,7 +7,7 @@
 - Approved by: David Ogoo, November 2026
 - Related: [Fork and upstream-sync strategy](../fork-and-upstream-sync.md) (decision D6)
 
-Numbered 0002 to match decision D6 in the fork strategy. ADR-0001 is not a file in this repository.
+Numbered 0002 to match decision D6 in the fork strategy. How decisions are recorded is [ADR-0001](0001-record-architecture-decisions.md).
 
 ## Context
 

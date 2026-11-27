@@ -1,0 +1,215 @@
+files scanned: 1318  kept: 110  deleted: 1208
+kept imports deleted: src/app/api/dynamic-og/listing/route.tsx -> src/constants/ASSET_URL.ts
+kept imports deleted: src/app/api/dynamic-og/listing/route.tsx -> src/server/tokenList.ts
+kept imports deleted: src/app/api/dynamic-og/listing/route.tsx -> src/utils/validUrl.ts
+kept imports deleted: src/app/api/dynamic-og/sponsor/route.tsx -> src/constants/ASSET_URL.ts
+kept imports deleted: src/app/api/dynamic-og/talent/route.tsx -> src/constants/ASSET_URL.ts
+kept imports deleted: src/components/providers.tsx -> src/components/shared/ExternalLinkDialogProvider.tsx
+kept imports deleted: src/features/auth/components/EmailSignIn.tsx -> src/features/auth/atoms.ts
+kept imports deleted: src/features/auth/components/EmailSignIn.tsx -> src/features/auth/utils/email.ts
+kept imports deleted: src/features/auth/components/EmailSignIn.tsx -> src/features/auth/utils/handleUserCreation.ts
+kept imports deleted: src/features/auth/components/Login.tsx -> src/features/conversion-popups/atoms.ts
+kept imports deleted: src/features/auth/components/Login.tsx -> src/features/auth/atoms.ts
+kept imports deleted: src/features/auth/components/Login.tsx -> src/features/auth/utils/handleUserCreation.ts
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/components/icons/MdOutlineEmail.tsx
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/constants/TERMS_OF_USE.ts
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/svg/google.tsx
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/features/auth/atoms.ts
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/features/auth/utils/handleUserCreation.ts
+kept imports deleted: src/features/auth/utils/withAuth.ts -> src/features/auth/types/index.ts
+kept imports deleted: src/features/auth/utils/withSponsorAuth.ts -> src/features/auth/types/index.ts
+kept imports deleted: src/pages/_app.tsx -> src/styles/st-globals.css
+kept imports deleted: src/pages/_app.tsx -> src/constants/ST_ROUTES.ts
+kept imports deleted: src/pages/_app.tsx -> src/constants/tokenList.ts
+kept imports deleted: src/pages/_app.tsx -> src/features/stfun/components/common/Footer.tsx
+kept imports deleted: src/pages/_app.tsx -> src/features/stfun/components/common/Header.tsx
+kept imports deleted: src/pages/_app.tsx -> src/lib/gsap.ts
+kept imports deleted: src/pages/index.tsx -> src/constants/ASSET_URL.ts
+kept imports deleted: src/pages/index.tsx -> src/layouts/Meta.tsx
+kept imports deleted: src/pages/index.tsx -> src/utils/formatNumberWithSuffix.ts
+kept imports deleted: src/pages/index.tsx -> src/features/stfun/components/daybreak/DaybreakLanding.tsx
+kept imports deleted: src/store/user.ts -> src/hooks/use-forced-profile-redirect.ts
+kept imports deleted: src/store/user.ts -> src/interface/user.ts
+ledger deletes imported code: src/pages/earn/hackathon/breakout.tsx -> src/components/hackathon/TrackBox.tsx
+ledger deletes imported code: src/pages/earn/hackathon/cypherpunk.tsx -> src/components/hackathon/TrackBox.tsx
+ledger deletes imported code: src/pages/earn/hackathon/frontier.tsx -> src/components/hackathon/TrackBox.tsx
+ledger deletes imported code: src/pages/earn/hackathon/radar.tsx -> src/components/hackathon/TrackBox.tsx
+ledger deletes imported code: src/pages/earn/hackathon/redacted.tsx -> src/components/hackathon/TrackBox.tsx
+ledger deletes imported code: src/pages/earn/hackathon/renaissance.tsx -> src/components/hackathon/TrackBox.tsx
+ledger deletes imported code: src/pages/earn/hackathon/scribes.tsx -> src/components/hackathon/TrackBox.tsx
+ledger deletes imported code: src/pages/_app.tsx -> src/constants/tokenList.ts
+ledger deletes imported code: src/components/ui/token-icon.tsx -> src/constants/tokenList.ts
+ledger deletes imported code: src/features/listing-builder/components/AutoGenerate/Dialog.tsx -> src/constants/tokenList.ts
+ledger deletes imported code: src/features/listing-builder/components/Form/Boost/queries.ts -> src/constants/tokenList.ts
+ledger deletes imported code: src/features/listing-builder/components/Form/Rewards/Tokens/TokenLabel.tsx -> src/constants/tokenList.ts
+ledger deletes imported code: src/features/listing-builder/components/Form/Rewards/Tokens/TokenSelect.tsx -> src/constants/tokenList.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/Modals/VerifyPayment.tsx -> src/constants/tokenList.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/Submissions/PayoutButton.tsx -> src/constants/tokenList.ts
+ledger deletes imported code: src/features/sponsor-dashboard/utils/paymentRPCValidation.ts -> src/constants/tokenList.ts
+ledger deletes imported code: src/layouts/Sponsor.tsx -> src/context/SolanaWallet.tsx
+ledger deletes imported code: src/features/comments/components/Comment.tsx -> src/features/agents/components/AgentBadge.tsx
+ledger deletes imported code: src/features/sponsor-dashboard/components/Submissions/SubmissionPanel.tsx -> src/features/agents/components/AgentBadge.tsx
+ledger deletes imported code: src/pages/earn/t/[slug]/index.tsx -> src/features/agents/components/AgentBadge.tsx
+ledger deletes imported code: src/app/api/sponsor-dashboard/grant-application/ai/review/route.ts -> src/features/agents/utils/queueAgent.ts
+ledger deletes imported code: src/features/listing-builder/utils/postListingSaveOperation.ts -> src/features/agents/utils/queueAgent.ts
+ledger deletes imported code: src/pages/api/submission/create.ts -> src/features/agents/utils/queueAgent.ts
+ledger deletes imported code: src/pages/api/submission/update.ts -> src/features/agents/utils/queueAgent.ts
+ledger deletes imported code: src/components/shared/RegionCombobox.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/components/shared/SuperteamCombobox.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/listing-builder/components/Form/SponsorVerificationForm.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/listings/components/ListingPage/ExtraInfoSection.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/listings/components/ListingPage/RegionLabel.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/listings/components/ListingsSection.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/listings/components/Submission/KYCModal.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/listings/components/Submission/SubmissionActionButton.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/listings/components/Submission/SubmissionDrawer.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/search/components/SearchModal.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/talent/components/onboarding-form/ImageCard.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/pages/earn/search/index.tsx -> src/features/chapters/queries/chapters.ts
+ledger deletes imported code: src/features/auth/components/Login.tsx -> src/features/conversion-popups/atoms.ts
+ledger deletes imported code: src/features/home/components/Banner/index.tsx -> src/features/conversion-popups/atoms.ts
+ledger deletes imported code: src/pages/earn/grants/[slug]/index.tsx -> src/features/conversion-popups/components/GrantsPop.tsx
+ledger deletes imported code: src/pages/earn/grants/index.tsx -> src/features/conversion-popups/components/GrantsPop.tsx
+ledger deletes imported code: src/features/feed/components/Feed.tsx -> src/features/conversion-popups/components/HomepagePop.tsx
+ledger deletes imported code: src/pages/earn/all/index.tsx -> src/features/conversion-popups/components/HomepagePop.tsx
+ledger deletes imported code: src/pages/earn/index.tsx -> src/features/conversion-popups/components/HomepagePop.tsx
+ledger deletes imported code: src/pages/earn/jobs.tsx -> src/features/conversion-popups/components/HomepagePop.tsx
+ledger deletes imported code: src/pages/earn/leaderboard/index.tsx -> src/features/conversion-popups/components/HomepagePop.tsx
+ledger deletes imported code: src/pages/earn/projects/index.tsx -> src/features/conversion-popups/components/HomepagePop.tsx
+ledger deletes imported code: src/pages/earn/listing/[slug]/index.tsx -> src/features/conversion-popups/components/ListingPop.tsx
+ledger deletes imported code: src/pages/earn/regions/[slug]/index.tsx -> src/features/conversion-popups/components/RegionPop.tsx
+ledger deletes imported code: src/features/navbar/components/Header.tsx -> src/features/credits/components/CreditDrawer.tsx
+ledger deletes imported code: src/features/listings/components/Submission/SubmissionActionButton.tsx -> src/features/credits/components/Nudge.tsx
+ledger deletes imported code: src/features/listings/components/Submission/SubmissionActionButton.tsx -> src/features/credits/components/ReferralModal.tsx
+ledger deletes imported code: src/features/navbar/components/Header.tsx -> src/features/credits/components/ReferralModal.tsx
+ledger deletes imported code: src/features/listings/components/Submission/SubmissionActionButton.tsx -> src/features/credits/icon/credit.tsx
+ledger deletes imported code: src/features/listings/components/Submission/SubmissionDrawer.tsx -> src/features/credits/icon/credit.tsx
+ledger deletes imported code: src/features/navbar/components/DesktopNavbar.tsx -> src/features/credits/icon/credit.tsx
+ledger deletes imported code: src/features/navbar/components/MobileNavbar.tsx -> src/features/credits/icon/credit.tsx
+ledger deletes imported code: src/app/api/spam-dispute/route.ts -> src/features/credits/utils/allocateCredits.ts
+ledger deletes imported code: src/app/api/sponsor-dashboard/listing/[id]/announce/route.ts -> src/features/credits/utils/allocateCredits.ts
+ledger deletes imported code: src/app/api/sponsor-dashboard/listing/[id]/unpublish/route.ts -> src/features/credits/utils/allocateCredits.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/grants/update-application-status.ts -> src/features/credits/utils/allocateCredits.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/grants/update-label.ts -> src/features/credits/utils/allocateCredits.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/submission/update-label.ts -> src/features/credits/utils/allocateCredits.ts
+ledger deletes imported code: src/pages/api/submission/create.ts -> src/features/credits/utils/allocateCredits.ts
+ledger deletes imported code: src/pages/api/submission/create.ts -> src/features/credits/utils/canUserSubmit.ts
+ledger deletes imported code: src/app/api/user/credit/balance/route.ts -> src/features/credits/utils/creditAggregate.ts
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/components/ApplicationActionButton.tsx
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/components/ApplicationStats.tsx
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/components/ApprovalStages.tsx
+ledger deletes imported code: src/pages/earn/grants/index.tsx -> src/features/grants/components/GrantEntry.tsx
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/components/GrantStats.tsx
+ledger deletes imported code: src/features/search/components/Results.tsx -> src/features/grants/components/GrantsCard.tsx
+ledger deletes imported code: src/features/search/components/SearchModal.tsx -> src/features/grants/components/GrantsCard.tsx
+ledger deletes imported code: src/features/home/components/LiveGrants.tsx -> src/features/grants/components/GrantsCardMini.tsx
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/components/GrantsHeader.tsx
+ledger deletes imported code: src/pages/earn/category/[slug]/index.tsx -> src/features/grants/components/GrantsSection.tsx
+ledger deletes imported code: src/pages/earn/opportunities/[[...tags]].tsx -> src/features/grants/components/GrantsSection.tsx
+ledger deletes imported code: src/pages/earn/pro.tsx -> src/features/grants/components/GrantsSection.tsx
+ledger deletes imported code: src/pages/earn/regions/[slug]/index.tsx -> src/features/grants/components/GrantsSection.tsx
+ledger deletes imported code: src/pages/earn/s/[slug].tsx -> src/features/grants/components/GrantsSection.tsx
+ledger deletes imported code: src/pages/earn/skill/[slug].tsx -> src/features/grants/components/GrantsSection.tsx
+ledger deletes imported code: src/pages/earn/grants/index.tsx -> src/features/grants/hooks/useGrants.ts
+ledger deletes imported code: src/pages/earn/grants/[slug]/index.tsx -> src/features/grants/queries/get-grant-by-slug.ts
+ledger deletes imported code: src/pages/earn/grants/[slug]/references.tsx -> src/features/grants/queries/get-grant-by-slug.ts
+ledger deletes imported code: src/features/home/components/LiveGrants.tsx -> src/features/grants/queries/live-grants.ts
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/queries/user-application.ts
+ledger deletes imported code: src/app/api/sponsor-dashboard/grant-application/ai/commit-reviewed/route.ts -> src/features/grants/types/index.ts
+ledger deletes imported code: src/app/api/sponsor-dashboard/grant-application/ai/unreviewed/route.ts -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/listings/components/ListingPage/ShareListing.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/search/types/index.ts -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/GrantApplications/ApplicationDetails.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/GrantApplications/ApplicationHeader.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/GrantApplications/Modals/AiReview.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/GrantApplications/Notes.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/GrantApplications/PaymentsHistoryTab.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/Traches/TrancheDetails.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/mutations/useCommitReviewsGrantApplications.ts -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/queries/grant.ts -> src/features/grants/types/index.ts
+ledger deletes imported code: src/features/sponsor-dashboard/queries/tranches.ts -> src/features/grants/types/index.ts
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/pages/earn/grants/[slug]/index.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/pages/earn/grants/[slug]/references.tsx -> src/features/grants/types/index.ts
+ledger deletes imported code: src/utils/json-ld.ts -> src/features/grants/types/index.ts
+ledger deletes imported code: src/app/api/sponsor-dashboard/grants/update-tranche-status/route.ts -> src/features/grants/utils/addPaymentInfoToAirtable.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/grants/update-application-status.ts -> src/features/grants/utils/convertGrantApplicationToAirtable.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/grants/update-application-status.ts -> src/features/grants/utils/createTranche.ts
+ledger deletes imported code: src/features/home/components/SponsorStage/SponsorSidebarListing.tsx -> src/features/grants/utils/grantAmount.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/daybreak/ListingBoardCard.tsx -> src/features/grants/utils/grantAmount.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/daybreak/ListingBoardList.tsx -> src/features/grants/utils/grantAmount.ts
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/utils/grantAmount.ts
+ledger deletes imported code: src/features/listings/components/ListingPage/DescriptionUI.tsx -> src/features/grants/utils/stGrant.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/GrantApplications/ApplicationDetails.tsx -> src/features/grants/utils/stGrant.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/Traches/TrancheDetails.tsx -> src/features/grants/utils/stGrant.ts
+ledger deletes imported code: src/layouts/Grants.tsx -> src/features/grants/utils/stGrant.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/grants/update-application-status.ts -> src/features/grants/utils/stGrant.ts
+ledger deletes imported code: src/pages/earn/dashboard/grants/[slug]/applications.tsx -> src/features/grants/utils/stGrant.ts
+ledger deletes imported code: src/pages/earn/hackathon/all.tsx -> src/features/hackathon/components/HackathonSection.tsx
+ledger deletes imported code: src/features/listings/components/ListingTabs.tsx -> src/features/hackathon/constants/hackathons.ts
+ledger deletes imported code: src/features/listings/components/ListingsSection.tsx -> src/features/hackathon/constants/hackathons.ts
+ledger deletes imported code: src/features/listings/utils/query-builder.ts -> src/features/hackathon/constants/hackathons.ts
+ledger deletes imported code: src/features/listings/constants/SORT_OPTIONS.tsx -> src/features/hackathon/hooks/useHackathons.ts
+ledger deletes imported code: src/features/listing-builder/components/AutoGenerate/Type.tsx -> src/features/hackathon/utils/getVisibleHackathons.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/CreateListingModal.tsx -> src/features/hackathon/utils/getVisibleHackathons.ts
+ledger deletes imported code: src/pages/api/submission/kyc/verify-completion.ts -> src/features/kyc/utils/checkVerificationStatus.ts
+ledger deletes imported code: src/pages/api/submission/kyc/verify-completion.ts -> src/features/kyc/utils/getApplicantData.ts
+ledger deletes imported code: src/pages/earn/leaderboard/index.tsx -> src/features/leaderboard/components/FilterRow.tsx
+ledger deletes imported code: src/pages/earn/leaderboard/index.tsx -> src/features/leaderboard/components/Pagination.tsx
+ledger deletes imported code: src/pages/earn/leaderboard/index.tsx -> src/features/leaderboard/components/RanksTable.tsx
+ledger deletes imported code: src/pages/earn/leaderboard/index.tsx -> src/features/leaderboard/types.ts
+ledger deletes imported code: src/pages/earn/leaderboard/index.tsx -> src/features/leaderboard/utils/index.ts
+ledger deletes imported code: src/app/api/user/pro/upgrade/route.ts -> src/features/membership/utils/peopleEligibility.ts
+ledger deletes imported code: src/features/home/components/SideBar.tsx -> src/features/membership/utils/peopleEligibility.ts
+ledger deletes imported code: src/features/listings/components/ListingPage/DescriptionUI.tsx -> src/features/membership/utils/peopleEligibility.ts
+ledger deletes imported code: src/features/navbar/components/MobileDrawer.tsx -> src/features/membership/utils/peopleEligibility.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/GrantApplications/ApplicationDetails.tsx -> src/features/membership/utils/peopleEligibility.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/GrantApplications/ApplicationList.tsx -> src/features/membership/utils/peopleEligibility.ts
+ledger deletes imported code: src/app/api/user/complete-profile/route.ts -> src/features/membership/utils/refreshUserMembershipLevel.ts
+ledger deletes imported code: src/features/comments/components/Comment.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/features/home/components/UserStatsBanner.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/features/listing-builder/components/Form/PrePublish/ProSlideout.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/features/listing-builder/components/Form/Rewards/Footer.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/features/listings/components/ListingCard.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/features/listings/components/ListingPage/DescriptionUI.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/features/listings/components/Submission/SubmissionActionButton.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/features/sponsor-dashboard/components/Submissions/SubmissionHeader.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/pages/earn/t/[slug]/index.tsx -> src/features/pro/components/ProBadge.tsx
+ledger deletes imported code: src/pages/earn/pro.tsx -> src/features/pro/components/ProBanner.tsx
+ledger deletes imported code: src/features/home/components/SideBar.tsx -> src/features/pro/components/ProIntro.tsx
+ledger deletes imported code: src/features/listings/components/ListingPage/DescriptionUI.tsx -> src/features/pro/components/ProIntro.tsx
+ledger deletes imported code: src/features/navbar/components/MobileDrawer.tsx -> src/features/pro/components/ProIntro.tsx
+ledger deletes imported code: src/pages/earn/pro.tsx -> src/features/pro/components/ProSidebar.tsx
+ledger deletes imported code: src/layouts/Default.tsx -> src/features/pro/components/ProUpgradeOverlay.tsx
+ledger deletes imported code: src/features/announcements/components/ProListingsAnnouncement.tsx -> src/features/pro/components/RandomArrow.tsx
+ledger deletes imported code: src/features/home/components/SideBar.tsx -> src/features/pro/state/pro-upgrade-flow.ts
+ledger deletes imported code: src/pages/branding/index.tsx -> src/features/stfun/components/branding/BrandingColorSwatch.tsx
+ledger deletes imported code: src/pages/branding/index.tsx -> src/features/stfun/components/branding/BrandingSTLogo.tsx
+ledger deletes imported code: src/pages/branding/index.tsx -> src/features/stfun/components/branding/BrandingSectionHeader.tsx
+ledger deletes imported code: src/pages/branding/index.tsx -> src/features/stfun/components/branding/BrandingTypeSample.tsx
+ledger deletes imported code: src/pages/branding/index.tsx -> src/features/stfun/components/branding/brandConstants.ts
+ledger deletes imported code: src/pages/fast-track.tsx -> src/features/stfun/components/common/FastTrackContainer.tsx
+ledger deletes imported code: src/pages/_app.tsx -> src/features/stfun/components/common/Footer.tsx
+ledger deletes imported code: src/pages/_app.tsx -> src/features/stfun/components/common/Header.tsx
+ledger deletes imported code: src/pages/collaborate.tsx -> src/features/stfun/components/common/HeroContainer.tsx
+ledger deletes imported code: src/pages/projects.tsx -> src/features/stfun/components/common/HeroContainer.tsx
+ledger deletes imported code: src/features/home/components/StartHereRail.tsx -> src/features/stfun/components/daybreak/DaybreakBountyCard.tsx
+ledger deletes imported code: src/features/listings/components/ListingsSection.tsx -> src/features/stfun/components/daybreak/DaybreakBountyCard.tsx
+ledger deletes imported code: src/features/listings/utils/toLiveBounty.ts -> src/features/stfun/components/daybreak/DaybreakBountyCard.tsx
+ledger deletes imported code: src/pages/index.tsx -> src/features/stfun/components/daybreak/DaybreakLanding.tsx
+ledger deletes imported code: src/pages/projects.tsx -> src/features/stfun/components/grids/ProjectsGrid.tsx
+ledger deletes imported code: src/pages/fast-track.tsx -> src/features/stfun/components/sections/Accelerator.tsx
+ledger deletes imported code: src/pages/collaborate.tsx -> src/features/stfun/components/sections/CollabServices.tsx
+ledger deletes imported code: src/pages/fast-track.tsx -> src/features/stfun/components/sections/FastTrackFaq.tsx
+ledger deletes imported code: src/pages/collaborate.tsx -> src/features/stfun/components/sections/LoveRespect.tsx
+ledger deletes imported code: src/features/navbar/components/Header.tsx -> src/features/wallet/components/WalletDrawer.tsx
+ledger deletes imported code: src/features/navbar/components/Header.tsx -> src/features/wallet/queries/fetch-assets.ts
+ledger deletes imported code: src/features/listing-builder/components/AutoGenerate/Dialog.tsx -> src/features/wallet/utils/fetchTokenUSDValue.ts
+ledger deletes imported code: src/features/listing-builder/components/Form/Boost/queries.ts -> src/features/wallet/utils/fetchTokenUSDValue.ts
+ledger deletes imported code: src/features/listing-builder/utils/listingTransformationPipe.ts -> src/features/wallet/utils/fetchTokenUSDValue.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/grants/update-application-status.ts -> src/features/wallet/utils/fetchTokenUSDValue.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/listings/verify-external-payment.ts -> src/features/wallet/utils/fetchTokenUSDValue.ts
+ledger deletes imported code: src/pages/api/sponsor-dashboard/submission/add-payment.ts -> src/features/wallet/utils/fetchTokenUSDValue.ts
+ledger deletes imported code: src/features/sponsor-dashboard/components/Submissions/PayoutButton.tsx -> src/features/wallet/utils/getConnection.ts
+ledger deletes imported code: src/features/sponsor-dashboard/utils/paymentRPCValidation.ts -> src/features/wallet/utils/getConnection.ts
+FAIL: 213 problem(s)
