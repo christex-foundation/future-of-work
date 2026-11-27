@@ -177,7 +177,7 @@ gitGraph
   commit id: "Next 16.4.6 ourselves"
   commit id: "strip A, B, C"
   commit id: "src/sldtp courses"
-  commit id: "auth, 4 roles, TOTP"
+  commit id: "Privy email OTP"
   commit id: "RC 1" tag: "sldtp/rc-1"
   commit id: "UAT fixes"
   commit id: "beta" tag: "sldtp/beta-1"

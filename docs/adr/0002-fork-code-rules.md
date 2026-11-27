@@ -11,7 +11,7 @@ Numbered 0002 to match decision D6 in the fork strategy. ADR-0001 is not a file 
 
 ## Context
 
-`christex-foundation/future-of-work` is a public fork of `SuperteamDAO/earn` (GNU AGPL-3.0). After the one-time upstream sync, upstream is an advisory feed, not a branch we merge. Product code will diverge quickly in the same modules upstream keeps editing (listings, sponsor dashboard, API routes, auth).
+`christex-foundation/future-of-work` is a public fork of `SuperteamDAO/earn` (GNU AGPL-3.0). We do not merge upstream. Upstream is an advisory feed: weekly triage, hand-ported security fixes, cherry-picked features. Product code will diverge quickly in the same modules upstream keeps editing (listings, sponsor dashboard, API routes, auth).
 
 Divergence stays cheap only if new code is isolated, edits to upstream files are marked, and every deletion is recorded where the triage script can see it.
 
@@ -39,7 +39,7 @@ Every edit to a file that came from upstream is wrapped so it can be grepped:
 
 A one-line change uses a trailing comment: `// SLDTP(ADR-0002): reason`.
 
-The number inside the marker is the ADR for that edit. This ADR is the standing rule. A later decision, such as the session replacement, takes the next number. `ADR-0003` in the example is that later number, not this document.
+The number inside the marker is the ADR for that edit. This ADR is the standing rule.
 
 ### Fixed hook points
 
