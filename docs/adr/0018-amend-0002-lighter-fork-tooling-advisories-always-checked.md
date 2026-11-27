@@ -76,7 +76,7 @@ Option 2. The ADR-0002 text changes as follows. Each rule not mentioned here sta
 
 ### Audit findings on this lockfile (27 Nov 2026)
 
-`pnpm audit --prod --audit-level=high` exits 1. It reports 8 critical and 113 high advisory rows. Critical packages: `next` (five advisories, including GHSA-p293-qw3h-jr36, GHSA-2xp9-vwfh-vxw4, GHSA-vcvr-r3jv-pc5j, and a further critical through 16.4.0), `next-auth` (GHSA-7rqj-j65f-68wh), `protobufjs`, and `shell-quote` (GHSA-w7jw-789q-3m8p, reached through `@privy-io/react-auth`). High rows include `next` again, `axios` (13), `brace-expansion` (10), `minimatch` (9), `fast-uri` (8), `protobufjs` (5), `mariadb` (4), and `sharp` (3).
+`pnpm audit --prod --audit-level=high` exits 1. Its summary line is 8 critical, 133 high, 202 moderate, and 37 low. Critical packages: `next` (including GHSA-p293-qw3h-jr36, GHSA-2xp9-vwfh-vxw4, GHSA-vcvr-r3jv-pc5j, and a further critical through 16.4.0), `next-auth` (GHSA-7rqj-j65f-68wh), `protobufjs`, and `shell-quote` (GHSA-w7jw-789q-3m8p, reached through `@privy-io/react-auth`). High rows include `next` again, `axios`, `brace-expansion`, `minimatch`, `fast-uri`, `protobufjs`, `mariadb`, and `sharp`.
 
 `osv-scanner --lockfile pnpm-lock.yaml` (v2.7.1) exits 1. It reports 87 packages affected by 395 known vulnerabilities: 10 critical, 145 high, 205 medium, 29 low, 6 unknown. It says 393 can be fixed.
 
