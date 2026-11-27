@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import IsoDomPurify from 'isomorphic-dompurify';
+import IsoDomPurify, { type Config } from 'isomorphic-dompurify';
 import posthog from 'posthog-js';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -27,12 +27,13 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useUser } from '@/store/user';
 
-const hardDomPurify = (dirty: string | Node, cfg?: IsoDomPurify.Config) =>
+const hardDomPurify = (dirty: string | Node, cfg?: Config): string =>
   IsoDomPurify.sanitize(dirty, {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
     ...cfg,
-  });
+    RETURN_TRUSTED_TYPE: false,
+  }) as string;
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -130,7 +131,7 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
       >
         {children}
       </DialogTrigger>
-      <DialogContent className="gap-2  border border-[#E6DCC9] bg-[#FBF7EF] px-0  sm:max-w-xl">
+      <DialogContent className="gap-2 border border-[#E6DCC9] bg-[#FBF7EF] px-0 sm:max-w-xl">
         <DialogHeader className="border-b border-dashed border-[#E6DCC9]/20 px-6 pb-4">
           <DialogTitle className="font-serif text-lg font-semibold text-[#221A14]">
             Get In Touch With Us
@@ -159,7 +160,7 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
                       <Input
                         type="email"
                         placeholder="Your email"
-                        className=" border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
                         {...field}
                       />
                     </FormControl>
@@ -180,7 +181,7 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
                   <FormControl>
                     <Input
                       placeholder="Add a short subject line"
-                      className=" border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      className="border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
                       {...field}
                     />
                   </FormControl>
@@ -200,7 +201,7 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
                   <FormControl>
                     <Textarea
                       placeholder="Write a short description on how we can help"
-                      className="min-h-[150px]  border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      className="min-h-[150px] border border-[#E6DCC9] bg-[#FBF7EF] text-[#221A14] placeholder:text-[#5C5147]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
                       {...field}
                     />
                   </FormControl>
@@ -211,7 +212,7 @@ export function SupportFormDialog({ children, onSubmit }: ModalFormProps) {
 
             <Button
               type="submit"
-              className="w-full  border border-[#E6DCC9] bg-[#C4502E] text-[#221A14]  hover:bg-[#C4502E] "
+              className="w-full border border-[#E6DCC9] bg-[#C4502E] text-[#221A14] hover:bg-[#C4502E]"
               disabled={isSubmitting}
             >
               {isSubmitting ? 'Sending...' : 'Continue →'}

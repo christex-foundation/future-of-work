@@ -1,0 +1,193 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (c) 2026 Christex Foundation
+"""List upstream (SuperteamDAO/earn) changes since our last triage and classify them.
+
+Lives at scripts/sldtp/upstream-triage.py. See docs/fork-and-upstream-sync.md.
+Reads:
+  .sldtp/upstream-baseline   one line: last upstream SHA fully triaged
+  .sldtp/deleted-paths       deletion ledger, one glob per line ('#' comments), e.g. src/features/credits/**
+                             a line "old/glob/** -> src/sldtp/new/" records a MOVE: upstream edits to the old
+                             path are still reported (class MOVED) because the code lives on under src/sldtp/
+  .sldtp/upstream-log.tsv    decisions, tab-separated: upstream_sha, decision, our_sha or -, who, note
+Prints a markdown table, one row per upstream first-parent commit (usually one PR merge).
+Exit 1 with --check if a commit touching kept paths has no decision in upstream-log.tsv.
+Exit 1 with --check-imported if a ledger path still exists and another file imports it.
+"""
+import argparse, fnmatch, os, re, subprocess, sys
+
+SEC = re.compile(r"\b(security|secur|vuln|cve-|ghsa-|xss|csrf|ssrf|idor|injection|sanitiz|escape|authn|authz|authori[sz]ation|permission|"
+                 r"rate.?limit|ratelimit|exploit|leak|bypass|unauthori[sz]ed|owner check|replay|harden|security headers|"
+                 r"txn.validation)\b", re.I)
+FIX = re.compile(r"\b(fix|bug|hotfix|patch|crash|broken|regression|revert)\b", re.I)
+DEP_FILES = {"package.json", "pnpm-lock.yaml"}
+CLASS_ORDER = {
+    "SECURITY-DEPS": 0,
+    "SECURITY-DELETED": 1,
+    "SECURITY": 2,
+    "DEPS": 3,
+    "BUGFIX-KEPT": 4,
+    "MOVED": 5,
+    "FEATURE-KEPT": 6,
+    "IRRELEVANT": 7,
+}
+
+def git(*a):
+    return subprocess.run(["git", *a], check=True, capture_output=True, text=True).stdout
+
+def git_ok(*a):
+    result = subprocess.run(["git", *a], check=False, capture_output=True, text=True)
+    if result.returncode not in (0, 1):
+        result.check_returncode()
+    return result.stdout
+
+def module_specifiers(path):
+    rel = path[4:] if path.startswith("src/") else path
+    noext = re.sub(r"\.(tsx|ts|jsx|js)$", "", rel)
+    specs = [f"@/{noext}"]
+    if noext.endswith("/index"):
+        specs.append(f"@/{noext[: -len('/index')]}")
+    return specs
+
+def importer_of(path, rev):
+    """Return another file that imports path, or None.
+
+    The specifier must end at a quote, so ListingTable does not match
+    ListingTableSkeleton.
+    """
+    for spec in module_specifiers(path):
+        out = git_ok("grep", "-F", "-n", spec, rev, "--", "*.ts", "*.tsx")
+        for line in out.splitlines():
+            parts = line.split(":", 2)
+            if len(parts) < 3:
+                continue
+            file, content = parts[1], parts[2]
+            if file == path:
+                continue
+            start = 0
+            while True:
+                idx = content.find(spec, start)
+                if idx < 0:
+                    break
+                after = content[idx + len(spec) : idx + len(spec) + 1]
+                if after in ("'", '"', "`"):
+                    return file
+                start = idx + 1
+    return None
+
+def check_imported(ledger, rev):
+    """Fail when a ledger entry still exists and kept code imports it."""
+    globs = [e for e in read_lines(ledger) if "->" not in e]
+    files = [f for f in git("ls-tree", "-r", "--name-only", rev).split("\n") if f]
+    problems = []
+    for glob in globs:
+        for path in files:
+            if not deleted(path, [glob]):
+                continue
+            importer = importer_of(path, rev)
+            if importer:
+                problems.append(f"{glob} matches {path}, imported from {importer}")
+    if problems:
+        print("deleted-paths entries still exist and are imported:", file=sys.stderr)
+        for problem in problems:
+            print(problem, file=sys.stderr)
+        return 1
+    print(f"ledger import check ok ({len(globs)} deletion entries)")
+    return 0
+
+def read_lines(p):
+    if not os.path.exists(p):
+        return []
+    return [l.strip() for l in open(p) if l.strip() and not l.lstrip().startswith("#")]
+
+def deleted(path, globs):
+    for g in globs:
+        g2 = g.rstrip("/")
+        if fnmatch.fnmatch(path, g) or path == g2 or path.startswith(g2.rstrip("*").rstrip("/") + "/"):
+            return True
+    return False
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--upstream", default="upstream/main")
+    ap.add_argument("--ours", default="HEAD")
+    ap.add_argument("--base", help="override .sldtp/upstream-baseline")
+    ap.add_argument("--ledger", default=".sldtp/deleted-paths")
+    ap.add_argument("--log", default=".sldtp/upstream-log.tsv")
+    ap.add_argument("--all", action="store_true", help="also list IRRELEVANT rows")
+    ap.add_argument("--check", action="store_true", help="exit 1 on untriaged commits touching kept paths")
+    ap.add_argument("--check-imported", action="store_true",
+                    help="exit 1 if a ledger path still exists and is imported")
+    a = ap.parse_args()
+
+    if a.check_imported:
+        if check_imported(a.ledger, a.ours):
+            sys.exit(1)
+        if not a.check:
+            return
+
+    base = a.base or (read_lines(".sldtp/upstream-baseline") or [None])[0]
+    if not base:
+        sys.exit("no baseline: pass --base or write .sldtp/upstream-baseline")
+    entries = read_lines(a.ledger)
+    globs = [e for e in entries if "->" not in e]
+    moved = [e.split("->")[0].strip() for e in entries if "->" in e]
+    decided = {l.split("\t")[0][:9] for l in read_lines(a.log)}
+    ours = set(git("ls-tree", "-r", "--name-only", a.ours).split("\n"))
+
+    shas = git("rev-list", "--first-parent", "--reverse", f"{base}..{a.upstream}").split()
+    rows, untriaged, counts = [], 0, {}
+    for sha in shas:
+        subj = git("log", "-1", "--format=%s", sha).strip()
+        body = git("log", "-1", "--format=%b", sha)
+        date = git("log", "-1", "--format=%ad", "--date=short", sha).strip()
+        files = [f for f in git("diff", "--name-only", f"{sha}^1", sha).split("\n") if f]
+        kept = [f for f in files if f in ours and not deleted(f, globs)]
+        mov = [f for f in files if deleted(f, moved)]
+        deps = [f for f in files if f in DEP_FILES]
+        text = subj + " " + body
+        sec = SEC.search(text)
+        if sec and deps:
+            cls = "SECURITY-DEPS"       # check every named package against our lockfile
+        elif sec and kept:
+            cls = "SECURITY"
+        elif sec and not mov:
+            # not in our tree: a deleted path, or a new upstream path we never shipped
+            cls = "SECURITY-DELETED"
+        elif not kept and not deps and not mov:
+            cls = "IRRELEVANT"          # only deleted paths or brand-new upstream paths
+        elif sec:
+            cls = "SECURITY"
+        elif not kept and mov:
+            cls = "MOVED"               # touches code we moved into src/sldtp/: port by hand if it matters
+        elif deps and not [f for f in kept if f not in DEP_FILES]:
+            cls = "DEPS"
+        elif FIX.search(text):
+            cls = "BUGFIX-KEPT"
+        else:
+            cls = "FEATURE-KEPT"
+        counts[cls] = counts.get(cls, 0) + 1
+        short = sha[:9]
+        # SECURITY, SECURITY-DEPS and SECURITY-DELETED are never auto-skipped.
+        auto_skip = cls == "IRRELEVANT"
+        status = "decided" if short in decided else ("-" if auto_skip else "TODO")
+        if status == "TODO":
+            untriaged += 1
+        if not auto_skip or a.all:
+            line = (f"| {short} | {date} | {cls} | {status} | {len(kept)}/{len(files)} | "
+                    f"{subj[:70].replace('|','/')} | {', '.join((kept or mov)[:3])}{' …' if len(kept or mov)>3 else ''} |")
+            rows.append((CLASS_ORDER.get(cls, 9), date, short, line))
+    order = ["SECURITY-DEPS", "SECURITY-DELETED", "SECURITY", "DEPS", "BUGFIX-KEPT", "MOVED", "FEATURE-KEPT", "IRRELEVANT"]
+    summary = ", ".join(f"{k} {counts[k]}" for k in order if k in counts)
+    print(f"Upstream {base[:9]}..{git('rev-parse','--short=9',a.upstream).strip()}: {len(shas)} first-parent commits; "
+          + summary + f"; untriaged {untriaged}\n")
+    print("SECURITY-DEPS and SECURITY-DELETED are listed first and are never auto-skipped. "
+          "SECURITY-DELETED means the change is not in our tree (a deleted path, or a new upstream path).\n")
+    print("| upstream | date | class | status | kept/all files | subject | kept files |")
+    print("| --- | --- | --- | --- | --- | --- | --- |")
+    print("\n".join(line for _, _, _, line in sorted(rows)))
+    if a.check and untriaged:
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
