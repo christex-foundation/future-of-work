@@ -18,6 +18,7 @@
 This repository is a public fork of [SuperteamDAO/earn](https://github.com/SuperteamDAO/earn). It is licensed under the GNU AGPL version 3. The terms are the verbatim [`LICENSE`](LICENSE) file. Christex Foundation maintains the fork as the SLDTP platform. The integration line is `main`: the Daybreak work, formerly the `redesign` branch.
 
 - [Fork and upstream-sync strategy](docs/fork-and-upstream-sync.md)
+- [Upstream leverage review](docs/upstream-leverage-review.md)
 - [ADR 0002: Fork code rules](docs/adr/0002-fork-code-rules.md)
 
 The setup notes below are the upstream Earn instructions and still describe this tree.

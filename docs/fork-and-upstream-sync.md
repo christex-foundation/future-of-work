@@ -1,6 +1,6 @@
 # SLDTP platform: fork and upstream-sync strategy
 
-**Status:** D2–D10 accepted. Approved by David Ogoo, November 2026. D1, upstream intake for the current `main`, is pending his choice.
+**Status:** Accepted. Approved by David Ogoo, 27 November 2026. D1 is option (b): no merge of upstream.
 **Repo:** `christex-foundation/future-of-work`. It is a public GitHub fork of `SuperteamDAO/earn`, licensed under the GNU AGPL version 3 (the verbatim `LICENSE` file). GitHub records `fork: true` and `parent: SuperteamDAO/earn`.
 **Supersedes:** the upstream-sync section of the internal no-Moodle note. This document fills the FND-04, FND-11, FND-12, and GAP-17 placeholders in the engineering plan. Those planning notes are not in this repository.
 **Code rules:** [ADR 0002](adr/0002-fork-code-rules.md).
@@ -11,7 +11,7 @@ This change is the strategy, the triage script, and a commented deletion ledger.
 
 The integration line is `main`. It is the Daybreak / Future of Work UI that used to be `redesign`, fast-forwarded onto `main` on 27 November 2026 (`97bfeeb8e`). That tip is 49 commits after the fork point.
 
-Upstream intake for this `main` is **pending** (D1). David chooses either (a) one full merge of `6544345c2`, reviewed by the Daybreak author, or (b) no merge, and upstream security fixes only through the weekly triage. After that choice, treat `SuperteamDAO/earn` as an **advisory feed**, not a branch we merge. From the day the strip starts we are a hard fork, and we should say so. We stay *watched*: a script lists every upstream change that touches code we still ship. One owner triages that list every week. Security fixes are **ported by hand** in a reviewed PR, with a test. Upstream features are never taken. Everything we build lives in `src/sldtp/`. Every deletion is recorded in a ledger the script reads. The database schema is ours from the first migration.
+Upstream intake for this `main` is **no merge** (D1, option (b), David Ogoo, 27 November 2026). Treat `SuperteamDAO/earn` as an **advisory feed**, not a branch we merge. From the day the strip starts we are a hard fork, and we should say so. We stay *watched*: a script lists every upstream change that touches code we still ship. The triage owner classifies each change. **Security ports are must-do.** Bugfixes in code we still ship, and features worth leveraging for SLDTP, are ported by hand when they serve the LMS and jobs platform. The tech lead decides those. Everything we build lives in `src/sldtp/`. Every deletion is recorded in a ledger the script reads. The database schema is ours from the first migration. The first pass over `4b9492b9d..6544345c2` is [the leverage review](upstream-leverage-review.md).
 
 ## 1. Facts this rests on
 
@@ -71,7 +71,7 @@ Versions a full merge would bring, against current `main`:
 | `typescript` | 5.8.3 | 7.0.2 |
 | Class names | `clsx` ^2.1.1 and `tailwind-merge` ^3.4.0, wrapped in `src/utils/cn.ts` | package `cn` ^0.4.0, `export { cn } from 'cn'` (upstream `f48e297a8`) |
 
-Next 16.3.8 is still inside the advisories in the facts table. The target stays 16.4.5 or later, as its own PR, and only if option (a) is taken.
+Next 16.3.8 is still inside the advisories in the facts table. We do not take it. The target stays 16.4.5 or later, in our own PR. See the leverage review.
 
 The lockfile-only result describes a merge into `3da3094d2`. It does not describe current `main`.
 
@@ -120,10 +120,10 @@ Conflicts on current `main`:
 
 1. **"After the strip, upstream will mostly touch code we deleted" is false for us.** Upstream's activity is concentrated in listings, sponsor dashboard, API routes, and auth. We keep exactly those and rewrite them into opportunities, employer review, and four-role auth. So the kept files will diverge **fast**, not slowly. Cherry-picks will rarely apply cleanly after week 4. Plan for **porting by hand**.
 2. **"Weekly security cherry-picks" overstates the inflow.** At upstream's current pace we should expect about **one relevant security fix a month**. Keep the weekly triage, because it is cheap and automated. Ports themselves are event-driven: a security fix is ported the same week, and bug fixes go in a monthly batch.
-3. **"Rebase the fork onto upstream and force-push `main`" buys nothing.** A merge needs no force-push, and `3da3094d2` stays reachable. On current `main` that merge is 36 paths, not one file (section 1.1). If D1 is option (a), **merge, don't rebase.**
+3. **"Rebase the fork onto upstream and force-push `main`" buys nothing.** D1 does not merge and does not rebase. On current `main` a merge would have been 36 paths, not one file (section 1.1). That is why it was refused. `3da3094d2` stays reachable.
 4. **A pushed `upstream-main` mirror branch is a moving part we don't need.** It needs its own protection, and it invites GitHub's **"Sync fork"** button, which merges upstream into a branch in one click. The remote-tracking ref `upstream/main` plus a committed baseline file (`.sldtp/upstream-baseline`) is enough. Use the GitHub compare URL for browsing.
 5. **The GitHub fork link itself is a risk the plan missed.** A PR created from the GitHub UI or `gh pr create` on a fork can default its base to `SuperteamDAO/earn`. One careless click would publish an SLDTP PR, with its description and client context, to Superteam's repo. Detach the fork (decision D4) or at least set `gh repo set-default christex-foundation/future-of-work` on every clone.
-6. **Do the Next.js upgrade to 16.4.6 as its own PR, not as an extra bump inside the conflict resolution.** Option (a) already brings Next 16.3.8, React 19.3.0, and TypeScript 7.0.2, because those commits are inside `6544345c2`. Review that set with the 36 conflicts. 16.4.6, which clears the advisories above, stays a follow-up. Option (b) does not take upstream's versions at all. The old "diff is four MariaDB files" check was for a merge into `3da3094d2` only.
+6. **Do the Next.js upgrade to 16.4.6 as our own PR.** D1 does not take upstream's Next 16.3.8, React 19.3.0, or TypeScript 7.0.2. Those versions ride inside `6ce3fa6fc`, which also conflicts with Daybreak. 16.3.8 is still inside the advisories above. The old "diff is four MariaDB files" check was for a merge into `3da3094d2` only.
 7. **"Take upstream schema changes by hand" is right, and it is incomplete.** Upstream will never give us a migration, so every upstream model change we want is a migration we write. Split the schema into files (section 7.4) so our models never sit in the same file as theirs.
 
 ## 3. Branch and remote model
@@ -149,8 +149,7 @@ flowchart LR
     P["production<br/>deployed from a tag<br/>footer 'Source' -> tag"]
   end
   UM -- "git fetch only<br/>(push URL disabled)" --> D
-  UM -. "option (a), pending<br/>merge 6544345c2" .-> M
-  D -- "SECURITY / BUGFIX-KEPT rows" --> UP
+  D -- "SECURITY must-do; features and bugfixes the tech lead accepts" --> UP
   UP -- "PR, human review" --> M
   FB -- "PR, human review" --> M
   D -- "records decision" --> L
@@ -172,34 +171,31 @@ gitGraph
   commit id: "48 Daybreak commits, now main"
   checkout upstream
   commit id: "6544345 on 25 Nov"
-  checkout ours-main
-  merge upstream id: "option a, pending" tag: "sldtp/sync-0"
-  commit id: "Next 16.4.6 + audit"
-  commit id: "strip A, B, C"
-  commit id: "src/sldtp courses"
-  checkout upstream
   commit id: "upstream security PR"
   checkout ours-main
   cherry-pick id: "upstream security PR"
+  commit id: "Next 16.4.6 ourselves"
+  commit id: "strip A, B, C"
+  commit id: "src/sldtp courses"
   commit id: "auth, 4 roles, TOTP"
   commit id: "RC 1" tag: "sldtp/rc-1"
   commit id: "UAT fixes"
   commit id: "beta" tag: "sldtp/beta-1"
 ```
 
-The first diagram is the branch and remote model. The second is the git timeline for option (a). The merge node is not chosen yet. Option (b) leaves `ours-main` on the Daybreak commits and ports security fixes by hand, with no `sldtp/sync-0`. In the flowchart node, `&lt;` is the mermaid HTML label for `<`, so the rendered text is `port/upstream-<sha>`. The branch name is `port/upstream-<sha9>`.
+The first diagram is the branch and remote model. Upstream is fetch-only. There is no merge into `main`. The second diagram is that history: Daybreak stays on `ours-main`, and a security fix is ported by hand. There is no `sldtp/sync-0`. In the flowchart node, `&lt;` is the mermaid HTML label for `<`, so the rendered text is `port/upstream-<sha>`. The branch name is `port/upstream-<sha9>`.
 
-`main` has no branch protection today (`protected: false`, 27 November 2026). Turn it on before any further work lands: pull request required, one approving review (two for `prisma/`, auth, `next.config.ts`, and `.sldtp/`), required checks once they exist, no force-push, no deletion. Allow merge commits so option (a), if chosen, is not squashed. Squash stays the default for every other PR. This recommendation is not applied in this change.
+`main` has no branch protection today (`protected: false`, 27 November 2026). Turn it on before any further work lands: pull request required, one approving review (two for `prisma/`, auth, `next.config.ts`, and `.sldtp/`), required checks once they exist, no force-push, no deletion. Squash is the default. This recommendation is not applied in this change.
 
 | Ref | Rule |
 | --- | --- |
 | remote `upstream` = `https://github.com/SuperteamDAO/earn.git` | **Fetch only.** `git remote set-url --push upstream DISABLED` on every clone, CI runner, and agent box |
-| `main` | The only long-lived branch. It is the Daybreak line (`97bfeeb8e`, formerly `redesign`). **Protection is not on.** The rule to set: PR required, 1 approving review (2 for `prisma/`, auth, `next.config.ts`, `.sldtp/`), required checks green once CI exists, no force-push, no deletion. **Merge commits allowed, so option (a) is not squashed.** Squash is the default for everything else |
+| `main` | The only long-lived branch. It is the Daybreak line (`97bfeeb8e`, formerly `redesign`). **Protection is not on.** The rule to set: PR required, 1 approving review (2 for `prisma/`, auth, `next.config.ts`, `.sldtp/`), required checks green once CI exists, no force-push, no deletion. Squash is the default. D1 does not add a merge commit |
 | `feature/<id>-…`, `strip/A-…`, `strip/B-…`, `strip/C-…` | Short-lived PR branches, one backlog ID each |
 | `port/upstream-<sha9>` | One upstream change ported per PR. The PR body links the upstream commit or PR and its triage class |
 | `release/<tag>` | Only if a hotfix is needed on what is deployed while `main` has moved on. Branch from the tag, fix, tag `…-1`, merge back to `main` |
-| Tags `sldtp/sync-0`, `sldtp/rc-N`, `sldtp/beta-1`, `sldtp/vX.Y` | Annotated and immutable. **Production is only ever installed from a tag.** The footer Source link points at that tag |
-| `.sldtp/upstream-baseline` | Full SHA of the last upstream commit we triaged. The weekly triage PR updates it. Not created yet |
+| Tags `sldtp/rc-N`, `sldtp/beta-1`, `sldtp/vX.Y` | Annotated and immutable. **Production is only ever installed from a tag.** The footer Source link points at that tag. There is no `sldtp/sync-0` |
+| `.sldtp/upstream-baseline` | Full SHA of the last upstream commit we triaged. D1 sets it to the fork point `4b9492b9d`, because nothing upstream has been triaged. The weekly triage PR advances it |
 | `.sldtp/deleted-paths` | Deletion ledger (section 7.3). Commented template until the first strip |
 | `.sldtp/upstream-log.tsv` | One row per upstream change we decided on: `upstream_sha`, `decision`, `our_sha`, `who`, `note`, separated by tabs |
 
@@ -207,32 +203,17 @@ Retire the old names `sldtp/prod` (use tags) and `sldtp/security` (use `port/ups
 
 `redesign` is the old name of this `main`. `dev` is an ancestor (section 1.1). Neither is a second integration line.
 
-## 4. Upstream intake (FND-04) is pending
+## 4. Upstream intake (FND-04): no merge
 
-D1 is not chosen. Current `main` is already the Daybreak line, so the lockfile-only window closed when that work landed. The strip has not started. The conflict set, if we merge, is the 36 paths in section 1.1.
+D1 is option (b). Approved by David Ogoo, 27 November 2026. Do not merge `6544345c2`. The 36-path table in section 1.1 is why: a full merge collides with Daybreak on the schema (`Sponsors.socials` vs `Sponsors.location`), the home listing filter, and nav, listing, and dashboard UI, and it would also take Next 16.3.8, React 19.3.0, TypeScript 7.0.2, and `clsx` / `tailwind-merge` → `cn`.
 
-About 4 upstream changes land every week, so waiting past this month widens the set. That is context for the choice. It is not a decision.
+What we do instead:
 
-### Option (a): one full merge
-
-One merge commit of `6544345c2` into `main`, reviewed by the Daybreak author.
-
-- The conflicts are the 36 paths, not `pnpm-lock.yaml` alone. Do not `git checkout --theirs` the lockfile and call the merge done.
-- Keep our `Sponsors.socials` and the homepage listing filter unless the reviewer deliberately takes upstream's `Sponsors.location` and the `eng` / `sco` home filter.
-- The merge also brings Next 16.3.8, React 19.3.0, TypeScript 7.0.2, and `clsx` / `tailwind-merge` → `cn`. Those need the same review.
-- Next 16.4.6 stays a follow-up PR (FND-05). 16.3.8 is still inside the advisories in section 1.
-- Merge with **"Create a merge commit"**. A squash drops the upstream parent. Then tag `sldtp/sync-0`.
-- Record `.sldtp/upstream-baseline` as `6544345c2`. Stage that file only, so the commit does not rewrite `.sldtp/deleted-paths`.
-
-Verification for (a) is not "the diff against upstream is the MariaDB files". It is: the 36 conflicts resolved, `pnpm install --frozen-lockfile`, `prisma generate`, `tsc --noEmit`, `pnpm lint`, `next build`, and a smoke test of the home page, one listing page, and sign-in on a throwaway local MariaDB. `prisma db push` only against that throwaway database. `git merge-base HEAD upstream/main` returns `6544345c2`.
-
-Rollback, if (a) is merged and no strip PR has landed: `git revert -m 1 <merge-sha>` through a PR. A hard reset of `main` to the pre-sync tag is a force-push and needs David Ogoo's explicit OK. After the strip has started, fix forward.
-
-### Option (b): no merge
-
-No merge of upstream. Set `.sldtp/upstream-baseline` to `4b9492b9d`. Port the six SECURITY commits in section 1 by hand, through the weekly triage (section 6): #1408, #1410, #1416, #1446, `af39bd178`, and #1465. Do not take upstream's lockfile, schema, or framework bumps. There is no `sldtp/sync-0`.
-
-Current `main` is the August Daybreak tree, which still does not contain those upstream fixes. Option (b) ports them onto that tree. It does not rewind `main` to 8 June.
+- `.sldtp/upstream-baseline` is the fork point `4b9492b9d4a2cdc2eb3b87e3cb03e78dd1011e2b`. Nothing upstream is triaged yet.
+- Each week the triage script classifies upstream changes since that baseline. Security is ported the same week. Bugfixes and features are ported by hand only when the tech lead says they serve SLDTP. The first list is [the leverage review](upstream-leverage-review.md).
+- Try `git cherry-pick -x` when the files are unchanged since the fork. If Daybreak touched the file, re-implement the fix and add `Ported-from:`.
+- Do not take upstream's lockfile, schema, or framework bump.
+- There is no `sldtp/sync-0`.
 
 ### Historical trial, not the procedure for this `main`
 
@@ -259,7 +240,7 @@ git merge --no-ff 6544345c26cbd1c16ab99a659b2543dabb6c4a5a
 
 ### Recommendation
 
-**D from the first strip PR (about 11 January), with C as the mechanism when it applies cleanly.** Whichever way D1 goes, there is no second full merge of upstream. Option (a) stops after `sldtp/sync-0`. Option (b) never starts one.
+**D from now, with C as the first attempt for each port.** There is no full merge of upstream, including no `sldtp/sync-0`. Security is ported when it touches code we still ship. A bugfix or a feature is ported only when the tech lead judges that it serves the LMS and jobs platform.
 
 **When to stop watching (switch D → E).** Review at the quarterly fork review (GAP-17). Stop when **any** of the following is true:
 
@@ -274,17 +255,17 @@ Even after that switch, **someone keeps reading upstream PRs titled security or 
 ### Triage: cadence, owner, classification
 
 - **When:** every Monday, after the scheduled drift job (07:00 Freetown, UTC+0) has produced the report. FND-12 covers a weekly triage. The drift job itself is later work (section 8). It is not in this change.
-- **Who:** the triage owner decides. The area owner ports. An AI agent may pre-fill the decisions (section 10). The backup owner is named outside this document.
+- **Who:** the triage owner classifies the rows. **Security is must-do.** The tech lead decides which bugfixes and which features to port. The area owner ports. An AI agent may pre-fill the notes (section 10). The backup owner is named outside this document.
 - **Output:** one PR, "Upstream triage week N". It appends rows to `.sldtp/upstream-log.tsv` and moves `.sldtp/upstream-baseline` to the SHA triaged. That PR is the audit trail. No issue tracker is needed (issues are disabled; see R13).
 
 | Class (from the script) | Meaning | Default decision | Deadline |
 | --- | --- | --- | --- |
-| **SECURITY** | Touches a kept path, and the message matches security, auth, rate-limit, sanitise, IDOR, and similar | **Port.** Reproduce on our code first. If it does not reproduce, record `not-affected` with the reason | Same week. Within 48 hours if it is exploitable without login |
-| **BUGFIX-KEPT** | Touches a kept path and looks like a fix | Port if the bug reproduces on our code; otherwise `skip` | Monthly batch |
-| **DEPS** | Only `package.json` or the lockfile | **Information only.** Our dependency policy (section 7.6) decides | Not applicable |
-| **FEATURE-KEPT** | Touches a kept path but is a feature | `skip`. Read it for ideas only | Not applicable |
-| **MOVED** | Touches upstream code we moved into `src/sldtp/` | Human look: is it a fix that applies to our copy? | Same as SECURITY or BUGFIX |
-| **IRRELEVANT** | Only deleted paths or brand-new upstream paths | Auto-`skip`. Never resurrect deleted code | Not applicable |
+| **SECURITY** | Security. Touches a kept path, and the message matches security, auth, rate-limit, sanitise, IDOR, and similar | **Must-do.** Reproduce on our code first. Port it, or record `not-affected` with the reason. The tech lead does not waive a kept-path security fix | Same week. Within 48 hours if it is exploitable without login |
+| **BUGFIX-KEPT** | Bugfix in kept code | Port by hand when it serves SLDTP. **The tech lead decides.** Otherwise `skip` | When accepted. Otherwise the monthly review |
+| **DEPS** | Only `package.json` or the lockfile | **Information only.** Our dependency policy (section 7.6) decides. We do not take upstream's versions | Not applicable |
+| **FEATURE-KEPT** | Feature worth a look. The script cannot know whether it is worth leveraging | Port by hand when it serves the LMS and jobs platform. **The tech lead decides.** Otherwise `skip` | When accepted |
+| **MOVED** | Touches upstream code we moved into `src/sldtp/` | Human look: is it a fix or a feature that applies to our copy? Same decision rule as SECURITY or BUGFIX-KEPT | Same as the class it would have had |
+| **IRRELEVANT** | Irrelevant. Only deleted paths or brand-new upstream paths | Auto-`skip`. Never resurrect deleted code | Not applicable |
 
 The regex classifier gives a **suggestion, not a verdict**. For example, `#1346 perf/cdn-cache-headers` touched 21 kept files and is not a security fix. The owner overrides it in the log.
 
@@ -305,7 +286,7 @@ python3 scripts/sldtp/upstream-triage.py --all           # include IRRELEVANT ro
 python3 scripts/sldtp/upstream-triage.py --check         # CI mode
 ```
 
-The script exits immediately until `.sldtp/upstream-baseline` exists or `--base` is passed. The baseline is written when D1 is settled (option (a) records `6544345c2`, option (b) records `4b9492b9d`), not by this change. `--check` is for the future drift job. This change does not wire it into CI.
+`.sldtp/upstream-baseline` is the fork point, so a run with no `--base` lists everything upstream since 8 June 2026. `--check` is for the future drift job. This change does not wire it into CI. The classified first pass is [the leverage review](upstream-leverage-review.md).
 
 ## 6. Porting a fix: the steps
 
@@ -377,7 +358,7 @@ Today the repo has no tests. Ports are only safe with three minimum layers, whic
 
 ### 7.6 Dependencies: our own policy, separate from upstream
 
-- From `sldtp/sync-0` on, **`package.json` is ours.** Upstream version bumps are DEPS rows and information only. We never take upstream's lockfile again.
+- **`package.json` is ours.** Upstream version bumps are DEPS rows and information only. We never take upstream's lockfile. Next 16.4.6, and any React or TypeScript move, are our own PRs. See the leverage review.
 - Pin exact versions for `next`, `react`, `react-dom`, `prisma`, `@prisma/client`, `@prisma/adapter-mariadb`, and `mariadb`. Pin the Node LTS version in `.nvmrc` and in `engines`, matching the MoCTI VM.
 - Critical or high advisory in a shipped dependency: patch PR within 48 hours. Minor versions: one batched PR a month. Majors need an ADR and are not taken after 15 February, before beta.
 - Renovate or Dependabot: security updates on, version updates grouped monthly. It never auto-merges.
@@ -416,7 +397,7 @@ The triage owner only routes.
 | --- | --- |
 | Path is in the deletion ledger | **Take ours (stay deleted).** Never restore an upstream file to make a cherry-pick apply |
 | Path is under `src/sldtp/` | Cannot conflict with upstream. If it seems to, the ledger move line is wrong |
-| Kept file we have **not** changed since `sldtp/sync-0` (`git diff sldtp/sync-0 main -- <file>` is empty) | **Take theirs.** It is still upstream code |
+| Kept file we have **not** changed since the fork point (`git diff 4b9492b9d main -- <file>` is empty) | **Try the cherry-pick.** Daybreak did not touch it |
 | Kept file we changed, and the upstream change is a security fix | **Port by hand.** Understand the vulnerability, write the failing test, apply the equivalent fix to our code |
 | Kept file we changed, and the upstream change is a bug fix | Port by hand **only if** the bug reproduces on our code |
 | Kept file we changed, and the upstream change is a feature | Skip |
@@ -463,7 +444,7 @@ New files therefore use `SPDX-License-Identifier: AGPL-3.0-only`, not `AGPL-3.0-
 
 No effort figures here. The sequencing change is:
 
-- FND-04 waits on D1. Option (a) is the 36-path merge into current `main`. Option (b) is security ports only. Neither has been started.
+- FND-04 is decided: no upstream merge. The remaining work is the ports in the leverage review, security first.
 - FND-11 remains the drift job, branch rules, and AGPL hygiene. The triage script is in the repo. The ledger check, the migrations check, `CODEOWNERS`, and the footer are not. Branch protection on `main` is recommended now. The branch has none (section 3).
 - FND-12, weekly triage, stays a priority. Security ports are not optional. Bugfix ports stay a monthly batch.
 - FND-09, the Prisma baseline, also covers splitting the schema folder.
@@ -471,28 +452,29 @@ No effort figures here. The sequencing change is:
 
 ## 13. Decisions
 
-**D2–D10 approved by David Ogoo, November 2026. D1 is pending.**
+**Approved by David Ogoo, 27 November 2026, including D1.**
 
 | # | Decision | Outcome |
 | --- | --- | --- |
-| D1 | Upstream intake for the current `main` | **Pending David's decision.** (a) A one-time full merge of `6544345c2` (36 conflicting paths, including schema `Sponsors.socials` vs `location`, the home listing filter, and nav, listing, and dashboard UI; it also brings Next 16.3.8, React 19.3, TypeScript 7.0.2, and `clsx` / `tailwind-merge` → `cn`), reviewed by the Daybreak author. Or (b) no merge; port upstream security fixes only via weekly triage. Evidence is section 1.1. This change does not pick (a) or (b) |
-| D2 | Merge or rebase, if D1 is option (a) | **Merge.** It needs no force-push and keeps `3da3094d2` reachable. Does not apply if D1 is option (b) |
-| D3 | Steady-state model after D1 | **Hard fork with watched upstream:** weekly scripted triage, hand-ported security fixes, no further full merges. Review the stop-watching triggers quarterly |
-| D4 | Detach the GitHub fork relationship from `SuperteamDAO/earn` | **Yes, after D1 is settled.** Use GitHub's leave-fork-network setting or ask GitHub Support. This prevents accidental PRs to Superteam's repo. `git fetch upstream` keeps working |
+| D1 | Upstream intake for the current `main` | **Option (b). No merge of `6544345c2`.** Port security fixes through the weekly triage, and selectively cherry-pick or hand-port upstream features and patches we can leverage. The tech lead decides features and bugfixes. Security on code we still ship is must-do. The 36-path table in section 1.1 stays as the evidence against a full merge. First list: [upstream leverage review](upstream-leverage-review.md) |
+| D2 | Merge or rebase for a one-time sync | **Not used.** D1 does not merge and does not rebase |
+| D3 | Steady-state model | **Hard fork with watched upstream.** Weekly scripted triage. Security is ported. Features and bugfixes are ported by hand when they serve SLDTP. No full merges. Review the stop-watching triggers quarterly |
+| D4 | Detach the GitHub fork relationship from `SuperteamDAO/earn` | **Yes.** D1 is settled. Use GitHub's leave-fork-network setting or ask GitHub Support. This prevents accidental PRs to Superteam's repo. `git fetch upstream` keeps working |
 | D5 | Who owns weekly triage | **A named triage owner, with a named backup.** Agents pre-fill. Humans decide and sign the log. Names are kept outside this repository |
 | D6 | Code rules: `src/sldtp/`, the seams, the `SLDTP-BEGIN` / `SLDTP-END` markers, adapt-by-move, the deletion ledger | **Yes.** Recorded in [ADR 0002](adr/0002-fork-code-rules.md) |
 | D7 | Database: split schema folder, baseline migration after the strip, `db push` banned outside local throwaway databases | **Yes** |
-| D8 | Dependency policy independent of upstream: exact pins, 48-hour security patches, no majors after 15 February. Next 16.4.6 in its own PR | **Yes.** Option (a) would land Next 16.3.8 inside the merge; 16.4.6 is still separate. Option (b) does not take upstream's versions |
-| D9 | Required CI checks and branch protection as in section 8, with merge commits allowed so option (a) is not squashed | **Yes.** `main` currently has no branch protection. Turn that on. The CI jobs themselves are FND-02 and are not in this change |
+| D8 | Dependency policy independent of upstream: exact pins, 48-hour security patches, no majors after 15 February. Next >= 16.4.5 in our own PR | **Yes.** Do not take upstream's Next 16.3.8, React 19.3.0, or TypeScript 7.0.2. React 19.3 only if the Next PR needs it. TypeScript 7 is not worth it now. Detail is in the leverage review |
+| D9 | Required CI checks and branch protection as in section 8 | **Yes.** `main` currently has no branch protection. Turn that on. Squash is the default. The CI jobs themselves are FND-02 and are not in this change |
 | D10 | Contribute anything back to Superteam (for example a `DATABASE_ADAPTER=mariadb` switch) | **Not before March.** Revisit at the June review. There is little to gain while we diverge |
 
 ## Appendix: files in this repository
 
 - `docs/fork-and-upstream-sync.md` (this document)
+- `docs/upstream-leverage-review.md`
 - `docs/adr/0002-fork-code-rules.md`
 - `scripts/sldtp/upstream-triage.py`
 - `.sldtp/deleted-paths` (commented template; nothing deleted yet)
 
-Not in this repository: rendered diagram images, the sample triage table, `.sldtp/upstream-baseline`, `.sldtp/upstream-log.tsv`, `NOTICE.md`, and CI workflows.
+Not in this repository: rendered diagram images, the sample triage table, `.sldtp/upstream-log.tsv`, `NOTICE.md`, and CI workflows. `.sldtp/upstream-baseline` is the fork point.
 
 **Unverified here:** `next build`, `tsc --noEmit`, and a running app on a merge into current `main` (the earlier trial ran `tsc --noEmit` and `prisma generate` only, and only against `3da3094d2`); whether GitHub currently offers self-service fork detachment for this org; the classifier's precision on future upstream commits. The SPDX finding in section 11, the 36-path conflict set, the dependency versions, and `protected: false` on `main` were checked on 27 November 2026.
