@@ -260,10 +260,12 @@ Even after that switch, **someone keeps reading upstream PRs titled security or 
 
 | Class (from the script) | Meaning | Default decision | Deadline |
 | --- | --- | --- | --- |
+| **SECURITY-DEPS** | Security regex, and the commit changes `package.json` or `pnpm-lock.yaml`. Listed first. Never auto-skipped | Check each named package with `pnpm why`. `port` or `not-affected: <reason>` | Same week |
+| **SECURITY-DELETED** | Security regex, and the change is not in our tree (deleted path or new upstream path). Listed first. Never auto-skipped | Read once for the pattern. Record `pattern-checked: <our file or test>` | Same week |
 | **SECURITY** | Security. Touches a kept path, and the message matches security, auth, rate-limit, sanitise, IDOR, and similar | **Must-do.** Reproduce on our code first. Port it, or record `not-affected` with the reason. The tech lead does not waive a kept-path security fix | Same week. Within 48 hours if it is exploitable without login |
 | **BUGFIX-KEPT** | Bugfix in kept code | Port by hand when it serves SLDTP. **The tech lead decides.** Otherwise `skip` | When accepted. Otherwise the monthly review |
-| **DEPS** | Only `package.json` or the lockfile | **Information only.** Our dependency policy (section 7.6) decides. We do not take upstream's versions | Not applicable |
-| **FEATURE-KEPT** | Feature worth a look. The script cannot know whether it is worth leveraging | Port by hand when it serves the LMS and jobs platform. **The tech lead decides.** Otherwise `skip` | When accepted |
+| **DEPS** | Only `package.json` or the lockfile, and not a security match | **Information only.** Our dependency policy (section 7.6) decides. We do not take upstream's versions | Not applicable |
+| **FEATURE-KEPT** | Feature worth a look. The script cannot know whether it is worth leveraging | Monthly skim, not a weekly decision. Port by hand when it serves the LMS and jobs platform. **The tech lead decides.** Otherwise `skip` | Monthly |
 | **MOVED** | Touches upstream code we moved into `src/sldtp/` | Human look: is it a fix or a feature that applies to our copy? Same decision rule as SECURITY or BUGFIX-KEPT | Same as the class it would have had |
 | **IRRELEVANT** | Irrelevant. Only deleted paths or brand-new upstream paths | Auto-`skip`. Never resurrect deleted code | Not applicable |
 
@@ -303,7 +305,7 @@ Accepted in [ADR 0002](adr/0002-fork-code-rules.md). The ADR is the rule. This s
 ### 7.1 Where code goes
 
 - **All new product code goes in `src/sldtp/`**: `courses/`, `quiz/`, `cohorts/`, `certificates/`, `opportunities/`, `employer/`, `auth/`, `hubs/`, `i18n/`, `offline/`, `admin/`. Upstream will never touch this tree, so it never conflicts.
-- **Routes:** use App Router groups `src/app/(sldtp)/…` and `src/app/api/sldtp/…`. Add no new files under `src/pages/` or `src/pages/api/`.
+- **Routes:** Pages Router only ([ADR 0018](adr/0018-amend-0002-lighter-fork-tooling-advisories-always-checked.md), accepting ADR-0014). All routes go in `src/pages/` and `src/pages/api/`. The strip deletes `src/app/`.
 - **Adapt by moving, not by editing in place.** If we would change more than about a third of an upstream module (for example `features/listings` → opportunities), `git mv` it into `src/sldtp/`, rewrite it there, and add an `old/** -> src/sldtp/new/` line to the ledger. Small edits (a field or a guard) stay in place under the marker rule below.
 
 ### 7.2 Seams, and marking edits to upstream files
@@ -311,7 +313,7 @@ Accepted in [ADR 0002](adr/0002-fork-code-rules.md). The ADR is the rule. This s
 Every edit to a file that came from upstream is wrapped and greppable:
 
 ```ts
-// SLDTP-BEGIN(ADR-0003): replace Privy session with SLDTP session
+// SLDTP-BEGIN(ADR-0002): employer guard over the Privy session
 ...
 // SLDTP-END
 ```
@@ -324,7 +326,7 @@ Use a small, fixed set of seams instead of scattered edits:
 
 | Seam | One upstream file touched | Everything else in |
 | --- | --- | --- |
-| Auth/session | `withAuth` and related helpers call `src/sldtp/auth/session.ts` | `src/sldtp/auth/` (roles, TOTP, guards) |
+| Auth/session | `withAuth` and related helpers wrap `getPrivyToken` | `src/sldtp/auth/` (roles and guards over Privy) |
 | Navigation | navbar imports `src/sldtp/nav.ts` | `src/sldtp/nav.ts` |
 | Providers (i18n, offline registration, theme) | `src/components/providers.tsx` wraps `SldtpProviders` | `src/sldtp/providers.tsx` |
 | Database client | `src/prisma.ts` (already ours since `3da3094d2`) | — |
@@ -362,11 +364,11 @@ Today the repo has no tests. Ports are only safe with three minimum layers, whic
 - Pin exact versions for `next`, `react`, `react-dom`, `prisma`, `@prisma/client`, `@prisma/adapter-mariadb`, and `mariadb`. Pin the Node LTS version in `.nvmrc` and in `engines`, matching the MoCTI VM.
 - Critical or high advisory in a shipped dependency: patch PR within 48 hours. Minor versions: one batched PR a month. Majors need an ADR and are not taken after 15 February, before beta.
 - Renovate or Dependabot: security updates on, version updates grouped monthly. It never auto-merges.
-- After the strip, remove the packages from the deleted subsystems (Solana, Privy, Sumsub, Airtable, BullMQ, and so on) and run `pnpm dlx knip` to find the rest. Every removed package shrinks both the attack surface and the audit noise.
+- After the strip, remove the packages from the deleted subsystems (Solana, Sumsub, Airtable, BullMQ, and so on) and run `pnpm dlx knip` to find the rest. `@privy-io/react-auth` and `@privy-io/node` stay. Every removed package shrinks both the attack surface and the audit noise.
 
 ## 8. CI and automation (FND-02, FND-11)
 
-`.github/workflows/ci.yml` installs with `pnpm install --frozen-lockfile`, runs `tsc --noEmit`, and runs the ledger import check. A loose install resolves past the lockfile and is what produces the extra typecheck errors. The other jobs below are still the FND-02 shape and are not in this change. Branch protection on `main` is recommended and is not turned on here (section 3).
+`.github/workflows/ci.yml` installs with `pnpm install --frozen-lockfile`, runs `tsc --noEmit`, and runs the ledger import check. A loose install resolves past the lockfile and is what produces the extra typecheck errors. The same workflow runs `audit` (`pnpm audit --prod --audit-level=high` and `osv-scanner --lockfile pnpm-lock.yaml`) and does not fail the workflow on the advisories already in the lockfile. The other jobs below are still the FND-02 shape. Branch protection on `main` is recommended and is not turned on here (section 3). The regenerated triage sample is [triage-4b9492b-6544345.md](triage-4b9492b-6544345.md).
 
 | Job | Trigger | Fails when | Blocks merge? |
 | --- | --- | --- | --- |
@@ -390,6 +392,8 @@ Branch protection makes all the "Yes" jobs required. A one-reviewer minimum appl
 - Hubs, i18n, offline, and accessibility
 
 The triage owner only routes.
+
+**Privy stays.** Do not remove `@privy-io/react-auth` or `@privy-io/node` with the other SaaS packages. Auth changes wrap `getPrivyToken`. Roles and guards sit over Privy. See [ADR 0018](adr/0018-amend-0002-lighter-fork-tooling-advisories-always-checked.md).
 
 **Decision rules, applied file by file:**
 
@@ -471,7 +475,9 @@ No effort figures here. The sequencing change is:
 
 - `docs/fork-and-upstream-sync.md` (this document)
 - `docs/upstream-leverage-review.md`
-- `docs/adr/0002-fork-code-rules.md`
+- `docs/adr/0002-fork-code-rules.md` (amended by ADR 0018)
+- `docs/adr/0018-amend-0002-lighter-fork-tooling-advisories-always-checked.md`
+- `docs/triage-4b9492b-6544345.md`
 - `scripts/sldtp/upstream-triage.py`
 - `.sldtp/deleted-paths` (files Daybreak removed that nothing still imports)
 - `.github/workflows/ci.yml` (`pnpm install --frozen-lockfile`, typecheck, ledger import check)

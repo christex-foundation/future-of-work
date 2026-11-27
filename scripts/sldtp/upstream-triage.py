@@ -21,6 +21,16 @@ SEC = re.compile(r"\b(security|secur|vuln|cve-|ghsa-|xss|csrf|ssrf|idor|injectio
                  r"txn.validation)\b", re.I)
 FIX = re.compile(r"\b(fix|bug|hotfix|patch|crash|broken|regression|revert)\b", re.I)
 DEP_FILES = {"package.json", "pnpm-lock.yaml"}
+CLASS_ORDER = {
+    "SECURITY-DEPS": 0,
+    "SECURITY-DELETED": 1,
+    "SECURITY": 2,
+    "DEPS": 3,
+    "BUGFIX-KEPT": 4,
+    "MOVED": 5,
+    "FEATURE-KEPT": 6,
+    "IRRELEVANT": 7,
+}
 
 def git(*a):
     return subprocess.run(["git", *a], check=True, capture_output=True, text=True).stdout
@@ -136,9 +146,17 @@ def main():
         mov = [f for f in files if deleted(f, moved)]
         deps = [f for f in files if f in DEP_FILES]
         text = subj + " " + body
-        if not kept and not deps and not mov:
+        sec = SEC.search(text)
+        if sec and deps:
+            cls = "SECURITY-DEPS"       # check every named package against our lockfile
+        elif sec and kept:
+            cls = "SECURITY"
+        elif sec and not mov:
+            # not in our tree: a deleted path, or a new upstream path we never shipped
+            cls = "SECURITY-DELETED"
+        elif not kept and not deps and not mov:
             cls = "IRRELEVANT"          # only deleted paths or brand-new upstream paths
-        elif SEC.search(text):
+        elif sec:
             cls = "SECURITY"
         elif not kept and mov:
             cls = "MOVED"               # touches code we moved into src/sldtp/: port by hand if it matters
@@ -150,17 +168,24 @@ def main():
             cls = "FEATURE-KEPT"
         counts[cls] = counts.get(cls, 0) + 1
         short = sha[:9]
-        status = "decided" if short in decided else ("-" if cls == "IRRELEVANT" else "TODO")
+        # SECURITY, SECURITY-DEPS and SECURITY-DELETED are never auto-skipped.
+        auto_skip = cls == "IRRELEVANT"
+        status = "decided" if short in decided else ("-" if auto_skip else "TODO")
         if status == "TODO":
             untriaged += 1
-        if cls != "IRRELEVANT" or a.all:
-            rows.append(f"| {short} | {date} | {cls} | {status} | {len(kept)}/{len(files)} | "
-                        f"{subj[:70].replace('|','/')} | {', '.join((kept or mov)[:3])}{' …' if len(kept or mov)>3 else ''} |")
+        if not auto_skip or a.all:
+            line = (f"| {short} | {date} | {cls} | {status} | {len(kept)}/{len(files)} | "
+                    f"{subj[:70].replace('|','/')} | {', '.join((kept or mov)[:3])}{' …' if len(kept or mov)>3 else ''} |")
+            rows.append((CLASS_ORDER.get(cls, 9), date, short, line))
+    order = ["SECURITY-DEPS", "SECURITY-DELETED", "SECURITY", "DEPS", "BUGFIX-KEPT", "MOVED", "FEATURE-KEPT", "IRRELEVANT"]
+    summary = ", ".join(f"{k} {counts[k]}" for k in order if k in counts)
     print(f"Upstream {base[:9]}..{git('rev-parse','--short=9',a.upstream).strip()}: {len(shas)} first-parent commits; "
-          + ", ".join(f"{k} {v}" for k, v in sorted(counts.items())) + f"; untriaged {untriaged}\n")
+          + summary + f"; untriaged {untriaged}\n")
+    print("SECURITY-DEPS and SECURITY-DELETED are listed first and are never auto-skipped. "
+          "SECURITY-DELETED means the change is not in our tree (a deleted path, or a new upstream path).\n")
     print("| upstream | date | class | status | kept/all files | subject | kept files |")
     print("| --- | --- | --- | --- | --- | --- | --- |")
-    print("\n".join(rows))
+    print("\n".join(line for _, _, _, line in sorted(rows)))
     if a.check and untriaged:
         sys.exit(1)
 

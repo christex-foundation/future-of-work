@@ -1,11 +1,13 @@
 # ADR 0002: Fork code rules
 
+**Amended by [ADR 0018](0018-amend-0002-lighter-fork-tooling-advisories-always-checked.md)** (CTO, 27 Nov 2026).
+
 - Status: Accepted
 - Date: 2026-11-27
 - Approved by: David Ogoo, November 2026
 - Related: [Fork and upstream-sync strategy](../fork-and-upstream-sync.md) (decision D6)
 
-Numbered 0002 to match decision D6 in the fork strategy. This repository has no ADR 0001.
+Numbered 0002 to match decision D6 in the fork strategy. ADR-0001 is not a file in this repository.
 
 ## Context
 
@@ -19,7 +21,7 @@ Divergence stays cheap only if new code is isolated, edits to upstream files are
 
 All new product code goes in `src/sldtp/`: `courses/`, `quiz/`, `cohorts/`, `certificates/`, `opportunities/`, `employer/`, `auth/`, `hubs/`, `i18n/`, `offline/`, `admin/`. Upstream does not touch this tree, so it does not conflict.
 
-Routes use App Router groups `src/app/(sldtp)/…` and `src/app/api/sldtp/…`. Add no new files under `src/pages/` or `src/pages/api/`.
+Routes use the Pages Router only (ADR-0014, accepted by the CTO on 27 Nov 2026). All routes go in `src/pages/` and `src/pages/api/`. The strip deletes `src/app/`.
 
 ### Adapt by moving, not by editing in place
 
@@ -30,12 +32,12 @@ If we would change more than about a third of an upstream module (for example `f
 Every edit to a file that came from upstream is wrapped so it can be grepped:
 
 ```ts
-// SLDTP-BEGIN(ADR-0003): replace Privy session with SLDTP session
+// SLDTP-BEGIN(ADR-0002): employer guard over the Privy session
 ...
 // SLDTP-END
 ```
 
-A one-line change uses a trailing comment: `// SLDTP(ADR-0003): reason`.
+A one-line change uses a trailing comment: `// SLDTP(ADR-0002): reason`.
 
 The number inside the marker is the ADR for that edit. This ADR is the standing rule. A later decision, such as the session replacement, takes the next number. `ADR-0003` in the example is that later number, not this document.
 
@@ -45,14 +47,14 @@ Use a small, fixed set of seams instead of scattered edits:
 
 | Seam | One upstream file touched | Everything else in |
 | --- | --- | --- |
-| Auth/session | `withAuth` and related helpers call `src/sldtp/auth/session.ts` | `src/sldtp/auth/` (roles, TOTP, guards) |
+| Auth/session | `withAuth` and related helpers wrap `getPrivyToken` | `src/sldtp/auth/` (roles and guards over Privy) |
 | Navigation | navbar imports `src/sldtp/nav.ts` | `src/sldtp/nav.ts` |
 | Providers (i18n, offline registration, theme) | `src/components/providers.tsx` wraps `SldtpProviders` | `src/sldtp/providers.tsx` |
 | Database client | `src/prisma.ts` (already ours since `3da3094d2`) | — |
 | Config and headers | `next.config.ts` spreads `sldtpConfig` | `src/sldtp/next.config.part.ts` |
 | Branding | theme tokens file | `src/sldtp/theme/` |
 
-The touch-budget report in the strategy counts `SLDTP-BEGIN` markers and changed upstream files. If the count grows faster than these seams explain, the reviewer asks why.
+ADR-0018 drops the touch-budget report. A reviewer still greps `SLDTP-BEGIN` when a PR edits a kept upstream file. Markers are for those in-place edits, not for files moved into `src/sldtp/`.
 
 ### Deletion ledger
 
