@@ -1,6 +1,6 @@
 # SLDTP platform: fork and upstream-sync strategy
 
-**Status:** Accepted. Approved by David Ogoo, November 2026.
+**Status:** D2–D10 accepted. Approved by David Ogoo, November 2026. D1, upstream intake for the current `main`, is pending his choice.
 **Repo:** `christex-foundation/future-of-work`. It is a public GitHub fork of `SuperteamDAO/earn`, licensed under the GNU AGPL version 3 (the verbatim `LICENSE` file). GitHub records `fork: true` and `parent: SuperteamDAO/earn`.
 **Supersedes:** the upstream-sync section of the internal no-Moodle note. This document fills the FND-04, FND-11, FND-12, and GAP-17 placeholders in the engineering plan. Those planning notes are not in this repository.
 **Code rules:** [ADR 0002](adr/0002-fork-code-rules.md).
@@ -9,9 +9,9 @@ This change is the strategy, the triage script, and a commented deletion ledger.
 
 ## 0. The decision in one paragraph
 
-Merge upstream **once**, before anything is stripped. After that, treat `SuperteamDAO/earn` as an **advisory feed**, not a branch we merge. From the day the strip starts we are a hard fork, and we should say so. We stay *watched*: a script lists every upstream change that touches code we still ship. One owner triages that list every week. Security fixes are **ported by hand** in a reviewed PR, with a test. Upstream features are never taken. Everything we build lives in `src/sldtp/`. Every deletion is recorded in a ledger the script reads. The database schema is ours from the first migration.
+The integration line is `main`. It is the Daybreak / Future of Work UI that used to be `redesign`, fast-forwarded onto `main` on 27 November 2026 (`97bfeeb8e`). That tip is 49 commits after the fork point.
 
-Decision D1 names `main` as the branch that receives that one merge. Section 1.1 records a later check: `redesign` already carries the Future of Work UI, and a merge of upstream into `redesign` is not the one-file conflict that D1 relies on. Do not open the sync PR until that choice is confirmed.
+Upstream intake for this `main` is **pending** (D1). David chooses either (a) one full merge of `6544345c2`, reviewed by the Daybreak author, or (b) no merge, and upstream security fixes only through the weekly triage. After that choice, treat `SuperteamDAO/earn` as an **advisory feed**, not a branch we merge. From the day the strip starts we are a hard fork, and we should say so. We stay *watched*: a script lists every upstream change that touches code we still ship. One owner triages that list every week. Security fixes are **ported by hand** in a reviewed PR, with a test. Upstream features are never taken. Everything we build lives in `src/sldtp/`. Every deletion is recorded in a ledger the script reads. The database schema is ours from the first migration.
 
 ## 1. Facts this rests on
 
@@ -20,8 +20,8 @@ Checked on 27 November 2026. Upstream `main` is `6544345c26cbd1c16ab99a659b2543d
 | Fact | Evidence |
 | --- | --- |
 | Fork point `4b9492b9d` (8 Jun 2026). Upstream `main` is `6544345c2` (25 Nov 2026), **267 commits ahead**, 394 files changed (+11,146 / −8,311) | `git rev-list --count 4b9492b9d..upstream/main` and `git diff --shortstat` |
-| On `main`, the only fork commit is `3da3094d2` (MariaDB adapter: `src/prisma.ts`, `package.json`, `pnpm-lock.yaml`, `.gitignore`). `dev` and `redesign` add more. See section 1.1 | `git log origin/main` |
-| Merging upstream `6544345c2` into `main` conflicts **only in `pnpm-lock.yaml`**. `package.json` auto-merges. An earlier trial regenerated the lockfile, then `tsc --noEmit` passed and `prisma generate` succeeded. That typecheck was not re-run for this check | `git merge-tree --write-tree origin/main upstream/main` on 27 Nov 2026 |
+| `main` (`97bfeeb8e`) is **49 commits** after the fork point. The first is `3da3094d2` (MariaDB adapter: `src/prisma.ts`, `package.json`, `pnpm-lock.yaml`, `.gitignore`). The other 48 are the Daybreak UI, previously `redesign`. `origin/main` and `origin/redesign` are the same commit | `git rev-list --count 4b9492b9d..origin/main` on 27 Nov 2026 |
+| Merging upstream `6544345c2` into current `main` conflicts in **36 paths**. The same merge into `3da3094d2` conflicted only in `pnpm-lock.yaml`. A full merge also brings Next 16.3.8, React 19.3.0, TypeScript 7.0.2, and replaces `clsx` and `tailwind-merge` with the `cn` package. `tsc` was not re-run on the 36-path merge | `git merge-tree --write-tree origin/main upstream/main`, and `package.json` on both tips, 27 Nov 2026 |
 | Upstream pace: 95 first-parent changes (PR merges plus direct pushes) in 24 weeks, about **4 a week** | `git rev-list --first-parent --count 4b9492b9d..upstream/main` on 27 Nov 2026 |
 | Of those 95, **6** match the security classifier: #1408, #1410, #1416, #1446, `af39bd178`, and #1465. #1408, #1410, and #1446 land in grant or sponsor-dashboard code we delete or rewrite. #1416 also touches `src/pages/api/token-icon.ts` (strip A) and `src/lib/ratelimit.ts` (kept). `af39bd178` is the email rate limit. #1465 edits `next.config.ts`, which stays as a seam | `scripts/sldtp/upstream-triage.py --base 4b9492b9d` on 27 Nov 2026, then `git diff --name-only <sha>^1 <sha>` for each SECURITY row |
 | Upstream's busiest paths are `src/pages/api` (64 files), `src/pages/earn` (30), `components/ui`, `sponsor-dashboard`, `features/listings`, and `features/auth`. **These are the same modules we keep and adapt** into opportunities, employer review, and auth | `git diff --stat` by directory |
@@ -29,31 +29,53 @@ Checked on 27 November 2026. Upstream `main` is `6544345c26cbd1c16ab99a659b2543d
 | Upstream ships `.github/workflows/lockfile.yml` and `schema-sync-notify.yml` | `git ls-tree upstream/main .github/workflows` |
 | Upstream is on Next 16.3.8. That version is still inside GHSA-2464-fhr4-w9xw and GHSA-7qx7-33qx-rqx2. Our target is 16.4.5 or later (16.4.6 is current) | Engineering plan, FND-05 |
 
-### 1.1 Branches on this fork
+### 1.1 The integration line is `main`
 
 Checked the same day, against `origin` and `upstream/main`. GitHub's default branch is `main`. There were no open pull requests. The fork relationship is intact.
 
-| Branch | Tip | Date | Versus `main` |
+`origin/main` was fast-forwarded from `3da3094d2` to `97bfeeb8e`, the tip that had been `redesign`. `origin/redesign` and `origin/main` are that same commit. The integration line is this `main`: the Daybreak work, not the MariaDB-only tip.
+
+`main` has **no branch protection**. The GitHub branch object reports `protected: false`. Section 3 is the protection to turn on. Until it is on, a direct push to `main` is possible.
+
+| Ref | Tip | Date | What it is |
 | --- | --- | --- | --- |
-| `main` | `3da3094d2`, MariaDB adapter | 8 Jun 2026 | Default branch. One commit on top of the fork point |
-| `dev` | `45e6db524`, Daybreak submissions dashboard | 12 Jun 2026 | 20 commits ahead, 0 behind. Contained entirely in `redesign` |
-| `redesign` | `97bfeeb8e`, smaller `/earn` hero | 11 Aug 2026 | 48 commits ahead, 0 behind. Fast-forward of `main` and of `dev` |
+| Fork point | `4b9492b9d` | 8 Jun 2026 | Last commit shared with upstream |
+| `3da3094d2` | MariaDB adapter | 8 Jun 2026 | First fork commit. This was `main` until the fast-forward |
+| `dev` | `45e6db524` | 12 Jun 2026 | 20 Daybreak commits. An ancestor of `main` |
+| `main` (formerly `redesign`) | `97bfeeb8e` | 11 Aug 2026 | 49 fork commits. The integration line |
 
-`redesign` is the Future of Work / Daybreak UI line: 326 files, +19,678 / −12,274, mostly under `src/components`, `src/features`, and `src/pages`. It does not add `src/sldtp/`. It removes `@radix-ui/react-aspect-ratio`, `d3`, and `@types/d3`, and adds `Sponsors.socials`. Forty-six of its commits landed in June 2026 and two on 11 August. `dev` is the 12 June prefix (20 commits). `origin/dev` is an ancestor of `origin/redesign`.
+The 49 commits are `3da3094d2` plus 48 Daybreak commits. Against `3da3094d2` those 48 commits change 326 files (+19,678 / −12,274), mostly under `src/components`, `src/features`, and `src/pages`. They do not add `src/sldtp/`. They remove `@radix-ui/react-aspect-ratio`, `d3`, and `@types/d3`, and add `Sponsors.socials`. Forty-six landed in June 2026 and two on 11 August. `dev` is the 12 June prefix of that range.
 
-`README.md` is the same file on `main` and on `redesign`.
-
-A content merge of upstream `6544345c2` was checked with `git merge-tree --write-tree`. No commits were created.
+A content merge of upstream `6544345c2` was checked with `git merge-tree --write-tree`. No commits were created. The table is the evidence for D1. Current `main` is the 36-path row.
 
 | Into | Conflicting paths |
 | --- | --- |
-| `main` | 1: `pnpm-lock.yaml` only |
-| `dev` | 22 |
-| `redesign` | 36, including every `dev` conflict |
+| `3da3094d2` (main before the fast-forward) | 1: `pnpm-lock.yaml` only. `package.json` auto-merged. The schema did not conflict |
+| `dev` (`45e6db524`) | 22 |
+| current `main` (`97bfeeb8e`, formerly `redesign`) | 36, including every `dev` conflict |
 
-The extra 14 paths on `redesign` come from commits that are not on `dev`. Three of the 36 are modify/delete (deleted on `redesign`, modified upstream). The rest are content conflicts. `package.json` auto-merges on all three branches. `prisma/schema.prisma` conflicts on `dev` and `redesign`, and does not conflict on `main`.
+The extra 14 paths on current `main` come from Daybreak commits that are not on `dev`. Three of the 36 are modify/delete (deleted on our side, modified upstream): the two home banners and `ListingTable.tsx`. The rest are content conflicts. `package.json` auto-merges, which is how a full merge also takes upstream's dependency bumps. `prisma/schema.prisma` conflicts on `dev` and on current `main`. It did not conflict at `3da3094d2`.
 
-`redesign` conflicts:
+What the 36-path merge actually collides on:
+
+- **Schema.** Our `Sponsors.socials Json?` against upstream `Sponsors.location String?`, in the same slot after `entityName`. The sponsor form and `src/pages/api/sponsors/create.ts` conflict on that same pair.
+- **Home listing filter.** `src/features/listings/utils/query-builder.ts`. Our homepage is not filtered by language or reward size. Upstream, for `context === 'home'`, keeps `language` in `eng` or `sco` and applies a USD value floor.
+- **Nav, listing, and dashboard UI.** The navbar, earn pages, listing page, listing builder, and sponsor-dashboard files in the list below.
+
+Versions a full merge would bring, against current `main`:
+
+| Package | Current `main` | Upstream `6544345c2` |
+| --- | --- | --- |
+| `next` | 16.2.1 | 16.3.8 |
+| `react`, `react-dom` | 19.2.4 | 19.3.0 |
+| `typescript` | 5.8.3 | 7.0.2 |
+| Class names | `clsx` ^2.1.1 and `tailwind-merge` ^3.4.0, wrapped in `src/utils/cn.ts` | package `cn` ^0.4.0, `export { cn } from 'cn'` (upstream `f48e297a8`) |
+
+Next 16.3.8 is still inside the advisories in the facts table. The target stays 16.4.5 or later, as its own PR, and only if option (a) is taken.
+
+The lockfile-only result describes a merge into `3da3094d2`. It does not describe current `main`.
+
+Conflicts on current `main`:
 
 - `pnpm-lock.yaml`
 - `prisma/schema.prisma`
@@ -92,20 +114,16 @@ The extra 14 paths on `redesign` come from commits that are not on `dev`. Three 
 - `src/pages/member-perks.tsx`
 - `src/styles/st-globals.css`
 
-`dev` conflicts are `pnpm-lock.yaml`, `prisma/schema.prisma`, the three `src/components/ui/*` files, both home banners, `ListingsSection.tsx`, both navbar files, `ListingTable.tsx`, `Submissions/SelectLabel.tsx`, `sponsorFormSchema.ts`, `src/pages/_app.tsx`, `src/pages/api/sponsors/create.ts`, the four `src/pages/earn/**` pages listed above, `src/pages/index.tsx`, and `src/styles/st-globals.css`.
-
-So "the only conflict is the lockfile" is true for a merge into `main` and false for `dev` and `redesign`. Those branches have already edited the listing, sponsor-dashboard, navbar, and schema files section 1 says upstream also edits. The clean window D1 relies on is still open on `main` only.
-
-This document does not change D1. If `redesign` is adopted as the integration line, section 4's review check ("upstream plus the MariaDB files") does not hold, and the sync is a 36-path merge. Confirm the receiving branch before opening the sync PR.
+`dev`'s 22 conflicts are `pnpm-lock.yaml`, `prisma/schema.prisma`, the three `src/components/ui/*` files, both home banners, `ListingsSection.tsx`, both navbar files, `ListingTable.tsx`, `Submissions/SelectLabel.tsx`, `sponsorFormSchema.ts`, `src/pages/_app.tsx`, `src/pages/api/sponsors/create.ts`, the four `src/pages/earn/**` pages in the list above, `src/pages/index.tsx`, and `src/styles/st-globals.css`.
 
 ## 2. Where the prior plan was wrong or too optimistic
 
 1. **"After the strip, upstream will mostly touch code we deleted" is false for us.** Upstream's activity is concentrated in listings, sponsor dashboard, API routes, and auth. We keep exactly those and rewrite them into opportunities, employer review, and four-role auth. So the kept files will diverge **fast**, not slowly. Cherry-picks will rarely apply cleanly after week 4. Plan for **porting by hand**.
 2. **"Weekly security cherry-picks" overstates the inflow.** At upstream's current pace we should expect about **one relevant security fix a month**. Keep the weekly triage, because it is cheap and automated. Ports themselves are event-driven: a security fix is ported the same week, and bug fixes go in a monthly batch.
-3. **"Rebase or re-apply `3da3094d2` and make that the new main" needs a force-push** of a shared branch and buys nothing. A merge gives the same merge-base, has the same single conflict on `main`, and keeps `3da3094d2` (which our documents cite) reachable. Linear history is worth nothing in a fork that is about to diverge. **Merge, don't rebase.**
+3. **"Rebase the fork onto upstream and force-push `main`" buys nothing.** A merge needs no force-push, and `3da3094d2` stays reachable. On current `main` that merge is 36 paths, not one file (section 1.1). If D1 is option (a), **merge, don't rebase.**
 4. **A pushed `upstream-main` mirror branch is a moving part we don't need.** It needs its own protection, and it invites GitHub's **"Sync fork"** button, which merges upstream into a branch in one click. The remote-tracking ref `upstream/main` plus a committed baseline file (`.sldtp/upstream-baseline`) is enough. Use the GitHub compare URL for browsing.
 5. **The GitHub fork link itself is a risk the plan missed.** A PR created from the GitHub UI or `gh pr create` on a fork can default its base to `SuperteamDAO/earn`. One careless click would publish an SLDTP PR, with its description and client context, to Superteam's repo. Detach the fork (decision D4) or at least set `gh repo set-default christex-foundation/future-of-work` on every clone.
-6. **Do the Next.js upgrade as its own PR after the sync, not inside it.** The sync PR must be a pure merge so that review can check "upstream plus the MariaDB files and the baseline". Bundling 16.4.6 makes the diff unreviewable. That check assumes the sync lands on `main`. It does not survive a sync that lands on `redesign` (section 1.1).
+6. **Do the Next.js upgrade to 16.4.6 as its own PR, not as an extra bump inside the conflict resolution.** Option (a) already brings Next 16.3.8, React 19.3.0, and TypeScript 7.0.2, because those commits are inside `6544345c2`. Review that set with the 36 conflicts. 16.4.6, which clears the advisories above, stays a follow-up. Option (b) does not take upstream's versions at all. The old "diff is four MariaDB files" check was for a merge into `3da3094d2` only.
 7. **"Take upstream schema changes by hand" is right, and it is incomplete.** Upstream will never give us a migration, so every upstream model change we want is a migration we write. Split the schema into files (section 7.4) so our models never sit in the same file as theirs.
 
 ## 3. Branch and remote model
@@ -116,7 +134,7 @@ flowchart LR
     UM["main<br/>6544345c2 on 25 Nov 2026<br/>~12 commits/week"]
   end
   subgraph GH_FORK["github.com/christex-foundation/future-of-work (public)"]
-    M["main<br/>SLDTP integration<br/>protected: PR + green checks"]
+    M["main = Daybreak line<br/>97bfeeb8e<br/>protection not set yet"]
     FB["feature/* , strip/*<br/>short-lived PR branches"]
     UP["port/upstream-&lt;sha&gt;<br/>one upstream fix per PR"]
     T["tags sldtp/rc-N, sldtp/beta-1, sldtp/vX.Y<br/>= what runs at MoCTI"]
@@ -131,7 +149,7 @@ flowchart LR
     P["production<br/>deployed from a tag<br/>footer 'Source' -> tag"]
   end
   UM -- "git fetch only<br/>(push URL disabled)" --> D
-  UM -. "ONE-TIME merge (Dec 2026)<br/>before the strip" .-> M
+  UM -. "option (a), pending<br/>merge 6544345c2" .-> M
   D -- "SECURITY / BUGFIX-KEPT rows" --> UP
   UP -- "PR, human review" --> M
   FB -- "PR, human review" --> M
@@ -151,10 +169,11 @@ gitGraph
   commit id: "267 upstream commits"
   checkout ours-main
   commit id: "3da3094 MariaDB adapter"
+  commit id: "48 Daybreak commits, now main"
   checkout upstream
   commit id: "6544345 on 25 Nov"
   checkout ours-main
-  merge upstream id: "one-time sync merge" tag: "sldtp/sync-0"
+  merge upstream id: "option a, pending" tag: "sldtp/sync-0"
   commit id: "Next 16.4.6 + audit"
   commit id: "strip A, B, C"
   commit id: "src/sldtp courses"
@@ -168,12 +187,14 @@ gitGraph
   commit id: "beta" tag: "sldtp/beta-1"
 ```
 
-The first diagram is the branch and remote model. The second is the git timeline. In the flowchart node, `&lt;` is the mermaid HTML label for `<`, so the rendered text is `port/upstream-<sha>`. The branch name is `port/upstream-<sha9>`.
+The first diagram is the branch and remote model. The second is the git timeline for option (a). The merge node is not chosen yet. Option (b) leaves `ours-main` on the Daybreak commits and ports security fixes by hand, with no `sldtp/sync-0`. In the flowchart node, `&lt;` is the mermaid HTML label for `<`, so the rendered text is `port/upstream-<sha>`. The branch name is `port/upstream-<sha9>`.
+
+`main` has no branch protection today (`protected: false`, 27 November 2026). Turn it on before any further work lands: pull request required, one approving review (two for `prisma/`, auth, `next.config.ts`, and `.sldtp/`), required checks once they exist, no force-push, no deletion. Allow merge commits so option (a), if chosen, is not squashed. Squash stays the default for every other PR. This recommendation is not applied in this change.
 
 | Ref | Rule |
 | --- | --- |
 | remote `upstream` = `https://github.com/SuperteamDAO/earn.git` | **Fetch only.** `git remote set-url --push upstream DISABLED` on every clone, CI runner, and agent box |
-| `main` | The only long-lived branch. Protected: PR required, 1 approving review (2 for `prisma/`, auth, `next.config.ts`, `.sldtp/`), required checks green, no force-push, no deletion. **Merge commits allowed, so the one-time sync is not squashed.** Squash is the default for everything else |
+| `main` | The only long-lived branch. It is the Daybreak line (`97bfeeb8e`, formerly `redesign`). **Protection is not on.** The rule to set: PR required, 1 approving review (2 for `prisma/`, auth, `next.config.ts`, `.sldtp/`), required checks green once CI exists, no force-push, no deletion. **Merge commits allowed, so option (a) is not squashed.** Squash is the default for everything else |
 | `feature/<id>-…`, `strip/A-…`, `strip/B-…`, `strip/C-…` | Short-lived PR branches, one backlog ID each |
 | `port/upstream-<sha9>` | One upstream change ported per PR. The PR body links the upstream commit or PR and its triage class |
 | `release/<tag>` | Only if a hotfix is needed on what is deployed while `main` has moved on. Branch from the tag, fix, tag `…-1`, merge back to `main` |
@@ -184,65 +205,45 @@ The first diagram is the branch and remote model. The second is the git timeline
 
 Retire the old names `sldtp/prod` (use tags) and `sldtp/security` (use `port/upstream-*`).
 
-`dev` and `redesign` are existing lines, not part of this model. Section 1.1 lists the conflicts a sync onto them would hit. They are not long-lived branches in the steady state.
+`redesign` is the old name of this `main`. `dev` is an ancestor (section 1.1). Neither is a second integration line.
 
-## 4. The one-time sync (FND-04), before the strip
+## 4. Upstream intake (FND-04) is pending
 
-**Why before the strip:** on `main`, the only conflict is the lockfile. Once a single wallet file is deleted or a course table is added, the same merge conflicts across hundreds of files, and the 267 commits arrive with no reviewer who can tell which ones matter. `redesign` has already left that window (36 conflicts, section 1.1) even though the strip has not started.
+D1 is not chosen. Current `main` is already the Daybreak line, so the lockfile-only window closed when that work landed. The strip has not started. The conflict set, if we merge, is the 36 paths in section 1.1.
 
-**Why this month rather than 4 January:** about 4 upstream changes land every week. The `main` trial's conflict set still matches. FND-04 then shrinks to "already done". D1 is approved for a merge into `main`. Confirm that `main`, and not `redesign`, is the integration line before opening the sync PR (section 1.1).
+About 4 upstream changes land every week, so waiting past this month widens the set. That is context for the choice. It is not a decision.
 
-Run the procedure below against `main`. Point it at `redesign` only after a new trial, and only if the 36-path merge is an accepted replacement for the one-file sync.
+### Option (a): one full merge
 
-### Procedure
+One merge commit of `6544345c2` into `main`, reviewed by the Daybreak author.
 
-Reviewed by David Ogoo. The commands target `main`.
+- The conflicts are the 36 paths, not `pnpm-lock.yaml` alone. Do not `git checkout --theirs` the lockfile and call the merge done.
+- Keep our `Sponsors.socials` and the homepage listing filter unless the reviewer deliberately takes upstream's `Sponsors.location` and the `eng` / `sco` home filter.
+- The merge also brings Next 16.3.8, React 19.3.0, TypeScript 7.0.2, and `clsx` / `tailwind-merge` → `cn`. Those need the same review.
+- Next 16.4.6 stays a follow-up PR (FND-05). 16.3.8 is still inside the advisories in section 1.
+- Merge with **"Create a merge commit"**. A squash drops the upstream parent. Then tag `sldtp/sync-0`.
+- Record `.sldtp/upstream-baseline` as `6544345c2`. Stage that file only, so the commit does not rewrite `.sldtp/deleted-paths`.
+
+Verification for (a) is not "the diff against upstream is the MariaDB files". It is: the 36 conflicts resolved, `pnpm install --frozen-lockfile`, `prisma generate`, `tsc --noEmit`, `pnpm lint`, `next build`, and a smoke test of the home page, one listing page, and sign-in on a throwaway local MariaDB. `prisma db push` only against that throwaway database. `git merge-base HEAD upstream/main` returns `6544345c2`.
+
+Rollback, if (a) is merged and no strip PR has landed: `git revert -m 1 <merge-sha>` through a PR. A hard reset of `main` to the pre-sync tag is a force-push and needs David Ogoo's explicit OK. After the strip has started, fix forward.
+
+### Option (b): no merge
+
+No merge of upstream. Set `.sldtp/upstream-baseline` to `4b9492b9d`. Port the six SECURITY commits in section 1 by hand, through the weekly triage (section 6): #1408, #1410, #1416, #1446, `af39bd178`, and #1465. Do not take upstream's lockfile, schema, or framework bumps. There is no `sldtp/sync-0`.
+
+Current `main` is the August Daybreak tree, which still does not contain those upstream fixes. Option (b) ports them onto that tree. It does not rewind `main` to 8 June.
+
+### Historical trial, not the procedure for this `main`
+
+The commands below were a trial merge into `3da3094d2`, when the only conflict was the lockfile and `tsc --noEmit` and `prisma generate` passed after the lockfile was regenerated. They are the wrong commands for current `main`.
 
 ```bash
-# 0. Clean clone; protect against pushing upstream
-git clone git@github.com:christex-foundation/future-of-work.git && cd future-of-work
-git remote add upstream https://github.com/SuperteamDAO/earn.git
-git remote set-url --push upstream DISABLED
-git config rerere.enabled true
-git fetch upstream
-git tag -a sldtp/pre-sync 3da3094d2929de597a516866df620fa379c62b1c -m "Rollback point before upstream sync"
-
-# 1. Merge (NOT rebase), pinned to the exact upstream SHA reviewed
-git switch -c sync/upstream-6544345 main
-git merge --no-ff 6544345c26cbd1c16ab99a659b2543dabb6c4a5a \
-  -m "Sync upstream SuperteamDAO/earn 6544345c2 (267 commits since 4b9492b9d)"
-# Expected conflict on main: pnpm-lock.yaml only
-git checkout --theirs pnpm-lock.yaml        # upstream's lockfile...
-pnpm install --lockfile-only                # ...regenerated to add @prisma/adapter-mariadb
-git add pnpm-lock.yaml && git commit --no-edit
-
-# 2. Record the baseline (same PR)
-mkdir -p .sldtp && echo 6544345c26cbd1c16ab99a659b2543dabb6c4a5a > .sldtp/upstream-baseline
-git add .sldtp && git commit -m "Record upstream baseline 6544345c2"
+# Trial against 3da3094d2 only. Do not run this against current main.
+git merge --no-ff 6544345c26cbd1c16ab99a659b2543dabb6c4a5a
+# That tip conflicted in pnpm-lock.yaml only.
+# git checkout --theirs pnpm-lock.yaml && pnpm install --lockfile-only
 ```
-
-Step 2 must not overwrite `.sldtp/deleted-paths`. If that file is already on the branch, stage only `.sldtp/upstream-baseline`.
-
-### Verification (all must pass before the PR is merged)
-
-1. `git diff 6544345c2 HEAD --stat` shows only `.gitignore`, `package.json` (adds `@prisma/adapter-mariadb`), `pnpm-lock.yaml`, `src/prisma.ts`, and `.sldtp/upstream-baseline`. Anything else means the merge went wrong. `.sldtp/deleted-paths` may also appear if this strategy has already landed.
-2. `git merge-base HEAD upstream/main` returns `6544345c2`.
-3. `pnpm install --frozen-lockfile`, `prisma generate`, `tsc --noEmit` (all three passed in the earlier `main` trial), `pnpm lint` (oxlint), `next build`.
-4. Boot against a **throwaway local MariaDB** in Docker. Run `prisma db push` there only, never against a shared database. Smoke-test the home page, one listing page, and sign-in. Confirm `src/prisma.ts` takes the MariaDB adapter path.
-5. `pnpm audit --prod`. The Next.js advisories above are expected, and they are fixed in the next PR, not this one.
-6. The PR is merged with **"Create a merge commit"**. A squash would drop the upstream parent and quietly destroy the sync. Then tag `sldtp/sync-0`.
-7. Immediately afterwards, a separate PR (FND-05): Next 16.4.6, sharp ≥ 0.35.5, `mariadb` past 3.4.5, `dangerouslyAllowSVG: false`, narrowed `remotePatterns`, re-audit.
-
-### Rollback
-
-- **Before merge:** close the PR. Nothing changed.
-- **After merge, before any strip PR lands:** `git revert -m 1 <merge-sha>` through a PR. Redoing the sync later then means reverting the revert. A hard reset of `main` to `sldtp/pre-sync` is cleaner, and it is a force-push that needs David Ogoo's explicit OK.
-- **After the strip has started:** no rollback. Fix forward. That is why verification step 4 is mandatory.
-- **If the sync is not taken:** record `4b9492b9d` in `.sldtp/upstream-baseline`. We then start from the June base, cherry-pick PRs #1408, #1410, #1416, #1446 (if any payment code survives), #1465, and the `af39bd178` rate limit by hand, and accept that the 8 June code lacks five months of upstream fixes in kept routes.
-
-### Bringing `redesign` across after the sync
-
-If the sync lands on `main` and the Daybreak UI is still wanted, merge or rebase `redesign` onto `sldtp/sync-0` in a **separate** PR. That PR is where the 36 conflicts in section 1.1 get resolved. It is not part of the sync, and it is not part of this document's change. Resolving it before the strip is still smaller than resolving upstream plus Daybreak plus the strip in one merge.
 
 ## 5. Ongoing intake policy
 
@@ -258,7 +259,7 @@ If the sync lands on `main` and the Daybreak UI is still wanted, merge or rebase
 
 ### Recommendation
 
-**D from the first strip PR (about 11 January), with C as the mechanism when it applies cleanly.** There are no further merges after `sldtp/sync-0`.
+**D from the first strip PR (about 11 January), with C as the mechanism when it applies cleanly.** Whichever way D1 goes, there is no second full merge of upstream. Option (a) stops after `sldtp/sync-0`. Option (b) never starts one.
 
 **When to stop watching (switch D → E).** Review at the quarterly fork review (GAP-17). Stop when **any** of the following is true:
 
@@ -304,7 +305,7 @@ python3 scripts/sldtp/upstream-triage.py --all           # include IRRELEVANT ro
 python3 scripts/sldtp/upstream-triage.py --check         # CI mode
 ```
 
-The script exits immediately until `.sldtp/upstream-baseline` exists or `--base` is passed. The baseline is written by the sync PR, not by this change. `--check` is for the future drift job. This change does not wire it into CI.
+The script exits immediately until `.sldtp/upstream-baseline` exists or `--base` is passed. The baseline is written when D1 is settled (option (a) records `6544345c2`, option (b) records `4b9492b9d`), not by this change. `--check` is for the future drift job. This change does not wire it into CI.
 
 ## 6. Porting a fix: the steps
 
@@ -384,7 +385,7 @@ Today the repo has no tests. Ports are only safe with three minimum layers, whic
 
 ## 8. CI and automation (FND-02, FND-11)
 
-Not in this change. The jobs below are the agreed shape for FND-02. Branch protection is unchanged until that work lands.
+Not in this change. The jobs below are the agreed shape for FND-02. Branch protection on `main` is recommended now, because the branch has none, and it is not turned on here (section 3). The jobs themselves wait for FND-02.
 
 | Job | Trigger | Fails when | Blocks merge? |
 | --- | --- | --- | --- |
@@ -450,7 +451,7 @@ Checked on upstream `6544345c2` on 27 November 2026:
 New files therefore use `SPDX-License-Identifier: AGPL-3.0-only`, not `AGPL-3.0-or-later`. `scripts/sldtp/upstream-triage.py` already does. FND-03 can revisit the header text. It should not switch the identifier to `-or-later` unless a grant in the repo actually says so.
 
 - **Section 13, the network source offer.** Every page footer has a Source link to the **exact running tag** (`https://github.com/christex-foundation/future-of-work/tree/<tag>`), plus build instructions and an env template with secrets removed. The build injects the tag, so the link cannot drift from what is deployed. If the repo is ever made private, the link must point to a public tarball of that tag instead.
-- **Section 5(a), notices of modification.** Add `NOTICE.md`: "SLDTP platform, modified by Christex Foundation from SuperteamDAO/earn (GNU AGPL version 3), modifications since 2026-06-08". The `.sldtp/deleted-paths` ledger and git history document what changed. `NOTICE.md` is not added in this change. The fork's first modification on `main` is the MariaDB adapter (`3da3094d2`). `redesign` adds further UI modifications on top of that.
+- **Section 5(a), notices of modification.** Add `NOTICE.md`: "SLDTP platform, modified by Christex Foundation from SuperteamDAO/earn (GNU AGPL version 3), modifications since 2026-06-08". The `.sldtp/deleted-paths` ledger and git history document what changed. `NOTICE.md` is not added in this change. `main` carries the MariaDB adapter (`3da3094d2`) and the 48 Daybreak commits through `97bfeeb8e`.
 - **Keep** `LICENSE` and every existing copyright notice. New files carry `SPDX-License-Identifier: AGPL-3.0-only` and `Copyright (c) 2026 Christex Foundation`.
 - **Trademarks:** remove Superteam and Earn names and logos from the UI (strip B already plans to). The AGPL does not grant trademark rights.
 - **Dependencies:** MIT, BSD, Apache-2.0, LGPL, GPL-3.0, and AGPL-3.0 are compatible with distributing this program under the AGPL. No proprietary or SSPL code in the build. Add a licence check to the `audit` job (`pnpm licenses list` against an allowlist).
@@ -462,27 +463,27 @@ New files therefore use `SPDX-License-Identifier: AGPL-3.0-only`, not `AGPL-3.0-
 
 No effort figures here. The sequencing change is:
 
-- FND-04, the one-time sync, can happen before the strip, on `main`, once section 1.1's receiving branch is confirmed. The conflict set on `main` was re-checked on 27 November 2026.
-- FND-11 remains the drift job, branch rules, and AGPL hygiene. The triage script is in the repo. The ledger check, the migrations check, `CODEOWNERS`, and the footer are not.
+- FND-04 waits on D1. Option (a) is the 36-path merge into current `main`. Option (b) is security ports only. Neither has been started.
+- FND-11 remains the drift job, branch rules, and AGPL hygiene. The triage script is in the repo. The ledger check, the migrations check, `CODEOWNERS`, and the footer are not. Branch protection on `main` is recommended now. The branch has none (section 3).
 - FND-12, weekly triage, stays a priority. Security ports are not optional. Bugfix ports stay a monthly batch.
 - FND-09, the Prisma baseline, also covers splitting the schema folder.
 - GAP-17, the quarterly fork review, first falls in early June 2027 and checks the triggers for stopping the upstream watch.
 
 ## 13. Decisions
 
-**Approved by David Ogoo, November 2026.**
+**D2–D10 approved by David Ogoo, November 2026. D1 is pending.**
 
-| # | Decision | Agreed outcome |
+| # | Decision | Outcome |
 | --- | --- | --- |
-| D1 | One-time upstream sync (merge `6544345c2` before any strip) | **Yes.** A reviewed PR into `main`, merged with a merge commit, then tag `sldtp/sync-0`. The `main` trial's conflict is still `pnpm-lock.yaml` only. Section 1.1: do not retarget this onto `redesign` unless a 36-path merge is explicitly accepted. The sync PR is not part of this change |
-| D2 | Merge or rebase for that sync | **Merge.** It needs no force-push and keeps `3da3094d2` reachable |
-| D3 | Steady-state model after the sync | **Hard fork with watched upstream:** weekly scripted triage, hand-ported security fixes, no further merges. Review the stop-watching triggers quarterly |
-| D4 | Detach the GitHub fork relationship from `SuperteamDAO/earn` | **Yes, after the sync is merged.** Use GitHub's leave-fork-network setting or ask GitHub Support. This prevents accidental PRs to Superteam's repo. `git fetch upstream` keeps working |
+| D1 | Upstream intake for the current `main` | **Pending David's decision.** (a) A one-time full merge of `6544345c2` (36 conflicting paths, including schema `Sponsors.socials` vs `location`, the home listing filter, and nav, listing, and dashboard UI; it also brings Next 16.3.8, React 19.3, TypeScript 7.0.2, and `clsx` / `tailwind-merge` → `cn`), reviewed by the Daybreak author. Or (b) no merge; port upstream security fixes only via weekly triage. Evidence is section 1.1. This change does not pick (a) or (b) |
+| D2 | Merge or rebase, if D1 is option (a) | **Merge.** It needs no force-push and keeps `3da3094d2` reachable. Does not apply if D1 is option (b) |
+| D3 | Steady-state model after D1 | **Hard fork with watched upstream:** weekly scripted triage, hand-ported security fixes, no further full merges. Review the stop-watching triggers quarterly |
+| D4 | Detach the GitHub fork relationship from `SuperteamDAO/earn` | **Yes, after D1 is settled.** Use GitHub's leave-fork-network setting or ask GitHub Support. This prevents accidental PRs to Superteam's repo. `git fetch upstream` keeps working |
 | D5 | Who owns weekly triage | **A named triage owner, with a named backup.** Agents pre-fill. Humans decide and sign the log. Names are kept outside this repository |
 | D6 | Code rules: `src/sldtp/`, the seams, the `SLDTP-BEGIN` / `SLDTP-END` markers, adapt-by-move, the deletion ledger | **Yes.** Recorded in [ADR 0002](adr/0002-fork-code-rules.md) |
 | D7 | Database: split schema folder, baseline migration after the strip, `db push` banned outside local throwaway databases | **Yes** |
-| D8 | Dependency policy independent of upstream: Next 16.4.6 in its own PR, exact pins, 48-hour security patches, no majors after 15 February | **Yes** |
-| D9 | Required CI checks and branch protection as in section 8, with merge commits allowed so the sync is not squashed | **Yes**, set with FND-02. Not in this change |
+| D8 | Dependency policy independent of upstream: exact pins, 48-hour security patches, no majors after 15 February. Next 16.4.6 in its own PR | **Yes.** Option (a) would land Next 16.3.8 inside the merge; 16.4.6 is still separate. Option (b) does not take upstream's versions |
+| D9 | Required CI checks and branch protection as in section 8, with merge commits allowed so option (a) is not squashed | **Yes.** `main` currently has no branch protection. Turn that on. The CI jobs themselves are FND-02 and are not in this change |
 | D10 | Contribute anything back to Superteam (for example a `DATABASE_ADAPTER=mariadb` switch) | **Not before March.** Revisit at the June review. There is little to gain while we diverge |
 
 ## Appendix: files in this repository
@@ -494,4 +495,4 @@ No effort figures here. The sequencing change is:
 
 Not in this repository: rendered diagram images, the sample triage table, `.sldtp/upstream-baseline`, `.sldtp/upstream-log.tsv`, `NOTICE.md`, and CI workflows.
 
-**Unverified here:** `next build` and a running app on the trial merge (the earlier trial ran `tsc --noEmit` and `prisma generate` only, and this check did not re-run them); whether GitHub currently offers self-service fork detachment for this org; the classifier's precision on future upstream commits. The SPDX finding in section 11 and the conflict sets in section 1.1 were checked on 27 November 2026.
+**Unverified here:** `next build`, `tsc --noEmit`, and a running app on a merge into current `main` (the earlier trial ran `tsc --noEmit` and `prisma generate` only, and only against `3da3094d2`); whether GitHub currently offers self-service fork detachment for this org; the classifier's precision on future upstream commits. The SPDX finding in section 11, the 36-path conflict set, the dependency versions, and `protected: false` on `main` were checked on 27 November 2026.
