@@ -4,7 +4,20 @@ Checked against `integration` at `b6c208cf6`. **Planned** sections are [ADR-0004
 
 ## Current
 
-GitHub Actions (`.github/workflows/ci.yml`) runs on pull requests and on pushes to `main` and `integration`. Both jobs use Node 22 and pnpm 10, and install with `pnpm install --frozen-lockfile`. The `check` job typechecks and runs `scripts/sldtp/upstream-triage.py --check-imported`. The `audit` job is non-blocking.
+GitHub Actions (`.github/workflows/ci.yml`) runs on pull requests and on pushes to `main` and `integration`. Jobs use Node 24 and pnpm 10 (`packageManager` in `package.json`), and install with `pnpm install --frozen-lockfile`.
+
+```mermaid
+flowchart LR
+  pr["Pull request or push"]
+  check["check<br>lint, typecheck, ledger, Vitest"]
+  audit["audit<br>non-blocking"]
+  e2e["e2e<br>Playwright, MariaDB 10.11<br>3-minute cap"]
+  pr --> check
+  pr --> audit
+  pr --> e2e
+```
+
+The `check` job lints, typechecks, runs `scripts/sldtp/upstream-triage.py --check-imported`, and runs `pnpm test`. The `audit` job is non-blocking. The `e2e` job builds the app, then runs Playwright against MariaDB 10.11. That Playwright step has `timeout-minutes: 3`. If the Privy test secrets are absent, the job fails and says so. See [ADR-0020](../adr/0020-journey-tests-and-thin-vitest.md).
 
 `vercel.json` rewrites `/build` and `/hackathon` to `superteam.fun`, and its install command is `pnpm install --frozen-lockfile`. `next.config.ts` rewrites `/docs-keep/*` to PostHog and `/cdn/*` to third-party CDNs. The CSP names Privy, Solana, PostHog, Sumsub, WalletConnect, Cloudinary, and `wss://earn-vibe-production.up.railway.app`.
 

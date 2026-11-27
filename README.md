@@ -245,6 +245,23 @@ The setup notes below are the upstream Earn instructions and still describe this
    pnpm dev
    ```
 
+## Tests
+
+`pnpm test` runs Vitest. It mocks Privy and Prisma and does not need a database.
+
+`pnpm test:e2e` runs the Playwright journeys. Sign-in uses a dedicated Privy test app. These values come from the environment only (in CI, GitHub Actions secrets). Do not commit them.
+
+- `PRIVY_TEST_APP_ID`
+- `PRIVY_TEST_APP_SECRET`
+- `PRIVY_TEST_VERIFICATION_KEY`
+- `PRIVY_TEST_OTP`
+- `PRIVY_TEST_TALENT_EMAIL`
+- `PRIVY_TEST_EMPLOYER_EMAIL`
+- `PRIVY_TEST_TALENT_DID`
+- `PRIVY_TEST_EMPLOYER_DID`
+
+The e2e job maps the app id, secret, and verification key onto `NEXT_PUBLIC_PRIVY_APP_ID`, `PRIVY_APP_SECRET`, and `PRIVY_VERIFICATION_KEY`. Setup for the Privy test app is in [tests/e2e/README.md](tests/e2e/README.md). If those secrets are missing, the e2e job fails.
+
 ## ⭐Contributing
 
 We welcome contributions from everyone! Whether it's submitting an issue, a pull request, or suggesting new ideas, your input is highly valued. Check out our [contributing guide](CONTRIBUTING.md) for guidelines on how to proceed.

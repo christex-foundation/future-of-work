@@ -18,7 +18,8 @@ export default async function handler(
   // adding this to eliminate the need for OSS contributors to set up zerobounce themselves
   const isDev = process.env.VERCEL_ENV !== 'production';
   if (isDev) {
-    res.status(200).json({ isValid: true });
+    // Stop here. Without this return the handler still calls ZeroBounce.
+    return res.status(200).json({ isValid: true });
   }
 
   try {
