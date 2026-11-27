@@ -1,0 +1,7 @@
+Upstream 4b9492b9d..6544345c2: 95 first-parent commits; BUGFIX-KEPT 6, DEPS 3, FEATURE-KEPT 12, IRRELEVANT 68, SECURITY 1, SECURITY-DELETED 
+| e6fe9aad3 | 2026-06-17 | SECURITY-DELETED | TODO | 0/1 | Merge pull request #1408 from SuperteamDAO/fix/security-audit |  |
+| 5582208bd | 2026-06-18 | SECURITY-DELETED | TODO | 0/14 | Merge pull request #1410 from SuperteamDAO/fix/security-audit |  |
+| 7afe54e56 | 2026-06-25 | SECURITY-DELETED | TODO | 0/3 | Merge pull request #1416 from SuperteamDAO/fix/security-audit |  |
+| 7c6d87789 | 2026-07-29 | SECURITY-DELETED | TODO | 0/4 | Merge pull request #1446 from SuperteamDAO/fix/txn-validation |  |
+| af39bd178 | 2026-08-07 | SECURITY-DELETED | TODO | 0/4 | ratelimit email validator |  |
+| 7faae4948 | 2026-11-10 | SECURITY | TODO | 1/1 | Merge pull request #1465 from rajanpanth/pr1-security-headers | next.config.ts |

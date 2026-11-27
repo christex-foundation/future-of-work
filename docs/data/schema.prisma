@@ -1,0 +1,426 @@
+// Target schema for the March 2027 beta. The live schema is prisma/schema.prisma.
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider     = "mysql"
+  relationMode = "foreignKeys"
+}
+
+// ---------- Identity, profile, inclusion ----------
+
+enum Role {
+  LEARNER
+  EMPLOYER
+  HUB_MANAGER
+  ADMIN
+}
+
+enum SkillLevel {
+  BASIC
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum Gender {
+  FEMALE
+  MALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+model Hub {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  district  String
+  createdAt DateTime @default(now())
+
+  users      User[]
+  attendance Attendance[]
+  enrolments Enrolment[]
+}
+
+model User {
+  id         String    @id @default(cuid())
+  privyDid   String    @unique // Privy user id; Privy holds the login (ADR-0006)
+  email      String    @unique
+  role       Role      @default(LEARNER)
+  hubId      String? // learner's home hub, or the hub a hub manager runs
+  employerId String? // employer staff only
+  blockedAt  DateTime?
+
+  // Learner profile and online CV (bid §3.2, §3.8.1)
+  name          String
+  phone         String? // plain; never copied into AuditLog.meta; in exports only for roles that need it (data-model-final §2.2)
+  district      String?
+  locale        String      @default("en") // en | kri
+  skillLevel    SkillLevel?
+  bio           String?     @db.Text
+  cv            Json? // structured CV sections: { education: [...], experience: [...], links: [...] }
+  cvFilePath    String? // optional uploaded CV (private files)
+  profilePublic Boolean     @default(false) // privacy toggle: employers see the profile only when true or when applied
+  nationalIdHmac  String?   @unique // "k1:" + HMAC-SHA256(NATIONAL_ID_HMAC_KEY, normalised id); never cleartext (bid §3.3)
+  nationalIdLast4 String?   @db.Char(4) // display only
+
+  // Inclusion reporting, consent-gated (bid §3.5; ADR-0016). Null until consent.
+  demographicsConsentAt DateTime?
+  gender                Gender?
+  disabilityWgss        Json? // Washington Group Short Set: six domains, answers 1-4. Read only through the InclusionReport view
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hub          Hub?             @relation(fields: [hubId], references: [id])
+  employer     Employer?        @relation("EmployerStaff", fields: [employerId], references: [id])
+  skills       UserSkill[]      @relation("SkillOwner")
+  endorsements UserSkill[]      @relation("SkillEndorser")
+  enrolments   Enrolment[]
+  progress     LessonProgress[]
+  attempts     QuizAttempt[]
+  certificates Certificate[]
+  attendance   Attendance[]     @relation("Attendee")
+  recorded     Attendance[]     @relation("AttendanceRecorder")
+  applications Application[]
+  approvals    Employer[]       @relation("EmployerApprover")
+  auditEntries AuditLog[]
+
+  @@index([role])
+  @@index([hubId])
+  @@index([district, skillLevel])
+}
+
+// ---------- Skills taxonomy (bid §2.4; shared by courses, profiles and opportunities) ----------
+
+enum SkillSource {
+  SELF
+  COURSE
+  HUB_ENDORSED
+}
+
+model Skill {
+  id         String    @id @default(cuid())
+  slug       String    @unique
+  name       String
+  archivedAt DateTime?
+
+  users         UserSkill[]
+  courses       CourseSkill[]
+  opportunities OpportunitySkill[]
+}
+
+model UserSkill {
+  userId       String
+  skillId      String
+  source       SkillSource
+  courseId     String? // set when source = COURSE
+  endorsedById String? // set when source = HUB_ENDORSED
+  verifiedAt   DateTime?
+  createdAt    DateTime    @default(now())
+
+  user       User    @relation("SkillOwner", fields: [userId], references: [id], onDelete: Cascade)
+  skill      Skill   @relation(fields: [skillId], references: [id])
+  course     Course? @relation(fields: [courseId], references: [id])
+  endorsedBy User?   @relation("SkillEndorser", fields: [endorsedById], references: [id])
+
+  @@id([userId, skillId])
+  @@index([skillId])
+}
+
+// ---------- Learning ----------
+
+enum Stage {
+  FOUNDATIONS
+  PRODUCTIVITY_EMPLOYABILITY
+  SPECIALISATION_JOB_LINKAGE
+}
+
+enum LessonKind {
+  TEXT
+  VIDEO
+  PDF
+}
+
+enum CompletionSource {
+  ONLINE
+  HUB_CSV
+}
+
+model Course {
+  id                String     @id @default(cuid())
+  slug              String     @unique
+  version           Int        @default(1) // bump invalidates offline copies (ADR-0011)
+  title             String
+  summary           String     @db.Text
+  stage             Stage
+  level             SkillLevel
+  locale            String     @default("en")
+  minAttendanceDays Int        @default(0) // blended courses: in-person days needed to complete (bid §3.1)
+  published         Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  lessons      Lesson[]
+  quiz         Quiz?
+  skills       CourseSkill[]
+  enrolments   Enrolment[]
+  certificates Certificate[]
+  userSkills   UserSkill[]
+  attendance   Attendance[]
+}
+
+model CourseSkill {
+  courseId String
+  skillId  String
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  skill  Skill  @relation(fields: [skillId], references: [id])
+
+  @@id([courseId, skillId])
+  @@index([skillId])
+}
+
+model Lesson {
+  id          String     @id @default(cuid())
+  courseId    String
+  position    Int
+  section     String // display grouping; no Module table
+  title       String
+  kind        LessonKind
+  bodyMd      String?    @db.Text
+  mediaPath   String? // CDN key; captions by convention media/<lessonId>/captions.<locale>.vtt
+  durationSec Int?
+
+  course   Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress LessonProgress[]
+
+  @@unique([courseId, position])
+}
+
+model Quiz {
+  id          String @id @default(cuid())
+  courseId    String @unique // one final quiz per course
+  passMark    Int // percent
+  maxAttempts Int    @default(3)
+
+  course    Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  questions Question[]
+  attempts  QuizAttempt[]
+}
+
+model Question {
+  id              String @id @default(cuid())
+  quizId          String
+  position        Int
+  prompt          String @db.Text
+  choices         Json // [{ id, label }], sent to clients
+  correctChoiceId String // never selected for clients
+
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([quizId, position])
+}
+
+model Enrolment {
+  userId           String
+  courseId         String
+  hubId            String? // hub cohort, for hub-scoped reports
+  enrolledAt       DateTime          @default(now())
+  completedAt      DateTime?
+  completionSource CompletionSource?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id])
+  hub    Hub?   @relation(fields: [hubId], references: [id])
+
+  @@id([userId, courseId])
+  @@index([courseId, completedAt])
+  @@index([hubId])
+}
+
+model LessonProgress {
+  userId      String
+  lessonId    String
+  completedAt DateTime // earliest wins on sync
+  clientId    String?   @unique // offline idempotency key
+  syncedAt    DateTime?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@id([userId, lessonId])
+  @@index([lessonId])
+}
+
+model QuizAttempt {
+  id         String   @id @default(cuid())
+  clientId   String?  @unique // offline idempotency key
+  userId     String
+  quizId     String
+  answers    Json // { questionId: choiceId }
+  score      Int // percent
+  passed     Boolean
+  overLimit  Boolean  @default(false)
+  answeredAt DateTime // device time
+  scoredAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz Quiz @relation(fields: [quizId], references: [id])
+
+  @@index([userId, quizId])
+}
+
+model Certificate {
+  id            String    @id @default(cuid())
+  serial        String    @unique // public verification id (QR)
+  userId        String
+  courseId      String
+  issuedAt      DateTime  @default(now())
+  revokedAt     DateTime?
+  revokedReason String?
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@unique([userId, courseId]) // one row per learner and course; reissue clears revokedAt on this row (data-model-final §2.3)
+}
+
+model Attendance {
+  userId       String
+  courseId     String // counts towards Course.minAttendanceDays
+  day          DateTime @db.Date
+  hubId        String
+  present      Boolean
+  recordedById String
+  recordedAt   DateTime @default(now())
+
+  user       User    @relation("Attendee", fields: [userId], references: [id], onDelete: Cascade)
+  hub        Hub     @relation(fields: [hubId], references: [id])
+  course     Course  @relation(fields: [courseId], references: [id])
+  recordedBy User    @relation("AttendanceRecorder", fields: [recordedById], references: [id])
+
+  @@id([userId, courseId, day])
+  @@index([hubId, day])
+  @@index([courseId])
+}
+
+// ---------- Jobs ----------
+
+enum OpportunityKind {
+  JOB
+  INTERNSHIP
+  APPRENTICESHIP
+  PAID_TASK
+  TRAINING
+}
+
+enum OpportunityStatus {
+  DRAFT
+  PENDING // awaiting moderation
+  OPEN
+  CLOSED
+  REJECTED
+}
+
+enum ApplicationStatus {
+  SUBMITTED
+  IN_REVIEW
+  INTERVIEW
+  HIRED
+  REJECTED
+  WITHDRAWN
+}
+
+model Employer {
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  name          String
+  logoPath      String?
+  website       String?
+  descriptionMd String?   @db.Text
+  district      String?
+  approvedAt    DateTime?
+  approvedById  String?
+  createdAt     DateTime  @default(now())
+
+  staff         User[]        @relation("EmployerStaff")
+  approvedBy    User?         @relation("EmployerApprover", fields: [approvedById], references: [id])
+  opportunities Opportunity[]
+}
+
+model Opportunity {
+  id            String            @id @default(cuid())
+  employerId    String
+  slug          String            @unique
+  title         String
+  descriptionMd String            @db.Text
+  kind          OpportunityKind
+  entryLevel    Boolean           @default(false)
+  district      String?
+  remote        Boolean           @default(false)
+  deadline      DateTime?
+  expiresAt     DateTime // default publishedAt + 60 days (bid §3.2)
+  status        OpportunityStatus @default(DRAFT)
+  publishedAt   DateTime?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  employer     Employer           @relation(fields: [employerId], references: [id])
+  skills       OpportunitySkill[]
+  applications Application[]
+
+  @@index([status, expiresAt])
+  @@index([district])
+  @@index([employerId])
+}
+
+model OpportunitySkill {
+  opportunityId String
+  skillId       String
+
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  skill       Skill       @relation(fields: [skillId], references: [id])
+
+  @@id([opportunityId, skillId])
+  @@index([skillId])
+}
+
+model Application {
+  id              String            @id @default(cuid())
+  opportunityId   String
+  userId          String
+  coverLetter     String            @db.Text
+  cvPath          String? // optional CV file for this application
+  profileSnapshot Json // profile, skills and certificates at submit time
+  status          ApplicationStatus @default(SUBMITTED)
+  statusChangedAt DateTime          @default(now())
+  employerNotes   String?           @db.Text
+  createdAt       DateTime          @default(now())
+
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
+
+  @@unique([opportunityId, userId])
+  @@index([userId])
+  @@index([opportunityId, status])
+}
+
+// ---------- Platform ----------
+
+model AuditLog {
+  id       BigInt   @id @default(autoincrement())
+  actorId  String?
+  action   String // e.g. login, role.change, employer.approve, profile.update, demographics.read
+  entity   String
+  entityId String
+  meta     Json?
+  ip       String?
+  at       DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id])
+
+  @@index([entity, entityId])
+  @@index([actorId, at])
+}

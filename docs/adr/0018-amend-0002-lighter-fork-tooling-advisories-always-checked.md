@@ -44,8 +44,8 @@ Option 2. The ADR-0002 text changes as follows. Each rule not mentioned here sta
 
 **A2. The deletion ledger is generated from the allowlist and checked for reachability.**
 
-- `strip/allowlist.txt` is the only hand-maintained list. At the strip commit, `strip/check-strip.mjs --emit-ledger` writes `.sldtp/deleted-paths`. Later deletions re-run it. Move lines (`old -> new`) are still written by hand.
-- `check-strip.mjs` lands with the strip PR, not this one. Until then, CI runs `python3 scripts/sldtp/upstream-triage.py --check-imported`. That interim check fails when a ledger path still exists and another `.ts` or `.tsx` file imports it through an `@/` specifier. It does not see relative imports, `require`, CSS `@import`, or `public/` assets.
+- [`docs/strip/allowlist.txt`](../strip/allowlist.txt) is the only hand-maintained list. At the strip commit, `node docs/strip/check-strip.mjs --emit-ledger` writes `.sldtp/deleted-paths`. Later deletions re-run it. Move lines (`old -> new`) are still written by hand.
+- [`docs/strip/check-strip.mjs`](../strip/check-strip.mjs) is in the repo as docs tooling. It is not a CI job. The required CI job starts with the strip PR. Until then, CI runs `python3 scripts/sldtp/upstream-triage.py --check-imported`. That interim check fails when a ledger path still exists and another `.ts` or `.tsx` file imports it through an `@/` specifier. It does not see relative imports, `require`, CSS `@import`, or `public/` assets.
 - The strip PR replaces that command with `check-strip.mjs --strict --ledger .sldtp/deleted-paths`. It fails if a kept file imports a non-kept or ledger path (static, dynamic, `require`, CSS `@import`), if an import doesn't resolve, if a kept file references a non-kept `public/` asset, or if a ledger glob matches a kept file.
 - An upstream port that would recreate a deleted path fails the same check. The conflict rule "take ours (stay deleted)" is then enforced, not just written down.
 
@@ -53,14 +53,14 @@ Option 2. The ADR-0002 text changes as follows. Each rule not mentioned here sta
 
 **A4. No touch-budget report.** After the allowlist strip, almost no upstream file is edited in place: the kept set is the UI kit, the Privy funnel, `prisma.ts`, a few utils and config. Counting markers adds a report nobody acts on. The reviewer still greps `SLDTP-BEGIN` when a PR edits a kept upstream file.
 
-**A5. Markers only where an upstream file is edited in place.** About 20 files, listed in `strip/allowlist.txt`, minus the ones moved into `src/sldtp/`. Files moved into `src/sldtp/` need no markers, because adapt-by-move is the rule.
+**A5. Markers only where an upstream file is edited in place.** About 20 files, listed in [`docs/strip/allowlist.txt`](../strip/allowlist.txt), minus the ones moved into `src/sldtp/`. Files moved into `src/sldtp/` need no markers, because adapt-by-move is the rule.
 
 **A6. Corrections to ADR-0002 that follow from later ADRs:**
 
 - Routes are the Pages Router only. The CTO accepted ADR-0014 on 27 Nov 2026. All routes go in `src/pages/` and `src/pages/api/`, and `src/app/` is deleted in the strip. ADR-0002's App Router line is amended to say that.
 - The seam table's `src/sldtp/auth/` (roles, TOTP, guards) becomes "roles and guards over Privy" (ADR-0006). The auth seam wraps `getPrivyToken`, not a replacement session. The same correction is in the strategy §7.2 and §9.
 - The strategy line that removed Privy with the deleted SaaS packages is struck. `@privy-io/react-auth` and `@privy-io/node` stay.
-- ADR-0002 no longer says this repository has no ADR 0001. ADR-0001 is not added to this repository in this change.
+- ADR-0002 points at [ADR-0001](0001-record-architecture-decisions.md), which records how decisions are kept.
 
 ### Consequences
 

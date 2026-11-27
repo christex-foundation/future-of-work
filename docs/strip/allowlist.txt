@@ -1,0 +1,90 @@
+# SLDTP strip allowlist (ADR-0007, ADR-0018). Paths are repo-relative globs.
+# Everything under src/, public/ and prisma/ that matches no line is deleted.
+# A leading "!" removes files from the kept set. Order does not matter for "!" lines.
+# A leading "~" keeps the path but marks it as rewritten in the strip PR: its current imports are not checked
+# until --strict (used in the strip PR and in CI).
+# "**" matches across folders; "*" matches inside one folder.
+
+# --- New SLDTP code (created before the strip PR: Daybreak extraction, adapted auth)
+src/sldtp/**
+
+# --- Design system
+src/components/ui/*
+!src/components/ui/token-icon.tsx
+!src/components/ui/token-input.tsx
+!src/components/ui/cloudinary-image.tsx
+src/components/shared/EmptySection.tsx
+src/components/shared/ErrorSection.tsx
+src/components/shared/ErrorInfo.tsx
+src/components/shared/MarkdownRenderer.tsx
+src/components/icons/AiOutlineInfoCircle.tsx
+src/components/icons/AiOutlineWarning.tsx
+src/components/icons/helpers/GenIcon.tsx
+src/components/icons/helpers/IconContext.tsx
+!src/components/ui/form-field-wrapper.tsx
+src/styles/globals.css
+src/theme/fonts.ts
+src/theme/fonts-st.ts
+
+# --- Adapt: Privy auth funnel (ADR-0006). Moved into src/sldtp/auth/ in step 3.
+src/lib/privy.ts
+src/lib/api.ts
+src/features/auth/utils/getPrivyToken.ts
+src/features/auth/utils/withAuth.ts
+src/features/auth/utils/withSponsorAuth.ts
+src/features/auth/utils/getUserSession.ts
+src/features/auth/utils/getSponsorSession.ts
+src/features/auth/components/Login.tsx
+src/features/auth/components/EmailSignIn.tsx
+src/features/auth/components/SignIn.tsx
+~src/components/providers.tsx
+~src/store/user.ts
+
+# --- Platform utilities
+~src/prisma.ts
+src/lib/logger.ts
+src/lib/domPurify.ts
+src/utils/cn.ts
+src/utils/dayjs.ts
+src/utils/timeAgo.ts
+src/utils/truncateString.ts
+src/utils/safeStringify.ts
+src/hooks/use-breakpoint.ts
+src/hooks/use-clipboard.ts
+src/hooks/use-disclosure.ts
+src/hooks/use-media-query.ts
+src/hooks/use-timeout.ts
+src/constants/country.ts
+
+# --- Moved from src/app/api to src/pages/api in the strip PR (ADR-0014, strip-map §2.2).
+# "~" because the handler is rewritten from a route.ts(x) export to a pages/api handler.
+# Security ports #1450 (image delete owner and folder checks) and #1520 (strict Cloudinary URL parsing)
+# land on the new paths, not the old ones.
+~src/app/api/image/sign/route.ts
+~src/app/api/image/delete/route.ts
+~src/app/api/dynamic-og/listing/route.tsx
+~src/app/api/dynamic-og/sponsor/route.tsx
+~src/app/api/dynamic-og/talent/route.tsx
+src/lib/image-upload/**
+src/utils/cloudinary.ts
+~src/utils/ogHelpers.ts
+src/pages/api/image/**
+src/pages/api/og/**
+
+# --- Pages shell (both rewritten in the strip PR)
+src/pages/_document.tsx
+~src/pages/_app.tsx
+~src/pages/index.tsx
+~src/pages/api/health.ts
+
+# --- Public assets
+public/favicon-*.png
+public/android-chrome-*.png
+public/apple-touch-icon.png
+public/site.webmanifest
+public/*.woff2
+public/fow-favicon.svg
+public/favicon.ico
+
+# --- Schema (replaced by the FND-09 baseline)
+prisma/schema.prisma

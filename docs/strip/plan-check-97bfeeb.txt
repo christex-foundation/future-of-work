@@ -1,0 +1,15 @@
+files scanned: 1318  kept: 110  deleted: 1208
+kept imports deleted: src/features/auth/components/EmailSignIn.tsx -> src/features/auth/atoms.ts
+kept imports deleted: src/features/auth/components/EmailSignIn.tsx -> src/features/auth/utils/email.ts
+kept imports deleted: src/features/auth/components/EmailSignIn.tsx -> src/features/auth/utils/handleUserCreation.ts
+kept imports deleted: src/features/auth/components/Login.tsx -> src/features/conversion-popups/atoms.ts
+kept imports deleted: src/features/auth/components/Login.tsx -> src/features/auth/atoms.ts
+kept imports deleted: src/features/auth/components/Login.tsx -> src/features/auth/utils/handleUserCreation.ts
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/components/icons/MdOutlineEmail.tsx
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/constants/TERMS_OF_USE.ts
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/svg/google.tsx
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/features/auth/atoms.ts
+kept imports deleted: src/features/auth/components/SignIn.tsx -> src/features/auth/utils/handleUserCreation.ts
+kept imports deleted: src/features/auth/utils/withAuth.ts -> src/features/auth/types/index.ts
+kept imports deleted: src/features/auth/utils/withSponsorAuth.ts -> src/features/auth/types/index.ts
+FAIL: 13 problem(s)

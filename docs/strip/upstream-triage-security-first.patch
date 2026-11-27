@@ -1,0 +1,21 @@
+--- a/scripts/sldtp/upstream-triage.py	2026-11-27 17:51:51.007076330 +0000
++++ b/scripts/sldtp/upstream-triage.py	2026-11-27 17:57:38.628263503 +0000
+@@ -136,9 +136,16 @@
+         mov = [f for f in files if deleted(f, moved)]
+         deps = [f for f in files if f in DEP_FILES]
+         text = subj + " " + body
+-        if not kept and not deps and not mov:
++        sec = SEC.search(text)
++        if sec and deps:
++            cls = "SECURITY-DEPS"       # ADR-0018 A1: check every named package against our lockfile
++        elif sec and kept:
++            cls = "SECURITY"
++        elif sec and not mov:
++            cls = "SECURITY-DELETED"    # ADR-0018 A1: deleted path, read once for the pattern
++        elif not kept and not deps and not mov:
+             cls = "IRRELEVANT"          # only deleted paths or brand-new upstream paths
+-        elif SEC.search(text):
++        elif sec:
+             cls = "SECURITY"
+         elif not kept and mov:
+             cls = "MOVED"               # touches code we moved into src/sldtp/: port by hand if it matters
