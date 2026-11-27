@@ -1,0 +1,48 @@
+# Deletion ledger for the SLDTP fork. See docs/fork-and-upstream-sync.md, section 7.3.
+#
+# One path or glob per line. '#' starts a comment. Blank lines are ignored.
+# A line "old/glob/** -> src/sldtp/new/" records a move.
+#
+# These are the files the Daybreak line removed between 3da3094d2 and 97bfeeb8e.
+# Each one is gone from main, and nothing that remains imports it.
+# Do not add a directory glob for a tree that is still live. src/features/stfun/**
+# is live Daybreak code (header, cards, branding). Only the five files below,
+# which Daybreak actually deleted, belong here.
+src/components/icons/IoDuplicateOutline.tsx
+src/components/icons/MdIosShare.tsx
+src/components/icons/MdOutlineInstallMobile.tsx
+src/components/icons/MdOutlineLock.tsx
+src/components/modals/InstallPWAModal.tsx
+src/components/shared/SkillsCombobox.tsx
+src/components/ui/aspect-ratio.tsx
+src/features/announcements/components/AnnouncementContent.tsx
+src/features/announcements/components/AnnouncementModal.tsx
+src/features/announcements/components/AnnouncementNavigation.tsx
+src/features/announcements/components/AnnouncementPagination.tsx
+src/features/announcements/components/TalentAnnouncements.tsx
+src/features/announcements/talent/Credits.tsx
+src/features/announcements/talent/Wallet.tsx
+src/features/announcements/types/announcement.ts
+src/features/home/components/SidebarBanner.tsx
+src/features/home/components/SponsorStage/BoostBanner.tsx
+src/features/home/components/SponsorStage/BoostedBanner.tsx
+src/features/home/components/SponsorStage/NewSponsorBanner.tsx
+src/features/home/components/SponsorStage/NextListingBanner.tsx
+src/features/home/components/SponsorStage/PaymentPendingBanner.tsx
+src/features/home/components/SponsorStage/ReviewAiBanner.tsx
+src/features/home/components/SponsorStage/ReviewBanner.tsx
+src/features/home/components/SponsorStage/ReviewUrgentBanner.tsx
+src/features/home/components/SponsorStage/SponsorStageBanner.tsx
+src/features/home/components/SponsorStage/UnderVerificationBanner.tsx
+src/features/listings/queries/submissions.tsx
+src/features/navbar/components/AnnouncementBar.tsx
+src/features/pro/components/ProIntroDialog.tsx
+src/features/sponsor-dashboard/components/ListingTable.tsx
+src/features/sponsor-dashboard/components/SelectHackathon.tsx
+src/features/sponsor/icons/Superteam.tsx
+src/features/stfun/components/cards/IllustrationCard.tsx
+src/features/stfun/components/common/Modal.tsx
+src/features/stfun/components/common/SuperteamMap.tsx
+src/features/stfun/components/common/Thunder.tsx
+src/features/stfun/components/sections/Geographies.tsx
+src/hooks/use-scroll-shadow.ts
