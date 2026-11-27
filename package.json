@@ -2,6 +2,10 @@
   "name": "superteam",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development next dev",
     "build": "prisma generate && next build",
