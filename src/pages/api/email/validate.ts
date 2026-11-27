@@ -15,10 +15,9 @@ export default async function handler(
     return res.status(400).json({ message: 'Email is required' });
   }
 
-  // adding this to eliminate the need for OSS contributors to set up zerobounce themselves
-  const isDev = process.env.VERCEL_ENV !== 'production';
-  if (isDev) {
-    res.status(200).json({ isValid: true });
+  // Local opt-in only. Unset VERCEL_ENV (on-prem production) still validates.
+  if (process.env.SKIP_EMAIL_VALIDATION === 'true') {
+    return res.status(200).json({ isValid: true });
   }
 
   try {
