@@ -13,6 +13,15 @@
   [![Follow](https://img.shields.io/twitter/follow/superteamearn.svg?style=social)](https://twitter.com/superteamearn)
 </div>
 
+## Fork and upstream sync
+
+This repository is a public fork of [SuperteamDAO/earn](https://github.com/SuperteamDAO/earn). It is licensed under the GNU AGPL version 3. The terms are the verbatim [`LICENSE`](LICENSE) file. Christex Foundation maintains the fork as the SLDTP platform.
+
+- [Fork and upstream-sync strategy](docs/fork-and-upstream-sync.md)
+- [ADR 0002: Fork code rules](docs/adr/0002-fork-code-rules.md)
+
+The setup notes below are the upstream Earn instructions and still describe this tree.
+
 ## 🔗Official Links
 
 - <img src="https://earn.superteam.fun/favicon.ico" title="Superteam Earn Icon" alt="superteam-earn-icon" width="24" height="24" /> Superteam Earn website - [https://earn.superteam.fun](https://earn.superteam.fun)
