@@ -28,7 +28,7 @@ Skills-to-jobs platform for MoCTI Sierra Leone, on the `christex-foundation/futu
 | [0003](adr/0003-nextjs-fork-is-the-whole-platform.md) | The Next.js fork is the whole platform | Accepted. G1 pending |
 | [0004](adr/0004-hosting-on-prem-primary-cloud-standby-cdn.md) | On-prem primary, cloud standby, CDN for lesson media | Accepted |
 | [0005](adr/0005-mariadb-prisma-migrations-only.md) | MariaDB 10.11, migrations only, real foreign keys | Accepted |
-| [0006](adr/0006-identity-with-privy-roles-in-sldtp.md) | Privy for identity, roles in our code | Accepted. Step-up depends on the week-1 spike |
+| [0006](adr/0006-identity-with-privy-roles-in-sldtp.md) | Privy for identity; emailed-code step-up for admin and hub manager | Accepted. Amended 28 Nov 2026: emailed code only, no TOTP |
 | [0007](adr/0007-delete-not-flag-allowlist-strip.md) | Delete, don't flag. Allowlist plus a reachability check | Accepted |
 | [0008](adr/0008-no-upstream-merge-weekly-triage.md) | No upstream merge. Weekly triage | Accepted |
 | [0009](adr/0009-src-sldtp-module-boundary.md) | Product code in `src/sldtp/` | Accepted. Module list proposed |

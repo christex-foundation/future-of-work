@@ -33,7 +33,7 @@ sequenceDiagram
 
 ## Planned login
 
-[ADR-0006](../adr/0006-identity-with-privy-roles-in-sldtp.md). Email one-time code for every role. Google comes out of `loginMethods`. Admin and hub manager then pass a TOTP step-up through Privy's server-side MFA API, after a week-1 spike. The spike stops if enrolment needs an embedded wallet.
+[ADR-0006](../adr/0006-identity-with-privy-roles-in-sldtp.md). Email one-time code for every role. Google comes out of `loginMethods`. An admin who attempts a privileged action receives a second Privy emailed code, enters it, and the action proceeds. A missing or wrong code is blocked. The same step-up applies to a hub manager. No authenticator-app TOTP and no SMS (amendment of 28 Nov 2026).
 
 ```mermaid
 sequenceDiagram
@@ -46,17 +46,24 @@ sequenceDiagram
   Privy-->>Browser: 6-digit code
   Browser->>Privy: Code
   Privy-->>Browser: Access token
-  Browser->>API: Bearer token
+  Browser->>API: Privileged action, bearer token
   API->>Session: requireRole
   Session->>Session: Verify with PRIVY_VERIFICATION_KEY
   Session->>DB: User by privyDid
   Session-->>API: User or 401 or 403
-  alt Admin or hub manager, no step-up cookie
+  alt Admin or hub manager, no recent step-up
     API-->>Browser: 403 step_up_required
-    Browser->>API: POST /api/me/step-up
-    API->>Privy: Verify TOTP
-    Privy-->>API: MFA token
-    API-->>Browser: Step-up cookie
+    Browser->>Privy: Request emailed code
+    Privy-->>Browser: Emailed code
+    Browser->>API: POST /api/me/step-up with the code
+    API->>Privy: Verify emailed code
+    alt Code missing or wrong
+      API-->>Browser: Blocked
+    else Code matches
+      API-->>Browser: Step-up cookie
+      Browser->>API: Privileged action
+      API-->>Browser: Action proceeds
+    end
   end
 ```
 

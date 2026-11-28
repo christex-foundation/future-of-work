@@ -22,12 +22,14 @@ Looked at and **not cut**, because they are bid rows: audit log (§2.4, §3.5), 
 | Decision | Items | Hours |
 | --- | --- | --- |
 | Keep Privy (ADR-0006) | FND-10 "remove Privy" dropped (−24); AUT-02 password sign-up, sessions → Privy wiring and first-login provisioning (40 → 8, −32); AUT-03 lockout → proxy limits on our own endpoints (16 → 4, −12); AUT-04 reset and verification → Privy does it (24 → 0, −24); HUB-02 CSV import also creates Privy users (+8) | **−84** |
-| Admin and hub-manager TOTP step-up through Privy's server-side MFA API (**agreed**, CTO, 27 Nov 2026; ADR-0006). If the week-1 spike finds that enrolment needs an embedded wallet, stop and escalate | AUT-10 24 → 20 (spike 3, enrolment 5, step-up and cookie 6, authenticator reset 3, tests 3) | **−4** |
+| ~~Admin and hub-manager TOTP step-up through Privy's server-side MFA API (CTO, 27 Nov 2026; ADR-0006).~~ **Superseded 28 Nov 2026.** That agreement is not the current decision, and its −4 h is not in the net | ~~AUT-10 24 → 20 (spike 3, enrolment 5, step-up and cookie 6, authenticator reset 3, tests 3)~~ | ~~−4~~ |
+| Privy emailed-code step-up for admin and hub manager **replaces** TOTP MFA (David Ogoo, 28 Nov 2026; ADR-0006). No authenticator app and no SMS. This departs from the bid's TOTP wording in tech.txt §2.4 and §3.3 and may need a change notice. §4.3, as cited in this file, is the password-policy and lockout wording, so it does not apply to this cut | AUT-10 24 → 8 (guard on admin API routes 2, emailed-code verify and cookie 3, step-up prompt 2, one unit test 1) | **−16** |
 | No upstream merge (ADR-0008) | FND-04 one-time sync dropped | **−12** |
 | Hosting: on-prem primary + cloud warm standby + CDN/object storage (ADR-0004) | CDN and bucket 8, upload in the content pipeline 6, offline download test against the CDN 6, standby 10, restore drill and failover runbook 10 | **+40** |
-| **Net** | | **−60** |
+| **Net** | | **−72** |
 
 ## 3. Things the decisions leave open (for the change notice, not for engineering)
 
-- The bid promised argon2id passwords, a password policy and brute-force lockout (tech.txt §3.3, §4.3). Privy login is passwordless, so these are a disclosed deviation. The **TOTP MFA for admin and hub manager** row (§2.4, §3.3) is met by the agreed Privy TOTP step-up, if the week-1 spike passes (ADR-0006).
+- The bid promised argon2id passwords, a password policy and brute-force lockout (tech.txt §3.3, §4.3). Privy login is passwordless, so these are a disclosed deviation. §4.3 is that password wording. It does not name TOTP.
+- The bid's **TOTP MFA for admin and hub manager** (tech.txt §2.4, §3.3) is cut. David Ogoo decided on 28 Nov 2026 to replace it with a Privy emailed-code step-up (ADR-0006). No authenticator app and no SMS. This departs from the bid and may need a change notice to the client. The 27 Nov note that the CTO had agreed to TOTP is superseded by that decision.
 - Privy holds learner email addresses and login metadata outside the MoCTI data centre, and costs about $299/month on Privy Core at 500–2,499 monthly active users (ADR-0017, [pricing](https://www.privy.io/pricing)).
