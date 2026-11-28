@@ -33,7 +33,7 @@ sequenceDiagram
 
 ## Planned login
 
-[ADR-0006](../adr/0006-identity-with-privy-roles-in-sldtp.md). Email one-time code for every role. Google comes out of `loginMethods`. Admin and hub manager then pass a TOTP step-up through Privy's server-side MFA API, after a week-1 spike. The spike stops if enrolment needs an embedded wallet.
+[ADR-0006](../adr/0006-identity-with-privy-roles-in-sldtp.md). Email one-time code for every role. Google comes out of `loginMethods`. An admin who attempts a privileged action receives a Privy email-MFA code. Our API checks that code with `POST /v1/users/{user_id}/mfa/email/verification/verify`. The action proceeds when that call returns an MFA token. A missing or wrong code is blocked. A hub manager uses the same step-up. No authenticator-app TOTP and no SMS (amendment of 28 Nov 2026).
 
 ```mermaid
 sequenceDiagram
@@ -46,21 +46,28 @@ sequenceDiagram
   Privy-->>Browser: 6-digit code
   Browser->>Privy: Code
   Privy-->>Browser: Access token
-  Browser->>API: Bearer token
+  Browser->>API: Privileged action, bearer token
   API->>Session: requireRole
   Session->>Session: Verify with PRIVY_VERIFICATION_KEY
   Session->>DB: User by privyDid
   Session-->>API: User or 401 or 403
-  alt Admin or hub manager, no step-up cookie
+  alt Admin or hub manager, no recent step-up
     API-->>Browser: 403 step_up_required
-    Browser->>API: POST /api/me/step-up
-    API->>Privy: Verify TOTP
-    Privy-->>API: MFA token
-    API-->>Browser: Step-up cookie
+    API->>Privy: POST mfa/email/verification/init
+    Privy-->>Browser: Emailed code
+    Browser->>API: POST /api/me/step-up with the code
+    API->>Privy: POST mfa/email/verification/verify
+    alt Code missing or wrong
+      API-->>Browser: Blocked
+    else MFA token returned
+      API-->>Browser: Step-up cookie
+      Browser->>API: Privileged action
+      API-->>Browser: Action proceeds
+    end
   end
 ```
 
-The step-up cookie is `HttpOnly`, bound to `privyDid` and the Privy session id. Hub CSV import pre-creates the Privy user by email, then the `User` row.
+The step-up cookie is `HttpOnly`, bound to `privyDid` and `sid`, for 8 hours, or 15 minutes for role changes and exports. Logout clears it. Hub CSV import pre-creates the Privy user by email, then the `User` row.
 
 ## Planned offline learning
 

@@ -1,13 +1,25 @@
-# ADR-0006: Keep Privy for identity; map roles and sessions in our code; email one-time code for every role
+# ADR-0006: Keep Privy for identity; map roles and sessions in our code; emailed code, with an emailed-code step-up for admin and hub manager
 
-- Status: Accepted: keep Privy (David, 27 Nov 2026). **Accepted: TOTP step-up for admin and hub manager through Privy's server-side MFA API** (CTO, 27 Nov 2026), subject to the week-1 spike's stop rule. Proposed: the remaining mapping details.
+- Status: Accepted: keep Privy (David, 27 Nov 2026). The TOTP step-up accepted by the CTO on 27 Nov 2026 is superseded. **Amended 28 Nov 2026: admin and hub-manager step-up is a Privy emailed one-time code only** (David Ogoo, relayed by the CTO). No authenticator-app TOTP, no SMS. Proposed: the remaining mapping details.
 - Date: 2026-11-27
 - Deciders: David Ogoo (Christex), CTO, SLDTP tech lead
 - Relates to: engineering-plan ADR-003; AUT-01 to AUT-10, FND-10; ADR-0017
 
+## Amendment (2026-11-28)
+
+David Ogoo (Founder/CEO), relayed by the CTO. This supersedes the TOTP step-up in the 27 Nov status, in Decision outcome, and in the research answer below. That research stays as the record of what was considered.
+
+Every role signs in with Privy's emailed code. An admin or hub manager who attempts a privileged action then receives a second Privy emailed code, enters it, and the action proceeds. A missing or wrong code is blocked. There is no authenticator-app TOTP and no SMS.
+
+The login code is checked in the browser (`loginWithCode`). Privy documents no server route for that login code ([email login](https://docs.privy.io/authentication/user-authentication/login-methods/email)). The step-up uses email MFA, which our API does check. `POST /v1/users/{user_id}/mfa/email/verification/init` sends the code, and `POST /v1/users/{user_id}/mfa/email/verification/verify` checks it ([verify](https://docs.privy.io/api-reference/users/mfa/email/verification/verify)). If email MFA is not enrolled yet, the same screen enrolls it first (`.../mfa/email/enrollment/init`, then `.../enrollment/verify`). Verify returns an MFA token. A missing or wrong code does not. A fresh `iat` is not that proof: a silent refresh keeps `sid` and issues a new `iat` ([tokens](https://docs.privy.io/authentication/user-authentication/tokens)). The locked `@privy-io/node` 0.7.0 exposes SMS, TOTP, and passkey MFA helpers, not email, so this call is the REST route or a later SDK.
+
+The step-up cookie is signed and `HttpOnly`, bound to `privyDid` and `sid`. It lasts 8 hours, and 15 minutes for role changes and exports. Logout clears it.
+
+This departs from TOTP in the bid's compliance-matrix rows tech.txt §2.4 ("TOTP MFA plugin enforced for admin/hub-manager"), §3.3 ("Argon2id… TOTP MFA enforced for admin/hub-manager… brute-force lockout"), and §4.3 ("Argon2id; secure session cookies; TOTP MFA"). It may need a change notice. The week-1 wallet spike, TOTP enrolment, and authenticator reset are not part of this decision.
+
 ## Context and problem statement
 
-Privy is already wired in: the browser signs in through `@privy-io/react-auth`, and every server check runs through `src/features/auth/utils/getPrivyToken.ts`, which verifies the token with `PRIVY_VERIFICATION_KEY` and returns `privyDid`. Four wrappers sit on top (`withAuth`, `withSponsorAuth`, `getUserSession`, `getSponsorSession`). Roles today are a free string (`USER`/`GOD`) plus Superteam's many-to-many sponsor membership. SLDTP needs four roles: learner, employer, hub manager, admin. David decided admin and hub-manager two-step login uses Privy's emailed one-time code, with no self-hosted auth and no SMS. The research below shows how to add an authenticator-app (TOTP) step through Privy itself, which David may prefer because it meets the bid's TOTP row.
+Privy is already wired in: the browser signs in through `@privy-io/react-auth`, and every server check runs through `src/features/auth/utils/getPrivyToken.ts`, which verifies the token with `PRIVY_VERIFICATION_KEY` and returns `privyDid`. Four wrappers sit on top (`withAuth`, `withSponsorAuth`, `getUserSession`, `getSponsorSession`). Roles today are a free string (`USER`/`GOD`) plus Superteam's many-to-many sponsor membership. SLDTP needs four roles: learner, employer, hub manager, admin. David decided admin and hub-manager two-step login uses Privy's emailed one-time code, with no self-hosted auth and no SMS. The research below records the authenticator-app (TOTP) option from 27 Nov 2026. David decided against it on 28 Nov 2026. The amendment above is the step-up.
 
 ## Decision drivers
 
@@ -23,7 +35,7 @@ Privy is already wired in: the browser signs in through `@privy-io/react-auth`, 
 
 ## Decision outcome
 
-Option 2.
+Option 2. The step-up for admin and hub manager is the amendment of 28 Nov 2026. TOTP sentences in this section, and the research answer below, are the 27 Nov record.
 - Keep `src/lib/privy.ts` (created lazily, so builds need no secrets) and `getPrivyToken.ts`, moved to `src/sldtp/auth/`. Replace the four wrappers with `requireUser`, `requireRole(req, ...roles)` for API routes and `withPageRole` for `getServerSideProps`.
 - `User` keeps `privyDid` (unique) and gets `role` as an enum `LEARNER | EMPLOYER | HUB_MANAGER | ADMIN`, plus `hubId` and `employerId`. `GOD`, `UserSponsors` and `currentSponsorId` go.
 - Privy login methods: **email only** (remove Google). Every role signs in with Privy's emailed 6-digit code. For admin and hub manager, see "Privy MFA research" below. The earlier idea of a "recent authentication" check on the token's age doesn't work: Privy access tokens are refreshed about hourly with a new `iat` and carry no auth-time claim, so token age doesn't prove the user just logged in. Every login and role change is written to the audit log.
@@ -45,7 +57,7 @@ Open point for the change notice: the bid promised argon2id passwords, a passwor
 5. **Interaction with email OTP.** Login stays Privy's emailed code (factor 1: control of the mailbox). The TOTP step is a separate call after login, made by our server with the user's Privy JWT (factor 2: the authenticator app). Privy's access token carries `sid`, `sub`, `iat` and `exp`, but no MFA or auth-time claim ([access tokens](https://docs.privy.io/authentication/user-authentication/access-tokens)). So we record the step-up ourselves: a signed, `HttpOnly` cookie bound to `privyDid` + `sid`, with our own lifetime (proposed 8 h, and 15 min for role changes and exports).
 6. **Passkeys.** Privy supports passkey **login** ([passkey](https://docs.privy.io/authentication/user-authentication/login-methods/passkey)) and passkeys as an MFA method. A passkey would be the stronger second step (phishing-resistant), but the bid's wording is TOTP, so TOTP is the default and passkey is an optional extra.
 
-**Answer (step-up agreed by the CTO, 27 Nov 2026).**
+**Answer (step-up agreed by the CTO, 27 Nov 2026). Superseded by the amendment of 28 Nov 2026.**
 - **Not out of the box.** Privy's MFA protects wallets. It can't be enforced at login or per role, and we don't use wallets.
 - **Yes, if we build a thin step-up on Privy's server-side TOTP API.** `requireRole('ADMIN' | 'HUB_MANAGER')` also requires a valid step-up cookie. If the user has no `totp` in `mfaMethods`, they are sent to enrolment (QR code from Privy's `otpauth://` URI). Otherwise they enter a 6-digit code, our API calls Privy's verify, and we set the cookie. Privy stores the TOTP secret and enforces the attempt limit, so we still write no credential code.
 - That meets the bid's **"TOTP MFA enforced for admin/hub-manager"** wording (tech.txt §2.4, §3.3) in substance: email code plus authenticator code, enforced by role on the server. It does **not** meet the password rows (argon2id, password policy, lockout), because Privy login is passwordless. Those rows stay a disclosed deviation.
