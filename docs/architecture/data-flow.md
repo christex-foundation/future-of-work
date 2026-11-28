@@ -33,7 +33,7 @@ sequenceDiagram
 
 ## Planned login
 
-[ADR-0006](../adr/0006-identity-with-privy-roles-in-sldtp.md). Email one-time code for every role. Google comes out of `loginMethods`. An admin who attempts a privileged action receives a second Privy emailed code, enters it, and the action proceeds. A missing or wrong code is blocked. The same step-up applies to a hub manager. No authenticator-app TOTP and no SMS (amendment of 28 Nov 2026).
+[ADR-0006](../adr/0006-identity-with-privy-roles-in-sldtp.md). Email one-time code for every role. Google comes out of `loginMethods`. An admin who attempts a privileged action receives a Privy email-MFA code. Our API checks that code with `POST /v1/users/{user_id}/mfa/email/verification/verify`. The action proceeds when that call returns an MFA token. A missing or wrong code is blocked. A hub manager uses the same step-up. No authenticator-app TOTP and no SMS (amendment of 28 Nov 2026).
 
 ```mermaid
 sequenceDiagram
@@ -53,13 +53,13 @@ sequenceDiagram
   Session-->>API: User or 401 or 403
   alt Admin or hub manager, no recent step-up
     API-->>Browser: 403 step_up_required
-    Browser->>Privy: Request emailed code
+    API->>Privy: POST mfa/email/verification/init
     Privy-->>Browser: Emailed code
     Browser->>API: POST /api/me/step-up with the code
-    API->>Privy: Verify emailed code
+    API->>Privy: POST mfa/email/verification/verify
     alt Code missing or wrong
       API-->>Browser: Blocked
-    else Code matches
+    else MFA token returned
       API-->>Browser: Step-up cookie
       Browser->>API: Privileged action
       API-->>Browser: Action proceeds
@@ -67,7 +67,7 @@ sequenceDiagram
   end
 ```
 
-The step-up cookie is `HttpOnly`, bound to `privyDid` and the Privy session id. Hub CSV import pre-creates the Privy user by email, then the `User` row.
+The step-up cookie is `HttpOnly`, bound to `privyDid` and `sid`, for 8 hours, or 15 minutes for role changes and exports. Logout clears it. Hub CSV import pre-creates the Privy user by email, then the `User` row.
 
 ## Planned offline learning
 
